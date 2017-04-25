@@ -1,0 +1,3 @@
+{
+  "backend-elasticsearch": "localhost:9200"
+}
