@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "system",
+    "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "target": "es6",
@@ -11,8 +11,9 @@
     "emitDecoratorMetadata": true,
     "noResolve": false,
     "preserveConstEnums": true,
-    "outFile": "../../built/local/tsc.js",
-    "sourceMap": true
+    "sourceMap": true,
+    "inlineSources": true,
+    "declaration": true
   },
   "include": [
     "server/**/*"

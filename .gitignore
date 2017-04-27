@@ -17,6 +17,11 @@ dist/
 .idea/**/tasks.xml
 .idea/dictionaries
 
+# Ignore generated file
+server/**/*.d.ts
+server/**/*.js
+server/**/*.js.map
+
 # Sensitive or high-churn files:
 .idea/**/dataSources/
 .idea/**/dataSources.ids
