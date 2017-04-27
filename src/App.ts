@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import errorHandler = require("errorhandler");
 import {LoggerInstance} from "winston";
 import methodOverride = require("method-override");
@@ -8,6 +9,7 @@ import {IndexController} from "./controllers/IndexController";
 import {Utils} from "./common/Utils";
 import {TrafficQueryServiceImpl} from "./services/query/impl/TrafficQueryServiceImpl";
 import {TrafficQueryService} from "./services/query/TrafficQueryService";
+import {Application} from "express";
 
 /**
  * The server.
@@ -31,6 +33,13 @@ export class App {
     private container: Container;
 
     /**
+     * Express application
+     *
+     * @type {Application}
+     */
+    private expressServer: Application;
+
+    /**
      * Bootstrap the application.
      *
      * @class Server
@@ -50,9 +59,8 @@ export class App {
 
         // create server
         const server = new InversifyExpressServer(this.container);
-        server
-            .build()
-            .listen(3000, "localhost");
+        this.expressServer = server.build();
+        this.expressServer.listen(3000, "127.0.0.1");
         this.logger.info("Server launched");
 
         return this.container;
@@ -61,24 +69,29 @@ export class App {
     /**
      * Bind the elastic search client
      */
-    private bindElasticClient() {
+    private bindElasticClient(): void {
         this.logger.debug("Create ElasticSearch client");
         // Create the elasticSearch client
         const elasticClient = new Client({
             host: "localhost:9200",
             log: "error",
         });
-        elasticClient.ping({
-            requestTimeout: 3000,
-        }, (error) => {
-            if (error) {
-                this.logger.error("ElasticSearch cluster is down!");
-                this.logger.error("Several features part will not work");
-            } else {
-                this.logger.debug("ElasticSearch cluster is well!");
-            }
-        });
-        this.logger.debug("ElasticSearch client connected");
+        try {
+            elasticClient.ping({
+                requestTimeout: 3000,
+            }, (error) => {
+                if (error) {
+                    this.logger.error("ElasticSearch cluster is down!");
+                    this.logger.error("Several features part will not work");
+                } else {
+                    this.logger.debug("ElasticSearch client connected");
+                    this.logger.debug("ElasticSearch cluster is well!");
+                }
+            });
+        } catch (e) {
+            this.logger.error("An error occurred to contact ElasticSearch");
+        }
+
 
         this.logger.debug("Binding ElasticSearch client");
         this.container.bind<Client>("ESClient").toConstantValue(elasticClient);
@@ -87,7 +100,7 @@ export class App {
     /**
      * Bind all query services
      */
-    private bindQueries() {
+    private bindQueries(): void {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
     }
@@ -95,8 +108,8 @@ export class App {
     /**
      * Bind all controllers
      */
-    private bindControllers() {
-        this.logger.debug("Binding controller");
+    private bindControllers(): void {
+        this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
     }
 

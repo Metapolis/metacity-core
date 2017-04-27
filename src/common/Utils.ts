@@ -27,7 +27,7 @@ export class Utils {
                             (options.meta && Object.keys(options.meta).length ? "\n\t" + JSON.stringify(options.meta) : "" ));
                         return logProperties.join(" ");
                     },
-                    level: "debug",
+                    level: "info",
                     timestamp: () => {
                         return new Date().toISOString();
                     },

@@ -4,9 +4,11 @@ import { Controller, Delete, Get, interfaces, Post } from "inversify-express-uti
 import {TrafficQueryService} from "../services/query/TrafficQueryService";
 import {LoggerInstance} from "winston";
 import {Utils} from "../common/Utils";
+import * as HTTPStatusCodes from "http-status-codes";
+
 
 /**
- * Index controller is an example of controller
+ * Index controllers is an example of controllers
  *
  * / route
  *
@@ -41,6 +43,7 @@ export class IndexController implements interfaces.Controller {
     @Get("/")
     public async findTraffic(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         this.logger.info("Find all traffic information");
+        res.status(HTTPStatusCodes.OK);
         res.json(await this.trafficQueryService.findTrafficIncident());
     }
 }
