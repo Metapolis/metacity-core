@@ -1,0 +1,9 @@
+{
+  "config": {
+    "elasticsearch_host": "localhost:9200",
+    "elasticsearch_log_level": "info",
+    "app_port": 3000,
+    "app_host": "localhost",
+    "app_log_level": "debug"
+  }
+}

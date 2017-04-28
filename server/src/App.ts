@@ -10,6 +10,7 @@ import {Utils} from "./common/Utils";
 import {TrafficQueryServiceImpl} from "./services/query/impl/TrafficQueryServiceImpl";
 import {TrafficQueryService} from "./services/query/TrafficQueryService";
 import {Application} from "express";
+import {Config} from "./Config";
 
 /**
  * The server.
@@ -60,7 +61,8 @@ export class App {
         // create server
         const server = new InversifyExpressServer(this.container);
         this.expressServer = server.build();
-        this.expressServer.listen(3000, "127.0.0.1");
+        this.logger.error("server conf:" + Config.getAppPort() + Config.getAppHost());
+        this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
         this.logger.info("Server launched");
 
         return this.container;
@@ -73,8 +75,8 @@ export class App {
         this.logger.debug("Create ElasticSearch client");
         // Create the elasticSearch client
         const elasticClient = new Client({
-            host: "localhost:9200",
-            log: "error",
+            host: Config.getElasticSearchHost(),
+            log: Config.getElasticSearchLogLevel(),
         });
         try {
             elasticClient.ping({
@@ -91,7 +93,6 @@ export class App {
         } catch (e) {
             this.logger.error("An error occurred to contact ElasticSearch");
         }
-
 
         this.logger.debug("Binding ElasticSearch client");
         this.container.bind<Client>("ESClient").toConstantValue(elasticClient);

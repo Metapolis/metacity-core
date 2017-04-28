@@ -5,10 +5,10 @@
   "main": "./server/bin/www",
   "scripts": {
     "dev": "NODE_ENV=development nodemon ./server/bin/www",
-    "check": "tslint -c tslint.json 'src/**/*.ts'",
-    "build": "tslint -c tslint.json 'src/**/*.ts' && grunt",
+    "check": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts'",
+    "build": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' && grunt && tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",
     "grunt": "grunt",
-    "start": "node ./dist/boostrap",
+    "start": "node ./dist/src/bootstrap",
     "test": "tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",
     "watch": "mocha-typescript-watch"
   },
@@ -27,6 +27,7 @@
     "morgan": "^1.8.1",
     "pug": "^2.0.0-beta.12",
     "reflect-metadata": "^0.1.10",
+    "ts-json-properties": "^1.1.5",
     "winston": "^2.3.1"
   },
   "devDependencies": {

@@ -6,7 +6,6 @@ import {LoggerInstance} from "winston";
 import {Utils} from "../common/Utils";
 import * as HTTPStatusCodes from "http-status-codes";
 
-
 /**
  * Index controllers is an example of controllers
  *
