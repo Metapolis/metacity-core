@@ -1,4 +1,5 @@
 import * as Winston from "winston";
+import {Config} from "../Config";
 
 /**
  * It's an util class
@@ -27,7 +28,7 @@ export class Utils {
                             (options.meta && Object.keys(options.meta).length ? "\n\t" + JSON.stringify(options.meta) : "" ));
                         return logProperties.join(" ");
                     },
-                    level: "info",
+                    level: Config.getAppLogLevel(),
                     timestamp: () => {
                         return new Date().toISOString();
                     },
