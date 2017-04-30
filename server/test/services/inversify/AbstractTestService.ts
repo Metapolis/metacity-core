@@ -2,7 +2,6 @@ import "reflect-metadata";
 import {suite} from "mocha-typescript";
 import {AppTestModule} from "./AppTestModule";
 
-@suite
 export abstract class AbstractTestService {
 
     /**

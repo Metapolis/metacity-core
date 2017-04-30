@@ -5,7 +5,6 @@ import {AppTestModule} from "./AppTestModule";
 /**
  * Abstract controller
  */
-@suite
 export abstract class AbstractTestController {
 
     /**
