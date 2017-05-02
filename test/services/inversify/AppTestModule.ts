@@ -19,7 +19,7 @@ export class AppTestModule {
         AppTestModule.logger.debug("disable some services");
         // Disable elasticsearch client
         // Second time for ESClientMock need to rebind ESClientMock
-        ContextApp.container.rebind("ESClientMock").toConstantValue(new Mock<Client>());
+        ContextApp.container.bind("ESClientMock").toConstantValue(new Mock<Client>());
         ContextApp.container.rebind("ESClient").toConstantValue((ContextApp.container.get("ESClientMock") as Mock<Client>).object());
 
         return ContextApp.container;
