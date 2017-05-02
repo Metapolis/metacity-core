@@ -5,6 +5,11 @@ import {Properties} from "ts-json-properties";
  */
 export class Config {
 
+    /**
+     * Application properties
+     *
+     * @type {Properties}
+     */
     private static properties: Properties = Properties.initialize("config/properties.json");
 
     /**
