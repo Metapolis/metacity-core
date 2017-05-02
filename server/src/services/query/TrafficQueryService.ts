@@ -1,4 +1,4 @@
-
+import {CarIncident} from "./dto/incident/CarIncident";
 /**
  * Contains method to perform traffic query
  */

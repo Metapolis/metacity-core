@@ -1,7 +1,4 @@
 /**
- * Created by lionel on 02/05/17.
- */
-/**
  * Contains Collision Type Values
  */
 export enum CollisionType {

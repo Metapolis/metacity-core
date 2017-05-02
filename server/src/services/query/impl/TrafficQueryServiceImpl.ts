@@ -26,7 +26,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
     /**
      * Override
      */
-    public async findTrafficIncident() {
+    public async findTrafficIncident(): Promise<{}> {
         this.logger.info("Retrieve all traffic incident in elastic search");
         return (await this.esClient.search({
             index: "test",
