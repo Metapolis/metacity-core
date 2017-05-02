@@ -16,4 +16,11 @@ export abstract class AbstractTestService {
         AbstractTestService.app = new AppTestModule();
         AbstractTestService.app.bootstrap();
     }
+
+    /**
+     * Method launched before test execution
+     */
+    public static after(): void {
+        AbstractTestService.app.rebind();
+    }
 }
