@@ -5,8 +5,8 @@
   "main": "./server/bin/www",
   "scripts": {
     "dev": "NODE_ENV=development nodemon ./server/bin/www",
-    "check": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts'",
-    "build": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' && grunt && tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",
+    "check": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json",
+    "build": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json && grunt && tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",
     "grunt": "grunt",
     "start": "node ./dist/src/bootstrap",
     "test": "tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",

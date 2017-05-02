@@ -1,20 +1,36 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "interface-name": [
+      true,
+      "never-prefix"
     ],
-    "jsRules": {},
-    "rules": {
-        "interface-name": [true, "never-prefix"],
-        "no-trailing-whitespace": false,
-        "max-line-length": [true, 300],
-        "ordered-imports": false,
-        "typedef": true,
-        "member-ordering": [true, "variables-before-functions"],
-        "no-magic-numbers": true,
-        "member-access": true,
-        "no-unused-expression": false,
-        "trailing-comma": [true, {"mutiline": "always", "singleline": "never"}]
-    },
-    "rulesDirectory": []
+    "no-trailing-whitespace": false,
+    "max-line-length": [
+      true,
+      300
+    ],
+    "ordered-imports": false,
+    "typedef": true,
+    "member-ordering": [
+      true,
+      "variables-before-functions"
+    ],
+    "no-magic-numbers": true,
+    "member-access": true,
+    "no-unused-expression": false,
+    "trailing-comma": [
+      true,
+      {
+        "mutiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "completed-docs": true
+  },
+  "rulesDirectory": []
 }
