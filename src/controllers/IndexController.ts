@@ -13,7 +13,7 @@ import * as HTTPStatusCodes from "http-status-codes";
  *
  * @class User
  */
-@Controller("/foo")
+@Controller("/")
 @injectable()
 export class IndexController implements interfaces.Controller {
 
@@ -44,5 +44,20 @@ export class IndexController implements interfaces.Controller {
         this.logger.info("Find all traffic information");
         res.status(HTTPStatusCodes.OK);
         res.json(await this.trafficQueryService.findTrafficIncident());
+    }
+
+    /**
+     * It's an exemple to get any information from ElasticSearch
+     *
+     * @param req it's call request
+     * @param res it's response
+     * @param next it's middleware to handle error
+     *
+     * @returns {Promise<void>}
+     */
+    @Get("/angular")
+    public async getIndex(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        this.logger.info("Deliver angular app");
+        res.sendFile("../../../client/index.html");
     }
 }
