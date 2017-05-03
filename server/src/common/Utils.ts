@@ -1,5 +1,5 @@
 import * as Winston from "winston";
-import {Config} from "../Config";
+import { Config } from "../Config";
 
 /**
  * It's an util class

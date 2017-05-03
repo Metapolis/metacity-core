@@ -1,4 +1,4 @@
-import {Properties} from "ts-json-properties";
+import { Properties } from "ts-json-properties";
 
 /**
  * Contain all access to config properties

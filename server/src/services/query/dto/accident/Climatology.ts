@@ -1,5 +1,5 @@
-import {Luminosity} from "../../../../common/accidentEnums/Luminosity";
-import {AtmosphericCondition} from "../../../../common/accidentEnums/AtmosphericCondition";
+import { Luminosity } from "../../../../common/accidentEnums/Luminosity";
+import { AtmosphericCondition } from "../../../../common/accidentEnums/AtmosphericCondition";
 
 /**
  * Contains all details about a climatology

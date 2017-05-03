@@ -1,7 +1,7 @@
-import {Climatology} from "./Climatology";
-import {Location} from "./Location";
-import {CollisionType} from "../../../../common/accidentEnums/CollisionType";
-import {Intersection} from "../../../../common/accidentEnums/Intersection";
+import { Climatology } from "./Climatology";
+import { Location } from "./Location";
+import { CollisionType } from "../../../../common/accidentEnums/CollisionType";
+import { Intersection } from "../../../../common/accidentEnums/Intersection";
 
 /**
  * Contains all details about a car accident

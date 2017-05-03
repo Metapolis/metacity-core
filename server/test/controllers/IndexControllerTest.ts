@@ -1,11 +1,11 @@
-import {AbstractTestController} from "./inversify/AbstractTestController";
-import {suite, test} from "mocha-typescript";
+import { AbstractTestController } from "./inversify/AbstractTestController";
+import { suite, test } from "mocha-typescript";
 import * as Request from "request-promise";
 import * as Chai from "chai";
 import ChaiHttp = require("chai-http");
-import {TrafficQueryService} from "../../src/services/query/TrafficQueryService";
-import {Mock} from "moq.ts";
-import {ContextApp} from "../ContextApp";
+import { TrafficQueryService } from "../../src/services/query/TrafficQueryService";
+import { Mock } from "moq.ts";
+import { ContextApp } from "../ContextApp";
 
 // TODO delete
 // Temporary waiting working code
@@ -26,7 +26,7 @@ class IndexControllerTest extends AbstractTestController {
     private async testFindTraffic(): Promise<void> {
         const path: string = "/foo";
         const trafficQueryService: Mock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as Mock<TrafficQueryService>);
-        trafficQueryService.setup((instance) => instance.findTrafficAccident()).returns({
+        trafficQueryService.setup((instance) => instance.findTrafficAccidents()).returns({
             test: "WORKED"
         });
 
