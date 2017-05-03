@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     "use strict";
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.initConfig({
@@ -7,24 +7,24 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: "./public",
+                        cwd: "./client",
                         src: ["**"],
-                        dest: "./dist/public"
+                        dest: "./dist/client"
                     },
                     {
                         expand: true,
-                        cwd: "./views",
+                        cwd: "./node_modules",
                         src: ["**"],
-                        dest: "./dist/views"
+                        dest: "./dist/client/src/node_modules"
                     }
                 ]
             }
         },
         ts: {
-            app: {
+            server: {
                 files: [{
                     src: ["server/\*\*/\*.ts", "!server/.baseDir.ts", "!server/\*\*/\*.d.ts"],
-                    dest: "./dist"
+                    dest: "./dist/server"
                 }],
                 options: {
                     module: "commonjs",
@@ -38,6 +38,25 @@ module.exports = function(grunt) {
                     preserveConstEnums: true,
                     outFile: "../../built/local/tsc.js",
                     sourceMap: false
+                }
+            },
+            client: {
+                files: [{
+                    src: ["./dist/client/\*\*/\*.ts", "!./dist/client/.baseDir.ts", "!./dist/client/\*\*/\*.d.ts", "!./dist/client/src/node_modules/\*\*/*.ts"],
+                    dest: "./dist/client/src"
+                }],
+                options: {
+                    baseUrl: "client/",
+                    target: "es6",
+                    module: "commonjs",
+                    moduleResolution: "node",
+                    sourceMap: true,
+                    emitDecoratorMetadata: true,
+                    experimentalDecorators: true,
+                    lib: ["es6", "dom"],
+                    types: ["reflect-metadata", "jasmine"],
+                    noImplicitAny: true,
+                    suppressImplicitAnyIndexErrors: true
                 }
             }
         },

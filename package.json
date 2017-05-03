@@ -4,16 +4,17 @@
   "description": "",
   "main": "./server/bin/www",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon ./server/bin/www",
+    "dev": "NODE_ENV=development nodemon ./dist/server/src/bootstrap",
     "check": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json",
-    "build": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json && grunt && tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",
+    "build": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json && grunt && tsc -p . && find ./dist/server/test -name '*Test.js' | xargs mocha -R spec",
     "grunt": "grunt",
-    "start": "node ./dist/src/bootstrap",
-    "test": "tsc -p . && find ./dist/test -name '*Test.js' | xargs mocha -R spec",
+    "start": "node ./dist/server/src/bootstrap",
+    "test": "tsc -p . && find ./dist/server/test -name '*Test.js' | xargs mocha -R spec",
     "watch": "mocha-typescript-watch"
   },
   "author": "",
   "license": "ISC",
+
   "dependencies": {
     "body-parser": "1.17.1",
     "cookie-parser": "1.4.3",
@@ -28,7 +29,20 @@
     "pug": "2.0.0-beta.12",
     "reflect-metadata": "0.1.10",
     "ts-json-properties": "1.1.5",
-    "winston": "2.3.1"
+    "winston": "2.3.1",
+    "@angular/common": "~4.0.0",
+    "@angular/compiler": "~4.0.0",
+    "@angular/core": "~4.0.0",
+    "@angular/forms": "~4.0.0",
+    "@angular/http": "~4.0.0",
+    "@angular/platform-browser": "~4.0.0",
+    "@angular/platform-browser-dynamic": "~4.0.0",
+    "@angular/router": "~4.0.0",
+    "angular-in-memory-web-api": "~0.3.0",
+    "systemjs": "0.19.40",
+    "core-js": "^2.4.1",
+    "rxjs": "5.0.1",
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@types/body-parser": "1.16.3",
@@ -66,6 +80,16 @@
     "sync-request": "4.0.3",
     "ts-node": "3.0.2",
     "tslint": "5.1.0",
-    "typescript": "2.2.2"
+    "typescript": "2.2.2",
+    "lodash": "^4.16.4",
+    "jasmine-core": "~2.4.1",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "~4.0.14",
+    "rimraf": "^2.5.4",
+    "@types/jasmine": "2.5.36"
   }
 }

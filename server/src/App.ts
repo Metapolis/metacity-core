@@ -69,8 +69,8 @@ export class App {
             }));
 
             // Add static file server to serve angular resources
-            const publicPath = Path.join(__dirname, "./../../client/");
-            app.use("/static", Express.static(publicPath));
+            const publicPath = Path.join(__dirname, "./../../dist/client/src");
+            app.use("/", Express.static(publicPath));
         });
         this.expressServer = server.build();
         this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
