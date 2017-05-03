@@ -1,4 +1,4 @@
-import {GPSType} from "../../../../common/incidentEnums/GPSType";
+import {GPSType} from "../../../../common/accidentEnums/GPSType";
 
 /**
  * Contains all details about a location

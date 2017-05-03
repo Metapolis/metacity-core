@@ -1,40 +1,40 @@
 import {Climatology} from "./Climatology";
 import {Location} from "./Location";
-import {CollisionType} from "../../../../common/incidentEnums/CollisionType";
-import {Intersection} from "../../../../common/incidentEnums/Intersection";
+import {CollisionType} from "../../../../common/accidentEnums/CollisionType";
+import {Intersection} from "../../../../common/accidentEnums/Intersection";
 
 /**
- * Contains all details about a car incident
+ * Contains all details about a car accident
  */
-export class CarIncident {
+export class CarAccident {
 
     /**
-     * Car incident's Identifier
+     * Car accident's Identifier
      */
     private id: number;
 
     /**
-     * Car incident's timestamp
+     * Car accident's timestamp
      */
     private timestamp: number;
 
     /**
-     * Car incident's collision type
+     * Car accident's collision type
      */
     private collisionType: CollisionType;
 
     /**
-     * Car incident's intersection
+     * Car accident's intersection
      */
     private intersection: Intersection;
 
     /**
-     * Car incident's climatology
+     * Car accident's climatology
      */
     private climatology: Climatology;
 
     /**
-     * Car incident's location
+     * Car accident's location
      */
     private location: Location;
 

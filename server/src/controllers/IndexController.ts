@@ -5,6 +5,7 @@ import {TrafficQueryService} from "../services/query/TrafficQueryService";
 import {LoggerInstance} from "winston";
 import {Utils} from "../common/Utils";
 import * as HTTPStatusCodes from "http-status-codes";
+import * as Path from "path";
 
 /**
  * Index controllers is an example of controllers
@@ -43,7 +44,7 @@ export class IndexController implements interfaces.Controller {
     public async findTraffic(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         this.logger.info("Find all traffic information");
         res.status(HTTPStatusCodes.OK);
-        res.json(await this.trafficQueryService.findTrafficIncident());
+        res.json(await this.trafficQueryService.findTrafficAccident());
     }
 
     /**
@@ -55,9 +56,9 @@ export class IndexController implements interfaces.Controller {
      *
      * @returns {Promise<void>}
      */
-    @Get("/angular")
+    @Get("toto")
     public async getIndex(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         this.logger.info("Deliver angular app");
-        res.sendFile("../../../client/index.html");
+        res.sendFile(Path.join(__dirname, "../../../client/index.html"));
     }
 }

@@ -2,6 +2,8 @@
   "config": {
     "elasticsearch_host": "localhost:9200",
     "elasticsearch_log_level": "info",
+    "index__name_traffic": "traffic",
+    "document_name_accident": "accident",
     "app_port": 3000,
     "app_host": "localhost",
     "app_log_level": "debug"

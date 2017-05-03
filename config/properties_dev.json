@@ -1,7 +1,9 @@
 {
-  "elasticsearch_host": "localhost:9200",
+  "elasticsearch_host": "163.172.18.177:9200",
   "elasticsearch_log_level": "info",
+  "index_name_traffic": "logstash-*",
+  "document_name_accident": "logs",
   "app_port": 3000,
-  "app_host": "localhost",
+  "app_host": "127.0.0.1",
   "app_log_level": "debug"
 }

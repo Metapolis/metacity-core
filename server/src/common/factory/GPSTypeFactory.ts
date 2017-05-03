@@ -1,4 +1,4 @@
-import {GPSType} from "../incidentEnums/GPSType";
+import {GPSType} from "../accidentEnums/GPSType";
 import {UnsupportedOperationError} from "../exception/UnsupportedOperationError";
 
 /**
