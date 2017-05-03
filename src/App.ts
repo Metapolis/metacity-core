@@ -1,18 +1,19 @@
 import "reflect-metadata";
 import errorHandler = require("errorhandler");
-import {LoggerInstance} from "winston";
+import { LoggerInstance } from "winston";
 import methodOverride = require("method-override");
-import {Client} from "elasticsearch";
-import {Container} from "inversify";
-import {interfaces, InversifyExpressServer, TYPE} from "inversify-express-utils";
-import {IndexController} from "./controllers/IndexController";
-import {Utils} from "./common/Utils";
-import {TrafficQueryServiceImpl} from "./services/query/impl/TrafficQueryServiceImpl";
-import {TrafficQueryService} from "./services/query/TrafficQueryService";
+import { Client } from "elasticsearch";
+import { Container } from "inversify";
+import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
+import { IndexController } from "./controllers/IndexController";
+import { Utils } from "./common/Utils";
+import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServiceImpl";
+import { TrafficQueryService } from "./services/query/TrafficQueryService";
 import * as Express from "express";
 import * as Path from "path";
-import {Config} from "./Config";
+import { Config } from "./Config";
 import * as BodyParser from "body-parser";
+import { TrafficController } from "./controllers/rest/TrafficController";
 
 /**
  * The server.
@@ -123,6 +124,7 @@ export class App {
     private bindControllers(): void {
         this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
     }
 
 }

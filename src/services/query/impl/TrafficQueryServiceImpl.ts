@@ -1,10 +1,10 @@
-import {Client} from "elasticsearch";
-import {inject, injectable} from "inversify";
-import {TrafficQueryService} from "../TrafficQueryService";
-import {LoggerInstance} from "winston";
-import {Utils} from "../../../common/Utils";
-import {Config} from "../../../Config";
-import {CarAccident} from "../dto/accident/CarAccident";
+import { Client } from "elasticsearch";
+import { inject, injectable } from "inversify";
+import { TrafficQueryService } from "../TrafficQueryService";
+import { LoggerInstance } from "winston";
+import { Utils } from "../../../common/Utils";
+import { Config } from "../../../Config";
+import { CarAccident } from "../dto/accident/CarAccident";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -28,7 +28,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
     /**
      * Override
      */
-    public async findTrafficAccident(): Promise<CarAccident[]> {
+    public async findTrafficAccidents(): Promise<CarAccident[]> {
         this.logger.info("Retrieve all traffic accident in elastic search");
         const jsonAccidents = (await this.esClient.search({
             index: Config.getIndexNameTraffic(),

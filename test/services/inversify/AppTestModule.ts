@@ -1,11 +1,11 @@
-import {App} from "../../../src/App";
-import {Client} from "elasticsearch";
-import {Container} from "inversify";
-import {LoggerInstance} from "winston";
-import {Utils} from "../../../src/common/Utils";
-import {Mock} from "moq.ts";
-import {ContextApp} from "../../ContextApp";
-import {TrafficQueryServiceImpl} from "../../../src/services/query/impl/TrafficQueryServiceImpl";
+import { App } from "../../../src/App";
+import { Client } from "elasticsearch";
+import { Container } from "inversify";
+import { LoggerInstance } from "winston";
+import { Utils } from "../../../src/common/Utils";
+import { Mock } from "moq.ts";
+import { ContextApp } from "../../ContextApp";
+import { TrafficQueryServiceImpl } from "../../../src/services/query/impl/TrafficQueryServiceImpl";
 
 export class AppTestModule {
 
