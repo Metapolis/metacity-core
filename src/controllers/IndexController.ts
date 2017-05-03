@@ -35,6 +35,6 @@ export class IndexController implements interfaces.Controller {
     @Get("/")
     public async getIndex(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<void> {
         this.logger.info("Deliver angular app");
-        res.sendFile(Path.join(__dirname, "../../../client/index.html"));
+        res.sendFile(Path.join(__dirname, "../../../client/src/index.html"));
     }
 }
