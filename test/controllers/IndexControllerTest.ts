@@ -20,13 +20,13 @@ class Test {
 class IndexControllerTest extends AbstractTestController {
 
     /**
-     * Test function find traffic incident
+     * Test function find traffic accident
      */
     @test
     private async testFindTraffic(): Promise<void> {
         const path: string = "/foo";
         const trafficQueryService: Mock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as Mock<TrafficQueryService>);
-        trafficQueryService.setup((instance) => instance.findTrafficIncident()).returns({
+        trafficQueryService.setup((instance) => instance.findTrafficAccident()).returns({
             test: "WORKED"
         });
 

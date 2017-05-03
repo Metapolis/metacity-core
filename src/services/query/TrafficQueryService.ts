@@ -1,12 +1,12 @@
-import {CarIncident} from "./dto/incident/CarIncident";
+import {CarAccident} from "./dto/accident/CarAccident";
 /**
  * Contains method to perform traffic query
  */
 export interface TrafficQueryService {
 
     /**
-     * Retrieves all traffic incident
+     * Retrieves all traffic accident
      * @returns {string}
      */
-    findTrafficIncident(): Promise<{}>;
+    findTrafficAccident(): Promise<CarAccident[]>;
 }

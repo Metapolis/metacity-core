@@ -61,7 +61,7 @@ export class App {
         // create server
         const server = new InversifyExpressServer(this.container);
         this.expressServer = server.build();
-        this.logger.error("server conf:" + Config.getAppPort() + Config.getAppHost());
+        this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
         this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
         this.logger.info("Server launched");
 

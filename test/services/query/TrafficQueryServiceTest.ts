@@ -13,16 +13,16 @@ import {ContextApp} from "../../ContextApp";
 class TrafficQueryServiceTest extends AbstractTestService {
 
     /**
-     * Test function find traffic incident
+     * Test function find traffic accident
      */
     @test
-    private testFindTrafficIncident(): void {
+    private testFindTrafficAccident(): void {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
         const esClient: Mock<Client> = (ContextApp.container.get("ESClientMock") as Mock<Client>);
         esClient.setup((instance) => instance.search(It.IsAny<SearchParams>())).returns({
             test: "WORKED"
         });
-        trafficQueryService.findTrafficIncident();
+        trafficQueryService.findTrafficAccident();
         esClient.verify((instance) => instance.search(It.IsAny<SearchParams>()), Times.Once());
     }
 
