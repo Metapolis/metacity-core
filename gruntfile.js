@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
     "use strict";
-
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.initConfig({
         copy: {
             build: {

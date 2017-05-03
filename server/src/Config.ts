@@ -1,4 +1,4 @@
-import {Properties} from "ts-json-properties";
+import { Properties } from "ts-json-properties";
 
 /**
  * Contain all access to config properties
@@ -55,5 +55,23 @@ export class Config {
      */
     public static getAppLogLevel(): string {
         return Config.properties.get("config.app_log_level");
+    }
+
+    /**
+     * Get index name traffic
+     *
+     * @returns {string}
+     */
+    public static getIndexNameTraffic(): string {
+        return Config.properties.get("config.index_name_traffic");
+    }
+
+    /**
+     * Get document name accident
+     *
+     * @returns {string}
+     */
+    public static getDocumentNameAccident(): string {
+        return Config.properties.get("config.document_name_accident");
     }
 }

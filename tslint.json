@@ -30,7 +30,8 @@
         "singleline": "never"
       }
     ],
-    "completed-docs": true
+    "completed-docs": true,
+    "import-spacing": true
   },
   "rulesDirectory": []
 }

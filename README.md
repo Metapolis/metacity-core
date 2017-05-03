@@ -6,7 +6,7 @@ L'application Portail Metacity est développée en typescript à l'aide de Inver
 	
 #### NodeJS et Node Package Manager (NPM)
 
-Installer Node.js et NPM depuis l'installeur disponible à l'adresse suivante : [http://nodejs.org/download/](http://nodejs.org/download/)
+Installer Node.js (7.7.1) et NPM depuis l'installeur disponible à l'adresse suivante : [http://nodejs.org/download/](http://nodejs.org/download/)
 A l'issue de l'installation les commandes `node`et `npm` doivent être disponibles.
 
 ### 2 - Avant de démarrer

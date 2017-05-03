@@ -1,16 +1,19 @@
 import "reflect-metadata";
 import errorHandler = require("errorhandler");
-import {LoggerInstance} from "winston";
+import { LoggerInstance } from "winston";
 import methodOverride = require("method-override");
-import {Client} from "elasticsearch";
-import {Container} from "inversify";
-import {interfaces, InversifyExpressServer, TYPE} from "inversify-express-utils";
-import {IndexController} from "./controllers/IndexController";
-import {Utils} from "./common/Utils";
-import {TrafficQueryServiceImpl} from "./services/query/impl/TrafficQueryServiceImpl";
-import {TrafficQueryService} from "./services/query/TrafficQueryService";
-import {Application} from "express";
-import {Config} from "./Config";
+import { Client } from "elasticsearch";
+import { Container } from "inversify";
+import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
+import { IndexController } from "./controllers/IndexController";
+import { Utils } from "./common/Utils";
+import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServiceImpl";
+import { TrafficQueryService } from "./services/query/TrafficQueryService";
+import * as Express from "express";
+import * as Path from "path";
+import { Config } from "./Config";
+import * as BodyParser from "body-parser";
+import { TrafficController } from "./controllers/rest/TrafficController";
 
 /**
  * The server.
@@ -38,7 +41,7 @@ export class App {
      *
      * @type {Application}
      */
-    private expressServer: Application;
+    private expressServer: Express.Application;
 
     /**
      * Bootstrap the application.
@@ -60,8 +63,17 @@ export class App {
 
         // create server
         const server = new InversifyExpressServer(this.container);
+        server.setConfig((app) => {
+            app.use(BodyParser.urlencoded({
+                extended: true
+            }));
+
+            // Add static file server to serve angular resources
+            const publicPath = Path.join(__dirname, "./../../client/");
+            app.use("/static", Express.static(publicPath));
+        });
         this.expressServer = server.build();
-        this.logger.error("server conf:" + Config.getAppPort() + Config.getAppHost());
+        this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
         this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
         this.logger.info("Server launched");
 
@@ -112,6 +124,7 @@ export class App {
     private bindControllers(): void {
         this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
     }
 
 }
