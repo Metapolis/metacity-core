@@ -9,8 +9,10 @@ import {IndexController} from "./controllers/IndexController";
 import {Utils} from "./common/Utils";
 import {TrafficQueryServiceImpl} from "./services/query/impl/TrafficQueryServiceImpl";
 import {TrafficQueryService} from "./services/query/TrafficQueryService";
-import {Application} from "express";
+import * as Express from "express";
+import * as Path from "path";
 import {Config} from "./Config";
+import * as BodyParser from "body-parser";
 
 /**
  * The server.
@@ -38,7 +40,7 @@ export class App {
      *
      * @type {Application}
      */
-    private expressServer: Application;
+    private expressServer: Express.Application;
 
     /**
      * Bootstrap the application.
@@ -60,6 +62,15 @@ export class App {
 
         // create server
         const server = new InversifyExpressServer(this.container);
+        server.setConfig((app) => {
+            app.use(BodyParser.urlencoded({
+                extended: true
+            }));
+
+            // Add static file server to serve angular resources
+            const publicPath = Path.join(__dirname, "./../../client/");
+            app.use("/static", Express.static(publicPath));
+        });
         this.expressServer = server.build();
         this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
         this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
