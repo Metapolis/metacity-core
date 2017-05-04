@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.initConfig({
         copy: {
-            build: {
+            client: {
                 files: [
                     {
                         expand: true,
@@ -11,13 +11,15 @@ module.exports = function (grunt) {
                         src: ["**"],
                         dest: "./dist/client"
                     },
-                    {
-                        expand: true,
-                        cwd: "./node_modules",
-                        src: ["**"],
-                        dest: "./dist/client/src/node_modules"
-                    }
                 ]
+            },
+            node: {
+                files: [{
+                    expand: true,
+                    cwd: "./node_modules",
+                    src: ["**"],
+                    dest: "./dist/client/src/node_modules"
+                }]
             }
         },
         ts: {
