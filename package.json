@@ -9,6 +9,7 @@
     "build": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json && grunt && tsc -p . && find ./dist/server/test -name '*Test.js' | xargs mocha -R spec",
     "build:light:client": "grunt copy:client ts:client",
     "grunt": "grunt",
+    "grunt-ts": "grunt ts",
     "start": "node ./dist/server/src/bootstrap",
     "test": "tsc -p . && find ./dist/server/test -name '*Test.js' | xargs mocha -R spec",
     "watch": "mocha-typescript-watch"

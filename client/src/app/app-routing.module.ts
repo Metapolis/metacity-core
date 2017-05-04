@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Import the components bellow
 // Ex : import { HeroesComponent }      from './heroes.component';
+import { GrafTestComponent }  from './graf-test/graf-test.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/graftest', pathMatch: 'full' },
   // Ex : { path: 'heroes',     component: HeroesComponent }
+  { path: 'graftest', component: GrafTestComponent }
 ];
 
 @NgModule({
