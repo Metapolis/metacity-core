@@ -23,6 +23,10 @@ Compiler le projet :
 
     npm run build
 
+Possibilité de faire une compilation légère avec seulement les fichiers client : 
+
+    npm run build:light:client
+
 #### Lancer le serveur
 
 Commande de lancement :
