@@ -10,25 +10,8 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a routerLink="/sources-et-applications" routerLinkActive="active" class="nav-link">Sources
-et Applications</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/nos-services" routerLinkActive="active" class="nav-link">Nos
-services</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/developpeurs" routerLinkActive="active" class="nav-link">Développeurs</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/mon-compte" routerLinkActive="active" class="nav-link">Mon Compte</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/connexion" routerLinkActive="active" class="nav-link">Connexion</a>
+        <li *ngFor="let link of navlinks" class="nav-item">
+          <a routerLink={{link.src}} routerLinkActive="active" class="nav-link">{{link.text}}</a>
         </li>
       </ul>
     </div>
