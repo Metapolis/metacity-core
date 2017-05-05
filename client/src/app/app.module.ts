@@ -12,6 +12,7 @@ import { GrafTestComponent }  from './graf-test/graf-test.component';
 import { NotFound404Component } from './not-found-404/not-found-404.component';
 import { VisualisationFormComponent } from './menu/visualisation-form/visualisation-form.component';
 import { HomeComponent } from './home/home.component';
+import { Container1Component }  from './home/container-1/container-1.component';
 
 // Services
 
@@ -27,7 +28,8 @@ import { HomeComponent } from './home/home.component';
     GrafTestComponent,
     NotFound404Component,
     VisualisationFormComponent,
-    HomeComponent
+    HomeComponent,
+    Container1Component
    ],
   bootstrap:    [ AppComponent ]
 })

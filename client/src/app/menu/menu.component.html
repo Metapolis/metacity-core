@@ -4,7 +4,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-      <img [src]= 'assets.whiteLogo' width="90" height="90" alt="metacity small logo">
+      <img [src]= 'assets.whiteLogo.src' width="90" height="90" alt="{{assets.whiteLogo.alt}}">
     </a>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
@@ -27,6 +27,6 @@
     </div>
   </nav>
   <nav class="breadcrumb">
-    <a routerLink="/" routerLinkActive="active" class="breadcrumb-item breadcrumb-home"><img [src]='assets.homeIcon' alt="home"></a>
+    <a routerLink="/" routerLinkActive="active" class="breadcrumb-item breadcrumb-home"><img [src]='assets.homeIcon.src' alt="home"></a>
   </nav>
 </div>
