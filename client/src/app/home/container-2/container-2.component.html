@@ -6,12 +6,9 @@
       <div class="row">
         <div class="col-md-4">
           <ul class="text-center">
-              <a href="#"><li>Accessibilité</li></a>
-              <a href="#"><li>Urbanisme</li></a>
-              <a href="#"><li>Territoire</li></a>
-              <a href="#"><li>Citoyenneté</li></a>
-              <a href="#"><li>Économie</li></a>
-              <a href="#"><li>Éducation & Jeunesse</li></a>
+              <a *ngFor="let link of thematiqueslinks1" href="{{link.src}}">
+                <li>{{link.text}}</li>
+              </a>
           </ul>
         </div>
         <div class="col-md-4 justify-content-center">
@@ -19,12 +16,9 @@
         </div>
         <div class="col-md-4">
           <ul class="text-center">
-              <a href="#"><li>Environnement</li></a>
-              <a href="#"><li>Sports & Loisirs</li></a>
-              <a href="#"><li>Santé</li></a>
-              <a href="#"><li>Sécurité</li></a>
-              <a href="#"><li>Mobilité</li></a>
-              <a href="#"><li>Culture & Tourisme</li></a>
+              <a *ngFor="let link of thematiqueslinks2" href="{{link.src}}">
+                <li>{{link.text}}</li>
+              </a>
           </ul>
         </div>
       </div>
