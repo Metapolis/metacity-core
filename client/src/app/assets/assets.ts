@@ -1,4 +1,4 @@
 export class Assets {
-  whiteLogo = "/app/assets/img/metaCityBlanc.svg";
-  homeIcon = "/app/assets/img/home.svg";
+  whiteLogo = "/assets/img/metaCityBlanc.svg";
+  homeIcon = "/assets/img/home.svg";
 }
