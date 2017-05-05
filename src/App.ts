@@ -14,6 +14,10 @@ import * as Path from "path";
 import { Config } from "./Config";
 import * as BodyParser from "body-parser";
 import { TrafficController } from "./controllers/rest/TrafficController";
+import { AuthenticationController } from "./controllers/rest/AuthenticationController";
+import * as TypeORM from "typeorm";
+import { User } from "./persistence/domain/User";
+import * as HTTPStatusCodes from "http-status-codes";
 
 /**
  * The server.
@@ -60,6 +64,7 @@ export class App {
         this.bindQueries();
         this.bindControllers();
         this.bindElasticClient();
+        this.initDB();
 
         // create server
         const server = new InversifyExpressServer(this.container);
@@ -67,11 +72,19 @@ export class App {
             app.use(BodyParser.urlencoded({
                 extended: true
             }));
-
+            app.use(BodyParser.json());
             // Add static file server to serve angular resources
             const publicPath = Path.join(__dirname, "../../client/src");
             this.logger.debug("Static file location: '%s'", publicPath);
-            app.use("/", Express.static(publicPath));
+            app.use("/app", Express.static(publicPath));
+            app.use((req, res, next) => {
+                res.status(HTTPStatusCodes.NOT_FOUND);
+                if (/^\/app/.test(req.path)) {
+                    res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
+                    return;
+                }
+                res.type("txt").send();
+            });
         });
         this.expressServer = server.build();
         this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
@@ -126,6 +139,30 @@ export class App {
         this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
     }
 
+    /**
+     * Initialization of data base connection
+     */
+    private initDB() {
+        TypeORM.createConnection({
+            autoSchemaSync: true,
+            driver: {
+                type: "postgres",
+                host: "localhost",
+                port: 5432,
+                username: "metacity",
+                password: "metacity",
+                database: "metacity"
+            },
+            entities: [
+                __dirname + "/persistence/domain/*.js"
+            ],
+        }).then((connection) => {
+            this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(connection.entityManager.getRepository(User));
+        }).catch((error) => {
+            this.logger.error(error);
+        });
+    }
 }
