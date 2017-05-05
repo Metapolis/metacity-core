@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Assets }    from '../assets/assets';
+import { Assets }    from '../assets';
 
 @Component({
   selector: 'menu',
