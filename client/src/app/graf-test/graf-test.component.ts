@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { geo } from './map'
-import * as d3 from 'd3'
-import * as L from 'leaflet'
 
 @Component({
   selector: 'my-graftest',
