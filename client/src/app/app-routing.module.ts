@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GrafTestComponent }  from './graf-test/graf-test.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/graftest', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   // Ex : { path: 'heroes',     component: HeroesComponent }
   { path: 'graftest', component: GrafTestComponent }
 ];

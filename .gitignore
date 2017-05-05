@@ -22,6 +22,11 @@ server/**/*.d.ts
 server/**/*.js
 server/**/*.js.map
 
+
+client/src/app/**/*.d.ts
+client/src/app/**/*.js
+client/src/app/**/*.js.map
+
 # Sensitive or high-churn files:
 .idea/**/dataSources/
 .idea/**/dataSources.ids
