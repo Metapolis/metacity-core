@@ -1,12 +1,12 @@
-import { Climatology } from "./Climatology";
-import { Location } from "./Location";
-import { CollisionType } from "../../../../common/accidentEnums/CollisionType";
-import { Intersection } from "../../../../common/accidentEnums/Intersection";
+import { ClimatologyDTO } from "./ClimatologyDTO";
+import { LocationDTO } from "./LocationDTO";
+import { CollisionType } from "../../../../common/enum/accident/CollisionType";
+import { Intersection } from "../../../../common/enum/accident/Intersection";
 
 /**
- * Contains all details about a car accident
+ * Data transfer object with all details about a car accident
  */
-export class CarAccident {
+export class CarAccidentDTO {
 
     /**
      * Car accident's Identifier
@@ -31,12 +31,12 @@ export class CarAccident {
     /**
      * Car accident's climatology
      */
-    private climatology: Climatology;
+    private climatology: ClimatologyDTO;
 
     /**
      * Car accident's location
      */
-    private location: Location;
+    private location: LocationDTO;
 
     /**
      * Getter identifier
@@ -115,7 +115,7 @@ export class CarAccident {
      *
      * @returns {Climatology}
      */
-    public getClimatology(): Climatology {
+    public getClimatology(): ClimatologyDTO {
         return this.climatology;
     }
 
@@ -124,7 +124,7 @@ export class CarAccident {
      *
      * @param climatology new climatology value
      */
-    public setClimatology(climatology: Climatology): void {
+    public setClimatology(climatology: ClimatologyDTO): void {
         this.climatology = climatology;
     }
 
@@ -133,7 +133,7 @@ export class CarAccident {
      *
      * @returns {Location}
      */
-    public getLocation(): Location {
+    public getLocation(): LocationDTO {
         return this.location;
     }
 
@@ -142,7 +142,7 @@ export class CarAccident {
      *
      * @param location new location value
      */
-    public setLocation(location: Location): void {
+    public setLocation(location: LocationDTO): void {
         this.location = location;
     }
 }
