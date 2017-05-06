@@ -31,7 +31,8 @@
       }
     ],
     "completed-docs": true,
-    "import-spacing": true
+    "import-spacing": true,
+    "object-literal-shorthand": false
   },
   "rulesDirectory": []
 }

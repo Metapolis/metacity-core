@@ -1,9 +1,9 @@
-import { GPSType } from "../../../../common/accidentEnums/GPSType";
+import { GPSType } from "../../../../common/enum/accident/GPSType";
 
 /**
- * Contains all details about a location
+ * Data transfer object with all details about a location
  */
-export class Location {
+export class LocationDTO {
 
     /**
      * Agglomeration name
@@ -31,12 +31,12 @@ export class Location {
     private address: string;
 
     /**
-     * Location latitude
+     * LocationDTO latitude
      */
     private latitude: number;
 
     /**
-     * Location longitude
+     * LocationDTO longitude
      */
     private longitude: number;
 

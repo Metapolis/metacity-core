@@ -7,5 +7,5 @@ export interface UserDao {
      *
      * @param username username to find
      */
-    findByUsername(username: string): User;
+    findByUsername(username: string): Promise<User> | undefined;
 }

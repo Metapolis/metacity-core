@@ -18,6 +18,12 @@ import { AuthenticationController } from "./controllers/rest/AuthenticationContr
 import * as TypeORM from "typeorm";
 import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
+import { UserDao } from "./persistence/dao/UserDao";
+import { UserDaoImpl } from "./persistence/dao/impl/UserDaoImpl";
+import { UserAuthenticationQueryServiceImpl } from "./services/query/impl/UserAuthenticationQueryServiceImpl";
+import { UserAuthenticationQueryService } from "./services/query/UserAuthenticationQueryService";
+import { IllegalArgumentError } from "./common/exception/IllegalArgumentError";
+import { AccessDeniedError } from "./common/exception/AccessDeniedError";
 
 /**
  * The server.
@@ -61,35 +67,7 @@ export class App {
         this.container = new Container();
 
         // bind all service
-        this.bindQueries();
-        this.bindControllers();
-        this.bindElasticClient();
-        this.initDB();
-
-        // create server
-        const server = new InversifyExpressServer(this.container);
-        server.setConfig((app) => {
-            app.use(BodyParser.urlencoded({
-                extended: true
-            }));
-            app.use(BodyParser.json());
-            // Add static file server to serve angular resources
-            const publicPath = Path.join(__dirname, "../../client/src");
-            this.logger.debug("Static file location: '%s'", publicPath);
-            app.use("/app", Express.static(publicPath));
-            app.use((req, res, next) => {
-                res.status(HTTPStatusCodes.NOT_FOUND);
-                if (/^\/app/.test(req.path)) {
-                    res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
-                    return;
-                }
-                res.type("txt").send();
-            });
-        });
-        this.expressServer = server.build();
-        this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
-        this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
-        this.logger.info("Server launched");
+        this.initModule();
 
         return this.container;
     }
@@ -130,6 +108,7 @@ export class App {
     private bindQueries(): void {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
+        this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
     }
 
     /**
@@ -145,8 +124,9 @@ export class App {
     /**
      * Initialization of data base connection
      */
-    private initDB() {
-        TypeORM.createConnection({
+    private async initModule(): Promise<void> {
+        this.logger.debug("Connect to database");
+        await TypeORM.createConnection({
             autoSchemaSync: true,
             driver: {
                 type: "postgres",
@@ -159,10 +139,80 @@ export class App {
             entities: [
                 __dirname + "/persistence/domain/*.js"
             ],
-        }).then((connection) => {
-            this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(connection.entityManager.getRepository(User));
+        }).then((connection: TypeORM.Connection) => {
+            this.logger.debug("Connexion to database succeed");
+            this.logger.debug("Begin to bind all services");
+            this.bindRepository(connection);
         }).catch((error) => {
             this.logger.error(error);
         });
+        this.bindDao();
+        this.bindQueries();
+        this.bindControllers();
+        this.bindElasticClient();
+        this.createServer();
+
+    }
+
+    /**
+     *
+     */
+    private createServer(): void {
+        const server = new InversifyExpressServer(this.container);
+        server.setConfig((app) => {
+            app.use(BodyParser.urlencoded({
+                extended: true
+            }));
+            app.use(BodyParser.json());
+            // Add static file server to serve angular resources
+            const publicPath = Path.join(__dirname, "../../client/src");
+            this.logger.debug("Static file location: '%s'", publicPath);
+            app.use("/app", Express.static(publicPath));
+            app.use(methodOverride());
+            app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+                if (/^\/app/.test(req.path)) {
+                    res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
+                    return;
+                }
+                next();
+            });
+        });
+        server.setErrorConfig((app) => {
+            app.use((err: Error, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+                if (/^\/api/.test(req.path)) {
+                    this.logger.error("An error occurred on api resources");
+                    if (err instanceof IllegalArgumentError) {
+                        res.status(HTTPStatusCodes.BAD_REQUEST).send({message: err.message});
+                    } else if (err instanceof AccessDeniedError) {
+                        res.status(HTTPStatusCodes.FORBIDDEN).send({message: err.message});
+                    } else {
+                        res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).send({message: err.message});
+                    }
+                }
+                next();
+            });
+        });
+        this.expressServer = server.build();
+        this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
+        this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
+        this.logger.info("Server launched");
+    }
+
+
+    /**
+     * Bind all DAOs
+     */
+    private bindDao(): void {
+        this.logger.debug("Binding DAO");
+        this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
+    }
+
+    /**
+     * Bind all repositories
+     *
+     * @param connection
+     */
+    private bindRepository(connection: TypeORM.Connection): void {
+        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(connection.entityManager.getRepository(User));
     }
 }
