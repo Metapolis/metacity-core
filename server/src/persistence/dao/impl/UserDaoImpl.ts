@@ -21,9 +21,13 @@ export class UserDaoImpl implements UserDao {
     @inject("UserRepository")
     private userRepository: TypeORM.Repository<User>;
 
-
-    public findByUsername(username: string): User {
+    /**
+     * Override
+     */
+    public async findByUsername(username: string): Promise<User> | undefined {
         this.logger.info("Retrieve user with username '%s'", username);
-        return new User();
+        return await this.userRepository.findOne({
+            username: username
+        });
     }
 }
