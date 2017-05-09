@@ -129,12 +129,12 @@ export class App {
         await TypeORM.createConnection({
             autoSchemaSync: true,
             driver: {
-                database: "metacity",
-                host: "localhost",
-                password: "metacity",
-                port: 5432,
+                database: Config.getDatabaseName(),
+                host: Config.getDatabaseHost(),
+                password: Config.getDatabasePassword(),
+                port: Config.getDatabasePort(),
                 type: "postgres",
-                username: "metacity"
+                username: Config.getDatabaseUser()
             },
             entities: [
                 __dirname + "/persistence/domain/*.js"
