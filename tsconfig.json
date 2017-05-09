@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": "server/",
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "target": "es6",
     "lib": ["es6"],
-    "types": ["reflect-metadata"],
+    "types": [
+      "node",
+      "express",
+      "reflect-metadata"
+    ],
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

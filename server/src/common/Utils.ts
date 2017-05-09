@@ -1,5 +1,6 @@
 import * as Winston from "winston";
 import { Config } from "../Config";
+import { IllegalArgumentError } from "./error/IllegalArgumentError";
 
 /**
  * It's an util class
@@ -35,5 +36,28 @@ export class Utils {
                 }),
             ],
         });
+    }
+
+    /**
+     * Check the expression passed, and if it's false throw
+     * an illegal argument error (catch by express to 400)
+     *
+     * @param expression expression to test
+     * @param message message to throw
+     */
+    public static checkArguments(expression: boolean, message?: string) {
+        if (!expression) {
+            throw new IllegalArgumentError(message);
+        }
+    }
+
+    /**
+     * Check if string is null or empty
+     *
+     * @param str string to check
+     * @returns {boolean} true means string is null or empty
+     */
+    public static isNullOrEmpty(str: string): boolean {
+        return !str;
     }
 }

@@ -1,5 +1,5 @@
-import { GPSType } from "../accidentEnums/GPSType";
-import { UnsupportedOperationError } from "../exception/UnsupportedOperationError";
+import { GPSType } from "../enum/accident/GPSType";
+import { UnsupportedOperationError } from "../error/UnsupportedOperationError";
 
 /**
  * Factory use to create GPSType
