@@ -6,6 +6,11 @@
     "document_name_accident": "accident",
     "app_port": 3000,
     "app_host": "localhost",
-    "app_log_level": "debug"
+    "app_log_level": "debug",
+    "database_name": "metacity",
+    "database_user": "metacity",
+    "database_password": "metacity",
+    "database_host": "localhost",
+    "database_port": 5432
   }
 }

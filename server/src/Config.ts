@@ -74,4 +74,49 @@ export class Config {
     public static getDocumentNameAccident(): string {
         return Config.properties.get("config.document_name_accident");
     }
+
+    /**
+     * Get database name
+     *
+     * @returns {string}
+     */
+    public static getDatabaseName(): string {
+        return Config.properties.get("config.database_name");
+    }
+
+    /**
+     * Get database user
+     *
+     * @returns {string}
+     */
+    public static getDatabaseUser(): string {
+        return Config.properties.get("config.database_user");
+    }
+
+    /**
+     * Get database password
+     *
+     * @returns {string}
+     */
+    public static getDatabasePassword(): string {
+        return Config.properties.get("config.database_password");
+    }
+
+    /**
+     * Get database host
+     *
+     * @returns {string}
+     */
+    public static getDatabaseHost(): string {
+        return Config.properties.get("config.database_host");
+    }
+
+    /**
+     * Get database port
+     *
+     * @returns {number}
+     */
+    public static getDatabasePort(): number {
+        return Config.properties.get("config.database_port");
+    }
 }
