@@ -1,5 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
+/**
+ * [Entity description]
+ * @return {[type]} [description]
+ */
 @Entity()
 export class User {
 

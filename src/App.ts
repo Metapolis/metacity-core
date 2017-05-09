@@ -129,12 +129,12 @@ export class App {
         await TypeORM.createConnection({
             autoSchemaSync: true,
             driver: {
-                type: "postgres",
+                database: "metacity",
                 host: "localhost",
-                port: 5432,
-                username: "metacity",
                 password: "metacity",
-                database: "metacity"
+                port: 5432,
+                type: "postgres",
+                username: "metacity"
             },
             entities: [
                 __dirname + "/persistence/domain/*.js"
@@ -155,7 +155,7 @@ export class App {
     }
 
     /**
-     *
+     * [createServer description]
      */
     private createServer(): void {
         const server = new InversifyExpressServer(this.container);
@@ -197,7 +197,6 @@ export class App {
         this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
         this.logger.info("Server launched");
     }
-
 
     /**
      * Bind all DAOs
