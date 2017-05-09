@@ -22,8 +22,8 @@ import { UserDao } from "./persistence/dao/UserDao";
 import { UserDaoImpl } from "./persistence/dao/impl/UserDaoImpl";
 import { UserAuthenticationQueryServiceImpl } from "./services/query/impl/UserAuthenticationQueryServiceImpl";
 import { UserAuthenticationQueryService } from "./services/query/UserAuthenticationQueryService";
-import { IllegalArgumentError } from "./common/exception/IllegalArgumentError";
-import { AccessDeniedError } from "./common/exception/AccessDeniedError";
+import { IllegalArgumentError } from "./common/error/IllegalArgumentError";
+import { AccessDeniedError } from "./common/error/AccessDeniedError";
 
 /**
  * The server.

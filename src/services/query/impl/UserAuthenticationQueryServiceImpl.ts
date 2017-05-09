@@ -7,7 +7,7 @@ import { UserAuthenticationTokenDTO } from "../dto/user/UserAuthenticationTokenD
 import { Labeled } from "../../../common/Labeled";
 import { UserDao } from "../../../persistence/dao/UserDao";
 import { User } from "../../../persistence/domain/User";
-import { AccessDeniedError } from "../../../common/exception/AccessDeniedError";
+import { AccessDeniedError } from "../../../common/error/AccessDeniedError";
 
 /**
  * Implementation of {@link TrafficQueryService}

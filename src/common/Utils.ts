@@ -1,6 +1,6 @@
 import * as Winston from "winston";
 import { Config } from "../Config";
-import { IllegalArgumentError } from "./exception/IllegalArgumentError";
+import { IllegalArgumentError } from "./error/IllegalArgumentError";
 
 /**
  * It's an util class

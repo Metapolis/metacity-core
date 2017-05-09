@@ -45,5 +45,4 @@ export class AuthenticationController implements interfaces.Controller {
             next(e);
         }
     }
-
 }
