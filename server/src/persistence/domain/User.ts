@@ -1,8 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 /**
- * [Entity description]
- * @return {[type]} [description]
+ * Represents a user
  */
 @Entity()
 export class User {
