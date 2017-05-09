@@ -155,7 +155,7 @@ export class App {
     }
 
     /**
-     * [createServer description]
+     * Instatiate a new server with specific configuration
      */
     private createServer(): void {
         const server = new InversifyExpressServer(this.container);

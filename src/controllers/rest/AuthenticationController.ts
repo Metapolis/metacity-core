@@ -33,12 +33,13 @@ export class AuthenticationController implements interfaces.Controller {
     private userAuthenticationQueryService: UserAuthenticationQueryService;
 
     /**
-     * [Post description]
-     * @param  {[type]} "/" [description]
-     * @return {[type]}     [description]
+     * Authentication resources
+     *
+     * @param userToken user credential use to authentication
+     * @param next next express function
      */
     @Post("/")
-    public async authenticate(@RequestParam("login") login: string, @RequestBody() userToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<Labeled> {
+    public async authenticate(@RequestBody() userToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<Labeled> {
         this.logger.debug("Begin authentication");
         // Build DTO
         const userTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();

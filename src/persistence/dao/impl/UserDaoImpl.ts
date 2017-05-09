@@ -19,9 +19,7 @@ export class UserDaoImpl implements UserDao {
     private logger: LoggerInstance = Utils.createLogger(UserDaoImpl.name);
 
     /**
-     * [inject description]
-     * @param  {[type]} "UserRepository" [description]
-     * @return {[type]}                  [description]
+     * User data access
      */
     @inject("UserRepository")
     private userRepository: TypeORM.Repository<User>;
