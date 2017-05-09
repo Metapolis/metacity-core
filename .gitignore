@@ -181,3 +181,5 @@ typings/
 
 .tscache/
 server/**/*.js
+
+.sass-cache/*

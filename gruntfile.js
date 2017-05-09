@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                 options: {
                     style: 'expanded',
                     // tell Sass to look in the Bootstrap stylesheets directory when compiling
-                    loadPath: 'node_modules/bootstrap-sass/assets/stylesheets'
+                    loadPath: 'node_modules/bootstrap/scss'
                 },// Target
                 files: [{
                     expand: true,
