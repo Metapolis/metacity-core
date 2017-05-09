@@ -1,3 +1,8 @@
+/**
+ * [password description]
+ * @param  {[type]} encrypt [description]
+ * @return {[type]}         [description]
+ */
 export class UserAuthenticationToken {
 
     /**

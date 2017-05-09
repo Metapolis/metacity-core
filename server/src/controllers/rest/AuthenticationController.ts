@@ -32,6 +32,11 @@ export class AuthenticationController implements interfaces.Controller {
     @inject("UserAuthenticationQueryService")
     private userAuthenticationQueryService: UserAuthenticationQueryService;
 
+    /**
+     * [Post description]
+     * @param  {[type]} "/" [description]
+     * @return {[type]}     [description]
+     */
     @Post("/")
     public async authenticate(@RequestParam("login") login: string, @RequestBody() userToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<Labeled> {
         this.logger.debug("Begin authentication");
