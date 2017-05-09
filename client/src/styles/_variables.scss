@@ -4,44 +4,22 @@ $alternate-color: #8ec2d7;
 $body-bg: #f4f5f7;
 $black: #000000;
 $white: #fdfffe;
-$gray-dark: #292b2c !default;
-$gray: #464a4c !default;
 $gray-light: #C2C5C6;
-$gray-lighter: #eceeef !default;
-$gray-lightest: #f7f7f9 !default;
-$grid-gutter-width-base: 30px !default;
 // Fonts
 
 $btn-primary-bg:                 $secondary-color;
 $btn-primary-border:             $btn-primary-bg;
 //
 // Font, line-height, and color for body text, headings, and more.
-@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:300,400');
 $font-family-sans-serif: "Open Sans", sans-serif;
 $font-weight-normal: 300;
 // navbar-inverse-color
 $navbar-inverse-color: $white;
 // Breadcrumbs
-$breadcrumb-padding-y: 0.75rem !default;
-$breadcrumb-padding-x: 1rem !default;
-$breadcrumb-item-padding: 0.5rem !default;
 $breadcrumb-bg: $white;
 $breadcrumb-divider-color: $black;
 $breadcrumb-active-color: $black;
 $breadcrumb-divider: ">";
 $border-radius: 0;
 // Cards
-$card-spacer-x: 1.25rem !default;
-$card-spacer-y: 0.75rem !default;
-$card-border-width: 1px !default;
-$card-border-radius: $border-radius !default;
 $card-border-color: $gray-light;
-$card-border-radius-inner: calc(#{$card-border-radius} - #{$card-border-width}) !default;
-$card-cap-bg: $gray-lightest !default;
-$card-bg: $white !default;
-$card-link-hover-color: $white !default;
-$card-img-overlay-padding: 1.25rem !default;
-$card-deck-margin: ($grid-gutter-width-base / 2) !default;
-$card-columns-count: 3 !default;
-$card-columns-gap: 1.25rem !default;
-$card-columns-margin: $card-spacer-y !default;
