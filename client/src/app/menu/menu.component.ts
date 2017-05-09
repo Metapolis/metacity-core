@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Assets }    from '../assets/assets';
+import { Assets }    from '../assets';
+import { Link }      from '../common/link';
 
 @Component({
   selector: 'menu',
@@ -8,4 +9,12 @@ import { Assets }    from '../assets/assets';
 })
 export class MenuComponent  {
   assets = new Assets;
+  navlinks : Link[] = [
+    {src: "sources-et-applications", text:"Sources et Applications"},
+    {src: "nos-services", text:"Nos services"},
+    {src: "developpeurs", text:"Développeurs"},
+    {src: "contact", text:"Contact"},
+    {src: "mon-compte", text:"Mon Compte"},
+    {src: "connexion", text:"Connexion"},
+  ];
 }

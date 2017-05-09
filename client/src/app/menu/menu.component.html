@@ -1,39 +1,17 @@
-<nav>
-  <a routerLink="/" routerLinkActive="active">Home</a>
-  <a routerLink="/graftest" routerLinkActive="active">Graftest</a>
-</nav>
-
 <nav class="navbar navbar-toggleable-sm navbar-inverse bg-primary">
   <div class="container">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-      <img [src]= 'assets.whiteLogo' width="90" height="90" alt="wetacity small logo">
+      <img [src]= 'assets.whiteLogo.src' width="90" height="90" alt="{{assets.whiteLogo.alt}}">
     </a>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a routerLink="/sources-et-applications" routerLinkActive="active" class="nav-link">Sources
-et Applications</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/nos-services" routerLinkActive="active" class="nav-link">Nos
-services</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/developpeurs" routerLinkActive="active" class="nav-link">Développeurs</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/mon-compte" routerLinkActive="active" class="nav-link">Mon Compte</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/connexion" routerLinkActive="active" class="nav-link">Connexion</a>
+        <li *ngFor="let link of navlinks" class="nav-item">
+          <a routerLink={{link.src}} routerLinkActive="active" class="nav-link">{{link.text}}</a>
         </li>
       </ul>
     </div>
@@ -49,6 +27,6 @@ services</a>
     </div>
   </nav>
   <nav class="breadcrumb">
-    <a routerLink="/" routerLinkActive="active" class="breadcrumb-item breadcrumb-home"><img [src]='assets.homeIcon' alt="home"></a>
+    <a routerLink="/" routerLinkActive="active" class="breadcrumb-item breadcrumb-home"><img [src]='assets.homeIcon.src' alt="home"></a>
   </nav>
 </div>

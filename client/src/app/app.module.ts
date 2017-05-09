@@ -11,6 +11,9 @@ import { MenuComponent }  from './menu/menu.component';
 import { GrafTestComponent }  from './graf-test/graf-test.component';
 import { NotFound404Component } from './not-found-404/not-found-404.component';
 import { VisualisationFormComponent } from './menu/visualisation-form/visualisation-form.component';
+import { HomeComponent } from './home/home.component';
+import { Container1Component }  from './home/container-1/container-1.component';
+import { Container2Component }  from './home/container-2/container-2.component';
 
 // Services
 
@@ -25,7 +28,10 @@ import { VisualisationFormComponent } from './menu/visualisation-form/visualisat
     MenuComponent,
     GrafTestComponent,
     NotFound404Component,
-    VisualisationFormComponent
+    VisualisationFormComponent,
+    HomeComponent,
+    Container1Component,
+    Container2Component
    ],
   bootstrap:    [ AppComponent ]
 })
