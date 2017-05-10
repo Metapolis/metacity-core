@@ -14,6 +14,8 @@ import { VisualisationFormComponent } from './menu/visualisation-form/visualisat
 import { HomeComponent } from './home/home.component';
 import { Container1Component }  from './home/container-1/container-1.component';
 import { Container2Component }  from './home/container-2/container-2.component';
+import { LoginComponent } from './login/login.component';
+import { FooterComponent } from './footer/footer.component';
 
 // Services
 
@@ -31,7 +33,9 @@ import { Container2Component }  from './home/container-2/container-2.component';
     VisualisationFormComponent,
     HomeComponent,
     Container1Component,
-    Container2Component
+    Container2Component,
+    LoginComponent,
+    FooterComponent,
    ],
   bootstrap:    [ AppComponent ]
 })

@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GrafTestComponent }  from './graf-test/graf-test.component';
 import { NotFound404Component } from './not-found-404/not-found-404.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'developpeurs', component: NotFound404Component },
   { path: 'contact', component: NotFound404Component },
   { path: 'mon-compte', component: NotFound404Component },
-  { path: 'connexion', component: NotFound404Component }
+  { path: 'connexion', component: LoginComponent }
 ];
 
 @NgModule({
