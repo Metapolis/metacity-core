@@ -16,6 +16,9 @@ import { Container1Component }  from './home/container-1/container-1.component';
 import { Container2Component }  from './home/container-2/container-2.component';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
+import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component';
+import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Services
 
@@ -36,6 +39,9 @@ import { FooterComponent } from './footer/footer.component';
     Container2Component,
     LoginComponent,
     FooterComponent,
+    DbaccidentComponent,
+    DbelectionComponent,
+    DashboardComponent
    ],
   bootstrap:    [ AppComponent ]
 })

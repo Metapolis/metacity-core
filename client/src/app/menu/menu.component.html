@@ -11,7 +11,7 @@
       </ul>
       <ul class="navbar-nav">
         <li *ngFor="let link of navlinks" class="nav-item">
-          <a routerLink={{link.src}} routerLinkActive="active" class="nav-link">{{link.text}}</a>
+          <a routerLink="{{link.src}}" routerLinkActive="active" class="nav-link">{{link.text}}</a>
         </li>
       </ul>
     </div>
@@ -27,6 +27,6 @@
     </div>
   </nav>
   <nav class="breadcrumb">
-    <a routerLink="/" routerLinkActive="active" class="breadcrumb-item breadcrumb-home"><img [src]='assets.homeIcon.src' alt="home"></a>
+    <a routerLink="/" routerLinkActive="active" class="breadcrumb-item breadcrumb-home"><img [src]="assets.homeIcon.src" alt="home"></a>
   </nav>
 </div>

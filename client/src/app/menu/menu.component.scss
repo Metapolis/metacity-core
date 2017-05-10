@@ -1,0 +1,22 @@
+@import "../../styles/_colors";
+
+.navbar-brand img {
+  color: $white;
+}
+
+.breadcrumb {
+  margin-bottom: 0 !important;
+
+  &-item {
+    color: black;
+  }
+
+  &-home {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.subnav {
+  border-bottom: 1px solid $gray-light;
+}

@@ -1,12 +1,9 @@
 /* Load Bootstrap variables */
-@import "../../node_modules/bootstrap/scss/_variables.scss";
+@import "../node_modules/bootstrap/scss/_variables.scss";
+/* Font */
+@import url('//fonts.googleapis.com/css?family=Open+Sans:300,400');
 /* Overwrite variables */
 @import "./styles/_variables.scss";
+
 /* Bootstrap */
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
-
-/* Font */
-@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:300,400');
-
-/* Components */
-// @import "./app/graf-test/graf-test.component.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
