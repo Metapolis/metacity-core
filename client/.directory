@@ -1,0 +1,11 @@
+[Dolphin]
+GroupedSorting=true
+PreviewsShown=true
+SortFoldersFirst=false
+SortOrder=1
+SortRole=date
+Timestamp=2017,5,10,1,22,10
+Version=3
+
+[Settings]
+HiddenFilesShown=true

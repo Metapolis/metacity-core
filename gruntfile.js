@@ -58,7 +58,7 @@ module.exports = function (grunt) {
             },
             client: {
                 files: [{
-                    src: ["./dist/client/\*\*/\*.ts", "!./dist/client/.baseDir.ts", "!./dist/client/\*\*/\*.d.ts", "!./dist/client/src/node_modules/\*\*/*.ts"],
+                    src: ["./dist/client/\*\*/\*.ts", "!./dist/client/.baseDir.ts", "!./dist/client/\*\*/\*.d.ts", "!./dist/client/src/node_modules/\*\*/\*.ts"],
                     dest: "./dist/client/src"
                 }],
                 options: {
@@ -97,8 +97,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask("default", [
         "copy",
-        "sass",
-        "ts"
+        "sass"
+        // "ts"
     ]);
 
 };

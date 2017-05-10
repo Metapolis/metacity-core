@@ -2,6 +2,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }    from '@angular/forms';
 
 
@@ -21,6 +22,7 @@ import { Container2Component }  from './home/container-2/container-2.component';
   imports:      [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     FormsModule
   ],
   declarations: [

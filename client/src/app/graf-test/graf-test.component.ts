@@ -4,7 +4,7 @@ import { geo } from './map'
 @Component({
   selector: 'my-graftest',
   templateUrl: './graf-test.component.html',
-  styleUrls : ['./graf-test.component.css']
+  styleUrls : ['./graf-test.component.scss']
 })
 
 export class GrafTestComponent {
