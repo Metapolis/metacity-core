@@ -2,14 +2,12 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Import the components bellow
-// Ex : import { HeroesComponent }      from './heroes.component';
 import { GrafTestComponent }  from './graf-test/graf-test.component';
 import { NotFound404Component } from './not-found-404/not-found-404.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  // Ex : { path: 'heroes',     component: HeroesComponent }
   { path: 'home', component: HomeComponent },
   { path: 'graftest', component: GrafTestComponent },
   { path: 'sources-et-applications', component: NotFound404Component },
