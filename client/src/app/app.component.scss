@@ -1,4 +1,4 @@
-@import "../_colors";
+@import "../_variables";
 
 body > .container {
   padding: 45px 15px 45px;
@@ -38,6 +38,7 @@ code {
   background-color: none;
 }
 
+
 canvas {
   position: fixed;
   top: 0;
@@ -46,7 +47,6 @@ canvas {
   height:  100%;
   z-index : -1000;
 }
-
 // endpoint
 .input-group-addon {
   ￼color: inherit !important;
@@ -57,7 +57,6 @@ button#search {
   ￼color: $white;
   ￼background-color: #8b343e;
 }
-
 // customization
 .input-group-addon {
   ￼color: inherit !important;
