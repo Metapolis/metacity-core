@@ -8,7 +8,11 @@
         <div id="legend">
           <legend class="">Inscription</legend>
         </div>
-        <div class="card-text col-md-6">En s’inscrivant sur la plateforme MetaCity vous aurez accès à des jeux de données et leur visualisation graphique </div>
+        <div class="row">
+          <div class="card-text col-md-6 offset-md-3">
+            En s’inscrivant sur la plateforme MetaCity vous aurez accès à des jeux de données et leur visualisation graphique
+          </div>
+        </div>
         <div class="control-group">
           <div class="control-group">
             <!-- Username -->
@@ -40,11 +44,11 @@
               <input type="text" id="password_confirmation" name="password_confirmation" placeholder="Confirmation du mot de passe" class="input-xlarge col-md-6">
             </div>
           </div>
-          <div class="control-group ">
-            <!-- user role -->
-            <div class="form-group col-md-6 justify-content-center">
-              <label for="sel1" class="col-md-6">Votre rôle utilisateur</label>
-              <select class="form-control col-md-6" id="sel1">
+          <!-- user role -->
+            <div class="form-group row">
+              <label for="sel1" class="col-md-4 col-form-label">Votre rôle utilisateur</label>
+              <div class="col-md-3">
+                <select class="form-control" id="sel1">
                   <option>Citoyens</option>
                   <option>Élu de la collectivité</option>
                   <option>Agent de la collectivité</option>
