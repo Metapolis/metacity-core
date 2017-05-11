@@ -1,9 +1,8 @@
 /* Load Bootstrap variables */
 @import "../node_modules/bootstrap/scss/_variables.scss";
+
 /* Font */
 @import url('//fonts.googleapis.com/css?family=Open+Sans:300,400');
-/* Overwrite variables */
-@import "./styles/_variables.scss";
 
-/* Bootstrap */
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import 'variables';
+@import '../node_modules/bootstrap/scss/bootstrap';

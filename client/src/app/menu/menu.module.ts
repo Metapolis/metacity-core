@@ -1,9 +1,10 @@
 // Modules
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule }       from '@angular/common';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // Components
 import { VisualisationFormComponent } from './visualisation-form/visualisation-form.component';
@@ -12,8 +13,9 @@ import { MenuComponent } from './menu.component';
 // Services
 
 @NgModule({
-  imports:      [
+  imports: [
     BrowserModule,
+    CollapseModule.forRoot(),
     CommonModule,
     AppRoutingModule,
     FormsModule,
@@ -21,7 +23,7 @@ import { MenuComponent } from './menu.component';
   declarations: [
     VisualisationFormComponent,
     MenuComponent,
-   ],
+  ],
   exports: [
     MenuComponent,
     VisualisationFormComponent,

@@ -1,5 +1,6 @@
 // Modules
 import { NgModule }      from '@angular/core';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule }    from '@angular/forms';
@@ -22,6 +23,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   imports:      [
     BrowserModule,
+    BsDropdownModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     HomeModule,
