@@ -10,11 +10,12 @@ import { Link }      from '../common/link';
 export class MenuComponent {
   assets = new Assets;
   navlinks: Link[] = [
-    { src: 'sources-et-applications', text: 'Sources et Applications' },
-    { src: 'nos-services', text: 'Nos services' },
-    { src: 'developpeurs', text: 'Développeurs' },
-    { src: 'contact', text: 'Contact' },
-    { src: 'mon-compte', text: 'Mon Compte' },
+    // { src: 'sources-et-applications', text: 'Sources et Applications' },
+    // { src: 'nos-services', text: 'Nos services' },
+    // { src: 'developpeurs', text: 'Développeurs' },
+    // { src: 'contact', text: 'Contact' },
+    // { src: 'mon-compte', text: 'Mon Compte' },
+    { src: 'register', text: 'Inscription' },
     { src: 'connexion', text: 'Connexion' },
   ];
 

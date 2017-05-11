@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component';
 import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RegisterComponent } from './register/register.component';
 
 
 // Services
@@ -37,7 +38,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     FooterComponent,
     DbaccidentComponent,
     DbelectionComponent,
-    DashboardComponent
+    DashboardComponent,
+    RegisterComponent
 
    ],
   bootstrap:    [ AppComponent ]
