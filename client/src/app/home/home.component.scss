@@ -1,0 +1,45 @@
+@import "../../_colors";
+
+.jdd {
+  img{
+    display: block;
+    float: right;
+    height: 30px;
+    width: 30px;
+  }
+  .block_jdd {
+    background-color: $brand-primary;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    margin-right: 7px;
+    margin-top: 12px;
+    box-shadow: 3px 6px 20px 4px rgba(0, 0, 0, 0.15);
+    position: relative;
+
+  }
+    p, h6 {color: $white;
+    }
+
+    p{
+      font-size: 10px;
+      margin-left: 10px;
+      position: absolute;
+      bottom: 0;
+    }
+
+    h6 {
+      position: absolute;
+      transform: translate(0%,80%);
+
+    }
+
+}
+
+.definitions  {
+  .card-block   {
+  background-color: $brand-primary;
+  color : $white;
+  text-align: center;
+  }
+}
