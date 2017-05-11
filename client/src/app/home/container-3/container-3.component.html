@@ -1,0 +1,16 @@
+<div class="container definitions">
+  <div class="row">
+    <div *ngFor="let block of blocks" class="col-md-4">
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title">{{block.title}}</h4>
+        </div>
+        <div class="card-text">
+          <p>
+            {{block.text}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
