@@ -7,6 +7,8 @@ import { NotFound404Component } from './not-found-404/not-found-404.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component';
+import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,8 +19,10 @@ const routes: Routes = [
   // { path: 'developpeurs', component: NotFound404Component },
   // { path: 'contact', component: NotFound404Component },
   // { path: 'mon-compte', component: NotFound404Component },
+  { path: 'accidents', component: DbaccidentComponent },
+  { path: 'elections', component: DbelectionComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'connexion', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({
