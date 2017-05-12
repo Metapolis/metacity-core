@@ -18,6 +18,7 @@ import { DbelectionComponent } from './dashboard/dbelection/dbelection.component
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AnimatedBackgroundComponent } from './animated-background/animated-background.component';
+import { OverviewComponent } from './overview/overview.component';
 
 
 // Services
@@ -41,7 +42,8 @@ import { AnimatedBackgroundComponent } from './animated-background/animated-back
     DbelectionComponent,
     DashboardComponent,
     RegisterComponent,
-    AnimatedBackgroundComponent
+    AnimatedBackgroundComponent,
+    OverviewComponent
 
    ],
   bootstrap:    [ AppComponent ]

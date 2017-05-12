@@ -1,0 +1,88 @@
+@import "../../_variables";
+
+html, body {
+  width: 100%;
+}
+
+.with_border_left {
+  box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
+  border-color: $card-border-color;
+}
+
+.with_border_right {
+  box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
+  border-color: $card-border-color;
+  background-color: $white;
+    h2 {
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      margin-top: 80px;
+    }
+    hr {
+      width: 100px;
+    }
+}
+
+.without_padding {
+  height: 100vh;
+  width: 100vw !important;
+  padding: 0px 0px 0px 0px !important;
+}
+
+.div_without_padding {
+  height: 100vh;
+  padding: 0px 0px 0px 0px !important;
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: $black;
+    }
+    a:hover {
+      font-style: none;
+    }
+
+}
+
+.accidents {
+  img {
+    width: 100%;
+    margin-top: 100px;
+  }
+  .dataviz {
+    background-color: $white;
+    z-index: -1000;
+  }
+}
+
+.title {
+  background-color: $brand-primary;
+  height: 150px;
+}
+
+.choice {
+  height: 80px;
+  background-color: #DBEAF0;
+}
+
+.button_dataviz {
+  width: 50px;
+  height: 50px;
+  background-color: $body-bg;
+  border-color: $gray-light;
+  border-radius: 100px;
+  border: 2px;
+  display: inline-block;
+
+
+    img {
+      z-index: 1000;
+      width: 25px;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+}
+
+.button_text {
+  margin-left: 25px;
+  display: inline-block;
+}

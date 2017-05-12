@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component';
 import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
+import { OverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'elections', component: DbelectionComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'connexion', component: LoginComponent },
+  { path: 'overview', component: OverviewComponent },
 ];
 
 @NgModule({
