@@ -17,6 +17,7 @@ import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component
 import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
+import { AnimatedBackgroundComponent } from './animated-background/animated-background.component';
 
 
 // Services
@@ -39,7 +40,8 @@ import { RegisterComponent } from './register/register.component';
     DbaccidentComponent,
     DbelectionComponent,
     DashboardComponent,
-    RegisterComponent
+    RegisterComponent,
+    AnimatedBackgroundComponent
 
    ],
   bootstrap:    [ AppComponent ]
