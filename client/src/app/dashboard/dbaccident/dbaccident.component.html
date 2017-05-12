@@ -1,83 +1,83 @@
-  <div class="container">
-    <div class="row">
-      <div class="col-md-7">
-        <div class="card">
-          <div class="card-block" id="no_padding">
-            <h4 class="card-title" id="lacarte">La carte</h4>
-            <img src="/assets/img/accidents_carte.png" alt="home" id="carte">
-            <div class=" rounded_buttons text-center">
-              <button type="button" class="btn btn-primary btn-lg button_map">Intéragir avec la carte</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="card">
-          <div class="card-block">
-            <h4 class="card-title">Les analyses</h4>
-          </div>
-          <div class="card-text"><img src="/assets/img/victimes.png" alt="home" id="analyses">
-          </div>
-          <div class="dataviz_buttons">
-            <button type="button" class="btn btn-primary btn-lg">Nombre</button>
-            <button type="button" class="btn btn-primary btn-lg">Accidents</button>
-            <button type="button" class="btn btn-primary btn-lg">Victimes</button>
-            <button type="button" class="btn btn-primary btn-lg">Endroits</button>
-          </div>
-          <div class="rounded_buttons text-center">
-            <button type="button" class="btn btn-primary btn-lg">Visualiser toutes les analyses</button>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-block" id="no_padding">
+          <h4 class="card-title" id="lacarte">La carte</h4>
+          <img [src]='assets.accidentsCarte.src' alt="{{assets.accidentsCarte.alt}}" id="carte">
+          <div class=" rounded_buttons text-center">
+            <button type="button" class="btn btn-primary btn-lg button_map">Intéragir avec la carte</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="container ">
-    <div class="row">
-      <div class="col-md-5">
-        <div class="card">
-          <div class="card-block">
-            <h4 class="card-title">Mots clés</h4>
-            <img src="/assets/img/motsclés.jpeg" alt="home" id="motscles_dashboard">
-          </div>
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title">Les analyses</h4>
         </div>
-        <div class="card sources">
-          <div class="card-block">
-            <h4 class="card-title">Sources</h4>
-            <a href="#">www.datagouv.fr</a>
-          </div>
+        <div class="card-text">
+          <img [src]='assets.victimes.src' alt="{{assets.victimes.alt}}" id="analyses">
+        </div>
+        <div class="dataviz_buttons">
+          <button type="button" class="btn btn-primary btn-lg">Nombre</button>
+          <button type="button" class="btn btn-primary btn-lg">Accidents</button>
+          <button type="button" class="btn btn-primary btn-lg">Victimes</button>
+          <button type="button" class="btn btn-primary btn-lg">Endroits</button>
+        </div>
+        <div class="rounded_buttons text-center">
+          <button type="button" class="btn btn-primary btn-lg">Visualiser toutes les analyses</button>
         </div>
       </div>
-      <div class="col-md-7">
-        <div class="card">
-          <div class="card-block jdd">
-            <h4 class="card-title">Jeux de données utilisés</h4>
-            <div id="jdd_dahboard">
-              <div class="row">
-                <div class="block_jdd">
-                  <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                  <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-                </div>
-                <div class="block_jdd">
-                  <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                  <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-                </div>
-                <div class="block_jdd" id="color1">
-                  <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                  <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-                </div>
-                <div class="block_jdd" id="color2">
-                  <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                  <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-                </div>
-                <div class="block_jdd" id="color2">
-                  <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                  <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-                </div>
-                <div class="block_jdd" id="color2">
-                  <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                  <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-                </div>
+    </div>
+  </div>
+</div>
+
+<div class="container ">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title">Mots clés</h4>
+          <img [src]='assets.wordCloud.src' alt="{{assets.wordCloud.alt}}" id="motscles_dashboard">
+        </div>
+      </div>
+      <div class="card sources">
+        <div class="card-block">
+          <h4 class="card-title">Sources</h4>
+          <a href="#">www.datagouv.fr</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-block jdd">
+          <h4 class="card-title">Jeux de données utilisés</h4>
+          <div id="jdd_dahboard">
+            <div class="row">
+              <div class="block_jdd">
+                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
+                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
+              </div>
+              <div class="block_jdd">
+                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
+                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
+              </div>
+              <div class="block_jdd" id="color1">
+                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
+                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
+              </div>
+              <div class="block_jdd" id="color2">
+                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
+                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
+              </div>
+              <div class="block_jdd" id="color2">
+                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
+                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
+              </div>
+              <div class="block_jdd" id="color2">
+                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
+                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
               </div>
             </div>
           </div>
@@ -85,3 +85,4 @@
       </div>
     </div>
   </div>
+</div>

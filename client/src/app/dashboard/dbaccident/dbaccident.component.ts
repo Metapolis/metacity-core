@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Assets } from '../../assets';
 
 @Component({
   selector: 'app-dbaccident',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dbaccident.component.scss', '../dashboard.component.scss']
 })
 export class DbaccidentComponent implements OnInit {
+  assets = new Assets;
 
   constructor() { }
 
