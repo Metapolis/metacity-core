@@ -19,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AnimatedBackgroundComponent } from './animated-background/animated-background.component';
 import { OverviewComponent } from './overview/overview.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 
 // Services
@@ -43,7 +44,8 @@ import { OverviewComponent } from './overview/overview.component';
     DashboardComponent,
     RegisterComponent,
     AnimatedBackgroundComponent,
-    OverviewComponent
+    OverviewComponent,
+    PieChartComponent
 
    ],
   bootstrap:    [ AppComponent ]
