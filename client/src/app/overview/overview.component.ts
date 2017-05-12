@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Assets } from '../assets';
 
 @Component({
   selector: 'app-overview',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
+  assets = new Assets;
 
   constructor() { }
 

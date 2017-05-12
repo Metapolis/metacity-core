@@ -11,4 +11,8 @@ export class Assets {
   presidentMap: Img = {src: "../assets/img/president_map.png", alt: ""};
   presidentGraph: Img = {src: "../assets/img/president_graph.png", alt: ""};
   legendGraph: Img = {src: "../assets/img/legend_graph.png", alt: ""};
+  home: Img = {src: "../assets/img/home.svg", alt: ""};
+  code: Img = {src: "../assets/img/code.svg", alt: ""};
+  search: Img = {src: "../assets/img/search.svg", alt: ""};
+  worldwide: Img = {src: "../assets/img/worldwide.svg", alt: ""};
 }
