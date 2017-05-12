@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-block" id="no_padding">
           <h4 class="card-title" id="lacarte">La carte</h4>
-          <img src="/assets/img/president_map.png" alt="home" id="carte">
+          <img [src]='assets.presidentMap.src' alt="{{assets.presidentMap.alt}}" class="carte">
           <div class=" rounded_buttons text-center">
             <button type="button" class="btn btn-primary btn-lg button_map">Intéragir avec la carte</button>
           </div>
@@ -21,9 +21,11 @@
         <div class="card-block">
           <h4 class="card-title">Les analyses</h4>
         </div>
-        <div class="card-text"><img src="/assets/img/president_graph.png" alt="home" id="analyses">
+        <div class="card-text">
+          <img [src]='assets.presidentGraph.src' alt="{{assets.presidentGraph.alt}}" id="analyses">
         </div>
-        <div class="card-text"><img src="/assets/img/legend_graph.png" alt="home" id="legend">
+        <div class="card-text">
+          <img [src]='assets.legendGraph.src' alt="{{assets.legendGraph.alt}}" class="legend">
         </div>
         <div class="rounded_buttons text-center">
           <button type="button" class="btn btn-primary btn-lg">Visualiser toutes les analyses</button>

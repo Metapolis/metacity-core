@@ -8,4 +8,7 @@ export class Assets {
   accidentsCarte: Img = {src: "../assets/img/accidents_carte.png", alt: "accidents map"};
   victimes: Img = {src: "../assets/img/victimes.png", alt: "victimes"};
   wordCloud: Img = {src: "../assets/img/motsclés.jpeg", alt: "word cloud "};
+  presidentMap: Img = {src: "../assets/img/president_map.png", alt: ""};
+  presidentGraph: Img = {src: "../assets/img/president_graph.png", alt: ""};
+  legendGraph: Img = {src: "../assets/img/legend_graph.png", alt: ""};
 }
