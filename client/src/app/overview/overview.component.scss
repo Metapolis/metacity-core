@@ -9,6 +9,7 @@
   box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
   border-color: $card-border-color;
   background-color: $white;
+  z-index: 1;
 
   h2 {
     font-size: 20px;
@@ -35,10 +36,12 @@
     display: inline-block;
     margin-top: 20px;
     color: $black;
+    text-decoration: none;
   }
 
   a:hover {
     font-style: none;
+    color: $brand-primary;
   }
 }
 
@@ -50,18 +53,22 @@
 
   .dataviz {
     background-color: $white;
-    z-index: -1000;
   }
 }
 
 .title {
   background-color: $brand-primary;
+  color: $white;
+  font-weight: 500;
   height: 150px;
+  line-height: 150px;
+  text-align: center;
 }
 
 .choice {
-  height: 80px;
-  background-color: #DBEAF0;
+  margin-top: 45px;
+  // height: 80px;
+  // background-color: #DBEAF0;
 }
 
 .button_dataviz {
@@ -74,7 +81,6 @@
   display: inline-block;
 
   img {
-    z-index: 1000;
     width: 25px;
     margin-left: 10px;
     margin-top: 10px;

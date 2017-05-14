@@ -11,42 +11,43 @@ export class PieChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.testDraw();
+    this.draw();
   }
 
-  public testDraw() {
-    const chart = new d3pie('test',
+  public draw() {
+    const chart = new d3pie('pieChart',
       {
         header: {
           title: {
-            text: '',
+            text: 'Victimes d\'accidents de la route a la Rochelle 2015',
             color: '#333333',
-            fontSize: 18,
-            font: 'arial'
+            fontSize: 24,
+            font: 'open sans'
           },
           subtitle: {
+            text: '(source: ministere de l\'interieur)',
             color: '#666666',
-            fontSize: 14,
-            font: 'arial'
+            fontSize: 12,
+            font: 'open sans'
           },
           location: 'top-center',
-          titleSubtitlePadding: 8
+          titleSubtitlePadding: 9
         },
         footer: {
           text: '',
           color: '#666666',
           fontSize: 14,
-          font: 'arial',
+          font: 'open sans',
           location: 'left'
         },
         size: {
-          canvasHeight: 500,
-          canvasWidth: 500,
+          canvasHeight: 590,
+          canvasWidth: 590,
           pieInnerRadius: 0,
           pieOuterRadius: null
         },
         data: {
-          sortOrder: 'none',
+          sortOrder: 'value-desc',
           smallSegmentGrouping: {
             enabled: false,
             value: 1,
@@ -89,18 +90,18 @@ export class PieChartComponent implements OnInit {
           },
           mainLabel: {
             color: '#333333',
-            font: 'arial',
+            font: 'open sans',
             fontSize: 10
           },
           percentage: {
             color: '#dddddd',
-            font: 'arial',
+            font: 'open sans',
             fontSize: 10,
             decimalPlaces: 0
           },
           value: {
             color: '#cccc44',
-            font: 'arial',
+            font: 'open sans',
             fontSize: 10
           },
           lines: {
@@ -115,7 +116,7 @@ export class PieChartComponent implements OnInit {
             speed: 1000
           },
           pullOutSegmentOnClick: {
-            effect: 'bounce', // none / linear / bounce / elastic / back
+            effect: 'none', // none / linear / bounce / elastic / back
             speed: 300,
             size: 10
           },
@@ -133,7 +134,7 @@ export class PieChartComponent implements OnInit {
             backgroundOpacity: 0.5,
             color: '#efefef',
             borderRadius: 2,
-            font: 'arial',
+            font: 'open sans',
             fontSize: 10,
             padding: 4
           }
@@ -181,98 +182,4 @@ export class PieChartComponent implements OnInit {
         }
       });
   }
-
-  public draw() {
-    // const pie = new d3pie('pieChart',
-    //   {
-    //     'header': {
-    //       'title': {
-    //         'text': 'Victimes d\'accidents de la route a la Rochelle 2015',
-    //         'fontSize': 24,
-    //         'font': 'open sans'
-    //       },
-    //       'subtitle': {
-    //         'text': '(source: ministere de l\'interieur)',
-    //         'color': '#999999',
-    //         'fontSize': 12,
-    //         'font': 'open sans'
-    //       },
-    //       'titleSubtitlePadding': 9
-    //     },
-    //     'footer': {
-    //       'color': '#999999',
-    //       'fontSize': 10,
-    //       'font': 'open sans',
-    //       'location': 'bottom-left'
-    //     },
-    //     'size': {
-    //       'canvasWidth': 590,
-    //       'pieOuterRadius': '90%'
-    //     },
-    //     'data': {
-    //       'sortOrder': 'value-desc',
-    //       'content': [
-    //         {
-    //           'label': 'Tues',
-    //           'value': 1,
-    //           'color': '#762222'
-    //         },
-    //         {
-    //           'label': 'Blesse(s) grave(s)',
-    //           'value': 9,
-    //           'color': '#cd2445'
-    //         },
-    //         {
-    //           'label': 'Blesse(s) leger(s)',
-    //           'value': 45,
-    //           'color': '#f0793e'
-    //         },
-    //         {
-    //           'label': 'Indemne(s)',
-    //           'value': 45,
-    //           'color': '#f5c2de'
-    //         }
-    //       ]
-    //     },
-    //     'labels': {
-    //       'outer': {
-    //         'pieDistance': 32
-    //       },
-    //       'inner': {
-    //         'hideWhenLessThanPercentage': 3
-    //       },
-    //       'mainLabel': {
-    //         'fontSize': 11
-    //       },
-    //       'percentage': {
-    //         'color': '#ffffff',
-    //         'decimalPlaces': 0
-    //       },
-    //       'value': {
-    //         'color': '#adadad',
-    //         'fontSize': 11
-    //       },
-    //       'lines': {
-    //         'enabled': true
-    //       },
-    //       'truncation': {
-    //         'enabled': true
-    //       }
-    //     },
-    //     'effects': {
-    //       'pullOutSegmentOnClick': {
-    //         'effect': 'linear',
-    //         'speed': 400,
-    //         'size': 8
-    //       }
-    //     },
-    //     'misc': {
-    //       'gradient': {
-    //         'enabled': true,
-    //         'percentage': 100
-    //       }
-    //     }
-    //   });
-  }
-
 }
