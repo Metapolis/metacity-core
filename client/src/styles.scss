@@ -1,21 +1,23 @@
 /* Load Bootstrap variables */
 @import "../node_modules/bootstrap/scss/_variables.scss";
-
 /* Font */
 @import "./src/assets/fonts/fonts.scss";
-
 @import 'variables';
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-.container {
-  padding: 45px 15px 45px;
-  ul {
-    list-style: none;
-  }
-  li {
-    margin-bottom: 5px;
-    color: $black;
-    font-size: 13px;
+#content {
+  .container {
+    margin: 45px 15px;
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 5px;
+      color: $black;
+      font-size: 13px;
+    }
   }
 }
 
