@@ -69,14 +69,25 @@
 
 .choice {
 
-  // height: 80px;
-  // background-color: #DBEAF0;
-  //
+  &-title {
+    background-color: #DBEAF0;
+    padding: 20px 0 20px;
+  }
+
+  &-content {
+    padding: 40px 20px 40px;
+
+    button {
+      margin-bottom: 15px;
+    }
+  }
+
   button {
     border-radius: 45px;
     background-color: $white;
     color: $black;
     border-color: $gray-light;
+    padding: 12px 30px 12px;
 
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     transition-delay: 0.2s;
@@ -93,15 +104,6 @@
       box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
       transition-delay: 0s;
     }
-  }
-
-  &-title {
-    background-color: #DBEAF0;
-    padding: 20px 0 20px;
-  }
-
-  &-content {
-    margin-top: 45px;
   }
 }
 
