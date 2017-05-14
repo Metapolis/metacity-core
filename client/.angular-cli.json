@@ -22,7 +22,10 @@
         "styles.scss",
         "../node_modules/font-awesome/scss/font-awesome.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/d3/build/d3.js",
+        "../node_modules/d3pie/d3pie/d3pie.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

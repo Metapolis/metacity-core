@@ -23,7 +23,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "d3": "^4.8.0",
-    "d3pie": "^0.1.9",
+    "d3pie": "github:benkeen/d3pie",
     "font-awesome": "^4.7.0",
     "gsap": "^1.19.1",
     "leaflet": "^1.0.3",
