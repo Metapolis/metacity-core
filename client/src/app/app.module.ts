@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule }    from '@angular/forms';
 import { HomeModule }     from './home/home.module';
 import { MenuModule }     from './menu/menu.module';
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 
 // Components
 import { AppComponent }  from './app.component';
@@ -21,6 +22,8 @@ import { AnimatedBackgroundComponent } from './animated-background/animated-back
 import { OverviewComponent } from './overview/overview.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { MapComponent } from './map/map.component';
+import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
+import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
 
 
 // Services
@@ -32,7 +35,8 @@ import { MapComponent } from './map/map.component';
     AppRoutingModule,
     FormsModule,
     HomeModule,
-    MenuModule
+    MenuModule,
+    LeafletModule
   ],
   declarations: [
     AppComponent,
@@ -47,7 +51,9 @@ import { MapComponent } from './map/map.component';
     AnimatedBackgroundComponent,
     OverviewComponent,
     PieChartComponent,
-    MapComponent
+    MapComponent,
+    PieOverviewComponent,
+    MapOverviewComponent
 
    ],
   bootstrap:    [ AppComponent ]

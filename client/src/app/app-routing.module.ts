@@ -9,7 +9,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component';
 import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
-import { OverviewComponent } from './overview/overview.component';
+import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
+import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,7 +26,8 @@ const routes: Routes = [
   { path: 'elections', component: DbelectionComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'connexion', component: LoginComponent },
-  { path: 'overview', component: OverviewComponent },
+  { path: 'accidents/analyse', component: PieOverviewComponent },
+  { path: 'accidents/carte', component: MapOverviewComponent },
 ];
 
 @NgModule({
