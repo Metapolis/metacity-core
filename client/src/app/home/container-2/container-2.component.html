@@ -2,16 +2,16 @@
 <div class="container">
   <div class="card">
     <div class="card-block">
-      <h2 class="card-title text-left">Les thématiques</h2>
+      <h4 class="card-title text-left">Les thématiques</h4>
       <div class="row">
         <div class="col-md-4">
           <ul class="text-center">
               <a *ngFor="let link of thematiqueslinks1" href="{{link.src}}">
-                <li>{{link.text}}</li>
+                <li><h6>{{link.text}}</h6></li>
               </a>
           </ul>
         </div>
-        <div class="col-md-4 justify-content-center">
+        <div class="col-md-4 d-inline-flex justify-content-center">
           <img class="card-img " [src]=assets.thematiques.src width="208" height="208" alt="{{assets.thematiques.alt}}">
         </div>
         <div class="col-md-4">
