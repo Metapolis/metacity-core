@@ -54,7 +54,6 @@ import { MapOverviewComponent } from './overview/map-overview/map-overview.compo
     MapComponent,
     PieOverviewComponent,
     MapOverviewComponent
-
    ],
   bootstrap:    [ AppComponent ]
 })
