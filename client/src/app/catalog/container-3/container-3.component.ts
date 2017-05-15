@@ -5,6 +5,7 @@ import { Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'container-3',
   templateUrl: './container-3.component.html',
+  styleUrls: ['../catalog.component.scss']
 })
 export class Container3Component implements OnInit {
    constructor(private _router: Router) {}

@@ -1,3 +1,4 @@
+@import "../../_colors";
 
 #nuage {
  width: 680px;
@@ -32,5 +33,132 @@
     height: 35px;
     display: inline-block;
     float: left;
+  }
+}
+
+/**/
+
+#motscles_dashboard {
+  width: 400px;
+}
+
+#jdd_dashboard {
+  margin-left: 300px;
+}
+
+.sources {
+  margin-top: 38px;
+}
+
+
+.dataviz_buttons {
+  margin-bottom: 1.5em;
+  button {
+
+        font-size: 7px;
+        width: 107px;
+    background-color: $white;
+    color: $brand-primary;
+    border-color:$brand-primary ;
+    border-radius: 25px;
+
+
+  }
+  button:hover{
+
+    background-color: $brand-primary;
+    border-color: $brand-primary;
+  }
+}
+
+#color1 {
+  background-color: #67A5B3;
+}
+
+#color2 {
+  background-color: #AFD3DF;
+}
+
+#color3 {
+  background-color: #67A5B3;
+}
+
+#analyses {
+  width: 365px;
+}
+
+#carte {
+  width: 632px;
+  padding-bottom: 1.25em;
+}
+
+#no_padding {
+  padding: 0em;
+}
+
+#lacarte {
+  padding: 1.25em;
+}
+
+.rounded_buttons {
+  button {
+  font-size: 10px;
+border-radius: 35px;
+margin-bottom: 1.5em;
+}
+}
+
+.button_map {
+    margin-top: 10px;
+    margin-bottom: 37px !important;
+  }
+
+  #legend {
+    width : 110px;
+  }
+
+/**/
+
+.jdd {
+  img{
+    display: block;
+    float: right;
+    height: 30px;
+    width: 30px;
+  }
+  .block_jdd {
+    background-color: $brand-primary;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    margin-right: 7px;
+    margin-top: 12px;
+    box-shadow: 3px 6px 20px 4px rgba(0, 0, 0, 0.15);
+    position: relative;
+
+  }
+    p, h6 {color: $white;
+    }
+
+    p{
+      font-size: 10px;
+      margin-left: 10px;
+      position: absolute;
+      bottom: 0;
+    }
+
+    h6 {
+      position: absolute;
+      transform: translate(0%,80%);
+
+    }
+
+}
+
+.definitions  {
+  .card-block   {
+  background-color: $brand-primary;
+  color : $white;
+  text-align: center;
   }
 }
