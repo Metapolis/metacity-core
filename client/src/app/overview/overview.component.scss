@@ -69,14 +69,13 @@
 }
 
 .choice {
-
   &-title {
     background-color: #DBEAF0;
-    padding: 20px 0 20px;
+    padding: 20px 0;
   }
 
   &-content {
-    padding: 40px 20px 40px;
+    padding: 40px 20px;
 
     button {
       margin-bottom: 15px;
@@ -88,14 +87,14 @@
     background-color: $white;
     color: $black;
     border-color: $gray-light;
-    padding: 12px 30px 12px;
-
+    padding: 12px 30px;
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     transition-delay: 0.2s;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 
     &:hover {
       background-color: $brand-primary;
+      transition: background-color 700ms linear;
       color: $white;
     }
 
@@ -109,22 +108,35 @@
 }
 
 .button_dataviz {
-  width: 50px;
-  height: 50px;
-  background-color: $body-bg;
-  border-color: $gray-light;
-  border-radius: 100px;
-  border: 2px;
-  display: inline-block;
 
-  img {
-    width: 25px;
-    margin-left: 10px;
-    margin-top: 10px;
+  &:hover {
+    .button_dataviz_icon {
+      background-color: $brand-primary;
+      transition: background-color 700ms linear;
+
+      img {
+        filter: invert(100%);
+      }
+    }
   }
-}
 
-.button_text {
-  margin-left: 25px;
-  display: inline-block;
+  &_icon {
+    width: 50px;
+    height: 50px;
+    background-color: $body-bg;
+    border-radius: 100px;
+    border: 2px solid $gray-light;
+    display: inline-block;
+
+    img {
+      width: 25px;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+  }
+
+  &_text {
+    margin-left: 25px;
+    display: inline-block;
+  }
 }
