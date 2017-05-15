@@ -3,22 +3,26 @@
   <div class="card">
     <div class="card-block">
       <h4 class="card-title text-left">Les thématiques</h4>
-      <div class="row">
+      <div class="card-text row">
         <div class="col-md-4">
-          <ul class="text-center">
-              <a *ngFor="let link of thematiqueslinks1" href="{{link.src}}">
-                <li><h6>{{link.text}}</h6></li>
-              </a>
+          <ul class="text-center space-element">
+            <a *ngFor="let link of thematiqueslinks1" href="{{link.src}}">
+              <li>
+                <h6>{{link.text}}</h6>
+              </li>
+            </a>
           </ul>
         </div>
         <div class="col-md-4 d-inline-flex justify-content-center">
           <img class="card-img " [src]=assets.thematiques.src width="208" height="208" alt="{{assets.thematiques.alt}}">
         </div>
         <div class="col-md-4">
-          <ul class="text-center">
-              <a *ngFor="let link of thematiqueslinks2" href="{{link.src}}">
-                <li>{{link.text}}</li>
-              </a>
+          <ul class="text-center space-element">
+            <a *ngFor="let link of thematiqueslinks2" href="{{link.src}}">
+              <li>
+                <h6>{{link.text}}</h6>
+              </li>
+            </a>
           </ul>
         </div>
       </div>
