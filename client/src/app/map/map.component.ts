@@ -17,6 +17,19 @@ export class MapComponent implements OnInit {
     center: L.latLng({ lat: 46.1621, lng: -1.1980 })
   };
 
+  onMapReady(map: L.Map) {
+    const layer = L.marker([46.16800, -1.15011], {
+      icon: L.icon({
+        iconSize: [25, 41],
+        iconAnchor: [13, 0],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
+
+    layer.addTo(map);
+  }
+
   constructor() { }
 
   ngOnInit() {
