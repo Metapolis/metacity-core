@@ -11,11 +11,13 @@ import { DbaccidentComponent } from './dashboard/dbaccident/dbaccident.component
 import { DbelectionComponent } from './dashboard/dbelection/dbelection.component';
 import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
 import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
+import { CatalogComponent } from './catalog/catalog.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'catalog', component: CatalogComponent },
   { path: 'graftest', component: GrafTestComponent },
   // { path: 'sources-et-applications', component: NotFound404Component },
   // { path: 'nos-services', component: NotFound404Component },

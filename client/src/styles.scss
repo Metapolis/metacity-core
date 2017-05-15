@@ -4,6 +4,7 @@
 @import "./src/assets/fonts/fonts.scss";
 @import 'variables';
 @import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/leaflet/dist/leaflet';
 
 #content {
   .container {

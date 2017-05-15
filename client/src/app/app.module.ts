@@ -7,6 +7,7 @@ import { FormsModule }    from '@angular/forms';
 import { HomeModule }     from './home/home.module';
 import { MenuModule }     from './menu/menu.module';
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+import { CatalogModule }     from './catalog/catalog.module';
 
 // Components
 import { AppComponent }  from './app.component';
@@ -25,7 +26,6 @@ import { MapComponent } from './map/map.component';
 import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
 import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
 
-
 // Services
 
 @NgModule({
@@ -36,7 +36,8 @@ import { MapOverviewComponent } from './overview/map-overview/map-overview.compo
     FormsModule,
     HomeModule,
     MenuModule,
-    LeafletModule
+    LeafletModule,
+    CatalogModule
   ],
   declarations: [
     AppComponent,

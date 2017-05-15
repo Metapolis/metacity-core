@@ -1,0 +1,38 @@
+
+#nuage {
+ width: 680px;
+}
+#mots {
+  width:330px;
+}
+
+
+.clear {
+  clear:both;
+      button {
+        margin-top: 35px;
+      }
+}
+
+.showall {
+  display: block;
+  float: right;
+}
+.monde {
+  img {
+    width: 440px;
+  }
+}
+
+
+.search_informations {
+  ul {
+    list-style: none;
+  }
+  img {
+    width: 85px;
+    height: 35px;
+    display: inline-block;
+    float: left;
+  }
+}
