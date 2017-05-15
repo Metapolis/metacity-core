@@ -10,20 +10,20 @@ import { Link }      from '../../common/link';
 export class Container2Component {
   assets = new Assets;
   thematiqueslinks1 : Link[] = [
-    { src: '#', text: 'Accessibilité'},
-    { src: '#', text: 'Urbanisme'},
-    { src: '#', text: 'Territoire'},
-    { src: '#', text: 'Citoyenneté'},
-    { src: '#', text: 'Économie'},
-    { src: '#', text: 'Éducation & Jeunesse'},
+    { src: '/', text: 'Accessibilité'},
+    { src: '/', text: 'Urbanisme'},
+    { src: '/', text: 'Territoire'},
+    { src: '/', text: 'Citoyenneté'},
+    { src: '/', text: 'Économie'},
+    { src: '/', text: 'Éducation & Jeunesse'},
   ];
   thematiqueslinks2 : Link[] = [
-    { src: '#', text: 'Environnement'},
-    { src: '#', text: 'Sports & Loisirs'},
-    { src: '#', text: 'Santé'},
-    { src: '#', text: 'Sécurité'},
-    { src: '#', text: 'Mobilité'},
-    { src: '#', text: 'Culture & Tourisme'},
+    { src: '/', text: 'Environnement'},
+    { src: '/', text: 'Sports & Loisirs'},
+    { src: '/', text: 'Santé'},
+    { src: '/', text: 'Sécurité'},
+    { src: '/', text: 'Mobilité'},
+    { src: '/', text: 'Culture & Tourisme'},
   ];
 
 }

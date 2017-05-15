@@ -6,7 +6,7 @@
       <div class="card-text row">
         <div class="col-md-4">
           <ul class="text-center space-element">
-            <a *ngFor="let link of thematiqueslinks1" href="{{link.src}}">
+            <a *ngFor="let link of thematiqueslinks1" routerLink="{{link.src}}" routerLinkActive="active">
               <li>
                 <h6>{{link.text}}</h6>
               </li>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-4">
           <ul class="text-center space-element">
-            <a *ngFor="let link of thematiqueslinks2" href="{{link.src}}">
+            <a *ngFor="let link of thematiqueslinks2" routerLink="{{link.src}}" routerLinkActive="active">
               <li>
                 <h6>{{link.text}}</h6>
               </li>
