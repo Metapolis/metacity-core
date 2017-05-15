@@ -1,13 +1,15 @@
 <div class="container">
   <div class="card">
     <div class="card-block">
-      <h2 class="card-title text-left">Trouvez vos visualisations de données</h2>
+      <h4 class="card-title text-left">Trouvez vos visualisations de données</h4>
       <div class="row">
         <div class="justify-content-center col-md-6 monde">
-          <img class=" justify" src="/assets/img/monde.png" alt="image statique Monde">
+          <img class=" justify" [src]="assets.world.src" alt={{assets.world.alt}}>
         </div>
         <div class="col-md-6 search_informations">
-          <h5>Thèmes</h5>
+          <div class="text-center">
+            <h5>Thèmes</h5>
+          </div>
           <div class="row">
             <div class="col-md-6">
               <ul>
@@ -54,7 +56,9 @@
               </ul>
             </div>
           </div>
-          <h5>Profil</h5>
+          <div class="text-center">
+            <h5>Profil</h5>
+          </div>
           <div class="row">
             <div class="col-md-6">
               <ul>
@@ -80,7 +84,9 @@
               </ul>
             </div>
           </div>
-          <h5>Visuels</h5>
+          <div class="text-center">
+            <h5>Visuels</h5>
+          </div>
           <ul>
             <a href="#">
               <li><img src="/assets/img/pie-chartbleu.svg" width="208" height="208" alt="Metacity Logo"></li>
@@ -99,7 +105,7 @@
             </a>
           </ul>
           <div class="d-flex justify-content-center clear">
-            <button type="button" class="btn btn-primary btn-lg">Rechercher</button>
+            <button type="button" class="btn btn-primary">Rechercher</button>
           </div>
           <div class="showall">
             <a href="#">Voir tout</a>
