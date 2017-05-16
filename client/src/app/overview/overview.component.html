@@ -5,7 +5,7 @@
       <hr class="text-center">
       <ul>
         <li *ngFor="let data of visuallinks">
-          <a  routerLink="{{data.link.src}}" routerLinkActive="active" class="button_dataviz">
+          <a routerLink="{{data.link.src}}" routerLinkActive="active" class="button_dataviz">
             <div class="button_dataviz_icon"><img [src]='data.img.src' alt="{{data.img.alt}}"></div>
             <div class="button_dataviz_text">{{data.link.text}}</div>
           </a>
@@ -25,23 +25,7 @@
       <ng-content select="[graph]"></ng-content>
     </div>
     <div class="col-md-3 with_border_left div_without_padding">
-      <div class="title align-middle">Le trafic et l'accidentologie à La Rochelle</div>
-      <div class="choice choice-title">
-        <div class="d-flex justify-content-center">
-          <div class="p-2">
-            <button type="button" class="btn btn-primary btn-xs">La carte</button>
-          </div>
-          <div class="p-2">
-            <button type="button" class="btn btn-primary btn-xs">Les analyses</button>
-          </div>
-        </div>
-      </div>
-      <div class="choice choice-content d-flex flex-column">
-        <button type="button" class="btn btn-primary btn-xs">Nombre de victimes</button>
-        <button type="button" class="btn btn-primary btn-xs">Evolution des accidents</button>
-        <button type="button" class="btn btn-primary btn-xs">Age des victimes</button>
-        <button type="button" class="btn btn-primary btn-xs">Endroits fréquemment accidentés</button>
-      </div>
+      <ng-content select="[filters-layers]"></ng-content>
     </div>
   </div>
 </div>

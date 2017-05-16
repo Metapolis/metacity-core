@@ -21,10 +21,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AnimatedBackgroundComponent } from './animated-background/animated-background.component';
 import { OverviewComponent } from './overview/overview.component';
-import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { PieChartComponent } from './overview/pie-chart/pie-chart.component';
 import { MapComponent } from './map/map.component';
 import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
 import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
+import { ChartFiltersComponent } from './overview/chart-filters/chart-filters.component';
+
 
 // Services
 
@@ -54,7 +56,8 @@ import { MapOverviewComponent } from './overview/map-overview/map-overview.compo
     PieChartComponent,
     MapComponent,
     PieOverviewComponent,
-    MapOverviewComponent
+    MapOverviewComponent,
+    ChartFiltersComponent
    ],
   bootstrap:    [ AppComponent ]
 })
