@@ -18,17 +18,19 @@ export class MapComponent implements OnInit {
   };
 
   onMapReady(map: L.Map) {
-    const layer = L.marker([46.16800, -1.15011], {
+    const icon = {
       icon: L.icon({
         iconSize: [25, 41],
         iconAnchor: [13, 0],
         iconUrl: 'assets/marker-icon.png',
         shadowUrl: 'assets/marker-shadow.png'
       })
-    });
+    };
+    const layer = L.marker([46.16800, -1.15011], icon );
 
     layer.addTo(map);
   }
+
 
   constructor() { }
 
