@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 // Components
 import { VisualisationFormComponent } from './visualisation-form/visualisation-form.component';
-import { MenuComponent } from './menu.component';
+import { HeaderComponent } from './header.component';
 
 // Services
 
@@ -22,11 +22,11 @@ import { MenuComponent } from './menu.component';
   ],
   declarations: [
     VisualisationFormComponent,
-    MenuComponent,
+    HeaderComponent,
   ],
   exports: [
-    MenuComponent,
+    HeaderComponent,
     VisualisationFormComponent,
   ]
 })
-export class MenuModule { }
+export class HeaderModule { }
