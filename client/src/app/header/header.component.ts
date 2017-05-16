@@ -3,11 +3,11 @@ import { Assets }    from '../assets';
 import { Link }      from '../common/link';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class MenuComponent {
+export class HeaderComponent {
   assets = new Assets;
   navlinks: Link[] = [
     // { src: 'sources-et-applications', text: 'Sources et Applications' },

@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule }    from '@angular/forms';
 import { HomeModule }     from './home/home.module';
-import { MenuModule }     from './menu/menu.module';
+import { HeaderModule }     from './header/header.module';
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 import { CatalogModule }     from './catalog/catalog.module';
 
@@ -39,7 +39,7 @@ import { MapFiltersComponent } from './overview/map-filters/map-filters.componen
     AppRoutingModule,
     FormsModule,
     HomeModule,
-    MenuModule,
+    HeaderModule,
     LeafletModule,
     CatalogModule
   ],
