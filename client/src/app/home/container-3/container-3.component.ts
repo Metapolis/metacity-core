@@ -42,20 +42,18 @@ favoriser l’adoption de
 standards de données et
 d’échanges permettant la
 généralisation de
-nouveaux services urbains
+nouveaux services urbains.
 `
     },
     {
-      title: 'ÉVOLUTIVE',
-      text: `La plateforme est pensée
-pour s’adapter aux
-évolutions des usages de
-la donnée urbaine, et
-anticiper l’ouverture
-croissante des flux de
-données issues des
-collectivités, des
-opérateurs et du
+title: 'ÉVOLUTIVE',
+  text: `La plateforme est pensée pour s’adapter
+      aux évolutions des usages de la donnée urbaine,
+       et anticiper l’ouverture croissante des flux de données
+        issues des collectivités, des opérateurs et du
+        développement de nouvelles pratiques telles
+         que le crowdsourcing.
+
 `
     }
   ];
