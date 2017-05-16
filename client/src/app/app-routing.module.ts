@@ -22,7 +22,7 @@ const routes: Routes = [
   // { path: 'sources-et-applications', component: NotFound404Component },
   // { path: 'nos-services', component: NotFound404Component },
   // { path: 'developpeurs', component: NotFound404Component },
-  // { path: 'contact', component: NotFound404Component },
+  { path: 'contact', component: NotFound404Component },
   // { path: 'mon-compte', component: NotFound404Component },
   { path: 'accidents', component: DbaccidentComponent },
   { path: 'elections', component: DbelectionComponent },
@@ -30,6 +30,9 @@ const routes: Routes = [
   { path: 'connexion', component: LoginComponent },
   { path: 'accidents/analyse', component: PieOverviewComponent },
   { path: 'accidents/carte', component: MapOverviewComponent },
+  { path: 'faq', component: NotFound404Component },
+  { path: 'cgu', component: NotFound404Component },
+  { path: 'mentions-legales', component: NotFound404Component },
 ];
 
 @NgModule({
