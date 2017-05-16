@@ -10,8 +10,7 @@
   </div>
 </div>
 <div class="choice choice-content d-flex flex-column">
-  <button type="button" class="btn btn-primary btn-xs">Nombre de victimes</button>
-  <button type="button" class="btn btn-primary btn-xs">Evolution des accidents</button>
-  <button type="button" class="btn btn-primary btn-xs">Age des victimes</button>
-  <button type="button" class="btn btn-primary btn-xs">Endroits fréquemment accidentés</button>
+  <button *ngFor="let button of buttonList" type="button" class="btn btn-primary btn-xs">
+    {{button.button}}
+  </button>
 </div>

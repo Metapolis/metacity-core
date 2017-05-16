@@ -11,5 +11,13 @@ export class ChartFiltersComponent implements OnInit {
 
   ngOnInit() {
   }
+  buttonList: {button: string}[] = [
+    {button: "Nombre de bléssés"},
+    {button: "Évolution des accidents"},
+    {button: "Luminosité lors des accidents"},
+    {button: "Catégories de véhicules accidentés"},
+    {button: "Météo lors des accidents"},
+    {button: "Âge des victimes"},
 
+  ]
 }
