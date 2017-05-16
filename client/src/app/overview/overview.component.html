@@ -4,35 +4,21 @@
       <h2 class="text-center">Les visualisations de données</h2>
       <hr class="text-center">
       <ul>
-        <li>
-          <a href="#" class="button_dataviz">
-            <div class="button_dataviz_icon"><img [src]='assets.home.src' alt="{{assets.home.alt}}"></div>
-            <div class="button_dataviz_text">Dashboard</div>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="button_dataviz">
-            <div class="button_dataviz_icon"><img [src]='assets.code.src' alt="{{assets.code.alt}}"></div>
-            <div class="button_dataviz_text">Intégrer</div>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="button_dataviz">
-            <div class="button_dataviz_icon"><img [src]='assets.search.src' alt="{{assets.search.alt}}"></div>
-            <div class="button_dataviz_text">Rechercher</div>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="button_dataviz">
-            <div class="button_dataviz_icon"><img [src]='assets.worldwide.src' alt="{{assets.worldwide.alt}}"></div>
-            <div class="button_dataviz_text">Carte</div>
+        <li *ngFor="let data of visuallinks">
+          <a  routerLink="{{data.link.src}}" routerLinkActive="active" class="button_dataviz">
+            <div class="button_dataviz_icon"><img [src]='data.img.src' alt="{{data.img.alt}}"></div>
+            <div class="button_dataviz_text">{{data.link.text}}</div>
           </a>
         </li>
       </ul>
       <hr>
       <ul>
-        <li><a href="#">Accueil</a></li>
-        <li><a href="#">Déconnexion</a></li>
+        <li>
+          <a routerLink="/" routerLinkActive>Accueil</a>
+        </li>
+        <li>
+          <a routerLink="404" routerLinkActive>Déconnexion</a>
+        </li>
       </ul>
     </div>
     <div class="col-md-7 without_border div_without_padding dataviz">
