@@ -26,6 +26,8 @@ import { MapComponent } from './map/map.component';
 import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
 import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
 import { ChartFiltersComponent } from './overview/chart-filters/chart-filters.component';
+import { MapFiltersComponent } from './overview/map-filters/map-filters.component';
+
 
 
 // Services
@@ -57,7 +59,8 @@ import { ChartFiltersComponent } from './overview/chart-filters/chart-filters.co
     MapComponent,
     PieOverviewComponent,
     MapOverviewComponent,
-    ChartFiltersComponent
+    ChartFiltersComponent,
+    MapFiltersComponent
    ],
   bootstrap:    [ AppComponent ]
 })
