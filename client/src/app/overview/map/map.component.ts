@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MapSpecific } from './accident-map';
+
+import { MapContentService } from '../shared/map-content.service';
+import { MapSpecific } from '../shared/mock-map-content/mock-accident-map-content';
+
 
 import * as L from 'leaflet';
 import * as d3 from 'd3';
@@ -17,9 +20,12 @@ interface Accident {
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
+  providers: [MapContentService]
 })
 export class MapComponent implements OnInit {
+  mapspecific: MapSpecific;
+
   options = {
     layers: [
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
@@ -27,18 +33,22 @@ export class MapComponent implements OnInit {
     zoom: 13,
     center: L.latLng({ lat: 46.1621, lng: -1.1980 })
   };
-  mapspecific: MapSpecific;
 
   onMapReady(map: L.Map) {
     this.mapspecific.onMapReady(map);
   }
 
 
-  constructor() {
-    this.mapspecific = new MapSpecific;
+  constructor(private mapcontentservice: MapContentService) {
+    this.getMapContent();
   }
 
-  ngOnInit() {
+  getMapContent(): void {
+    // No promise for now, it is comented, the bis works without anyway
+    //this.mapcontentservice.getMapContent('accident-map').then(answer => this.mapspecific = answer);
+    this.mapspecific = this.mapcontentservice.getMapContentbis('accident-map');
   }
+
+  ngOnInit() {}
 
 }
