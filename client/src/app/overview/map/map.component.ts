@@ -34,20 +34,19 @@ export class MapComponent implements OnInit {
     center: L.latLng({ lat: 46.1621, lng: -1.1980 })
   };
 
-  onMapReady(map: L.Map) {
+  async onMapReady(map: L.Map) {
+    await this.getMapContent();
     this.mapspecific.onMapReady(map);
   }
 
 
   constructor(private mapcontentservice: MapContentService) {
-    this.getMapContent();
+    //this.getMapContent();
   }
 
-  getMapContent(): void {
-    // No promise for now, it is comented, the bis works without anyway
-    
-    //this.mapcontentservice.getMapContent('accident-map').then(answer => this.mapspecific = answer);
-    this.mapspecific = this.mapcontentservice.getMapContentbis('accident-map');
+  async getMapContent(): Promise<void> {
+    let response = await this.mapcontentservice.getMapContent('accident-map');
+    this.mapspecific = response;
   }
 
   ngOnInit() {}
