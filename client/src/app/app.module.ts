@@ -29,7 +29,7 @@ import { ChartFiltersComponent } from './overview/chart-filters/chart-filters.co
 import { MapFiltersComponent } from './overview/map-filters/map-filters.component';
 import { BarChartComponent } from './overview/bar-chart/bar-chart.component';
 import { PlotComponent } from './overview/plot/plot.component';
-
+import { MenuService } from './shared/menu.service';
 
 
 // Services
@@ -66,6 +66,7 @@ import { PlotComponent } from './overview/plot/plot.component';
     BarChartComponent,
     PlotComponent
    ],
+  providers: [ MenuService ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
