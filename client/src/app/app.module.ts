@@ -6,14 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HomeModule } from './home/home.module';
 import { HeaderModule } from './header/header.module';
-import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 import { CatalogModule } from './catalog/catalog.module';
-import { MaterialModule } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdButtonModule, MdCheckboxModule} from '@angular/material';
-
-
-
+import { OverviewModule } from './overview/overview.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -26,22 +20,9 @@ import { DbelectionComponent } from './dashboard/dbelection/dbelection.component
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AnimatedBackgroundComponent } from './animated-background/animated-background.component';
-import { OverviewComponent } from './overview/overview.component';
-import { PieChartComponent } from './overview/pie-chart/pie-chart.component';
-import { MapComponent } from './overview/map/map.component';
-import { PieOverviewComponent } from './overview/pie-overview/pie-overview.component';
-import { MapOverviewComponent } from './overview/map-overview/map-overview.component';
-import { ChartFiltersComponent } from './overview/chart-filters/chart-filters.component';
-import { MapFiltersComponent } from './overview/map-filters/map-filters.component';
-import { BarChartComponent } from './overview/bar-chart/bar-chart.component';
-import { PlotComponent } from './overview/plot/plot.component';
 import { MenuService } from './shared/menu.service';
 
-
-
-
 // Services
-
 @NgModule({
   imports:      [
     BrowserModule,
@@ -50,12 +31,8 @@ import { MenuService } from './shared/menu.service';
     FormsModule,
     HomeModule,
     HeaderModule,
-    LeafletModule,
     CatalogModule,
-    MaterialModule,
-    BrowserAnimationsModule,
-    MdButtonModule,
-    MdCheckboxModule,
+    OverviewModule
   ],
   declarations: [
     AppComponent,
@@ -68,15 +45,6 @@ import { MenuService } from './shared/menu.service';
     DashboardComponent,
     RegisterComponent,
     AnimatedBackgroundComponent,
-    OverviewComponent,
-    PieChartComponent,
-    MapComponent,
-    PieOverviewComponent,
-    MapOverviewComponent,
-    ChartFiltersComponent,
-    MapFiltersComponent,
-    BarChartComponent,
-    PlotComponent
    ],
   providers: [ MenuService ],
   bootstrap:    [ AppComponent ]
