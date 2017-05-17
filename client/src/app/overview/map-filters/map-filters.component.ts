@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import 'hammerjs';
+
 
 @Component({
   selector: 'app-map-filters',
@@ -10,6 +12,7 @@ export class MapFiltersComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

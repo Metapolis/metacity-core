@@ -8,6 +8,12 @@ import { HomeModule } from './home/home.module';
 import { HeaderModule } from './header/header.module';
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 import { CatalogModule } from './catalog/catalog.module';
+import { MaterialModule } from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdButtonModule, MdCheckboxModule} from '@angular/material';
+
+
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -29,6 +35,8 @@ import { ChartFiltersComponent } from './overview/chart-filters/chart-filters.co
 import { MapFiltersComponent } from './overview/map-filters/map-filters.component';
 import { BarChartComponent } from './overview/bar-chart/bar-chart.component';
 import { PlotComponent } from './overview/plot/plot.component';
+import { MenuService } from './shared/menu.service';
+
 
 
 
@@ -43,7 +51,11 @@ import { PlotComponent } from './overview/plot/plot.component';
     HomeModule,
     HeaderModule,
     LeafletModule,
-    CatalogModule
+    CatalogModule,
+    MaterialModule,
+    BrowserAnimationsModule,
+    MdButtonModule,
+    MdCheckboxModule,
   ],
   declarations: [
     AppComponent,
@@ -66,6 +78,7 @@ import { PlotComponent } from './overview/plot/plot.component';
     BarChartComponent,
     PlotComponent
    ],
+  providers: [ MenuService ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
