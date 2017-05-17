@@ -1,6 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
 import * as L from 'leaflet';
+import * as d3 from 'd3';
+
+interface Location {
+    address: string;
+    lat_lon: L.LatLngExpression;
+}
+
+interface Accident {
+    id: number;
+    location: Location;
+}
 
 @Component({
   selector: 'app-map',
@@ -8,7 +19,6 @@ import * as L from 'leaflet';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-
   options = {
     layers: [
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
@@ -25,9 +35,15 @@ export class MapComponent implements OnInit {
         iconUrl: 'assets/markers.png',
       })
     };
-    const layer = L.marker([46.16800, -1.15011], icon );
+    d3.json('assets/mock-data/accidents.json', (err, data) => {
 
-    layer.addTo(map);
+      const pdata = data as Accident[];
+
+      pdata.forEach((item, index, array) => {
+          const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
+          L.marker(lat_lon, icon).addTo(map);
+      });
+    });
   }
 
 
