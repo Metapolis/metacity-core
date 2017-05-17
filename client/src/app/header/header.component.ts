@@ -8,7 +8,6 @@ import { MenuService } from '../shared/menu.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [MenuService]
 })
 export class HeaderComponent implements OnInit {
   constructor(private menuService: MenuService) {}
