@@ -22,7 +22,7 @@ export class PieChartComponent implements OnInit {
   }
 
   getPieChartContent(): void {
-    this.chartContent = this.chartcontentservice.getPieChartContent('accidents-pie-chart');
+    this.chartcontentservice.getPieChartContent('accidents-pie-chart').then(answer => this.chartContent = answer);
   }
 
   public draw() {
