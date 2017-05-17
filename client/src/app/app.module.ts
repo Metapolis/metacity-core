@@ -8,6 +8,12 @@ import { HomeModule } from './home/home.module';
 import { HeaderModule } from './header/header.module';
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 import { CatalogModule } from './catalog/catalog.module';
+import { MaterialModule } from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdButtonModule, MdCheckboxModule} from '@angular/material';
+
+
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -32,6 +38,8 @@ import { PlotComponent } from './overview/plot/plot.component';
 import { MenuService } from './shared/menu.service';
 
 
+
+
 // Services
 
 @NgModule({
@@ -43,7 +51,11 @@ import { MenuService } from './shared/menu.service';
     HomeModule,
     HeaderModule,
     LeafletModule,
-    CatalogModule
+    CatalogModule,
+    MaterialModule,
+    BrowserAnimationsModule,
+    MdButtonModule,
+    MdCheckboxModule,
   ],
   declarations: [
     AppComponent,
