@@ -39,6 +39,7 @@
   "devDependencies": {
     "@angular/cli": "^1.0.3",
     "@angular/compiler-cli": "^4.0.0",
+    "@types/angular-material": "^1.1.51",
     "@types/d3": "^4.8.0",
     "@types/d3pie": "^0.1.5",
     "@types/jasmine": "2.5.38",

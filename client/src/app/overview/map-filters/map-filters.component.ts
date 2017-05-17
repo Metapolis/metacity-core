@@ -12,6 +12,7 @@ export class MapFiltersComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }
