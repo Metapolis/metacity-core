@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MapContentService } from '../shared/map-content.service';
+import { MapSpecific } from '../shared/mock-map-content/mock-accident-map-content';
+
+
 import * as L from 'leaflet';
 import * as d3 from 'd3';
 
@@ -16,9 +20,12 @@ interface Accident {
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
+  providers: [MapContentService]
 })
 export class MapComponent implements OnInit {
+  mapspecific: MapSpecific;
+
   options = {
     layers: [
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
@@ -28,28 +35,21 @@ export class MapComponent implements OnInit {
   };
 
   onMapReady(map: L.Map) {
-    const icon = {
-      icon: L.icon({
-        iconSize: [50, 50],
-        iconAnchor: [0, 0],
-        iconUrl: 'assets/markers.png',
-      })
-    };
-    d3.json('assets/mock-data/accidents.json', (err, data) => {
-
-      const pdata = data as Accident[];
-
-      pdata.forEach((item, index, array) => {
-          const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
-          L.marker(lat_lon, icon).addTo(map);
-      });
-    });
+    this.mapspecific.onMapReady(map);
   }
 
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private mapcontentservice: MapContentService) {
+    this.getMapContent();
   }
+
+  getMapContent(): void {
+    // No promise for now, it is comented, the bis works without anyway
+    
+    //this.mapcontentservice.getMapContent('accident-map').then(answer => this.mapspecific = answer);
+    this.mapspecific = this.mapcontentservice.getMapContentbis('accident-map');
+  }
+
+  ngOnInit() {}
 
 }
