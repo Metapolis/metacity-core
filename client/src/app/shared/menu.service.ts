@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { Link } from "../../common/link";
+import { Link } from "./../common/link";
 import { NAVLINKS } from "./mock-navlinks";
 
 @Injectable()
 export class MenuService {
-  getNavlinks(): Promise<Link[]> {
+  getHeaderNavlinks(): Promise<Link[]> {
     return Promise.resolve(NAVLINKS);
   }
 }
