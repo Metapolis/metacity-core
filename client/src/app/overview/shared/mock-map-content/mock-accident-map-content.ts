@@ -12,7 +12,7 @@ export class MapSpecific {
     };
     d3.json('assets/mock-data/accidents.json', (err, data) => {
 
-      const pdata = data as {id:number, location: {address: string, lat_lon: L.LatLngExpression}}[];
+      const pdata = data as {id: number, location: {address: string, lat_lon: L.LatLngExpression}}[];
 
       pdata.forEach((item, index, array) => {
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;

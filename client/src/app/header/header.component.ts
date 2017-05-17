@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Assets }    from '../assets';
-import { Link }      from '../common/link';
+import { Assets } from '../assets';
+import { Link } from '../common/link';
 import { MenuService } from '../shared/menu.service';
 
 @Component({
@@ -10,16 +10,18 @@ import { MenuService } from '../shared/menu.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  navlinks: Link[];
+  assets = new Assets;
+
+  public isCollapsed = true;
+
   constructor(private menuService: MenuService) {}
+
   ngOnInit(): void {
     this.getMenu();
   }
-  navlinks: Link[];
-  assets = new Assets;
 
   getMenu(): void {
     this.menuService.getHeaderNavlinks().then(answer => this.navlinks = answer);
   }
-
-  public isCollapsed = true;
 }
