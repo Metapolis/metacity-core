@@ -45,6 +45,7 @@ export class MapComponent implements OnInit {
 
   getMapContent(): void {
     // No promise for now, it is comented, the bis works without anyway
+    
     //this.mapcontentservice.getMapContent('accident-map').then(answer => this.mapspecific = answer);
     this.mapspecific = this.mapcontentservice.getMapContentbis('accident-map');
   }
