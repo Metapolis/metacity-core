@@ -10,7 +10,7 @@ import { Img } from '../common/img';
 })
 export class OverviewComponent {
   assets = new Assets;
-  visuallinks : { link: Link, img: Img}[] = [
+  visuallinks: { link: Link, img: Img}[] = [
     {
       link: { src: '404', text: 'Dashboard'},
       img: { src: this.assets.home.src, alt: this.assets.home.alt}
