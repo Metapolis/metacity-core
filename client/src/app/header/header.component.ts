@@ -1,27 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { Assets }    from '../assets';
 import { Link }      from '../common/link';
+import { MenuService } from './shared/menu.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  providers: [MenuService]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  constructor(private menuService: MenuService) {}
+  ngOnInit(): void {
+    this.getMenu();
+  }
+  navlinks: Link[];
   assets = new Assets;
-  navlinks: Link[] = [
-    // { src: 'sources-et-applications', text: 'Sources et Applications' },
-    // { src: 'nos-services', text: 'Nos services' },
-    // { src: 'developpeurs', text: 'Développeurs' },
-    // { src: 'contact', text: 'Contact' },
-    // { src: 'mon-compte', text: 'Mon Compte' },
-    { src: 'accidents/analyse', text: 'Accident/analyse' },
-    { src: 'accidents/carte', text: 'Accident/carte'},
-    { src: 'accidents', text: 'Accidents' },
-    { src: 'elections', text: 'Elections' },
-    { src: 'register', text: 'Inscription' },
-    { src: 'connexion', text: 'Connexion' },
-  ];
+
+  getMenu(): void {
+    this.menuService.getNavlinks().then(answer => this.navlinks = answer);
+  }
 
   public isCollapsed = true;
 }
