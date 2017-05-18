@@ -7,14 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 
 // Components
-import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { MapComponent } from './map/map.component';
 import { PieOverviewComponent } from './pie-overview/pie-overview.component';
 import { MapOverviewComponent } from './map-overview/map-overview.component';
-import { ChartFiltersComponent } from './chart-filters/chart-filters.component';
-import { MapFiltersComponent } from './map-filters/map-filters.component';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { PlotComponent } from './plot/plot.component';
+import { ChartFiltersComponent } from './filters/chart-filters/chart-filters.component';
+import { MapFiltersComponent } from './filters/map-filters/map-filters.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { PlotComponent } from './charts/plot/plot.component';
 import { OverviewComponent } from './overview.component';
 
 // Services

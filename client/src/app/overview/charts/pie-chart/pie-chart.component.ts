@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import 'd3pie';
 
-import { ChartContentService } from '../shared/chart-content.service';
+import { ChartContentService } from '../../shared/chart-content.service';
 
 @Component({
   selector: 'app-pie-chart',
