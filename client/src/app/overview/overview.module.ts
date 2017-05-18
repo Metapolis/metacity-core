@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 import { MaterialModule, MdButtonModule, MdCheckboxModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OverviewRoutingModule } from './overview-routing.module';
 import { AppRoutingModule } from '../app-routing.module';
 
 // Components
@@ -30,7 +31,8 @@ import { MapContentService } from './shared/map-content.service';
     BrowserAnimationsModule,
     MdButtonModule,
     MdCheckboxModule,
-    AppRoutingModule,
+    OverviewRoutingModule,
+    AppRoutingModule
   ],
   declarations: [
     PieChartComponent,

@@ -17,15 +17,18 @@
           <a routerLink="/" routerLinkActive>Accueil</a>
         </li>
         <li>
+          <a routerLink="carte" routerLinkActive>carte</a>
+        </li>
+        <li>
           <a routerLink="404" routerLinkActive>Déconnexion</a>
         </li>
       </ul>
     </div>
+
     <div class="col-md-7 without_border div_without_padding dataviz">
-      <ng-content select="[graph]"></ng-content>
+      <router-outlet></router-outlet>
     </div>
     <div class="col-md-3 with_border_left div_without_padding">
-      <ng-content select="[filters-layers]"></ng-content>
     </div>
   </div>
 </div>
