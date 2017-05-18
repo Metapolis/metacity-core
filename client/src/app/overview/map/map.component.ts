@@ -41,6 +41,7 @@ export class MapComponent implements OnInit {
 
 
   constructor(private mapcontentservice: MapContentService) {
+    // we should think about having an observable to load map content much sooner
     //this.getMapContent();
   }
 
