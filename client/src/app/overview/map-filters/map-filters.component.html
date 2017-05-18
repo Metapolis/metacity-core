@@ -1,0 +1,60 @@
+<div class="title align-middle">Le trafic et l'accidentologie à La Rochelle</div>
+<div class="choice choice-title">
+  <div class="d-flex justify-content-center">
+    <div class="p-2">
+      <button type="button" class="btn btn-primary btn-xs">La carte</button>
+    </div>
+    <div class="p-2">
+      <button type="button" class="btn btn-primary btn-xs">Les analyses</button>
+    </div>
+  </div>
+</div>
+<div class="choice choice-content d-flex flex-column">
+  <select class="selectpicker">
+    <option>Véhicules impliqués</option>
+    <option>Voiture</option>
+    <option>Vélo et Skateboards</option>
+    <option>Deux-roues motorisées</option>
+    <option>Tracteurs</option>
+    <option>Bus et Cars</option>
+    <option>Trains</option>
+  </select>
+  <md-slider ng-model="myValue" min="5" max="500" step="5"></md-slider>
+  <div ng-controller="AppCtrl" class="md-padding demo">
+    <div layout="row" layout-wrap>
+      <div flex="100" layout="column">
+        <div>
+          <fieldset class="demo-fieldset">
+            <div layout="row" layout-wrap flex>
+              <div flex-xs flex="50">
+                <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <span ng-if="isChecked()">Pluie</span>
+                </md-checkbox>
+              </div>
+              <div flex-xs flex="50">
+                <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <span ng-if="isChecked()">Vents forts</span>
+                </md-checkbox>
+              </div>
+              <div flex-xs flex="50">
+                <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <span ng-if="isChecked()">Brouillard</span>
+                </md-checkbox>
+              </div>
+              <div flex-xs flex="50">
+                <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <span ng-if="isChecked()">Beau temps</span>
+                </md-checkbox>
+              </div>
+              <div flex-xs flex="50">
+                <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <span ng-if="isChecked()">Neige</span>
+                </md-checkbox>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
