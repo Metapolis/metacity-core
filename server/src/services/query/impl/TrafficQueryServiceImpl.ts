@@ -5,6 +5,8 @@ import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { Config } from "../../../Config";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
+import { LocationDTO } from "../dto/accident/LocationDTO";
+import { ClimatologyDTO } from "../dto/accident/ClimatologyDTO";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -37,7 +39,14 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
 
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
-            accidents.push(Object.assign(new CarAccidentDTO(), jsonAccident._source));
+            // Truly ugly tricky, I hate this shit !
+            // You can't copy this stuff
+            // TODO remove this
+            const accident: CarAccidentDTO = Object.setPrototypeOf(jsonAccident._source, CarAccidentDTO.prototype);
+            accident.setLocation(Object.setPrototypeOf(accident.getLocation(), LocationDTO.prototype));
+            accident.setClimatology(Object.setPrototypeOf(accident.getClimatology(), ClimatologyDTO.prototype));
+            accidents.push(accident);
+
         }
 
         return accidents;
