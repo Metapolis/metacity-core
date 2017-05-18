@@ -1,6 +1,6 @@
 import 'd3pie';
 
-export const GRAPHCONTENT: d3pie.ID3PieOptions = {
+export const ACCIDENTGRAPHCONTENT: d3pie.ID3PieOptions = {
   header: {
     title: {
       text: 'Victimes d\'accidents de la route a la Rochelle 2015',
