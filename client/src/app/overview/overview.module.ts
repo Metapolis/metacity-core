@@ -19,6 +19,7 @@ import { OverviewComponent } from './overview.component';
 
 // Services
 import { ChartContentService } from './shared/chart-content.service';
+import { MapContentService } from './shared/map-content.service';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ChartContentService } from './shared/chart-content.service';
     OverviewComponent
   ],
   providers: [
-    ChartContentService
+    ChartContentService,
+    MapContentService
   ]
 })
 export class OverviewModule { }
