@@ -9,14 +9,14 @@ export class ElectionMapSpecific {
         iconUrl: 'assets/markers.png',
       })
     };
-    d3.json('assets/mock-data/accidents.json', (err, data) => {
 
-      // const pdata = data as {id: number, location: {address: string, lat_lon: L.LatLngExpression}}[];
-      //
-      // pdata.forEach((item, index, array) => {
-      //     const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
-      //     L.marker(lat_lon, icon).addTo(map);
-      // });
+    d3.json('assets/mock-data/electoral_bureau_vote_4326.geojson', (err, data) => {
+      const featureCollection = data as any;
+
+      console.log(featureCollection);
+
+      const layer = new L.GeoJSON(featureCollection);
+      map.addLayer(layer);
     });
   }
 }
