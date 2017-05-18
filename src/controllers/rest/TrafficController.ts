@@ -6,6 +6,7 @@ import { TrafficQueryService } from "../../services/query/TrafficQueryService";
 import * as HTTPStatusCodes from "http-status-codes";
 import * as Express from "express";
 import { AccidentMinimal } from "./model/accident/AccidentMinimal";
+import { Location } from "./model/accident/Location";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -49,16 +50,18 @@ export class TrafficController implements interfaces.Controller {
         const returnedAccidents: AccidentMinimal[] = [];
 
         for (const accident of accidents) {
-            returnedAccidents.push(Object.assign(new AccidentMinimal(), {
-                id : accident.getId(),
-                location : {
-                    // Here is the issue
-                    address: accident.getLocation().getAddress()/*,
-                    latLon: accident.getLocationLatLon()*/
-                }
-            }));
+            const accidentMinimal: AccidentMinimal = new AccidentMinimal();
+            accidentMinimal.setId(accident.getId());
+            accidentMinimal.setLocation(new Location());
+            accidentMinimal.getLocation().setAddress(accident.getLocationAddress());
+            accidentMinimal.getLocation().setLatLon(
+                [accident.getLocation().getLatitude(), accident.getLocation().getLongitude()]
+            );
+
+            returnedAccidents.push(accidentMinimal);
         }
 
         res.json(returnedAccidents);
+
     }
 }
