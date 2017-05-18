@@ -10,8 +10,6 @@ import { AppRoutingModule } from '../app-routing.module';
 // Components
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { MapComponent } from './map/map.component';
-import { PieOverviewComponent } from './pie-overview/pie-overview.component';
-import { MapOverviewComponent } from './map-overview/map-overview.component';
 import { ChartFiltersComponent } from './filters/chart-filters/chart-filters.component';
 import { MapFiltersComponent } from './filters/map-filters/map-filters.component';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
@@ -37,8 +35,6 @@ import { MapContentService } from './shared/map-content.service';
   declarations: [
     PieChartComponent,
     MapComponent,
-    PieOverviewComponent,
-    MapOverviewComponent,
     ChartFiltersComponent,
     MapFiltersComponent,
     BarChartComponent,
