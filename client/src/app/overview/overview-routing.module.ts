@@ -5,13 +5,14 @@ import { OverviewComponent } from './overview.component';
 import { MapComponent } from './map/map.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { MapFiltersComponent } from './filters/map-filters/map-filters.component';
+import { AccidentMapComponent } from './categories/accidents/accident-map/accident-map.component';
 
 const overviewRoutes: Routes = [
   { path: 'overview', component: OverviewComponent,
     children: [
       { path: 'accidents',
         children: [
-          { path: 'carte', component: MapComponent },
+          { path: 'carte', component: AccidentMapComponent },
           { path: 'analyse', component: PieChartComponent },
         ]
       },

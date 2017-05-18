@@ -15,6 +15,8 @@ import { MapFiltersComponent } from './filters/map-filters/map-filters.component
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { PlotComponent } from './charts/plot/plot.component';
 import { OverviewComponent } from './overview.component';
+import { AccidentMapComponent } from './categories/accidents/accident-map/accident-map.component';
+import { TemplateThreeColumnsComponent } from './template/template-three-columns.component';
 
 // Services
 import { ChartContentService } from './shared/chart-content.service';
@@ -39,7 +41,9 @@ import { MapContentService } from './shared/map-content.service';
     MapFiltersComponent,
     BarChartComponent,
     PlotComponent,
-    OverviewComponent
+    OverviewComponent,
+    AccidentMapComponent,
+    TemplateThreeColumnsComponent,
   ],
   providers: [
     ChartContentService,

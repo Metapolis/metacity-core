@@ -5,7 +5,7 @@ import 'hammerjs';
 @Component({
   selector: 'app-map-filters',
   templateUrl: './map-filters.component.html',
-  styleUrls: ['./map-filters.component.scss', '../../overview.component.scss']
+  styleUrls: ['../../template/template-three-columns.component.scss']
 })
 export class MapFiltersComponent implements OnInit {
 
