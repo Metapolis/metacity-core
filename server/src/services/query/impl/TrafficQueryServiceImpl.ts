@@ -37,7 +37,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
 
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
-            accidents.push(Object.assign(new CarAccidentDTO(), jsonAccident));
+            accidents.push(Object.assign(new CarAccidentDTO(), jsonAccident._source));
         }
 
         return accidents;

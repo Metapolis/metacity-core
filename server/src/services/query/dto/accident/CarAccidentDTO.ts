@@ -9,6 +9,11 @@ import { Intersection } from "../../../../common/enum/accident/Intersection";
 export class CarAccidentDTO {
 
     /**
+     * Accident sources
+     */
+    private sources: string[];
+
+    /**
      * Car accident's Identifier
      */
     private id: number;
@@ -37,6 +42,24 @@ export class CarAccidentDTO {
      * Car accident's location
      */
     private location: LocationDTO;
+
+    /**
+     * Getter sources
+     *
+     * @returns {string}
+     */
+    public getSources(): string[] {
+        return this.sources;
+    }
+
+    /**
+     * Setter sources
+     *
+     * @param sources new sources value
+     */
+    public setSources(sources: string[]): void {
+        this.sources = sources;
+    }
 
     /**
      * Getter identifier
@@ -113,7 +136,7 @@ export class CarAccidentDTO {
     /**
      * Getter climatology
      *
-     * @returns {Climatology}
+     * @returns {ClimatologyDTO}
      */
     public getClimatology(): ClimatologyDTO {
         return this.climatology;
@@ -131,7 +154,7 @@ export class CarAccidentDTO {
     /**
      * Getter location
      *
-     * @returns {Location}
+     * @returns {LocationDTO}
      */
     public getLocation(): LocationDTO {
         return this.location;
@@ -144,5 +167,24 @@ export class CarAccidentDTO {
      */
     public setLocation(location: LocationDTO): void {
         this.location = location;
+    }
+
+    // Temporary Hack to remove after but not even working
+    /**
+     * Getter address
+     *
+     * @returns {string}
+     */
+    public getLocationAddress(): string {
+        return this.location.getAddress();
+    }
+
+    /**
+     * Getter latlon
+     *
+     * @returns {[string, string]}
+     */
+    public getLocationLatLon(): [number, number] {
+        return [this.location.getLatitude(), this.location.getLongitude()];
     }
 }

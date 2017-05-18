@@ -6,19 +6,20 @@ import { GPSType } from "../../../../common/enum/accident/GPSType";
 export class LocationDTO {
 
     /**
-     * Agglomeration name
+     * Agglomeration info
      */
-    private agglomeration: string;
+
+    private agglomeration: number;
 
     /**
-     * Town name
+     * Commune id
      */
-    private town: string;
+    private commune: number;
 
     /**
-     * Department name
+     * Department id
      */
-    private department: string;
+    private department: number;
 
     /**
      * GPS type (define how to use latitude and longitude)
@@ -45,7 +46,7 @@ export class LocationDTO {
      *
      * @returns {string}
      */
-    public getAgglomeration(): string {
+    public getAgglomeration(): number {
         return this.agglomeration;
     }
 
@@ -54,26 +55,26 @@ export class LocationDTO {
      *
      * @param agglomeration new agglomeration value
      */
-    public setAgglomeration(agglomeration: string): void {
+    public setAgglomeration(agglomeration: number): void {
         this.agglomeration = agglomeration;
     }
 
     /**
-     * Getter town
+     * Getter commune
      *
      * @returns {string}
      */
-    public getTown(): string {
-        return this.town;
+    public getCommune(): number {
+        return this.commune;
     }
 
     /**
-     * Setter town
+     * Setter commune
      *
-     * @param town new town value
+     * @param commune new town value
      */
-    public setTown(town: string): void {
-        this.town = town;
+    public setCommune(commune: number): void {
+        this.commune = commune;
     }
 
     /**
@@ -81,7 +82,7 @@ export class LocationDTO {
      *
      * @returns {string}
      */
-    public getDepartment(): string {
+    public getDepartment(): number {
         return this.department;
     }
 
@@ -90,7 +91,7 @@ export class LocationDTO {
      *
      * @param department new department value
      */
-    public setDepartment(department: string): void {
+    public setDepartment(department: number): void {
         this.department = department;
     }
 

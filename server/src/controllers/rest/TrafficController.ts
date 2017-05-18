@@ -5,6 +5,7 @@ import { Utils } from "../../common/Utils";
 import { TrafficQueryService } from "../../services/query/TrafficQueryService";
 import * as HTTPStatusCodes from "http-status-codes";
 import * as Express from "express";
+import { AccidentMinimal } from "./model/accident/AccidentMinimal";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -43,6 +44,21 @@ export class TrafficController implements interfaces.Controller {
     public async findAccidents(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<void> {
         this.logger.info("Find all traffic information");
         res.status(HTTPStatusCodes.OK);
-        res.json(await this.trafficQueryService.findTrafficAccidents());
+        // res.json(await this.trafficQueryService.findTrafficAccidents());
+        const accidents = await this.trafficQueryService.findTrafficAccidents();
+        const returnedAccidents: AccidentMinimal[] = [];
+
+        for (const accident of accidents) {
+            returnedAccidents.push(Object.assign(new AccidentMinimal(), {
+                id : accident.getId(),
+                location : {
+                    // Here is the issue
+                    address: accident.getLocation().getAddress()/*,
+                    latLon: accident.getLocationLatLon()*/
+                }
+            }));
+        }
+
+        res.json(returnedAccidents);
     }
 }
