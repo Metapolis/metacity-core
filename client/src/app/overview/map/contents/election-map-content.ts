@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
 export class ElectionMapSpecific {
+
   onMapReady(map: L.Map) {
     const icon = {
       icon: L.icon({
@@ -10,13 +11,17 @@ export class ElectionMapSpecific {
       })
     };
 
+
     d3.json('assets/mock-data/electoral_bureau_vote_4326.geojson', (err, data) => {
       const featureCollection = data as any;
 
-      console.log(featureCollection);
-
-      const layer = new L.GeoJSON(featureCollection);
-      map.addLayer(layer);
+      L.geoJSON(featureCollection, {
+        onEachFeature: (feature, layer) => {
+          console.log(feature.properties);
+          const p = feature.properties as any;
+          layer.bindPopup(p.ebc_nom as any);
+        }
+      }).addTo(map);
     });
   }
 }
