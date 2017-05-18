@@ -10,11 +10,6 @@ import { MapContentService } from '../shared/map-content.service';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  constructor(private mapcontentservice: MapContentService) {
-    // we should think about having an observable to load map content much sooner
-    //this.getMapContent();
-  }
-  ngOnInit() {}
 
   mapspecific: any;
 
@@ -26,13 +21,21 @@ export class MapComponent implements OnInit {
     center: L.latLng({ lat: 46.1621, lng: -1.1980 })
   };
 
+  constructor(private mapcontentservice: MapContentService) {
+    // we should think about having an observable to load map content much sooner
+    //this.getMapContent();
+  }
+
+  ngOnInit() {}
+
   async onMapReady(map: L.Map) {
     await this.getMapContent();
     this.mapspecific.onMapReady(map);
   }
 
   async getMapContent(): Promise<void> {
-    let response = await this.mapcontentservice.getMapContent('accident-map');
+    // const response = await this.mapcontentservice.getMapContent('accident-map');
+    const response = await this.mapcontentservice.getMapContent('election-map');
     this.mapspecific = response;
   }
 
