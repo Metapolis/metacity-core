@@ -7,16 +7,20 @@ import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { MapFiltersComponent } from './filters/map-filters/map-filters.component';
 
 const overviewRoutes: Routes = [
-  { path: 'accidents/overview', component: OverviewComponent,
+  { path: 'overview', component: OverviewComponent,
     children: [
-      { path: 'carte', component: MapComponent },//, outlet: 'overview-center'},
-      { path: 'analyse', component: PieChartComponent },
-    ]
-  },
-  { path: 'elections/overview', component: OverviewComponent,
-    children: [
-      { path: 'carte', component: MapComponent },//, outlet: 'overview-center'},
-      { path: 'analyse', component: PieChartComponent },
+      { path: 'accidents',
+        children: [
+          { path: 'carte', component: MapComponent },
+          { path: 'analyse', component: PieChartComponent },
+        ]
+      },
+      { path: 'elections',
+        children: [
+          { path: 'carte', component: MapComponent },
+          { path: 'analyse', component: PieChartComponent },
+        ]
+      },
     ]
   },
 ]
