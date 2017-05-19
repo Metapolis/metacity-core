@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-chart-filters',
+  selector: 'overview-accident-chart-filters',
   templateUrl: './accident-chart-filters.component.html',
   styleUrls: ['../../generique-filters.component.scss']
 })
