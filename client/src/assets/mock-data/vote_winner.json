@@ -1,0 +1,1596 @@
+[
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 37.36,
+            "name" : "Hollande",
+            "votes" : 309
+          },
+          "@timestamp" : "2017-05-17T16:07:57.094Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 78.26,
+            "votesNull" : 8,
+            "registrations" : 1067,
+            "voters" : 835,
+            "votesCast" : 827,
+            "name" : "LALEU",
+            "id" : 1
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 40.0,
+            "name" : "Hollande",
+            "votes" : 260
+          },
+          "@timestamp" : "2017-05-17T16:07:57.095Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 77.35,
+            "votesNull" : 16,
+            "registrations" : 861,
+            "voters" : 666,
+            "votesCast" : 650,
+            "name" : "LA PALLICE",
+            "id" : 2
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.99,
+            "name" : "Hollande",
+            "votes" : 240
+          },
+          "@timestamp" : "2017-05-17T16:07:57.095Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 80.95,
+            "votesNull" : 12,
+            "registrations" : 887,
+            "voters" : 718,
+            "votesCast" : 706,
+            "name" : "SAINT-MAURICE",
+            "id" : 3
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 37.09,
+            "name" : "Hollande",
+            "votes" : 240
+          },
+          "@timestamp" : "2017-05-17T16:07:57.095Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 80.65,
+            "votesNull" : 20,
+            "registrations" : 827,
+            "voters" : 667,
+            "votesCast" : 647,
+            "name" : "SAINT-MAURICE",
+            "id" : 4
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 40.78,
+            "name" : "Hollande",
+            "votes" : 281
+          },
+          "@timestamp" : "2017-05-17T16:07:57.098Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 72.49,
+            "votesNull" : 4,
+            "registrations" : 956,
+            "voters" : 693,
+            "votesCast" : 689,
+            "name" : "PORT-NEUF",
+            "id" : 5
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 41.53,
+            "name" : "Hollande",
+            "votes" : 282
+          },
+          "@timestamp" : "2017-05-17T16:07:57.098Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 70.11,
+            "votesNull" : 13,
+            "registrations" : 987,
+            "voters" : 692,
+            "votesCast" : 679,
+            "name" : "PORT-NEUF",
+            "id" : 6
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 38.46,
+            "name" : "Sarkozy",
+            "votes" : 270
+          },
+          "@timestamp" : "2017-05-17T16:07:57.098Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 1,
+          "bureau" : {
+            "participation" : 79.62,
+            "votesNull" : 5,
+            "registrations" : 888,
+            "voters" : 707,
+            "votesCast" : 702,
+            "name" : "PORT-NEUF",
+            "id" : 7
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 41.36,
+            "name" : "Hollande",
+            "votes" : 225
+          },
+          "@timestamp" : "2017-05-17T16:07:57.099Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 77.58,
+            "votesNull" : 13,
+            "registrations" : 718,
+            "voters" : 557,
+            "votesCast" : 544,
+            "name" : "LALEU",
+            "id" : 8
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 38.56,
+            "name" : "Hollande",
+            "votes" : 204
+          },
+          "@timestamp" : "2017-05-17T16:07:57.103Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 77.29,
+            "votesNull" : 12,
+            "registrations" : 700,
+            "voters" : 541,
+            "votesCast" : 529,
+            "name" : "LALEU",
+            "id" : 9
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 39.02,
+            "name" : "Hollande",
+            "votes" : 183
+          },
+          "@timestamp" : "2017-05-17T16:07:57.105Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 73.58,
+            "votesNull" : 10,
+            "registrations" : 651,
+            "voters" : 479,
+            "votesCast" : 469,
+            "name" : "LA PASSERELLE",
+            "id" : 10
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 38.12,
+            "name" : "Hollande",
+            "votes" : 178
+          },
+          "@timestamp" : "2017-05-17T16:07:57.105Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 75.56,
+            "votesNull" : 9,
+            "registrations" : 630,
+            "voters" : 476,
+            "votesCast" : 467,
+            "name" : "LA PASSERELLE",
+            "id" : 11
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 39.18,
+            "name" : "Hollande",
+            "votes" : 192
+          },
+          "@timestamp" : "2017-05-17T16:07:57.105Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 78.74,
+            "votesNull" : 10,
+            "registrations" : 635,
+            "voters" : 500,
+            "votesCast" : 490,
+            "name" : "MIREUIL I",
+            "id" : 12
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 42.02,
+            "name" : "Hollande",
+            "votes" : 221
+          },
+          "@timestamp" : "2017-05-17T16:07:57.106Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 72.08,
+            "votesNull" : 11,
+            "registrations" : 745,
+            "voters" : 537,
+            "votesCast" : 526,
+            "name" : "MIREUIL I",
+            "id" : 13
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 41.15,
+            "name" : "Hollande",
+            "votes" : 251
+          },
+          "@timestamp" : "2017-05-17T16:07:57.106Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 2,
+          "bureau" : {
+            "participation" : 67.5,
+            "votesNull" : 9,
+            "registrations" : 917,
+            "voters" : 619,
+            "votesCast" : 610,
+            "name" : "MIREUIL I",
+            "id" : 14
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 43.85,
+            "name" : "Hollande",
+            "votes" : 221
+          },
+          "@timestamp" : "2017-05-17T16:07:57.107Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 3,
+          "bureau" : {
+            "participation" : 66.89,
+            "votesNull" : 1,
+            "registrations" : 755,
+            "voters" : 505,
+            "votesCast" : 504,
+            "name" : "MIREUIL II",
+            "id" : 15
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 41.63,
+            "name" : "Hollande",
+            "votes" : 281
+          },
+          "@timestamp" : "2017-05-17T16:07:57.107Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 3,
+          "bureau" : {
+            "participation" : 65.78,
+            "votesNull" : 15,
+            "registrations" : 1049,
+            "voters" : 690,
+            "votesCast" : 675,
+            "name" : "MIREUIL II",
+            "id" : 16
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 39.84,
+            "name" : "Hollande",
+            "votes" : 255
+          },
+          "@timestamp" : "2017-05-17T16:07:57.113Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 3,
+          "bureau" : {
+            "participation" : 66.19,
+            "votesNull" : 8,
+            "registrations" : 979,
+            "voters" : 648,
+            "votesCast" : 640,
+            "name" : "MIREUIL II",
+            "id" : 17
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 39.28,
+            "name" : "Hollande",
+            "votes" : 262
+          },
+          "@timestamp" : "2017-05-17T16:07:57.117Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 3,
+          "bureau" : {
+            "participation" : 76.47,
+            "votesNull" : 9,
+            "registrations" : 884,
+            "voters" : 676,
+            "votesCast" : 667,
+            "name" : "MIREUIL II",
+            "id" : 18
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 38.75,
+            "name" : "Hollande",
+            "votes" : 267
+          },
+          "@timestamp" : "2017-05-17T16:07:57.118Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 3,
+          "bureau" : {
+            "participation" : 81.84,
+            "votesNull" : 14,
+            "registrations" : 859,
+            "voters" : 703,
+            "votesCast" : 689,
+            "name" : "FETILLY",
+            "id" : 19
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 31.77,
+            "name" : "Hollande",
+            "votes" : 231
+          },
+          "@timestamp" : "2017-05-17T16:07:57.118Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 3,
+          "bureau" : {
+            "participation" : 82.16,
+            "votesNull" : 10,
+            "registrations" : 897,
+            "voters" : 737,
+            "votesCast" : 727,
+            "name" : "FETILLY",
+            "id" : 20
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 37.21,
+            "name" : "Sarkozy",
+            "votes" : 285
+          },
+          "@timestamp" : "2017-05-17T16:07:57.118Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 83.95,
+            "votesNull" : 8,
+            "registrations" : 922,
+            "voters" : 774,
+            "votesCast" : 766,
+            "name" : "LA GENETTE",
+            "id" : 21
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 45.53,
+            "name" : "Sarkozy",
+            "votes" : 362
+          },
+          "@timestamp" : "2017-05-17T16:07:57.119Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 82.66,
+            "votesNull" : 6,
+            "registrations" : 969,
+            "voters" : 801,
+            "votesCast" : 795,
+            "name" : "LA GENETTE",
+            "id" : 22
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.75,
+            "name" : "Sarkozy",
+            "votes" : 294
+          },
+          "@timestamp" : "2017-05-17T16:07:57.129Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 84.58,
+            "votesNull" : 12,
+            "registrations" : 960,
+            "voters" : 812,
+            "votesCast" : 800,
+            "name" : "LA GENETTE",
+            "id" : 23
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 47.36,
+            "name" : "Sarkozy",
+            "votes" : 350
+          },
+          "@timestamp" : "2017-05-17T16:07:57.129Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 79.59,
+            "votesNull" : 6,
+            "registrations" : 936,
+            "voters" : 745,
+            "votesCast" : 739,
+            "name" : "LA GENETTE",
+            "id" : 24
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.01,
+            "name" : "Sarkozy",
+            "votes" : 310
+          },
+          "@timestamp" : "2017-05-17T16:07:57.130Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 74.18,
+            "votesNull" : 15,
+            "registrations" : 1286,
+            "voters" : 954,
+            "votesCast" : 939,
+            "name" : "DOR",
+            "id" : 25
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 35.63,
+            "name" : "Hollande",
+            "votes" : 315
+          },
+          "@timestamp" : "2017-05-17T16:07:57.131Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 81.92,
+            "votesNull" : 13,
+            "registrations" : 1095,
+            "voters" : 897,
+            "votesCast" : 884,
+            "name" : "CURE-CRAMPETTE",
+            "id" : 26
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 34.87,
+            "name" : "Sarkozy",
+            "votes" : 302
+          },
+          "@timestamp" : "2017-05-17T16:07:57.131Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 4,
+          "bureau" : {
+            "participation" : 83.65,
+            "votesNull" : 4,
+            "registrations" : 1040,
+            "voters" : 870,
+            "votesCast" : 866,
+            "name" : "REAUMUR",
+            "id" : 27
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.11,
+            "name" : "Sarkozy",
+            "votes" : 194
+          },
+          "@timestamp" : "2017-05-17T16:07:57.132Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 0,
+          "bureau" : {
+            "participation" : 75.03,
+            "votesNull" : 6,
+            "registrations" : 789,
+            "voters" : 592,
+            "votesCast" : 586,
+            "name" : "ORATOIRE",
+            "id" : 28
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 39.17,
+            "name" : "Hollande",
+            "votes" : 291
+          },
+          "@timestamp" : "2017-05-17T16:07:57.132Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 0,
+          "bureau" : {
+            "participation" : 76.81,
+            "votesNull" : 12,
+            "registrations" : 984,
+            "voters" : 755,
+            "votesCast" : 743,
+            "name" : "ORATOIRE",
+            "id" : 29
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.74,
+            "name" : "Hollande",
+            "votes" : 275
+          },
+          "@timestamp" : "2017-05-17T16:07:57.135Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 5,
+          "bureau" : {
+            "participation" : 80.82,
+            "votesNull" : 11,
+            "registrations" : 1022,
+            "voters" : 826,
+            "votesCast" : 815,
+            "name" : "LE PRIEURE",
+            "id" : 30
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 34.84,
+            "name" : "Hollande",
+            "votes" : 286
+          },
+          "@timestamp" : "2017-05-17T16:07:57.135Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 5,
+          "bureau" : {
+            "participation" : 82.09,
+            "votesNull" : 13,
+            "registrations" : 1016,
+            "voters" : 834,
+            "votesCast" : 821,
+            "name" : "LAFOND",
+            "id" : 31
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 37.79,
+            "name" : "Hollande",
+            "votes" : 294
+          },
+          "@timestamp" : "2017-05-17T16:07:57.136Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 5,
+          "bureau" : {
+            "participation" : 81.15,
+            "votesNull" : 14,
+            "registrations" : 976,
+            "voters" : 792,
+            "votesCast" : 778,
+            "name" : "LAFOND",
+            "id" : 32
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.39,
+            "name" : "Hollande",
+            "votes" : 270
+          },
+          "@timestamp" : "2017-05-17T16:07:57.136Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 0,
+          "bureau" : {
+            "participation" : 75.96,
+            "votesNull" : 13,
+            "registrations" : 994,
+            "voters" : 755,
+            "votesCast" : 742,
+            "name" : "ORATOIRE",
+            "id" : 33
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 31.34,
+            "name" : "Sarkozy",
+            "votes" : 236
+          },
+          "@timestamp" : "2017-05-17T16:07:57.136Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 0,
+          "bureau" : {
+            "participation" : 77.86,
+            "votesNull" : 17,
+            "registrations" : 989,
+            "voters" : 770,
+            "votesCast" : 753,
+            "name" : "ORATOIRE",
+            "id" : 34
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.3,
+            "name" : "Hollande",
+            "votes" : 310
+          },
+          "@timestamp" : "2017-05-17T16:07:57.137Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 77.99,
+            "votesNull" : 7,
+            "registrations" : 1104,
+            "voters" : 861,
+            "votesCast" : 854,
+            "name" : "REY-VALIN",
+            "id" : 35
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 43.54,
+            "name" : "Hollande",
+            "votes" : 219
+          },
+          "@timestamp" : "2017-05-17T16:07:57.138Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 75.22,
+            "votesNull" : 10,
+            "registrations" : 682,
+            "voters" : 513,
+            "votesCast" : 503,
+            "name" : "LAVOISIER",
+            "id" : 36
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 42.86,
+            "name" : "Hollande",
+            "votes" : 246
+          },
+          "@timestamp" : "2017-05-17T16:07:57.138Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 77.36,
+            "votesNull" : 7,
+            "registrations" : 751,
+            "voters" : 581,
+            "votesCast" : 574,
+            "name" : "TASDON",
+            "id" : 37
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.67,
+            "name" : "Hollande",
+            "votes" : 304
+          },
+          "@timestamp" : "2017-05-17T16:07:57.139Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 80.69,
+            "votesNull" : 15,
+            "registrations" : 1046,
+            "voters" : 844,
+            "votesCast" : 829,
+            "name" : "TASDON",
+            "id" : 38
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.99,
+            "name" : "Hollande",
+            "votes" : 243
+          },
+          "@timestamp" : "2017-05-17T16:07:57.140Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 76.99,
+            "votesNull" : 12,
+            "registrations" : 869,
+            "voters" : 669,
+            "votesCast" : 657,
+            "name" : "BONGRAINE",
+            "id" : 39
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.76,
+            "name" : "Hollande",
+            "votes" : 237
+          },
+          "@timestamp" : "2017-05-17T16:07:57.141Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 76.93,
+            "votesNull" : 5,
+            "registrations" : 919,
+            "voters" : 707,
+            "votesCast" : 702,
+            "name" : "TECHNOFORUM",
+            "id" : 40
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.04,
+            "name" : "Hollande",
+            "votes" : 329
+          },
+          "@timestamp" : "2017-05-17T16:07:57.145Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 81.14,
+            "votesNull" : 12,
+            "registrations" : 1140,
+            "voters" : 925,
+            "votesCast" : 913,
+            "name" : "TECHNOFORUM",
+            "id" : 41
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.41,
+            "name" : "Hollande",
+            "votes" : 292
+          },
+          "@timestamp" : "2017-05-17T16:07:57.150Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 77.98,
+            "votesNull" : 15,
+            "registrations" : 1140,
+            "voters" : 889,
+            "votesCast" : 874,
+            "name" : "TECHNOFORUM",
+            "id" : 42
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 35.51,
+            "name" : "Hollande",
+            "votes" : 234
+          },
+          "@timestamp" : "2017-05-17T16:07:57.160Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 84.13,
+            "votesNull" : 9,
+            "registrations" : 794,
+            "voters" : 668,
+            "votesCast" : 659,
+            "name" : "BEAUREGARD",
+            "id" : 43
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 36.94,
+            "name" : "Hollande",
+            "votes" : 174
+          },
+          "@timestamp" : "2017-05-17T16:07:57.161Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 81.32,
+            "votesNull" : 8,
+            "registrations" : 589,
+            "voters" : 479,
+            "votesCast" : 471,
+            "name" : "BEAUREGARD",
+            "id" : 44
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 34.26,
+            "name" : "Hollande",
+            "votes" : 346
+          },
+          "@timestamp" : "2017-05-17T16:07:57.161Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 82.45,
+            "votesNull" : 14,
+            "registrations" : 1242,
+            "voters" : 1024,
+            "votesCast" : 1010,
+            "name" : "SAINT-ELOI",
+            "id" : 45
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 35.34,
+            "name" : "Hollande",
+            "votes" : 264
+          },
+          "@timestamp" : "2017-05-17T16:07:57.161Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 77.08,
+            "votesNull" : 13,
+            "registrations" : 986,
+            "voters" : 760,
+            "votesCast" : 747,
+            "name" : "SAINT-ELOI",
+            "id" : 46
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 35.84,
+            "name" : "Hollande",
+            "votes" : 329
+          },
+          "@timestamp" : "2017-05-17T16:07:57.165Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 84.08,
+            "votesNull" : 17,
+            "registrations" : 1112,
+            "voters" : 935,
+            "votesCast" : 918,
+            "name" : "SAINT-ELOI",
+            "id" : 47
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 42.38,
+            "name" : "Hollande",
+            "votes" : 289
+          },
+          "@timestamp" : "2017-05-17T16:07:57.166Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 80.37,
+            "votesNull" : 14,
+            "registrations" : 866,
+            "voters" : 696,
+            "votesCast" : 682,
+            "name" : "LAVOISIER",
+            "id" : 48
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 40.76,
+            "name" : "Hollande",
+            "votes" : 278
+          },
+          "@timestamp" : "2017-05-17T16:07:57.166Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 82.62,
+            "votesNull" : 12,
+            "registrations" : 840,
+            "voters" : 694,
+            "votesCast" : 682,
+            "name" : "LAVOISIER",
+            "id" : 49
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 44.28,
+            "name" : "Hollande",
+            "votes" : 352
+          },
+          "@timestamp" : "2017-05-17T16:07:57.167Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 8,
+          "bureau" : {
+            "participation" : 68.9,
+            "votesNull" : 16,
+            "registrations" : 1177,
+            "voters" : 811,
+            "votesCast" : 795,
+            "name" : "VILLENEUVE",
+            "id" : 50
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 43.98,
+            "name" : "Hollande",
+            "votes" : 296
+          },
+          "@timestamp" : "2017-05-17T16:07:57.168Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 8,
+          "bureau" : {
+            "participation" : 77.01,
+            "votesNull" : 17,
+            "registrations" : 896,
+            "voters" : 690,
+            "votesCast" : 673,
+            "name" : "VILLENEUVE",
+            "id" : 51
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 33.99,
+            "name" : "Hollande",
+            "votes" : 225
+          },
+          "@timestamp" : "2017-05-17T16:07:57.169Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 9,
+          "bureau" : {
+            "participation" : 83.64,
+            "votesNull" : 13,
+            "registrations" : 807,
+            "voters" : 675,
+            "votesCast" : 662,
+            "name" : "ANCIENNE GENDARMERIE",
+            "id" : 52
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 39.8,
+            "name" : "Hollande",
+            "votes" : 195
+          },
+          "@timestamp" : "2017-05-17T16:07:57.169Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 9,
+          "bureau" : {
+            "participation" : 71.1,
+            "votesNull" : 7,
+            "registrations" : 699,
+            "voters" : 497,
+            "votesCast" : 490,
+            "name" : "ANCIENNE GENDARMERIE",
+            "id" : 53
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 34.55,
+            "name" : "Hollande",
+            "votes" : 218
+          },
+          "@timestamp" : "2017-05-17T16:07:57.172Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 7,
+          "bureau" : {
+            "participation" : 86.01,
+            "votesNull" : 2,
+            "registrations" : 736,
+            "voters" : 633,
+            "votesCast" : 631,
+            "name" : "PAUL DOUMER",
+            "id" : 54
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+,
+{
+          "date" : "22-04-2012",
+          "candidate" : {
+            "percentage" : 43.42,
+            "name" : "Hollande",
+            "votes" : 211
+          },
+          "@timestamp" : "2017-05-17T16:07:57.177Z",
+          "sources" : [
+            "Opendata LaRochelle"
+          ],
+          "meta" : {
+            "documentType" : "vote",
+            "index" : "politic"
+          },
+          "canton" : 6,
+          "bureau" : {
+            "participation" : 71.39,
+            "votesNull" : 8,
+            "registrations" : 692,
+            "voters" : 494,
+            "votesCast" : 486,
+            "name" : "LAVOISIER",
+            "id" : 55
+          },
+          "type" : "presidential",
+          "tour" : 1
+        }
+]
