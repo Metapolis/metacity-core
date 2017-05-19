@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { OverviewComponent } from './overview.component';
 import { MapComponent } from './map/map.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
-import { MapFiltersComponent } from './filters/map-filters/map-filters.component';
 import { AccidentMapComponent } from './categories/accidents/accident-map/accident-map.component';
 
 const overviewRoutes: Routes = [
