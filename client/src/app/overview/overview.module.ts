@@ -17,6 +17,8 @@ import { PlotComponent } from './charts/plot/plot.component';
 import { OverviewComponent } from './overview.component';
 import { AccidentMapComponent } from './categories/accidents/accident-map/accident-map.component';
 import { ThreeColumnsTemplateComponent } from './templates/three-columns/three-columns-template.component';
+import { ElectionMapFiltersComponent } from './filters/elections/election-map-filters/election-map-filters.component';
+import { ElectionMapComponent } from './categories/elections/election-map/election-map.component';
 
 // Services
 import { ChartContentService } from './shared/chart-content.service';
@@ -44,6 +46,8 @@ import { MapContentService } from './shared/map-content.service';
     OverviewComponent,
     AccidentMapComponent,
     ThreeColumnsTemplateComponent,
+    ElectionMapFiltersComponent,
+    ElectionMapComponent,
   ],
   providers: [
     ChartContentService,
