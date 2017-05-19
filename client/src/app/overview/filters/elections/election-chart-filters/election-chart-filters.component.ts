@@ -11,10 +11,11 @@ export class ElectionChartFiltersComponent implements OnInit {
 
   ngOnInit() {
   }
-  buttonList: {button: string}[] = [
+  buttonListElections: {button: string}[] = [
     {button: "Résultats du 1er tour 2012"},
     {button: "Résultats du 2ème tour 2012"},
     {button: "Résultats du 1er tour 2017"},
     {button: "Résultats du 2ème tour 2017"},
+
   ]
 }
