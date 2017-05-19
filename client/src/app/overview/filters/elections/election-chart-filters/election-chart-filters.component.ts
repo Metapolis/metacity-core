@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import 'hammerjs';
-
 
 @Component({
   selector: 'overview-election-chart-filters',
   templateUrl: './election-chart-filters.component.html',
-  styleUrls: ['./election-chart-filters.component.html', '../../generique-filters.component.scss']
+  styleUrls: ['../../generique-filters.component.scss']
 })
 export class ElectionChartFiltersComponent implements OnInit {
 
@@ -13,5 +11,11 @@ export class ElectionChartFiltersComponent implements OnInit {
 
   ngOnInit() {
   }
+  buttonListElections: {button: string}[] = [
+    {button: "Résultats du 1er tour 2012"},
+    {button: "Résultats du 2ème tour 2012"},
+    {button: "Résultats du 1er tour 2017"},
+    {button: "Résultats du 2ème tour 2017"},
 
+  ]
 }
