@@ -23,6 +23,5 @@ export class HeaderComponent implements OnInit {
 
   async getMenu(): Promise<void> {
     this.navlinks = await this.menuService.getHeaderNavlinks();
-    //this.menuService.getHeaderNavlinks().then(answer => this.navlinks = answer);
   }
 }
