@@ -5,6 +5,8 @@ import { OverviewComponent } from './overview.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { AccidentMapComponent } from './categories/accidents/accident-map/accident-map.component';
 import { ElectionMapComponent } from './categories/elections/election-map/election-map.component';
+import { ElectionChartComponent } from './categories/elections/election-chart/election-chart.component';
+
 
 const overviewRoutes: Routes = [
   { path: 'overview', component: OverviewComponent,
@@ -18,7 +20,7 @@ const overviewRoutes: Routes = [
       { path: 'elections',
         children: [
           { path: 'carte', component: ElectionMapComponent },
-          { path: 'analyse', component: PieChartComponent },
+          { path: 'analyse', component: ElectionChartComponent },
         ]
       },
     ]
