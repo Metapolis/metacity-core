@@ -6,12 +6,15 @@ import { MaterialModule, MdButtonModule, MdCheckboxModule } from '@angular/mater
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverviewRoutingModule } from './overview-routing.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { Ng2SelectModule } from 'ng2-material-select';
+import { FormsModule } from '@angular/forms';
+
 
 // Components
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { MapComponent } from './map/map.component';
-import { AccidentChartFiltersComponent } from './filters/accidents/chart-filters/accident-chart-filters.component';
-import { AccidentMapFiltersComponent } from './filters/accidents/map-filters/accident-map-filters.component';
+import { AccidentChartFiltersComponent } from './filters/accidents/accident-chart-filters/accident-chart-filters.component';
+import { AccidentMapFiltersComponent } from './filters/accidents/accident-map-filters/accident-map-filters.component';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { PlotComponent } from './charts/plot/plot.component';
 import { OverviewComponent } from './overview.component';
@@ -34,7 +37,9 @@ import { MapContentService } from './shared/map-content.service';
     MdButtonModule,
     MdCheckboxModule,
     OverviewRoutingModule,
-    AppRoutingModule
+    AppRoutingModule,
+    Ng2SelectModule,
+    FormsModule
   ],
   declarations: [
     PieChartComponent,
@@ -55,3 +60,4 @@ import { MapContentService } from './shared/map-content.service';
   ]
 })
 export class OverviewModule { }
+export class MyModule {}
