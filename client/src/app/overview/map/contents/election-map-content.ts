@@ -13,21 +13,29 @@ export class ElectionMapSpecific {
       })
     };
 
+    d3.json('assets/mock-data/vote_winner.json', (err, vote_winner) => {
+      let index = 0;
 
-    d3.json('assets/mock-data/electoral_bureau_vote_4326.geojson', (err, data) => {
-      const featureCollection = data as any;
+      d3.json('assets/mock-data/electoral_bureau_vote_4326.geojson', (err2, data) => {
+        const featureCollection = data as any;
 
-      L.geoJSON(featureCollection, {
-        onEachFeature: (feature, layer) => {
-          // console.log(feature.properties);
-          const p = feature.properties as any;
-          layer.bindPopup(p.ebc_nom as any);
-        }
-      }).addTo(map);
-    });
-
-    d3.json('assets/mock-data/vote_winner.json', (err, data) => {
-      console.log(data);
+        L.geoJSON(featureCollection, {
+          onEachFeature: (feature, layer) => {
+            // console.log(feature.properties);
+            const p = feature.properties as any;
+            if (index < 55) {
+              layer.bindPopup(p.ebc_nom as any +
+                '<br>' +
+                vote_winner[index].bureau.name as any +
+                '<br>' +
+                vote_winner[index].bureau.id
+              );
+              console.log(vote_winner[index]);
+              index++;
+            }
+          }
+        }).addTo(map);
+      });
     });
   }
 }
