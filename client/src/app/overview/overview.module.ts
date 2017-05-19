@@ -24,6 +24,8 @@ import { ElectionMapFiltersComponent } from './filters/elections/election-map-fi
 import { ElectionMapComponent } from './categories/elections/election-map/election-map.component';
 import { GenericNavPanelComponent } from './nav-pannels/generic-nav-panel/generic-nav-panel.component';
 import { ElectionChartComponent } from './categories/elections/election-chart/election-chart.component';
+import { AccidentChartComponent } from './categories/accidents/accident-chart/accident-chart.component';
+
 
 
 // Services
@@ -58,6 +60,7 @@ import { MapContentService } from './shared/map-content.service';
     ElectionMapComponent,
     ElectionChartComponent,
     GenericNavPanelComponent,
+    AccidentChartComponent,
   ],
   providers: [
     ChartContentService,
