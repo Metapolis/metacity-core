@@ -1,0 +1,77 @@
+@import "../../../../_variables";
+
+.with_border_right {
+  box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
+  border-color: $card-border-color;
+  background-color: $white;
+  z-index: 1;
+
+  h2 {
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    margin-top: 0px;
+    padding-top: 20px;
+  }
+
+  hr {
+    width: 100px;
+  }
+}
+
+.button_dataviz {
+
+  &:hover {
+    .button_dataviz_icon {
+      background-color: $brand-primary;
+      transition: background-color 700ms linear;
+
+      img {
+        filter: invert(100%);
+      }
+    }
+  }
+
+  &_icon {
+    width: 50px;
+    height: 50px;
+    background-color: $body-bg;
+    border-radius: 100px;
+    border: 2px solid $gray-light;
+    display: inline-block;
+
+    img {
+      width: 25px;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+  }
+
+  &_text {
+    margin-left: 25px;
+    display: inline-block;
+  }
+}
+
+.div_without_padding {
+  height: 100vh;
+  padding: 0 !important;
+
+  a {
+    display: inline-block;
+    margin-top: 20px;
+    color: $black;
+    text-decoration: none;
+  }
+
+  a:hover {
+    font-style: none;
+    color: $brand-primary;
+  }
+}
+
+.without_padding {
+  width: 100vw !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}

@@ -1,26 +1,11 @@
 @import "../../../../_variables";
 
+
 .with_border_left {
   box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
   border-color: $card-border-color;
 }
 
-.with_border_right {
-  box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
-  border-color: $card-border-color;
-  background-color: $white;
-  z-index: 1;
-
-  h2 {
-    font-size: 20px;
-    font-family: "Open Sans", sans-serif;
-    margin-top: 80px;
-  }
-
-  hr {
-    width: 100px;
-  }
-}
 
 .without_padding {
   width: 100vw !important;
@@ -104,39 +89,5 @@
       box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
       transition-delay: 0s;
     }
-  }
-}
-
-.button_dataviz {
-
-  &:hover {
-    .button_dataviz_icon {
-      background-color: $brand-primary;
-      transition: background-color 700ms linear;
-
-      img {
-        filter: invert(100%);
-      }
-    }
-  }
-
-  &_icon {
-    width: 50px;
-    height: 50px;
-    background-color: $body-bg;
-    border-radius: 100px;
-    border: 2px solid $gray-light;
-    display: inline-block;
-
-    img {
-      width: 25px;
-      margin-left: 10px;
-      margin-top: 10px;
-    }
-  }
-
-  &_text {
-    margin-left: 25px;
-    display: inline-block;
   }
 }

@@ -6,7 +6,7 @@ import { Img } from '../../../common/img';
 @Component({
   selector: 'overview-generic-nav-panel',
   templateUrl: 'generic-nav-panel.component.html',
-  styleUrls: ['../../templates/three-columns/three-columns-template.component.scss']
+  styleUrls: ['generic-nav-panel.component.scss']
 })
 export class GenericNavPanelComponent {
   assets = new Assets;
