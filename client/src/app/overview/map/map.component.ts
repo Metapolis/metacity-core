@@ -34,8 +34,7 @@ export class MapComponent implements OnInit {
   }
 
   async getMapContent(): Promise<void> {
-    // const response = await this.mapcontentservice.getMapContent('accident-map');
-    const response = await this.mapcontentservice.getMapContent('election-map');
+    const response = await this.mapcontentservice.getMapContent();
     this.mapspecific = response;
   }
 
