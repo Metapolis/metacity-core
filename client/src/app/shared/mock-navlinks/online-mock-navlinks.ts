@@ -12,6 +12,5 @@ export const ONLINENAVLINKS: Link[] = [
   { src: '/overview/elections/carte', text: 'Election/carte' },
   { src: 'accidents', text: 'Accidents' },
   { src: 'elections', text: 'Elections' },
-  { src: 'register', text: 'Inscription' },
-  { src: 'connexion', text: 'Connexion' },
+  { src: 'disconnexion', text: 'Déconnexion' },
 ];
