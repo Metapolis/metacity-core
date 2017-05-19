@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
 
 import { Link } from "./../common/link";
-import { NAVLINKS } from "./mock-navlinks";
+import { OFFLINENAVLINKS } from "./mock-navlinks/offline-mock-navlinks";
+import { ConnexionService } from "./connexion.service";
 
 @Injectable()
 export class MenuService {
-  getHeaderNavlinks(): Promise<Link[]> {
-    return Promise.resolve(NAVLINKS);
+  constructor(private connexionService: ConnexionService) { }
+  connexionState: boolean;
+  async getHeaderNavlinks(): Promise<Link[]> {
+    await this.getConnexionState();
+    if (this.connexionState) {
+      return Promise.resolve(OFFLINENAVLINKS);
+    }
+  }
+
+  private async getConnexionState() {
+    this.connexionState = await this.connexionService.getConnexionState();
   }
 }

@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
     //this.getMapContent();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async onMapReady(map: L.Map) {
     await this.getMapContent();
