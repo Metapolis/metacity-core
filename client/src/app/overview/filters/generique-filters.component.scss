@@ -1,0 +1,104 @@
+@import "../../../_variables";
+
+
+.checkboxdemoSelectAll .demo-legend {
+  color: #3F51B5; }
+
+.checkboxdemoSelectAll .demo-fieldset {
+  border-style: solid;
+  border-width: 1px;
+  height: 100%; }
+
+.checkboxdemoSelectAll .demo-select-all-checkboxes {
+  padding-left: 30px; }
+
+  .with_border_left {
+    box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15) !important;
+    border-color: $card-border-color;
+  }
+
+  .without_padding {
+    width: 100vw !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .div_without_padding {
+    height: 100vh;
+    padding: 0 !important;
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: $black;
+      text-decoration: none;
+    }
+
+    a:hover {
+      font-style: none;
+      color: $brand-primary;
+    }
+  }
+
+  .accidents {
+    img {
+      width: 100%;
+      margin-top: 100px;
+    }
+
+    .dataviz {
+      background-color: $white;
+    }
+  }
+
+
+  .title {
+    background-color: $brand-primary;
+    color: $white;
+    font-weight: 500;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    position: relative;
+  }
+
+  .choice {
+    &-title {
+      background-color: #DBEAF0;
+      padding: 20px 0;
+    }
+
+    &-content {
+      padding: 40px 20px;
+
+      button {
+        margin-bottom: 15px;
+      }
+    }
+
+    button {
+      border-radius: 45px;
+      background-color: $white;
+      color: $black;
+      border-color: $gray-light;
+      padding: 12px 30px;
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.2s;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+
+      &:hover {
+        background-color: $brand-primary;
+        transition: background-color 700ms linear;
+        color: $white;
+      }
+
+      &:active {
+        background-color: $brand-primary;
+        color: $white;
+        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+        transition-delay: 0s;
+      }
+    }
+  }

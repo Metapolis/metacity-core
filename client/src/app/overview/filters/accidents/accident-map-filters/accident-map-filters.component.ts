@@ -6,7 +6,7 @@ import 'hammerjs';
 @Component({
   selector: 'overview-accident-map-filters',
   templateUrl: './accident-map-filters.component.html',
-  styleUrls: ['../../../templates/three-columns/three-columns-template.component.scss', './accident-map-filters.component.scss']
+  styleUrls: ['../../generique-filters.component.scss']
 })
 export class AccidentMapFiltersComponent implements OnInit {
 

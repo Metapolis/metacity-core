@@ -5,7 +5,7 @@ import 'hammerjs';
 @Component({
   selector: 'overview-election-map-filters',
   templateUrl: './election-map-filters.component.html',
-  styleUrls: ['../../../templates/three-columns/three-columns-template.component.scss', './election-map-filters.component.scss']
+  styleUrls: ['./election-map-filters.component.html', '../../generique-filters.component.scss']
 })
 export class ElectionMapFiltersComponent implements OnInit {
 
