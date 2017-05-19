@@ -16,7 +16,7 @@ import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { PlotComponent } from './charts/plot/plot.component';
 import { OverviewComponent } from './overview.component';
 import { AccidentMapComponent } from './categories/accidents/accident-map/accident-map.component';
-import { TemplateThreeColumnsComponent } from './template/template-three-columns.component';
+import { ThreeColumnsTemplateComponent } from './templates/three-columns/three-columns-template.component';
 
 // Services
 import { ChartContentService } from './shared/chart-content.service';
@@ -43,7 +43,7 @@ import { MapContentService } from './shared/map-content.service';
     PlotComponent,
     OverviewComponent,
     AccidentMapComponent,
-    TemplateThreeColumnsComponent,
+    ThreeColumnsTemplateComponent,
   ],
   providers: [
     ChartContentService,

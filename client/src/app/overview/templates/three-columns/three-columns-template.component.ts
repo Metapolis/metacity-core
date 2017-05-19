@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { Assets } from '../../assets';
-import { Link } from '../../common/link';
-import { Img } from '../../common/img';
+import { Assets } from '../../../assets';
+import { Link } from '../../../common/link';
+import { Img } from '../../../common/img';
 
 @Component({
-  selector: "app-template-three-columns",
-  templateUrl: 'template-three-columns.component.html',
-  styleUrls: ['template-three-columns.component.scss']
+  selector: "overview-template-three-columns",
+  templateUrl: 'three-columns-template.component.html',
+  styleUrls: ['three-columns-template.component.scss']
 })
-export class TemplateThreeColumnsComponent {
+export class ThreeColumnsTemplateComponent {
   assets = new Assets;
   visuallinks: { link: Link, img: Img }[] = [
     {

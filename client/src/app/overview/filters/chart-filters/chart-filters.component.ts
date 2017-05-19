@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-chart-filters',
   templateUrl: './chart-filters.component.html',
-  styleUrls: ['../../template/template-three-columns.component.scss']
+  styleUrls: ['../../templates/three-columns/three-columns-template.component.scss']
 })
 export class ChartFiltersComponent implements OnInit {
 
