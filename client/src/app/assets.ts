@@ -16,4 +16,5 @@ export class Assets {
   search: Img = {src: '../assets/img/search.svg', alt: ''};
   worldwide: Img = {src: '../assets/img/worldwide.svg', alt: ''};
   world: Img = {src: '../assets/img/monde.png', alt: 'image statique Monde'};
+  larochelLogo: Img = {src: '../assets/img/Logo_ville_la_rochelle.svg.png', alt: 'logo de la rochelle'};
 }
