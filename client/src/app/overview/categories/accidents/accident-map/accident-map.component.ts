@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { MapContentService } from '../../../shared/map-content.service';
 
@@ -7,7 +8,7 @@ import { MapContentService } from '../../../shared/map-content.service';
     templateUrl: 'accident-map.component.html',
 })
 export class AccidentMapComponent {
-  constructor(private mapcontentservice: MapContentService) {}
+  constructor(private mapcontentservice: MapContentService) { }
 
   ngOnInit() {
     this.setMapContent('accident-map');

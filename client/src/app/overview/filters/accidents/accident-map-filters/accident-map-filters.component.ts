@@ -48,15 +48,7 @@ export class AccidentMapFiltersComponent implements OnInit {
     }
   }
 
-  setRoberto(roberto: string): void {
-    this.roberto = roberto;
-  }
-  roberto:string;
-
-
-  constructor(private mapcontentservice: MapContentService) {
-    this.setWeatherFilterService();
-  }
+  constructor(private mapcontentservice: MapContentService) { }
   ngOnInit() {
   }
 

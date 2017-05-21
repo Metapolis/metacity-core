@@ -5,7 +5,7 @@
     "lat_lon": [4616800, -115011]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -16,7 +16,7 @@
     "lat_lon": [4616792, -113314]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 5

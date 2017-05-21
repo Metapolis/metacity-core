@@ -13,8 +13,8 @@ export class AccidentMapSpecific {
   layer: L.Layer;
 
   constructor() {
-    this.weatherFilters = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+    this.weatherFilters = [1,2,3,4,5,6,7,8,9];
+    //this.layer = new L.LayerGroup;
     this.icon = {
       icon: L.icon({
         iconSize: [50, 50],
@@ -49,13 +49,22 @@ export class AccidentMapSpecific {
 
   public reDraw(): void {
     this.map.removeLayer(this.layer);
+    // let layerlist: L.Layer[] = [];
+    // this.map.eachLayer(function(layer) {
+    //   layerlist.push(layer);
+    // })
+    // for (var element in layerlist ) {
+    //   this.map.removeLayer(layerlist[element]);
+    // }
     this.draw();
+    //console.log(this.weatherFilters);
   }
 
-  public setWeatherFilters(weatherFilters: number[]) {
+  public setWeatherFilters(weatherFilters: number[]): void {
+    //this.weatherFilters = [1,2,3,4,5,6,7,8,9];
     this.weatherFilters = weatherFilters;
   }
-  
+
   public draw(): void {
     d3.json('assets/mock-data/accidents.json', (err, data) => {
 
@@ -67,6 +76,8 @@ export class AccidentMapSpecific {
       }[];
 
       pdata.forEach((item, index, array) => {
+        // console.log(item.climatology.atmosphericCondition);
+        // console.log(item.climatology.atmosphericCondition in this.weatherFilters);
         if (item.climatology.atmosphericCondition in this.weatherFilters) {
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
           this.layer = L.marker(lat_lon, this.icon);
