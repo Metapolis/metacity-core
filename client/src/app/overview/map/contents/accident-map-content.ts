@@ -10,6 +10,7 @@ export class AccidentMapSpecific {
   } = {};
   icon: any;
   map: L.Map;
+  layer: L.Layer;
 
   constructor() {
     this.weatherFilters = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -46,6 +47,11 @@ export class AccidentMapSpecific {
     this.draw();
   }
 
+  public reDraw(): void {
+    this.map.removeLayer(this.layer);
+    this.draw();
+  }
+
   public draw(): void {
     d3.json('assets/mock-data/accidents.json', (err, data) => {
 
@@ -59,15 +65,15 @@ export class AccidentMapSpecific {
       pdata.forEach((item, index, array) => {
         if (item.climatology.atmosphericCondition in this.weatherFilters) {
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
-          const layer = L.marker(lat_lon, this.icon);
-          layer.bindPopup(
+          this.layer = L.marker(lat_lon, this.icon);
+          this.layer.bindPopup(
             '<h6>' + item.location.address + '</h6>' +
             '<hr>' +
             '<b>meteo</b>: ' + this.weatherFiltersMap[item.climatology.atmosphericCondition] +
             '<br>' +
             '<b>type de collision</b>: ' + this.collisionMap[item.collisionType]
           );
-          layer.addTo(this.map);
+          this.layer.addTo(this.map);
         }
       });
     });

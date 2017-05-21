@@ -10,16 +10,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019284,
+  "id": 201500019444,
   "location": {
-    "address": "55, JOFFRE   BOULEVARD (",
-    "lat_lon": [4615794, -114232]
+    "address": "63, SAUTEL  BOULEVARD AN",
+    "lat_lon": [4616792, -113314]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 5
 }, {
   "id": 201500019286,
   "location": {
@@ -28,20 +28,20 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 2
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
-  "id": 201500019287,
+  "id": 201500019446,
   "location": {
-    "address": "2, MOTTE ROUGE    PLACE",
-    "lat_lon": [4615533, -114876]
+    "address": "2, CONVENTION   RUE DE L",
+    "lat_lon": [4615099, -111632]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019288,
   "location": {
@@ -52,12 +52,12 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019289,
+  "id": 201500019448,
   "location": {
-    "address": "JOFFRE   BOULEVARD (27/7",
-    "lat_lon": [4616142, -113993]
+    "address": "01, COUBERTIN   AVENUE P",
+    "lat_lon": [4616519, -117502]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -72,36 +72,47 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
-  "id": 201500019293,
+  "id": 201500019451,
   "location": {
-    "address": "52, FETILLY   AVENUE DE",
-    "lat_lon": [4617200, -115453]
+    "address": "24, ALBERT IER   RUE",
+    "lat_lon": [4616467, -115160]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
-  "id": 201500019295,
+  "id": 201500019453,
   "location": {
-    "address": "02, DAUPHINE   AVENUE DE",
-    "lat_lon": [4616644, -115091]
+    "address": "05, SCHWEITZER   RUE DU",
+    "lat_lon": [4615851, -114567]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019296,
   "location": {
     "address": "SENAC DE MEILHAN   RUE",
     "lat_lon": [4615394, -115249]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 5
+  },
+  "collisionType": 6
+}, {
+  "id": 201500019455,
+  "location": {
+    "address": "06, DANTON   AVENUE",
+    "lat_lon": [4615556, -111882]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -120,10 +131,10 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019300,
+  "id": 201500019458,
   "location": {
-    "address": "VESPUCCI   AVENUE AMERIG",
-    "lat_lon": [4615005, -115476]
+    "address": "2 G, VESPUCCI   AVENUE A",
+    "lat_lon": [4615321, -115467]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -142,6 +153,17 @@
   },
   "collisionType": 3
 }, {
+  "id": 201500019460,
+  "location": {
+    "address": "06, REPUBLIQUE   BOULEVA",
+    "lat_lon": [4613842, -115137]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 2
+  },
+  "collisionType": 3
+}, {
   "id": 201500019305,
   "location": {
     "address": "25, SARTRE   AVENUE JEAN",
@@ -149,9 +171,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019306,
   "location": {
@@ -162,12 +184,12 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019307,
+  "id": 201500019463,
   "location": {
-    "address": "9, GUILLET   AVENUE LOUI",
-    "lat_lon": [4616960, -118378]
+    "address": "77, GUITON   AVENUE JEAN",
+    "lat_lon": [4615980, -116657]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -182,31 +204,31 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 2
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
-  "id": 201500019310,
+  "id": 201500019465,
   "location": {
-    "address": "9, SCIERIE   RUE DE LA",
-    "lat_lon": [4615072, -115404]
+    "address": "114 PK RN137 ROCHEFORT J",
+    "lat_lon": [4613726, -110350]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 2
+  },
+  "collisionType": 6
+}, {
+  "id": 201500019466,
+  "location": {
+    "address": "1, SARTRE   AVENUE JEAN-",
+    "lat_lon": [4615340, -111302]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
-}, {
-  "id": 201500019311,
-  "location": {
-    "address": "146, BERNIER   AVENUE DU",
-    "lat_lon": [4617146, -115906]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019312,
   "location": {
@@ -217,12 +239,12 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019313,
+  "id": 201500019467,
   "location": {
-    "address": "SAUTEL  BOULEVARD ANDRE",
-    "lat_lon": [4617128, -112317]
+    "address": "01, LOMBARD   AVENUE MOD",
+    "lat_lon": [4617491, -119707]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -230,16 +252,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019314,
+  "id": 201500019468,
   "location": {
-    "address": "66, QUATORZE JUILLET   A",
-    "lat_lon": [4615207, -112406]
+    "address": "21, KENNEDY   AVENUE DU",
+    "lat_lon": [4616784, -118355]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 2
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019315,
   "location": {
@@ -248,7 +270,18 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 3
+  },
+  "collisionType": 7
+}, {
+  "id": 201500019469,
+  "location": {
+    "address": "17, ECOLES   RUE DES",
+    "lat_lon": [4616356, -115467]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -261,18 +294,18 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019318,
+  "id": 201500019470,
   "location": {
-    "address": "67, COGNEHORS   BOULEVAR",
-    "lat_lon": [4616806, -114240]
+    "address": "50, SARTRE   AVENUE JEAN",
+    "lat_lon": [4615622, -113061]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019319,
   "location": {
@@ -283,16 +316,16 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019320,
+  "id": 201500019472,
   "location": {
-    "address": "9, VIELJEUX   RUE LEONCE",
-    "lat_lon": [4615789, -115417]
+    "address": "37, JOFFRE   BOULEVARD (",
+    "lat_lon": [4615329, -114618]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -305,29 +338,29 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
-  "id": 201500019324,
+  "id": 201500019473,
   "location": {
-    "address": "2, PERIGNY   RUE DE",
-    "lat_lon": [4616213, -112250]
+    "address": "GRASSET   AVENUE EDMOND",
+    "lat_lon": [4616324, -116640]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
-  "id": 201500019326,
+  "id": 201500019474,
   "location": {
-    "address": "69, SARTRE   AVENUE JEAN",
-    "lat_lon": [4615612, -113159]
+    "address": "1, FETILLY   PLACE DE",
+    "lat_lon": [4617332, -115627]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019329,
   "location": {
@@ -338,29 +371,29 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
-  "id": 201500019330,
+  "id": 201500019477,
   "location": {
-    "address": "CLEMENCEAU   AVENUE GEOR",
-    "lat_lon": [4616362, -118197]
+    "address": "2, REPENTIE   AVENUE DE",
+    "lat_lon": [4610326, -113191]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 2
   },
   "collisionType": 3
 }, {
-  "id": 201500019331,
+  "id": 201500019478,
   "location": {
-    "address": "GUITON   AVENUE JEAN (9/",
-    "lat_lon": [4615982, -116674]
+    "address": "44, CORDELIERS   AVENUE",
+    "lat_lon": [4616635, -114150]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019332,
   "location": {
@@ -370,6 +403,17 @@
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
+  },
+  "collisionType": 2
+}, {
+  "id": 201500019481,
+  "location": {
+    "address": "1, REPENTIE   AVENUE DE",
+    "lat_lon": [4617196, -121289]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -384,16 +428,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019334,
+  "id": 201500019483,
   "location": {
-    "address": "32, NORMANDIN   RUE EMIL",
-    "lat_lon": [4614758, -114327]
+    "address": "71, SARTRE   AVENUE JEAN",
+    "lat_lon": [4609176, -108109]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019335,
   "location": {
@@ -406,16 +450,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019336,
+  "id": 201500019485,
   "location": {
-    "address": "33, NORMANDIN   RUE EMIL",
-    "lat_lon": [4614874, -114403]
+    "address": "12, DUMONT   RUE DU GENE",
+    "lat_lon": [4600000, -100000]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 2
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019338,
   "location": {
@@ -424,9 +468,20 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 2
   },
   "collisionType": 3
+}, {
+  "id": 201500019486,
+  "location": {
+    "address": "123, SARTRE   AVENUE JEA",
+    "lat_lon": [4600000, -100000]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 5
+  },
+  "collisionType": 6
 }, {
   "id": 201500019339,
   "location": {
@@ -437,27 +492,27 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
-  "id": 201500019340,
+  "id": 201500019487,
   "location": {
-    "address": "245, GUITON   AVENUE JEA",
-    "lat_lon": [4616156, -117858]
+    "address": "1, COLMAR   AVENUE DE",
+    "lat_lon": [4609231, -108920]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019341,
+  "id": 201500019488,
   "location": {
-    "address": "88, PERIGNY   RUE DE",
-    "lat_lon": [4616209, -112261]
+    "address": "2, BRETIGNIERE   RUE",
+    "lat_lon": [4616159, -113978]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -468,31 +523,20 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
-  "id": 201500019344,
+  "id": 201500019492,
   "location": {
-    "address": "20, BILLAUD-VARENNE   AV",
-    "lat_lon": [4615206, -112207]
+    "address": "01, 115 PK RN137 JUSTICE",
+    "lat_lon": [4614640, -110936]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 3
   },
-  "collisionType": 3
-}, {
-  "id": 201500019345,
-  "location": {
-    "address": "34 PK RN11 ROCADE NANTES",
-    "lat_lon": [4617548, -110910]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019346,
   "location": {
@@ -501,36 +545,14 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019347,
   "location": {
     "address": "4, REPENTIE   AVENUE DE",
     "lat_lon": [4617197, -121294]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019348,
-  "location": {
-    "address": "02, HILAIRE   COURS DAME",
-    "lat_lon": [4616864, -117281]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019349,
-  "location": {
-    "address": "1, BERNIER   AVENUE DU L",
-    "lat_lon": [4617306, -116115]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -558,29 +580,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
-}, {
-  "id": 201500019352,
-  "location": {
-    "address": "24, FILATURE   RUE DE LA",
-    "lat_lon": [4616233, -120854]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019353,
-  "location": {
-    "address": "33, NORMANDIN   RUE EMIL",
-    "lat_lon": [4614884, -114412]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019354,
   "location": {
@@ -593,16 +593,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019355,
+  "id": 201500019504,
   "location": {
-    "address": "18, MAIL   ALLEE DU",
-    "lat_lon": [4615605, -116392]
+    "address": "8, CHAUDRIER   RUE",
+    "lat_lon": [4616044, -115336]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019356,
   "location": {
@@ -613,7 +613,18 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
+}, {
+  "id": 201500019505,
+  "location": {
+    "address": "24, GRANDES VARENNES   A",
+    "lat_lon": [4616827, -117763]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 2
+  },
+  "collisionType": 1
 }, {
   "id": 201500019357,
   "location": {
@@ -621,21 +632,21 @@
     "lat_lon": [4616139, -120679]
   },
   "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
+    "atmosphericCondition": 2,
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019361,
+  "id": 201500019506,
   "location": {
-    "address": "41, DESIREE   RUE DE LA",
-    "lat_lon": [4614994, -115553]
+    "address": "50, MOULIN   AVENUE JEAN",
+    "lat_lon": [4614234, -113959]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019362,
   "location": {
@@ -646,18 +657,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
-}, {
-  "id": 201500019364,
-  "location": {
-    "address": "201, CARNOT   AVENUE",
-    "lat_lon": [4616460, -118027]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019365,
   "location": {
@@ -668,7 +668,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019366,
   "location": {
@@ -679,18 +679,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
-}, {
-  "id": 201500019367,
-  "location": {
-    "address": "3, NORMANDIN   RUE EMILE",
-    "lat_lon": [4615212, -114809]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019368,
   "location": {
@@ -710,7 +699,7 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -723,7 +712,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019371,
   "location": {
@@ -734,7 +723,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019372,
   "location": {
@@ -754,9 +743,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019374,
   "location": {
@@ -767,7 +756,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019375,
   "location": {
@@ -778,7 +767,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019376,
   "location": {
@@ -789,7 +778,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019377,
   "location": {
@@ -809,9 +798,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019379,
   "location": {
@@ -820,9 +809,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019380,
   "location": {
@@ -831,7 +820,7 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -844,7 +833,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019382,
   "location": {
@@ -853,9 +842,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019383,
   "location": {
@@ -866,7 +855,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019385,
   "location": {
@@ -877,7 +866,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019388,
   "location": {
@@ -888,7 +877,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019392,
   "location": {
@@ -899,7 +888,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019393,
   "location": {
@@ -910,7 +899,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019394,
   "location": {
@@ -921,7 +910,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019396,
   "location": {
@@ -932,7 +921,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019397,
   "location": {
@@ -965,7 +954,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019400,
   "location": {
@@ -985,9 +974,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019403,
   "location": {
@@ -998,7 +987,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019406,
   "location": {
@@ -1009,7 +998,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019407,
   "location": {
@@ -1031,7 +1020,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019409,
   "location": {
@@ -1040,9 +1029,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019410,
   "location": {
@@ -1075,7 +1064,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019415,
   "location": {
@@ -1097,7 +1086,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019418,
   "location": {
@@ -1108,7 +1097,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019419,
   "location": {
@@ -1119,7 +1108,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019420,
   "location": {
@@ -1130,7 +1119,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019421,
   "location": {
@@ -1152,7 +1141,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019423,
   "location": {
@@ -1163,7 +1152,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019424,
   "location": {
@@ -1185,7 +1174,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019426,
   "location": {
@@ -1196,7 +1185,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019427,
   "location": {
@@ -1207,7 +1196,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019428,
   "location": {
@@ -1216,9 +1205,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019429,
   "location": {
@@ -1249,9 +1238,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019433,
   "location": {
@@ -1262,7 +1251,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019434,
   "location": {
@@ -1273,7 +1262,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019435,
   "location": {
@@ -1282,9 +1271,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019436,
   "location": {
@@ -1295,7 +1284,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019437,
   "location": {
@@ -1303,10 +1292,10 @@
     "lat_lon": [4616919, -112914]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019438,
   "location": {
@@ -1317,7 +1306,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019439,
   "location": {
@@ -1328,7 +1317,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019441,
   "location": {
@@ -1339,7 +1328,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019442,
   "location": {
@@ -1348,9 +1337,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 4
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019443,
   "location": {
@@ -1361,16 +1350,16 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019444,
+  "id": 201500019284,
   "location": {
-    "address": "63, SAUTEL  BOULEVARD AN",
-    "lat_lon": [4616792, -113314]
+    "address": "55, JOFFRE   BOULEVARD (",
+    "lat_lon": [4615794, -114232]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -1383,12 +1372,12 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 5
 }, {
-  "id": 201500019446,
+  "id": 201500019287,
   "location": {
-    "address": "2, CONVENTION   RUE DE L",
-    "lat_lon": [4615099, -111632]
+    "address": "2, MOTTE ROUGE    PLACE",
+    "lat_lon": [4615533, -114876]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1403,14 +1392,14 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 3
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019448,
+  "id": 201500019289,
   "location": {
-    "address": "01, COUBERTIN   AVENUE P",
-    "lat_lon": [4616519, -117502]
+    "address": "JOFFRE   BOULEVARD (27/7",
+    "lat_lon": [4616142, -113993]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1429,10 +1418,10 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019451,
+  "id": 201500019293,
   "location": {
-    "address": "24, ALBERT IER   RUE",
-    "lat_lon": [4616467, -115160]
+    "address": "52, FETILLY   AVENUE DE",
+    "lat_lon": [4617200, -115453]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1440,10 +1429,10 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019453,
+  "id": 201500019295,
   "location": {
-    "address": "05, SCHWEITZER   RUE DU",
-    "lat_lon": [4615851, -114567]
+    "address": "02, DAUPHINE   AVENUE DE",
+    "lat_lon": [4616644, -115091]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1462,16 +1451,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019455,
+  "id": 201500019298,
   "location": {
-    "address": "06, DANTON   AVENUE",
-    "lat_lon": [4615556, -111882]
+    "address": "JOFFRE   BOULEVARD (27/7",
+    "lat_lon": [0, 0]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019456,
   "location": {
@@ -1484,13 +1473,13 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019458,
+  "id": 201500019300,
   "location": {
-    "address": "2 G, VESPUCCI   AVENUE A",
-    "lat_lon": [4615321, -115467]
+    "address": "VESPUCCI   AVENUE AMERIG",
+    "lat_lon": [4615005, -115476]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1506,14 +1495,14 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019460,
+  "id": 201500019303,
   "location": {
-    "address": "06, REPUBLIQUE   BOULEVA",
-    "lat_lon": [4613842, -115137]
+    "address": "33 PK RN11 ROCADE NANTES",
+    "lat_lon": [0, 0]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
@@ -1537,12 +1526,34 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
+  "collisionType": 6
+}, {
+  "id": 201500019307,
+  "location": {
+    "address": "9, GUILLET   AVENUE LOUI",
+    "lat_lon": [4616960, -118378]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 6
+}, {
+  "id": 201500019310,
+  "location": {
+    "address": "9, SCIERIE   RUE DE LA",
+    "lat_lon": [4615072, -115404]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 2
+  },
   "collisionType": 3
 }, {
-  "id": 201500019463,
+  "id": 201500019311,
   "location": {
-    "address": "77, GUITON   AVENUE JEAN",
-    "lat_lon": [4615980, -116657]
+    "address": "146, BERNIER   AVENUE DU",
+    "lat_lon": [4617146, -115906]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1550,10 +1561,21 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019465,
+  "id": 201500019313,
   "location": {
-    "address": "114 PK RN137 ROCHEFORT J",
-    "lat_lon": [4613726, -110350]
+    "address": "SAUTEL  BOULEVARD ANDRE",
+    "lat_lon": [4617128, -112317]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 2
+}, {
+  "id": 201500019314,
+  "location": {
+    "address": "66, QUATORZE JUILLET   A",
+    "lat_lon": [4615207, -112406]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1561,54 +1583,10 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019466,
+  "id": 201500019318,
   "location": {
-    "address": "1, SARTRE   AVENUE JEAN-",
-    "lat_lon": [4615340, -111302]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019467,
-  "location": {
-    "address": "01, LOMBARD   AVENUE MOD",
-    "lat_lon": [4617491, -119707]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019468,
-  "location": {
-    "address": "21, KENNEDY   AVENUE DU",
-    "lat_lon": [4616784, -118355]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019469,
-  "location": {
-    "address": "17, ECOLES   RUE DES",
-    "lat_lon": [4616356, -115467]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019470,
-  "location": {
-    "address": "50, SARTRE   AVENUE JEAN",
-    "lat_lon": [4615622, -113061]
+    "address": "67, COGNEHORS   BOULEVAR",
+    "lat_lon": [4616806, -114240]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1623,14 +1601,47 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
 }, {
-  "id": 201500019472,
+  "id": 201500019320,
   "location": {
-    "address": "37, JOFFRE   BOULEVARD (",
-    "lat_lon": [4615329, -114618]
+    "address": "9, VIELJEUX   RUE LEONCE",
+    "lat_lon": [4615789, -115417]
+  },
+  "climatology": {
+    "atmosphericCondition": 2,
+    "luminosity": 1
+  },
+  "collisionType": 2
+}, {
+  "id": 201500019324,
+  "location": {
+    "address": "2, PERIGNY   RUE DE",
+    "lat_lon": [4616213, -112250]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 6
+}, {
+  "id": 201500019326,
+  "location": {
+    "address": "69, SARTRE   AVENUE JEAN",
+    "lat_lon": [4615612, -113159]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 2
+  },
+  "collisionType": 6
+}, {
+  "id": 201500019330,
+  "location": {
+    "address": "CLEMENCEAU   AVENUE GEOR",
+    "lat_lon": [4616362, -118197]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1638,49 +1649,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019473,
+  "id": 201500019331,
   "location": {
-    "address": "GRASSET   AVENUE EDMOND",
-    "lat_lon": [4616324, -116640]
+    "address": "GUITON   AVENUE JEAN (9/",
+    "lat_lon": [4615982, -116674]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
-}, {
-  "id": 201500019474,
-  "location": {
-    "address": "1, FETILLY   PLACE DE",
-    "lat_lon": [4617332, -115627]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019477,
-  "location": {
-    "address": "2, REPENTIE   AVENUE DE",
-    "lat_lon": [4610326, -113191]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019478,
-  "location": {
-    "address": "44, CORDELIERS   AVENUE",
-    "lat_lon": [4616635, -114150]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019479,
   "location": {
@@ -1693,27 +1671,16 @@
   },
   "collisionType": 3
 }, {
-  "id": 201500019481,
+  "id": 201500019334,
   "location": {
-    "address": "1, REPENTIE   AVENUE DE",
-    "lat_lon": [4617196, -121289]
+    "address": "32, NORMANDIN   RUE EMIL",
+    "lat_lon": [4614758, -114327]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
-}, {
-  "id": 201500019483,
-  "location": {
-    "address": "71, SARTRE   AVENUE JEAN",
-    "lat_lon": [4609176, -108109]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019484,
   "location": {
@@ -1724,45 +1691,34 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
-  "id": 201500019485,
+  "id": 201500019336,
   "location": {
-    "address": "12, DUMONT   RUE DU GENE",
-    "lat_lon": [4600000, -100000]
+    "address": "33, NORMANDIN   RUE EMIL",
+    "lat_lon": [4614874, -114403]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019486,
+  "id": 201500019340,
   "location": {
-    "address": "123, SARTRE   AVENUE JEA",
-    "lat_lon": [4600000, -100000]
+    "address": "245, GUITON   AVENUE JEA",
+    "lat_lon": [4616156, -117858]
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
-  "id": 201500019487,
+  "id": 201500019341,
   "location": {
-    "address": "1, COLMAR   AVENUE DE",
-    "lat_lon": [4609231, -108920]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019488,
-  "location": {
-    "address": "2, BRETIGNIERE   RUE",
-    "lat_lon": [4616159, -113978]
+    "address": "88, PERIGNY   RUE DE",
+    "lat_lon": [4616209, -112261]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1779,18 +1735,18 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
-  "id": 201500019492,
+  "id": 201500019344,
   "location": {
-    "address": "01, 115 PK RN137 JUSTICE",
-    "lat_lon": [4614640, -110936]
+    "address": "20, BILLAUD-VARENNE   AV",
+    "lat_lon": [4615206, -112207]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019493,
   "location": {
@@ -1801,7 +1757,18 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
+}, {
+  "id": 201500019345,
+  "location": {
+    "address": "34 PK RN11 ROCADE NANTES",
+    "lat_lon": [4617548, -110910]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 5
 }, {
   "id": 201500019495,
   "location": {
@@ -1812,12 +1779,23 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019496,
   "location": {
     "address": "112 PK RN137 ROCHEFORT J",
     "lat_lon": [4612085, -110937]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 4
+}, {
+  "id": 201500019348,
+  "location": {
+    "address": "02, HILAIRE   COURS DAME",
+    "lat_lon": [4616864, -117281]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1832,6 +1810,17 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
+    "luminosity": 5
+  },
+  "collisionType": 2
+}, {
+  "id": 201500019349,
+  "location": {
+    "address": "1, BERNIER   AVENUE DU L",
+    "lat_lon": [4617306, -116115]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1843,9 +1832,9 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019500,
   "location": {
@@ -1854,9 +1843,20 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
   "collisionType": 3
+}, {
+  "id": 201500019352,
+  "location": {
+    "address": "24, FILATURE   RUE DE LA",
+    "lat_lon": [4616233, -120854]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 2
 }, {
   "id": 201500019501,
   "location": {
@@ -1865,9 +1865,20 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
+    "luminosity": 5
+  },
+  "collisionType": 1
+}, {
+  "id": 201500019353,
+  "location": {
+    "address": "33, NORMANDIN   RUE EMIL",
+    "lat_lon": [4614884, -114412]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019502,
   "location": {
@@ -1876,36 +1887,25 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 5
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
-  "id": 201500019504,
+  "id": 201500019355,
   "location": {
-    "address": "8, CHAUDRIER   RUE",
-    "lat_lon": [4616044, -115336]
+    "address": "18, MAIL   ALLEE DU",
+    "lat_lon": [4615605, -116392]
   },
   "climatology": {
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
-  "id": 201500019505,
+  "id": 201500019361,
   "location": {
-    "address": "24, GRANDES VARENNES   A",
-    "lat_lon": [4616827, -117763]
-  },
-  "climatology": {
-    "atmosphericCondition": 1,
-    "luminosity": 1
-  },
-  "collisionType": 3
-}, {
-  "id": 201500019506,
-  "location": {
-    "address": "50, MOULIN   AVENUE JEAN",
-    "lat_lon": [4614234, -113959]
+    "address": "41, DESIREE   RUE DE LA",
+    "lat_lon": [4614994, -115553]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1922,7 +1922,18 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
+}, {
+  "id": 201500019364,
+  "location": {
+    "address": "201, CARNOT   AVENUE",
+    "lat_lon": [4616460, -118027]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 7
 }, {
   "id": 201500019509,
   "location": {
@@ -1933,12 +1944,23 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019510,
   "location": {
     "address": "31, VALIN   QUAI",
     "lat_lon": [4615680, -114976]
+  },
+  "climatology": {
+    "atmosphericCondition": 1,
+    "luminosity": 1
+  },
+  "collisionType": 6
+}, {
+  "id": 201500019367,
+  "location": {
+    "address": "3, NORMANDIN   RUE EMILE",
+    "lat_lon": [4615212, -114809]
   },
   "climatology": {
     "atmosphericCondition": 1,
@@ -1953,7 +1975,18 @@
   },
   "climatology": {
     "atmosphericCondition": 1,
-    "luminosity": 1
+    "luminosity": 3
   },
-  "collisionType": 3
-}]
+  "collisionType": 2
+}, {
+  "id": 0,
+  "location": {
+    "address": "",
+    "lat_lon": [0, 0]
+  },
+  "climatology": {
+    "atmosphericCondition": 0,
+    "luminosity": 0
+  },
+  "collisionType": 0
+} ]
