@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 import { AccidentMapSpecific } from '../map/contents/accident-map-content';
@@ -30,6 +31,10 @@ export class MapContentService {
   setWeatherFilter(weatherFilters: {name: string, code: number, value: boolean}[]) {
     this.weatherFilters = weatherFilters;
     this.weatherFiltersListSubject.next(this.getWeatherFiltersList());
+  }
+
+  getWeatherFilters(): Observable<any> {
+    return this.weatherFiltersListSubject.asObservable();
   }
 
   getWeatherFiltersList() {
