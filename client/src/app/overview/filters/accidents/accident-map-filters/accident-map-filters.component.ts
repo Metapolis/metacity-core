@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Ng2SelectModule } from 'ng2-material-select';
 import 'hammerjs';
 
+import { MapContentService } from '../../../shared/map-content.service';
+
+
 
 @Component({
   selector: 'overview-accident-map-filters',
@@ -9,6 +12,8 @@ import 'hammerjs';
   styleUrls: ['../../generique-filters.component.scss']
 })
 export class AccidentMapFiltersComponent implements OnInit {
+
+
 
   vehicules = [
       {value: 'voiture', id: 0},
@@ -32,6 +37,7 @@ export class AccidentMapFiltersComponent implements OnInit {
   ]
   check(curentBox: HTMLInputElement){
     this.setWeatherFilter(curentBox.value, curentBox.checked);
+    this.setWeatherFilterService();
   }
 
   setWeatherFilter(name: string, value: boolean) {
@@ -48,9 +54,14 @@ export class AccidentMapFiltersComponent implements OnInit {
   roberto:string;
 
 
-  constructor() { }
-
+  constructor(private mapcontentservice: MapContentService) {
+    this.setWeatherFilterService();
+  }
   ngOnInit() {
+  }
+
+  setWeatherFilterService() {
+    this.mapcontentservice.setWeatherFilter(this.weatherFilters);
   }
 
 }
