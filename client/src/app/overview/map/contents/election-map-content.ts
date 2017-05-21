@@ -20,20 +20,35 @@ export class ElectionMapSpecific {
         const featureCollection = data as any;
 
         L.geoJSON(featureCollection, {
+          style: (feature) => {
+            if (index < 55) {
+              switch (vote_winner[index].candidate.name) {
+                case 'Hollande':
+                  return { color: '#f10d47' };
+                case 'Sarkozy':
+                  return { color: '#0080c5' };
+                default:
+                  return { color: '#6b848c' };
+              }
+            }
+          },
           onEachFeature: (feature, layer) => {
             // console.log(feature.properties);
             const p = feature.properties as any;
             if (index < 55) {
-              layer.bindPopup(p.ebc_nom as any +
+              layer.bindPopup(
+                '<h4>' + vote_winner[index].candidate.name + '</h4>' +
+                '<hr>' +
+                '<b>lieu</b>: ' + vote_winner[index].bureau.name as any +
                 '<br>' +
-                vote_winner[index].bureau.name as any +
+                '<b>pourcentages</b>: ' + vote_winner[index].candidate.percentage + '%' +
                 '<br>' +
-                vote_winner[index].bureau.id
+                '<b>votes</b>: ' + vote_winner[index].candidate.votes as any +
+                ''
               );
-              console.log(vote_winner[index]);
               index++;
             }
-          }
+          },
         }).addTo(map);
       });
     });
