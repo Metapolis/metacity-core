@@ -50,7 +50,7 @@ export class AccidentMapSpecific {
 
   public reDraw(): void {
     console.log(this.weatherFilters);
-
+    this.map.removeLayer(this.layerGroup);
     // if (this.map.hasLayer) {
     //   this.map.removeLayer(this.layerGroup);
     // }
