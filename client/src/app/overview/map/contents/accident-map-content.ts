@@ -1,6 +1,12 @@
 import * as d3 from 'd3';
 
 export class AccidentMapSpecific {
+  filter: number[];
+
+  constructor() {
+    this.filter = [1, 2, 3, 4, 5];
+  }
+
   onMapReady(map: L.Map) {
     const icon = {
       icon: L.icon({
@@ -11,8 +17,15 @@ export class AccidentMapSpecific {
     };
     d3.json('assets/mock-data/accidents.json', (err, data) => {
 
-      const pdata = data as {id: number, location: {address: string, lat_lon: L.LatLngExpression}, climatology: {atmosphericCondition: number, luminosity: number}, collisionType: number}[];
+      const pdata = data as {
+        id: number,
+        location: { address: string, lat_lon: L.LatLngExpression },
+        climatology: { atmosphericCondition: number, luminosity: number },
+        collisionType: number
+      }[];
+
       pdata.forEach((item, index, array) => {
+        if (item.climatology.atmosphericCondition in this.filter) {
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
           const layer = L.marker(lat_lon, icon);
           layer.bindPopup(
@@ -24,6 +37,7 @@ export class AccidentMapSpecific {
             ''
           );
           layer.addTo(map);
+        }
       });
     });
   }
