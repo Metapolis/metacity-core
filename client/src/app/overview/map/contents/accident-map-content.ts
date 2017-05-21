@@ -11,11 +11,19 @@ export class AccidentMapSpecific {
     };
     d3.json('assets/mock-data/accidents.json', (err, data) => {
 
-      const pdata = data as {id: number, location: {address: string, lat_lon: L.LatLngExpression}}[];
-
+      const pdata = data as {id: number, location: {address: string, lat_lon: L.LatLngExpression}, climatology: {atmosphericCondition: number, luminosity: number}, collisionType: number}[];
       pdata.forEach((item, index, array) => {
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
-          L.marker(lat_lon, icon).addTo(map);
+          const layer = L.marker(lat_lon, icon);
+          layer.bindPopup(
+            '<h6>' + item.location.address + '</h6>' +
+            '<hr>' +
+            '<b>meteo</b>: ' + item.climatology.atmosphericCondition +
+            '<br>' +
+            '<b>type de collision</b>: ' + item.collisionType +
+            ''
+          );
+          layer.addTo(map);
       });
     });
   }
