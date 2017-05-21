@@ -12,6 +12,7 @@ export class AccidentMapSpecific {
   map: L.Map;
   layers: L.Layer[];
   layerGroup: L.LayerGroup;
+  // layerControl: any;
 
   constructor() {
     this.weatherFilters = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -49,13 +50,8 @@ export class AccidentMapSpecific {
   }
 
   public reDraw(): void {
-    console.log(this.weatherFilters);
-
-    // if (this.map.hasLayer) {
-    //   this.map.removeLayer(this.layerGroup);
-    // }
-    // this.layerGroup.clearLayers();
-
+    this.layerGroup.clearLayers();
+    this.layers = [];
     this.draw();
   }
 
@@ -74,7 +70,8 @@ export class AccidentMapSpecific {
       }[];
 
       pdata.forEach((item, index, array) => {
-        if (item.climatology.atmosphericCondition in this.weatherFilters) {
+        if (this.weatherFilters.indexOf(item.climatology.atmosphericCondition) >= 0) {
+          console.log(item.climatology.atmosphericCondition, ' est dans ', this.weatherFilters);
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
           const layer = L.marker(lat_lon, this.icon);
           layer.bindPopup(
@@ -89,6 +86,8 @@ export class AccidentMapSpecific {
       });
 
       this.layerGroup = L.layerGroup(this.layers);
+      // this.layerControl = L.control.layers().addTo(this.map);
+      // this.layerControl.addOverlay(this.layerGroup, 'Accidents La Rochelle 2015');
       this.layerGroup.addTo(this.map);
     });
   }
