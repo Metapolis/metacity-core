@@ -28,27 +28,27 @@
             <fieldset class="demo-fieldset">
               <div layout="row" layout-wrap flex>
                 <div flex-xs flex="50">
-                  <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
-                    <span ng-if="isChecked()">Pluie</span>
+                  <md-checkbox #Pluie value="Pluie" (change)="check(Pluie)" [checked]="true" aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                    <span ng-if="isChecked()" >Pluie</span>
                   </md-checkbox>
                 </div>
                 <div flex-xs flex="50">
-                  <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <md-checkbox #Vent value="Vent" (change)="check(Vent)" [checked]="true" aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
                     <span ng-if="isChecked()">Vents forts</span>
                   </md-checkbox>
                 </div>
                 <div flex-xs flex="50">
-                  <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <md-checkbox #Brouillard value="Brouillard" (change)="check(Brouillard)" [checked]="true" aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
                     <span ng-if="isChecked()">Brouillard</span>
                   </md-checkbox>
                 </div>
                 <div flex-xs flex="50">
-                  <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <md-checkbox #Beau value="Beau" (change)="check(Beau)" [checked]="true" aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
                     <span ng-if="isChecked()">Beau temps</span>
                   </md-checkbox>
                 </div>
                 <div flex-xs flex="50">
-                  <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+                  <md-checkbox #Neige value="Neige" (change)="check(Neige)" [checked]="true" aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
                     <span ng-if="isChecked()">Neige</span>
                   </md-checkbox>
                 </div>
