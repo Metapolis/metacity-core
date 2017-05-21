@@ -71,7 +71,6 @@ export class AccidentMapSpecific {
 
       pdata.forEach((item, index, array) => {
         if (this.weatherFilters.indexOf(item.climatology.atmosphericCondition) >= 0) {
-          console.log(item.climatology.atmosphericCondition, ' est dans ', this.weatherFilters);
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
           const layer = L.marker(lat_lon, this.icon);
           layer.bindPopup(
