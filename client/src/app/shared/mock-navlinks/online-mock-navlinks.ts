@@ -8,7 +8,7 @@ export const ONLINENAVLINKS: Link[] = [
   // { src: 'mon-compte', text: 'Mon Compte' },
   { src: '/overview/accidents/analyse', text: 'Accident/analyse' },
   { src: '/overview/accidents/carte', text: 'Accident/carte' },
-  { src: '/overview/elections/analyse', text: 'Election/analyse' },
+  //{ src: '/overview/elections/analyse', text: 'Election/analyse' },
   { src: '/overview/elections/carte', text: 'Election/carte' },
   { src: 'accidents', text: 'Accidents' },
   { src: 'elections', text: 'Elections' },
