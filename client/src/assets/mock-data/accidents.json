@@ -63,7 +63,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019291,
   "location": {
@@ -74,7 +74,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019293,
   "location": {
@@ -85,7 +85,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019295,
   "location": {
@@ -107,7 +107,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 7
 }, {
   "id": 201500019299,
   "location": {
@@ -129,7 +129,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019302,
   "location": {
@@ -151,7 +151,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019306,
   "location": {
@@ -173,7 +173,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 1
 }, {
   "id": 201500019308,
   "location": {
@@ -228,7 +228,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 5
 }, {
   "id": 201500019314,
   "location": {
@@ -1097,7 +1097,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 5
 }, {
   "id": 201500019418,
   "location": {
@@ -1152,7 +1152,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019423,
   "location": {
@@ -1174,7 +1174,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 6
 }, {
   "id": 201500019425,
   "location": {
@@ -1207,7 +1207,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 5
 }, {
   "id": 201500019428,
   "location": {
@@ -1229,7 +1229,7 @@
     "atmosphericCondition": 1,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019430,
   "location": {
@@ -1501,7 +1501,7 @@
     "lat_lon": [4615729, -116616]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1512,7 +1512,7 @@
     "lat_lon": [4613842, -115137]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1523,7 +1523,7 @@
     "lat_lon": [4616957, -115115]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1534,7 +1534,7 @@
     "lat_lon": [4613838, -115177]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1545,7 +1545,7 @@
     "lat_lon": [4615980, -116657]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1556,7 +1556,7 @@
     "lat_lon": [4613726, -110350]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 7,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1567,7 +1567,7 @@
     "lat_lon": [4615340, -111302]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 7,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1578,7 +1578,7 @@
     "lat_lon": [4617491, -119707]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 7,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1589,7 +1589,7 @@
     "lat_lon": [4616784, -118355]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 7,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1600,7 +1600,7 @@
     "lat_lon": [4616356, -115467]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 8,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1611,7 +1611,7 @@
     "lat_lon": [4615622, -113061]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 8,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1622,7 +1622,7 @@
     "lat_lon": [4616175, -114670]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 9,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1633,7 +1633,7 @@
     "lat_lon": [4615329, -114618]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 9,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1644,7 +1644,7 @@
     "lat_lon": [4616324, -116640]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 9,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1655,7 +1655,7 @@
     "lat_lon": [4617332, -115627]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 8,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1666,7 +1666,7 @@
     "lat_lon": [4610326, -113191]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 8,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1677,7 +1677,7 @@
     "lat_lon": [4616635, -114150]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 8,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1688,7 +1688,7 @@
     "lat_lon": [4617574, -115467]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 8,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1699,7 +1699,7 @@
     "lat_lon": [4617196, -121289]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1710,7 +1710,7 @@
     "lat_lon": [4609176, -108109]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1721,7 +1721,7 @@
     "lat_lon": [4600000, -100000]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1732,7 +1732,7 @@
     "lat_lon": [4600000, -100000]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1743,7 +1743,7 @@
     "lat_lon": [4600000, -100000]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1754,7 +1754,7 @@
     "lat_lon": [4609231, -108920]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1765,7 +1765,7 @@
     "lat_lon": [4616159, -113978]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1776,7 +1776,7 @@
     "lat_lon": [4616755, -113394]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 2,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1787,10 +1787,10 @@
     "lat_lon": [4614640, -110936]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 3,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 2
 }, {
   "id": 201500019493,
   "location": {
@@ -1798,7 +1798,7 @@
     "lat_lon": [4616649, -117420]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 3,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1809,7 +1809,7 @@
     "lat_lon": [4616365, -114499]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 3,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1820,7 +1820,7 @@
     "lat_lon": [4612085, -110937]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 3,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1831,7 +1831,7 @@
     "lat_lon": [4614271, -114476]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 3,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1842,10 +1842,10 @@
     "lat_lon": [4616268, -115518]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 3,
     "luminosity": 1
   },
-  "collisionType": 3
+  "collisionType": 4
 }, {
   "id": 201500019500,
   "location": {
@@ -1853,7 +1853,7 @@
     "lat_lon": [4616947, -118090]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 4,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1864,7 +1864,7 @@
     "lat_lon": [4616261, -116017]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 6,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1875,7 +1875,7 @@
     "lat_lon": [4615605, -113326]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 4,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1886,7 +1886,7 @@
     "lat_lon": [4616044, -115336]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 4,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1897,7 +1897,7 @@
     "lat_lon": [4616827, -117763]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 6,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1908,7 +1908,7 @@
     "lat_lon": [4614234, -113959]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 4,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1919,7 +1919,7 @@
     "lat_lon": [4614423, -115312]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1930,7 +1930,7 @@
     "lat_lon": [4617151, -112330]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1941,7 +1941,7 @@
     "lat_lon": [4615680, -114976]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
@@ -1952,7 +1952,7 @@
     "lat_lon": [4617364, -117821]
   },
   "climatology": {
-    "atmosphericCondition": 1,
+    "atmosphericCondition": 5,
     "luminosity": 1
   },
   "collisionType": 3
