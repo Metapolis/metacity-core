@@ -10,11 +10,12 @@ export class AccidentMapSpecific {
   } = {};
   icon: any;
   map: L.Map;
-  layer: L.Layer;
+  layers: L.Layer[];
+  layerGroup: L.LayerGroup;
 
   constructor() {
-    this.weatherFilters = [1,2,3,4,5,6,7,8,9];
-    //this.layer = new L.LayerGroup;
+    this.weatherFilters = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    this.layers = [];
     this.icon = {
       icon: L.icon({
         iconSize: [50, 50],
@@ -48,20 +49,17 @@ export class AccidentMapSpecific {
   }
 
   public reDraw(): void {
-    this.map.removeLayer(this.layer);
-    // let layerlist: L.Layer[] = [];
-    // this.map.eachLayer(function(layer) {
-    //   layerlist.push(layer);
-    // })
-    // for (var element in layerlist ) {
-    //   this.map.removeLayer(layerlist[element]);
+    console.log(this.weatherFilters);
+
+    // if (this.map.hasLayer) {
+    //   this.map.removeLayer(this.layerGroup);
     // }
+    // this.layerGroup.clearLayers();
+
     this.draw();
-    //console.log(this.weatherFilters);
   }
 
   public setWeatherFilters(weatherFilters: number[]): void {
-    //this.weatherFilters = [1,2,3,4,5,6,7,8,9];
     this.weatherFilters = weatherFilters;
   }
 
@@ -76,21 +74,22 @@ export class AccidentMapSpecific {
       }[];
 
       pdata.forEach((item, index, array) => {
-        // console.log(item.climatology.atmosphericCondition);
-        // console.log(item.climatology.atmosphericCondition in this.weatherFilters);
         if (item.climatology.atmosphericCondition in this.weatherFilters) {
           const lat_lon = [item.location.lat_lon[0] / 100000, item.location.lat_lon[1] / 100000] as L.LatLngExpression;
-          this.layer = L.marker(lat_lon, this.icon);
-          this.layer.bindPopup(
+          const layer = L.marker(lat_lon, this.icon);
+          layer.bindPopup(
             '<h6>' + item.location.address + '</h6>' +
             '<hr>' +
             '<b>meteo</b>: ' + this.weatherFiltersMap[item.climatology.atmosphericCondition] +
             '<br>' +
             '<b>type de collision</b>: ' + this.collisionMap[item.collisionType]
           );
-          this.layer.addTo(this.map);
+          this.layers.push(layer);
         }
       });
+
+      this.layerGroup = L.layerGroup(this.layers);
+      this.layerGroup.addTo(this.map);
     });
   }
 }
