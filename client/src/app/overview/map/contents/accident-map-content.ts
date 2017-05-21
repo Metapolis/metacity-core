@@ -52,6 +52,10 @@ export class AccidentMapSpecific {
     this.draw();
   }
 
+  public setWeatherFilters(weatherFilters: number[]) {
+    this.weatherFilters = weatherFilters;
+  }
+  
   public draw(): void {
     d3.json('assets/mock-data/accidents.json', (err, data) => {
 
