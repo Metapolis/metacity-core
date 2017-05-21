@@ -23,7 +23,29 @@ export class AccidentMapFiltersComponent implements OnInit {
     {value: 'bus', id: 2}
   ];
 
+  weatherFilters: {name: string, code: number, value: boolean}[] = [
+    {name: "Pluie", code: 2, value: true},
+    {name: "Vent", code: 6, value: true},
+    {name: "Brouillard", code: 5, value: true},
+    {name: "Beau", code: 1, value: true},
+    {name: "Neige", code: 4, value: true},
+  ]
+  check(curentBox: HTMLInputElement){
+    this.setWeatherFilter(curentBox.value, curentBox.checked);
+  }
 
+  setWeatherFilter(name: string, value: boolean) {
+    for (var element in this.weatherFilters) {
+      if(this.weatherFilters[element]["name"] === name) {
+        this.weatherFilters[element]["value"] = value;
+      }
+    }
+  }
+
+  setRoberto(roberto: string): void {
+    this.roberto = roberto;
+  }
+  roberto:string;
 
 
   constructor() { }
