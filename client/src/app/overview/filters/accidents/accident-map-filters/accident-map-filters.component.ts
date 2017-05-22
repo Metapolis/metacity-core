@@ -53,7 +53,7 @@ export class AccidentMapFiltersComponent implements OnInit {
   }
 
   setWeatherFilterService() {
-    this.mapcontentservice.setWeatherFilter(this.weatherFilters);
+    this.mapcontentservice.accidentMapControl.setWeatherFilter(this.weatherFilters);
   }
 
 }
