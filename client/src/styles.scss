@@ -7,6 +7,9 @@
 @import '../node_modules/leaflet/dist/leaflet';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+.btn {
+  text-overflow: ellipsis;
+}
 
 #content {
   .container {
