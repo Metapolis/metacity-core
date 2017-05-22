@@ -10,7 +10,7 @@ export class ElectionChartComponent implements OnInit {
   constructor(private mapcontentservice: MapContentService) {}
 
   ngOnInit() {
-    this.setMapContent('election-chart');
+    this.setMapContent('elections-pie-chart');
   }
 
   setMapContent(selectedMap: string): void {
