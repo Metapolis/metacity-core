@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
+import { MapSpecific } from './map-specific';
 
-export class ElectionMapSpecific {
+export class ElectionMapSpecific implements MapSpecific {
 
   option: L.GeoJSONOptions;
 

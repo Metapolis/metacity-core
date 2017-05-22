@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
+import { MapSpecific } from './map-specific';
 
-export class AccidentMapSpecific {
+export class AccidentMapSpecific implements MapSpecific {
   weatherFilters: number[];
   weatherFiltersMap: {
     [index: number]: string

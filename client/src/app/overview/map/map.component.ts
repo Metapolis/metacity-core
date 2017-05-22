@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MapContentService } from '../shared/map-content.service';
+import {MapSpecific} from './contents/map-specific';
 
 @Component({
   selector: 'app-map',
@@ -11,7 +12,7 @@ import { MapContentService } from '../shared/map-content.service';
 })
 export class MapComponent implements OnInit {
 
-  mapspecific: any;
+  mapspecific: MapSpecific;
 
   options = {
     layers: [
