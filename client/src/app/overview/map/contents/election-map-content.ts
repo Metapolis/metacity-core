@@ -16,6 +16,7 @@ export class ElectionMapSpecific implements MapSpecific {
     this.colors = colors;
   }
 
+
   onMapReady(map: L.Map) {
     const icon = {
       icon: L.icon({
@@ -44,12 +45,11 @@ export class ElectionMapSpecific implements MapSpecific {
               layer.bindPopup(
                 '<h4>' + vote_winner[index].candidate.name + '</h4>' +
                 '<hr>' +
-                // '<b>lieu</b>: ' + vote_winner[index].bureau.name as any +
+                '<b>lieu</b>: ' + vote_winner[index].bureau.name as any +
                 '<br>' +
                 '<b>pourcentages</b>: ' + vote_winner[index].candidate.percentage + '%' +
                 '<br>' +
-                '<b>votes</b>: ' + vote_winner[index].candidate.votes as any +
-                ''
+                '<b>votes</b>: ' + vote_winner[index].candidate.votes as any
               );
               index++;
             }
