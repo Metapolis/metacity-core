@@ -13,5 +13,7 @@ export class ElectionMapFiltersComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  buttonListElections: {button: string}[] = [
+    {button: 'Résultats du 2nd tour 2012'},
+  ];
 }
