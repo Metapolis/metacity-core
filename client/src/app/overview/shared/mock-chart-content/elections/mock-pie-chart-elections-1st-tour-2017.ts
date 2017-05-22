@@ -1,6 +1,6 @@
 import 'd3pie';
 
-export const ACCIDENTGRAPHCONTENT: d3pie.ID3PieOptions = {
+export const ELECTION1STOUR2017GRAPHCONTENT: d3pie.ID3PieOptions = {
   header: {
     title: {
       text: 'Victimes d\'accidents de la route a la Rochelle 2015',
@@ -56,7 +56,7 @@ export const ACCIDENTGRAPHCONTENT: d3pie.ID3PieOptions = {
         'color': '#f0793e'
       },
       {
-        'label': 'Indemne(s)',
+        'label': 'mort(s)',
         'value': 45,
         'color': '#f5c2de'
       }
