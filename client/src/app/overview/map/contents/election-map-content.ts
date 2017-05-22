@@ -4,6 +4,17 @@ import { MapSpecific } from './map-specific';
 export class ElectionMapSpecific implements MapSpecific {
 
   option: L.GeoJSONOptions;
+  winner: string;
+  bureau: string;
+  colors: {
+    [candidate: string]: string
+  };
+
+  constructor(winner: string, bureau: string, colors: {[candidate: string]: string}) {
+    this.winner = winner;
+    this.bureau = bureau;
+    this.colors = colors;
+  }
 
   onMapReady(map: L.Map) {
     const icon = {
@@ -14,23 +25,16 @@ export class ElectionMapSpecific implements MapSpecific {
       })
     };
 
-    d3.json('assets/mock-data/vote_winner.json', (err, vote_winner) => {
+    d3.json(this.winner, (err, vote_winner) => {
       let index = 0;
 
-      d3.json('assets/mock-data/electoral_bureau_vote_4326.geojson', (err2, data) => {
+      d3.json(this.bureau, (err2, data) => {
         const featureCollection = data as any;
 
         L.geoJSON(featureCollection, {
           style: (feature) => {
             if (index < 55) {
-              switch (vote_winner[index].candidate.name) {
-                case 'Hollande':
-                  return { color: '#f10d47' };
-                case 'Sarkozy':
-                  return { color: '#0080c5' };
-                default:
-                  return { color: '#6b848c' };
-              }
+              return { color: this.colors[vote_winner[index].candidate.name] };
             }
           },
           onEachFeature: (feature, layer) => {

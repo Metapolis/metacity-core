@@ -11,9 +11,11 @@ export class MapContentService {
   selectedMap: string;
   accidentMap: AccidentMapSpecific;
   accidentMapControl: AccidentMapControl;
+  electionColorsCandidates: {
+    [candidate: string]: string
+  } = {};
 
   constructor() { }
-
 
   getMapContent(): Promise<MapSpecific> {
     if (this.selectedMap === 'accident-map') {
@@ -22,13 +24,16 @@ export class MapContentService {
       return Promise.resolve(this.accidentMap);
     }
     if (this.selectedMap === 'election-map') {
-      return Promise.resolve(new ElectionMapSpecific);
+      this.electionColorsCandidates['Hollande'] = '#f10d47';
+      this.electionColorsCandidates['Sarkozy'] = '#0080c5';
+      return Promise.resolve(new ElectionMapSpecific(
+        'assets/mock-data/vote_winner.json',
+        'assets/mock-data/electoral_bureau_vote_4326.geojson',
+        this.electionColorsCandidates));
     }
   }
+
   setSelectedMap(selectedMap: string): void {
     this.selectedMap = selectedMap;
   }
-
-
-
 }

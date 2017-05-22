@@ -3,9 +3,9 @@ import { AccidentMapSpecific } from '../../map/contents/accident-map-content';
 export class AccidentMapControl {
   accidentMap: AccidentMapSpecific;
   weatherFilters: { name: string, code: number, value: boolean }[];
-  
+
   constructor(accidentMap: AccidentMapSpecific) {
-    this.accidentMap = accidentMap
+    this.accidentMap = accidentMap;
   }
 
   setWeatherFilter(weatherFilters: { name: string, code: number, value: boolean }[]) {
@@ -15,10 +15,10 @@ export class AccidentMapControl {
   }
 
   getWeatherFiltersList() {
-    let list: number[] = [];
-    for (var element in this.weatherFilters) {
-      if (this.weatherFilters[element]["value"]) {
-        list.push(<number>this.weatherFilters[element]["code"]);
+    const list: number[] = [];
+    for (const element in this.weatherFilters) {
+      if (this.weatherFilters[element]['value']) {
+        list.push(<number>this.weatherFilters[element]['code']);
       }
     }
     return list;

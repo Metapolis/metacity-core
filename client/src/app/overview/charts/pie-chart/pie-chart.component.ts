@@ -20,7 +20,7 @@ export class PieChartComponent implements OnInit {
   }
 
   async getPieChartContent(): Promise<void> {
-    const answer = await this.chartcontentservice.getPieChartContent('elections-pie-chart');
+    const answer = await this.chartcontentservice.getPieChartContent('accidents-luminosity-pie-chart');
     this.chartContent = answer;
   }
 
