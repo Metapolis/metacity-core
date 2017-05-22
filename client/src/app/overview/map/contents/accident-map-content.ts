@@ -8,7 +8,9 @@ export class AccidentMapSpecific {
   collisionMap: {
     [index: number]: string
   } = {};
-  icon: any;
+  icon: {
+    icon: L.Icon
+  };
   map: L.Map;
   layers: L.Layer[];
   layerGroup: L.LayerGroup;

@@ -15,6 +15,7 @@ export class ElectionMapSpecific {
     this.colors = colors;
   }
 
+
   onMapReady(map: L.Map) {
     const icon = {
       icon: L.icon({

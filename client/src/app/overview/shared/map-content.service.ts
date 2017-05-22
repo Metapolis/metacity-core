@@ -13,7 +13,6 @@ export class MapContentService {
   selectedMap: string;
   accidentMap: AccidentMapSpecific;
   accidentMapControl: AccidentMapControl;
-
   electionColorsCandidates: {
     [candidate: string]: string
   } = {};
