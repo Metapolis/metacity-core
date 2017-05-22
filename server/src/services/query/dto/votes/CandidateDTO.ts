@@ -19,6 +19,15 @@ export class CandidateDTO {
     private percentage: number;
 
     /**
+     * Constructor from json
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+    }
+
+    /**
      * Getter name
      *
      * @returns {Luminosity}

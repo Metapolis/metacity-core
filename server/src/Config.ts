@@ -76,7 +76,7 @@ export class Config {
     }
 
     /**
-     * Get index name traffic
+     * Get index name politic
      *
      * @returns {string}
      */
@@ -85,7 +85,7 @@ export class Config {
     }
 
     /**
-     * Get document name accident
+     * Get document name vote
      *
      * @returns {string}
      */

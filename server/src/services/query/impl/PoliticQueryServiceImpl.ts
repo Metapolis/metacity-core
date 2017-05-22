@@ -37,10 +37,8 @@ export class PoliticQueryServiceImpl implements PoliticQueryService {
 
         const votes: VoteDTO[] = [];
         for (const jsonVote of jsonVotes.hits) {
-            votes.push(Object.assign(new VoteDTO(), jsonVote._source));
+            votes.push(new VoteDTO(jsonVote._source));
         }
-
-        this.logger.debug("Bureau: '%s'", votes[0].getBureau());
 
         return votes;
     }

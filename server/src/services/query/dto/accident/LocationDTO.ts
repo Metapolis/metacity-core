@@ -42,6 +42,15 @@ export class LocationDTO {
     private longitude: number;
 
     /**
+     * Constructor from json
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+    }
+
+    /**
      * Getter agglomeration
      *
      * @returns {string}

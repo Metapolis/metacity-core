@@ -39,6 +39,15 @@ export class BureauDTO {
     private participation: number;
 
     /**
+     * Constructor from json
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+    }
+
+    /**
      * Getter id
      *
      * @returns {number}

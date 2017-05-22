@@ -42,6 +42,17 @@ export class VoteDTO {
     private candidate: CandidateDTO;
 
     /**
+     * Constructor from JSON
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+        this.candidate = new CandidateDTO(this.candidate);
+        this.bureau = new BureauDTO(this.bureau);
+    }
+
+    /**
      * Getter type
      *
      * @returns {string}

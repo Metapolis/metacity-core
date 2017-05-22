@@ -44,9 +44,20 @@ export class CarAccidentDTO {
     private location: LocationDTO;
 
     /**
+     * Constructor from JSON
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+        this.climatology = new ClimatologyDTO(this.climatology);
+        this.location = new LocationDTO(this.location);
+    }
+
+    /**
      * Getter sources
      *
-     * @returns {string}
+     * @returns {string[]}
      */
     public getSources(): string[] {
         return this.sources;
@@ -167,24 +178,5 @@ export class CarAccidentDTO {
      */
     public setLocation(location: LocationDTO): void {
         this.location = location;
-    }
-
-    // Temporary Hack to remove after but not even working
-    /**
-     * Getter address
-     *
-     * @returns {string}
-     */
-    public getLocationAddress(): string {
-        return this.location.getAddress();
-    }
-
-    /**
-     * Getter latlon
-     *
-     * @returns {[string, string]}
-     */
-    public getLocationLatLon(): [number, number] {
-        return [this.location.getLatitude(), this.location.getLongitude()];
     }
 }
