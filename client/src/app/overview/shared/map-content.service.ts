@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 
 import { AccidentMapSpecific } from '../map/contents/accident-map-content';
 import { ElectionMapSpecific } from '../map/contents/election-map-content';
 
 import { AccidentMapControl } from './map-control/accident-map-control';
+import {MapSpecific} from '../map/contents/map-specific';
 
 @Injectable()
 export class MapContentService {
-
   selectedMap: string;
   accidentMap: AccidentMapSpecific;
   accidentMapControl: AccidentMapControl;
@@ -19,7 +17,7 @@ export class MapContentService {
 
   constructor() { }
 
-  getMapContent(): Promise<any> {
+  getMapContent(): Promise<MapSpecific> {
     if (this.selectedMap === 'accident-map') {
       this.accidentMap = new AccidentMapSpecific;
       this.accidentMapControl = new AccidentMapControl(this.accidentMap);
