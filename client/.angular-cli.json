@@ -24,7 +24,8 @@
     "prefix": "app",
     "styles": [
       "styles.scss",
-      "../node_modules/font-awesome/scss/font-awesome.scss"
+      "../node_modules/font-awesome/scss/font-awesome.scss",
+      "./assets/css/material_theme.css"
     ],
     "scripts": [
       "../node_modules/d3/build/d3.js",
