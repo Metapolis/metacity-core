@@ -3,9 +3,8 @@ import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { TrafficQueryService } from "../../services/query/TrafficQueryService";
-import * as HTTPStatusCodes from "http-status-codes";
 import * as Express from "express";
-import { AccidentMinimal } from "./model/accident/AccidentMinimal";
+import { AccidentSummary } from "./model/accident/AccidentSummary";
 import { Location } from "./model/accident/Location";
 
 /**
@@ -42,18 +41,17 @@ export class TrafficController implements interfaces.Controller {
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    public async findAccidents(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<void> {
+    public async findAccidents(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<AccidentSummary[]> {
         this.logger.info("Find all traffic information");
-        res.status(HTTPStatusCodes.OK);
-        // res.json(await this.trafficQueryService.findTrafficAccidents());
+
         const accidents = await this.trafficQueryService.findTrafficAccidents();
-        const returnedAccidents: AccidentMinimal[] = [];
+        const returnedAccidents: AccidentSummary[] = [];
 
         for (const accident of accidents) {
-            const accidentMinimal: AccidentMinimal = new AccidentMinimal();
+            const accidentMinimal: AccidentSummary = new AccidentSummary();
             accidentMinimal.setId(accident.getId());
             accidentMinimal.setLocation(new Location());
-            accidentMinimal.getLocation().setAddress(accident.getLocationAddress());
+            accidentMinimal.getLocation().setAddress(accident.getLocation().getAddress());
             accidentMinimal.getLocation().setLatLon(
                 [accident.getLocation().getLatitude(), accident.getLocation().getLongitude()]
             );
@@ -61,7 +59,6 @@ export class TrafficController implements interfaces.Controller {
             returnedAccidents.push(accidentMinimal);
         }
 
-        res.json(returnedAccidents);
-
+        return returnedAccidents;
     }
 }

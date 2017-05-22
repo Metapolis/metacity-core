@@ -7,9 +7,9 @@ import * as HTTPStatusCodes from "http-status-codes";
 import * as Express from "express";
 
 /**
- * API resources to delivery service to access to traffic element
+ * API resources to delivery service to access to politics element
  *
- * /api/traffics route
+ * /api/politics route
  *
  * @class PoliticController
  */

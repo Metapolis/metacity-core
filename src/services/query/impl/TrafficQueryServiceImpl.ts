@@ -39,14 +39,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
 
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
-            // Truly ugly tricky, I hate this shit !
-            // You can't copy this stuff
-            // TODO remove this
-            const accident: CarAccidentDTO = Object.setPrototypeOf(jsonAccident._source, CarAccidentDTO.prototype);
-            accident.setLocation(Object.setPrototypeOf(accident.getLocation(), LocationDTO.prototype));
-            accident.setClimatology(Object.setPrototypeOf(accident.getClimatology(), ClimatologyDTO.prototype));
-            accidents.push(accident);
-
+            accidents.push(new CarAccidentDTO(jsonAccident._source));
         }
 
         return accidents;

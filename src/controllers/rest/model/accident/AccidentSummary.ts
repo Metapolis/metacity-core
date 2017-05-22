@@ -1,8 +1,9 @@
 import { Location } from "./Location";
+
 /**
- * Contains accident minimal info
+ * Contains accident summary info
  */
-export class AccidentMinimal {
+export class AccidentSummary {
 
     /**
      * Accident's id

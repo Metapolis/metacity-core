@@ -16,16 +16,15 @@ import { PoliticQueryServiceImpl } from "./services/query/impl/PoliticQueryServi
 import { TrafficQueryService } from "./services/query/TrafficQueryService";
 import { PoliticQueryService } from "./services/query/PoliticQueryService";
 
-import * as Express from "express";
-import * as Path from "path";
-import { Config } from "./Config";
-import * as BodyParser from "body-parser";
-
 // Import Controllers
 import { TrafficController } from "./controllers/rest/TrafficController";
 import { AuthenticationController } from "./controllers/rest/AuthenticationController";
 import { PoliticController } from "./controllers/rest/PoliticController";
 
+import * as Express from "express";
+import * as Path from "path";
+import { Config } from "./Config";
+import * as BodyParser from "body-parser";
 import * as TypeORM from "typeorm";
 import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
