@@ -10,11 +10,11 @@ import { AccidentMapControl } from './map-control/accident-map-control';
 @Injectable()
 export class MapContentService {
 
-  constructor() { }
-
   selectedMap: string;
   accidentMap: AccidentMapSpecific;
   accidentMapControl: AccidentMapControl;
+
+  constructor() { }
 
   getMapContent(): Promise<any> {
     if (this.selectedMap === 'accident-map') {
@@ -26,10 +26,8 @@ export class MapContentService {
       return Promise.resolve(new ElectionMapSpecific);
     }
   }
+
   setSelectedMap(selectedMap: string): void {
     this.selectedMap = selectedMap;
   }
-
-
-
 }
