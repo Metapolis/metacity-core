@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BlockContent } from './block-content';
 
 @Component({
-  selector: 'container-3',
+  selector: 'app-container-3',
   templateUrl: './container-3.component.html',
   styleUrls: ['../home.component.scss'],
 })
