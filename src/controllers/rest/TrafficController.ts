@@ -3,8 +3,9 @@ import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { TrafficQueryService } from "../../services/query/TrafficQueryService";
-import * as HTTPStatusCodes from "http-status-codes";
 import * as Express from "express";
+import { AccidentSummary } from "./model/accident/AccidentSummary";
+import { Location } from "./model/accident/Location";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -40,9 +41,24 @@ export class TrafficController implements interfaces.Controller {
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    public async findAccidents(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<void> {
+    public async findAccidents(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<AccidentSummary[]> {
         this.logger.info("Find all traffic information");
-        res.status(HTTPStatusCodes.OK);
-        res.json(await this.trafficQueryService.findTrafficAccidents());
+
+        const accidents = await this.trafficQueryService.findTrafficAccidents();
+        const returnedAccidents: AccidentSummary[] = [];
+
+        for (const accident of accidents) {
+            const accidentMinimal: AccidentSummary = new AccidentSummary();
+            accidentMinimal.setId(accident.getId());
+            accidentMinimal.setLocation(new Location());
+            accidentMinimal.getLocation().setAddress(accident.getLocation().getAddress());
+            accidentMinimal.getLocation().setLatLon(
+                [accident.getLocation().getLatitude(), accident.getLocation().getLongitude()]
+            );
+
+            returnedAccidents.push(accidentMinimal);
+        }
+
+        return returnedAccidents;
     }
 }

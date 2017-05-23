@@ -17,6 +17,15 @@ export class ClimatologyDTO {
     private atmosphericCondition: AtmosphericCondition;
 
     /**
+     * Constructor from json
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+    }
+
+    /**
      * Getter luminosity
      *
      * @returns {Luminosity}
