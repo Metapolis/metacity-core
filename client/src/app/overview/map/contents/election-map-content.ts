@@ -4,20 +4,27 @@ import { MapSpecific } from './map-specific';
 export class ElectionMapSpecific implements MapSpecific {
 
   option: L.GeoJSONOptions;
-  winner: string;
-  bureau: string;
-  colors: {
+  electionDataPath: string;
+  pollingStationPath: string;
+  electionCandidateColors: {
     [candidate: string]: string
   } = {};
+  electionCandidateColorPath: string;
   map: L.Map;
-  roundFilter: string;
 
   constructor() {
-    this.colors['Hollande'] = '#f10d47';
-    this.colors['Sarkozy'] = '#0080c5';
-    this.bureau = 'assets/mock-data/electoral_bureau_vote_4326.geojson';
-    this.winner = 'assets/mock-data/vote_winner.json';
+    this.electionCandidateColors['Hollande'] = '#f10d47';
+    this.electionCandidateColors['Sarkozy'] = '#0080c5';
+  }
 
+  setData(pollingStationPath: string, electionDataPath: string, electionCandidateColorPath: string) {
+    this.pollingStationPath = pollingStationPath;
+    this.electionDataPath = electionDataPath;
+    this.electionCandidateColorPath = electionCandidateColorPath;
+  }
+
+  onMapReady(map: L.Map) {
+    this.map = map;
     const icon = {
       icon: L.icon({
         iconSize: [50, 50],
@@ -26,43 +33,30 @@ export class ElectionMapSpecific implements MapSpecific {
       })
     };
   }
-
-  public setRoundFilter(roundFilter: string) {
-    if (roundFilter !== this.roundFilter) {
-      this.roundFilter = roundFilter;
-      console.log(this.roundFilter);
-    }
-  }
-
-  onMapReady(map: L.Map) {
-    this.map = map;
-    this.draw();
-  }
-
-  public draw(): void {
-    d3.json(this.winner, (err, vote_winner) => {
+  draw () {
+    d3.json(this.electionDataPath, (err, electionData) => {
       let index = 0;
 
-      d3.json(this.bureau, (err2, data) => {
-        const featureCollection = data as any;
+      d3.json(this.pollingStationPath, (err2, fc) => {
+        const featureCollection = fc as any;
 
         L.geoJSON(featureCollection, {
           style: (feature) => {
             if (index < 55) {
-              return { color: this.colors[vote_winner[index].candidate.name] };
+              return { color: this.electionCandidateColors[electionData[index].candidate.name] };
             }
           },
           onEachFeature: (feature, layer) => {
             const p = feature.properties as any;
             if (index < 55) {
               layer.bindPopup(
-                '<h4>' + vote_winner[index].candidate.name + '</h4>' +
+                '<h4>' + electionData[index].candidate.name + '</h4>' +
                 '<hr>' +
-                '<b>lieu</b>: ' + vote_winner[index].bureau.name as any +
+                '<b>lieu</b>: ' + electionData[index].bureau.name as any +
                 '<br>' +
-                '<b>pourcentages</b>: ' + vote_winner[index].candidate.percentage + '%' +
+                '<b>pourcentages</b>: ' + electionData[index].candidate.percentage + '%' +
                 '<br>' +
-                '<b>votes</b>: ' + vote_winner[index].candidate.votes as any
+                '<b>votes</b>: ' + electionData[index].candidate.votes as any
               );
               index++;
             }

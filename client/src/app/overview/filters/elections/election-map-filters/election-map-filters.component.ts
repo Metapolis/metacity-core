@@ -13,10 +13,10 @@ export class ElectionMapFiltersComponent implements OnInit {
   private current_election_layer;
 
   private buttonListElections: { label: string, value: string }[] = [
-    { label: 'Résultats du 1er tour 2012', value: 'election-2012-1' },
-    { label: 'Résultats du 2nd tour 2012', value: 'election-2012-2' },
-    { label: 'Résultats du 1er tour 2017', value: 'election-2017-1' },
-    { label: 'Résultats du 2nd tour 2017', value: 'election-2017-2' },
+    { label: 'Résultats du 1er tour 2012', value: 'election-2012/1' },
+    { label: 'Résultats du 2nd tour 2012', value: 'election-2012/2' },
+    { label: 'Résultats du 1er tour 2017', value: 'election-2017/1' },
+    { label: 'Résultats du 2nd tour 2017', value: 'election-2017/2' },
   ];
 
   constructor(private mapcontentservice: MapContentService) { }
