@@ -18,6 +18,5 @@ export class ChartFiltersComponent implements OnInit {
     {button: "Catégories de véhicules accidentés"},
     {button: "Météo lors des accidents"},
     {button: "Âge des victimes"},
-
   ]
 }

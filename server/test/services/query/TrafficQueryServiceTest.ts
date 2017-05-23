@@ -15,7 +15,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
     /**
      * Test function find traffic accident
      */
-    @test
+    // @test
     private testFindTrafficAccident(): void {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
         const esClient: Mock<Client> = (ContextApp.container.get("ESClientMock") as Mock<Client>);
