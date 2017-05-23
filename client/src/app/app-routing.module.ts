@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: 'faq', component: NotFound404Component },
   { path: 'cgu', component: NotFound404Component },
   { path: 'mentions-legales', component: NotFound404Component },
+  { path: '404', component: NotFound404Component }
 ];
 
 @NgModule({
