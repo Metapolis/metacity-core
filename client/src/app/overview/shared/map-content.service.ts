@@ -5,7 +5,7 @@ import { ElectionMapSpecific } from '../map/contents/election-map-content';
 
 import { AccidentMapControl } from './map-control/accident-map-control';
 import { ElectionMapControl } from './map-control/election-map-control';
-import {MapSpecific} from '../map/contents/map-specific';
+import { MapSpecific } from '../map/contents/map-specific';
 
 @Injectable()
 export class MapContentService {
