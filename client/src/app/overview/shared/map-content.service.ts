@@ -1,20 +1,52 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
-import { MapSpecific } from './mock-map-content/mock-accident-map-content';
+import { AccidentMapSpecific } from '../map/contents/accident-map-content';
+import { ElectionMapSpecific } from '../map/contents/election-map-content';
 
 @Injectable()
 export class MapContentService {
-  getMapContent(selectedMap: string): Promise<MapSpecific> {
-    if (selectedMap === 'accident-map') {
-      let mapspecific = new MapSpecific;
-      return Promise.resolve(mapspecific);
-    }
-  }
-  getMapContentbis(selectedMap: string): MapSpecific {
-    if (selectedMap === 'accident-map') {
-      let mapspecific = new MapSpecific();
-      return mapspecific;
-    }
+
+  constructor() {
+    //this.weatherFiltersListSubject.next([])
   }
 
+  selectedMap: string;
+  private weatherFiltersListSubject = new Subject<any>();
+  weatherFilters: {name: string, code: number, value: boolean}[];
+  accidentMap: AccidentMapSpecific;
+  getMapContent(): Promise<any> {
+    if (this.selectedMap === 'accident-map') {
+      this.accidentMap = new AccidentMapSpecific;
+      return Promise.resolve(this.accidentMap);
+    }
+    if (this.selectedMap === 'election-map') {
+      return Promise.resolve(new ElectionMapSpecific);
+    }
+  }
+  setSelectedMap(selectedMap: string): void {
+    this.selectedMap = selectedMap;
+  }
+
+  setWeatherFilter(weatherFilters: {name: string, code: number, value: boolean}[]) {
+    this.weatherFilters = weatherFilters;
+    this.accidentMap.setWeatherFilters(this.getWeatherFiltersList());
+    this.accidentMap.reDraw();
+    //this.weatherFiltersListSubject.next(this.getWeatherFiltersList());
+  }
+
+  getWeatherFilters(): Observable<any> {
+    return this.weatherFiltersListSubject.asObservable();
+  }
+
+  getWeatherFiltersList() {
+    let list: number[] = [];
+    for (var element in this.weatherFilters) {
+      if (this.weatherFilters[element]["value"]) {
+        list.push(<number>this.weatherFilters[element]["code"]);
+      }
+    }
+    return list;
+  }
 }

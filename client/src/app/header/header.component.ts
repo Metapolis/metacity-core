@@ -15,13 +15,13 @@ export class HeaderComponent implements OnInit {
 
   public isCollapsed = true;
 
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getMenu();
   }
 
-  getMenu(): void {
-    this.menuService.getHeaderNavlinks().then(answer => this.navlinks = answer);
+  async getMenu(): Promise<void> {
+    this.navlinks = await this.menuService.getHeaderNavlinks();
   }
 }

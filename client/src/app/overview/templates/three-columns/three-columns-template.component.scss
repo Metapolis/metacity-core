@@ -1,0 +1,14 @@
+@import "../../../../_variables";
+
+.without_padding {
+  width: 100vw !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.shadow {
+  box-shadow: 0 3px 24px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 999;
+}
