@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { MapContentService } from '../../../shared/map-content.service';
 
 @Component({
-    selector: "overview-accident-map",
+    selector: 'overview-accident-map',
     templateUrl: 'accident-map.component.html',
 })
-export class AccidentMapComponent {
+export class AccidentMapComponent implements OnInit {
   constructor(private mapcontentservice: MapContentService) { }
 
   ngOnInit() {

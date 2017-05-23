@@ -9,8 +9,13 @@
     </div>
   </div>
 </div>
-<div class="choice choice-content d-flex flex-column">
-  <button *ngFor="let button of buttonListElections" type="button" class="btn btn-primary btn-xs">
-    {{button.button}}
-  </button>
+<div class="choice choice-content">
+  <div class="btn-group btn-block d-flex flex-column" data-toggle="buttons">
+    <label *ngFor="let button of buttonListElections" class="btn btn-primary btn-xs btn-block">
+      <input  type="radio" name="option"
+              value="{{button.value}}"
+              (click)="goTo(button.value)">
+      {{button.label}}
+    </label>
+  </div>
 </div>

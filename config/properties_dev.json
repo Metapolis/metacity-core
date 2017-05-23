@@ -1,14 +1,22 @@
 {
-  "elasticsearch_host": "163.172.18.177:9200",
-  "elasticsearch_log_level": "info",
-  "index_name_traffic": "logstash-*",
-  "document_name_accident": "logs",
-  "app_port": 3000,
-  "app_host": "127.0.0.1",
-  "app_log_level": "debug",
-  "database_name": "metacity",
-  "database_user": "metacity",
-  "database_password": "metacity",
-  "database_host": "localhost",
-  "database_port": 5432
+  "elasticsearch": {
+    "host":      "163.172.18.177:9200",
+    "log_level": "info"
+  },
+  "index_name_traffic": "traffic",
+  "document_name_accident": "accident",
+  "index_name_politic": "politic",
+  "document_name_vote": "vote",
+  "app": {
+    "host" : "127.0.0.1",
+    "port" : 3000,
+    "log_level": "debug"
+  },
+  "database": {
+    "name": "metacity",
+    "user": "metacity",
+    "password": "metacity",
+    "host": "163.172.18.177",
+    "port": 5432
+  }
 }

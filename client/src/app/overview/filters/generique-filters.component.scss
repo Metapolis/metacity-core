@@ -1,5 +1,5 @@
 @import "../../../_variables";
-
+@import "../../../assets/css/material_theme";
 
 .checkboxdemoSelectAll .demo-legend {
   color: #3F51B5; }
@@ -73,12 +73,12 @@
     &-content {
       padding: 40px 20px;
 
-      button {
+      .btn {
         margin-bottom: 15px;
       }
     }
 
-    button {
+    .btn {
       border-radius: 45px;
       background-color: $white;
       color: $black;

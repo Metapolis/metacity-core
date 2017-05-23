@@ -9,6 +9,11 @@ import { Intersection } from "../../../../common/enum/accident/Intersection";
 export class CarAccidentDTO {
 
     /**
+     * Accident sources
+     */
+    private sources: string[];
+
+    /**
      * Car accident's Identifier
      */
     private id: number;
@@ -37,6 +42,35 @@ export class CarAccidentDTO {
      * Car accident's location
      */
     private location: LocationDTO;
+
+    /**
+     * Constructor from JSON
+     *
+     * @param json json used to construction
+     */
+    constructor(json: {}) {
+        Object.assign(this, json);
+        this.climatology = new ClimatologyDTO(this.climatology);
+        this.location = new LocationDTO(this.location);
+    }
+
+    /**
+     * Getter sources
+     *
+     * @returns {string[]}
+     */
+    public getSources(): string[] {
+        return this.sources;
+    }
+
+    /**
+     * Setter sources
+     *
+     * @param sources new sources value
+     */
+    public setSources(sources: string[]): void {
+        this.sources = sources;
+    }
 
     /**
      * Getter identifier
@@ -113,7 +147,7 @@ export class CarAccidentDTO {
     /**
      * Getter climatology
      *
-     * @returns {Climatology}
+     * @returns {ClimatologyDTO}
      */
     public getClimatology(): ClimatologyDTO {
         return this.climatology;
@@ -131,7 +165,7 @@ export class CarAccidentDTO {
     /**
      * Getter location
      *
-     * @returns {Location}
+     * @returns {LocationDTO}
      */
     public getLocation(): LocationDTO {
         return this.location;

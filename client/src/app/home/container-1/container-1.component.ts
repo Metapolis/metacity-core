@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Assets }    from '../../assets';
+import { Assets } from '../../assets';
 
 @Component({
-  selector: 'container-1',
+  selector: 'app-container-1',
   templateUrl: './container-1.component.html',
   styleUrls: ['../home.component.scss'],
 })

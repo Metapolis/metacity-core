@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
+import { MapSpecific } from './map-specific';
 
-export class AccidentMapSpecific {
+export class AccidentMapSpecific implements MapSpecific {
   weatherFilters: number[];
   weatherFiltersMap: {
     [index: number]: string
@@ -8,7 +9,9 @@ export class AccidentMapSpecific {
   collisionMap: {
     [index: number]: string
   } = {};
-  icon: any;
+  icon: {
+    icon: L.Icon
+  };
   map: L.Map;
   layers: L.Layer[];
   layerGroup: L.LayerGroup;

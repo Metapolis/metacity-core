@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MapContentService } from '../shared/map-content.service';
+import {MapSpecific} from './contents/map-specific';
 
 @Component({
   selector: 'app-map',
@@ -11,19 +12,24 @@ import { MapContentService } from '../shared/map-content.service';
 })
 export class MapComponent implements OnInit {
 
-  mapspecific: any;
+  mapspecific: MapSpecific;
 
   options = {
     layers: [
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 1,
+        maxZoom: 18,
+        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      })
     ],
+    minZoom: 1,
     zoom: 13,
     center: L.latLng({ lat: 46.1621, lng: -1.1980 })
   };
 
   constructor(private mapcontentservice: MapContentService) {
     // we should think about having an observable to load map content much sooner
-    //this.getMapContent();
+    // this.getMapContent();
   }
 
   ngOnInit() { }

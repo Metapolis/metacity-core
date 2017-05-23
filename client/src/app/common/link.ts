@@ -1,4 +1,4 @@
 export class Link {
-  src : string;
-  text : string;
+  src: string;
+  text: string;
 }

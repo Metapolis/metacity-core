@@ -11,7 +11,6 @@ import { OverviewModule } from './overview/overview.module';
 
 // Components
 import { AppComponent } from './app.component';
-import { GrafTestComponent } from './graf-test/graf-test.component';
 import { NotFound404Component } from './not-found-404/not-found-404.component';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
@@ -39,7 +38,6 @@ import { ConnexionService } from './shared/connexion.service';
   ],
   declarations: [
     AppComponent,
-    GrafTestComponent,
     NotFound404Component,
     LoginComponent,
     FooterComponent,
