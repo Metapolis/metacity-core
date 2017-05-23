@@ -5,6 +5,8 @@ import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { Config } from "../../../Config";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
+import { LocationDTO } from "../dto/accident/LocationDTO";
+import { ClimatologyDTO } from "../dto/accident/ClimatologyDTO";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -37,7 +39,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
 
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
-            accidents.push(Object.assign(new CarAccidentDTO(), jsonAccident));
+            accidents.push(new CarAccidentDTO(jsonAccident._source));
         }
 
         return accidents;

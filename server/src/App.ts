@@ -7,14 +7,24 @@ import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
 import { IndexController } from "./controllers/IndexController";
 import { Utils } from "./common/Utils";
+
+// Import QueryServicesImpl
 import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServiceImpl";
+import { PoliticQueryServiceImpl } from "./services/query/impl/PoliticQueryServiceImpl";
+
+// Import QueryServices
 import { TrafficQueryService } from "./services/query/TrafficQueryService";
+import { PoliticQueryService } from "./services/query/PoliticQueryService";
+
+// Import Controllers
+import { TrafficController } from "./controllers/rest/TrafficController";
+import { AuthenticationController } from "./controllers/rest/AuthenticationController";
+import { PoliticController } from "./controllers/rest/PoliticController";
+
 import * as Express from "express";
 import * as Path from "path";
 import { Config } from "./Config";
 import * as BodyParser from "body-parser";
-import { TrafficController } from "./controllers/rest/TrafficController";
-import { AuthenticationController } from "./controllers/rest/AuthenticationController";
 import * as TypeORM from "typeorm";
 import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
@@ -108,6 +118,7 @@ export class App {
     private bindQueries(): void {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
+        this.container.bind<PoliticQueryService>("PoliticQueryService").to(PoliticQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
     }
 
@@ -118,6 +129,7 @@ export class App {
         this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(PoliticController).whenTargetNamed("PoliticController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
     }
 

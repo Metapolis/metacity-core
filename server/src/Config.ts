@@ -18,7 +18,7 @@ export class Config {
      * @returns {string}
      */
     public static getElasticSearchHost(): string {
-        return Config.properties.get("config.elasticsearch_host");
+        return Config.properties.get("config.elasticsearch.host");
     }
 
     /**
@@ -27,7 +27,7 @@ export class Config {
      * @returns {number}
      */
     public static getElasticSearchLogLevel(): number {
-        return Config.properties.get("config.elasticsearch_log_level");
+        return Config.properties.get("config.elasticsearch.log_level");
     }
 
     /**
@@ -36,7 +36,7 @@ export class Config {
      * @returns {number}
      */
     public static getAppPort(): number {
-        return Config.properties.get("config.app_port");
+        return Config.properties.get("config.app.port");
     }
 
     /**
@@ -45,7 +45,7 @@ export class Config {
      * @returns {string}
      */
     public static getAppHost(): string {
-        return Config.properties.get("config.app_host");
+        return Config.properties.get("config.app.host");
     }
 
     /**
@@ -54,7 +54,7 @@ export class Config {
      * @returns {string}
      */
     public static getAppLogLevel(): string {
-        return Config.properties.get("config.app_log_level");
+        return Config.properties.get("config.app.log_level");
     }
 
     /**
@@ -76,12 +76,30 @@ export class Config {
     }
 
     /**
+     * Get index name politic
+     *
+     * @returns {string}
+     */
+    public static getIndexNamePolitic(): string {
+        return Config.properties.get("config.index_name_politic");
+    }
+
+    /**
+     * Get document name vote
+     *
+     * @returns {string}
+     */
+    public static getDocumentNameVote(): string {
+        return Config.properties.get("config.document_name_vote");
+    }
+
+    /**
      * Get database name
      *
      * @returns {string}
      */
     public static getDatabaseName(): string {
-        return Config.properties.get("config.database_name");
+        return Config.properties.get("config.database.name");
     }
 
     /**
@@ -90,7 +108,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabaseUser(): string {
-        return Config.properties.get("config.database_user");
+        return Config.properties.get("config.database.user");
     }
 
     /**
@@ -99,7 +117,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabasePassword(): string {
-        return Config.properties.get("config.database_password");
+        return Config.properties.get("config.database.password");
     }
 
     /**
@@ -108,7 +126,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabaseHost(): string {
-        return Config.properties.get("config.database_host");
+        return Config.properties.get("config.database.host");
     }
 
     /**
@@ -117,6 +135,6 @@ export class Config {
      * @returns {number}
      */
     public static getDatabasePort(): number {
-        return Config.properties.get("config.database_port");
+        return Config.properties.get("config.database.port");
     }
 }
