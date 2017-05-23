@@ -1,4 +1,4 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { OverviewComponent } from './overview.component';
@@ -16,18 +16,18 @@ const overviewRoutes: Routes = [
       { path: 'accidents',
         children: [
           { path: 'carte', component: AccidentMapComponent },
-          { path: 'analyse', component: AccidentChartComponent },
+          { path: 'analyse', component: AccidentChartComponent }
         ]
       },
       { path: 'elections',
         children: [
           { path: 'carte', component: ElectionMapComponent },
-          { path: 'analyse', component: ElectionChartComponent },
+          { path: 'analyse', component: ElectionChartComponent }
         ]
       },
     ]
   },
-]
+];
 
 @NgModule({
   imports: [ RouterModule.forChild(overviewRoutes) ],

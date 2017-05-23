@@ -1,4 +1,4 @@
-import { Link } from "./../../common/link";
+import { Link } from './../../common/link';
 
 export const OFFLINENAVLINKS: Link[] = [
   // { src: 'sources-et-applications', text: 'Sources et Applications' },

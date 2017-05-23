@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Link }      from '../../common/link';
+import { Link } from '../../common/link';
 
 @Component({
-  selector: 'visualisation-form',
+  selector: 'app-visualisation-form',
   templateUrl: './visualisation-form.component.html',
   styleUrls: ['../header.component.scss'],
 })
