@@ -1,7 +1,6 @@
 // Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { OverviewRoutingModule } from '../overview-routing.module';
 
@@ -14,18 +13,14 @@ import { GenericNavPanelComponent } from './generic-nav-panel/generic-nav-panel.
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    OverviewRoutingModule,
+    OverviewRoutingModule
   ],
   declarations: [
-    GenericNavPanelComponent,
+    GenericNavPanelComponent
   ],
-  providers: [
-
-  ],
+  providers: [],
   exports: [
-    GenericNavPanelComponent,
+    GenericNavPanelComponent
   ]
 })
 export class NavPannelsModule { }
-export class MyModule { }

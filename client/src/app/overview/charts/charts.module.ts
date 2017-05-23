@@ -19,4 +19,3 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
   ]
 })
 export class ChartsModule { }
-export class MyModule { }

@@ -1,6 +1,5 @@
 // Modules
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { OverviewRoutingModule } from './overview-routing.module';
@@ -19,17 +18,16 @@ import { MapContentService } from './shared/map-content.service';
 
 @NgModule({
   imports: [
-    CommonModule,
     BrowserAnimationsModule,
     OverviewRoutingModule,
-    CategoriesModule,
+    CategoriesModule
   ],
   declarations: [
-    OverviewComponent,
+    OverviewComponent
   ],
   providers: [
     ChartContentService,
-    MapContentService,
+    MapContentService
   ],
   exports: []
 })

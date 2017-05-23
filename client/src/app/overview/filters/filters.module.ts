@@ -21,7 +21,7 @@ import { ElectionChartFiltersComponent } from './elections/election-chart-filter
     Ng2SelectModule,
     MaterialModule,
     MdButtonModule,
-    MdCheckboxModule,
+    MdCheckboxModule
   ],
   declarations: [
     AccidentMapFiltersComponent,
@@ -38,4 +38,3 @@ import { ElectionChartFiltersComponent } from './elections/election-chart-filter
   ]
 })
 export class FiltersModule { }
-export class MyModule { }

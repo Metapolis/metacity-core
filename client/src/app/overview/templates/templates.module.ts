@@ -9,10 +9,7 @@ import { ThreeColumnsTemplateComponent } from './three-columns/three-columns-tem
 // Services
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [],
   declarations: [
     ThreeColumnsTemplateComponent
   ],
@@ -22,4 +19,3 @@ import { ThreeColumnsTemplateComponent } from './three-columns/three-columns-tem
   ]
 })
 export class TemplatesModule { }
-export class MyModule { }
