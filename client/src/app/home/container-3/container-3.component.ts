@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { BlockContent } from './block-content';
+import { Component } from "@angular/core";
+import { BlockContent } from "./block-content";
 
 @Component({
-  selector: 'app-container-3',
-  templateUrl: './container-3.component.html',
-  styleUrls: ['../home.component.scss'],
+  selector: "app-container-3",
+  templateUrl: "./container-3.component.html",
+  styleUrls: ["../home.component.scss"],
 })
 export class Container3Component {
   blocks: BlockContent[] = [
     {
-      title: 'OPEN SOURCE',
+      title: "OPEN SOURCE",
       text: `MetaCity est un outil open
 source de gestion de
 données « smart » des
@@ -26,7 +26,7 @@ chacun.
 `
     },
     {
-      title: 'INNOVANTE',
+      title: "INNOVANTE",
       text: `A travers l’ouverture et
 l’accès à plusieurs jeux de
 données, la plateforme
@@ -46,7 +46,7 @@ nouveaux services urbains.
 `
     },
     {
-title: 'ÉVOLUTIVE',
+      title: "ÉVOLUTIVE",
   text: `La plateforme est pensée pour s’adapter
       aux évolutions des usages de la donnée urbaine,
        et anticiper l’ouverture croissante des flux de données

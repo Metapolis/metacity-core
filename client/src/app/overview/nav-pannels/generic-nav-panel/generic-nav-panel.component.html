@@ -4,7 +4,7 @@
   <ul>
     <li *ngFor="let data of visuallinks">
       <a routerLink="{{data.link.src}}" routerLinkActive="active" class="button_dataviz">
-        <div class="button_dataviz_icon"><img [src]='data.img.src' alt="{{data.img.alt}}"></div>
+        <div class="button_dataviz_icon"><img [src]="data.img.src" alt="{{data.img.alt}}"></div>
         <div class="button_dataviz_text">{{data.link.text}}</div>
       </a>
     </li>
@@ -18,7 +18,8 @@
       <a routerLink="/404" routerLinkActive>Déconnexion</a>
     </li>
     <li>
-      <div><img style=" margin-left: 90px; margin-botom: 30px;   height: 90px; width: 90px;" [src]='assets.larochelLogo.src' alt="{{assets.larochelLogo.alt}}"></div>
+      <div><img style=" margin-left: 90px; margin-botom: 30px;   height: 90px; width: 90px;"
+                [src]="assets.larochelLogo.src" alt="{{assets.larochelLogo.alt}}"></div>
     </li>
 </ul>
 

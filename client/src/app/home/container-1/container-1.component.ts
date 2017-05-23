@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { Assets } from '../../assets';
+import { Component } from "@angular/core";
+import { Assets } from "../../assets";
 
 @Component({
-  selector: 'app-container-1',
-  templateUrl: './container-1.component.html',
-  styleUrls: ['../home.component.scss'],
+  selector: "app-container-1",
+  templateUrl: "./container-1.component.html",
+  styleUrls: ["../home.component.scss"],
 })
 export class Container1Component {
   assets = new Assets;

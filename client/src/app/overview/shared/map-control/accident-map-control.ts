@@ -1,4 +1,4 @@
-import { AccidentMapSpecific } from '../../map/contents/accident-map-content';
+import { AccidentMapSpecific } from "../../map/contents/accident-map-content";
 
 export class AccidentMapControl {
   accidentMap: AccidentMapSpecific;
@@ -17,8 +17,8 @@ export class AccidentMapControl {
   getWeatherFiltersList() {
     const list: number[] = [];
     for (const element in this.weatherFilters) {
-      if (this.weatherFilters[element]['value']) {
-        list.push(<number>this.weatherFilters[element]['code']);
+      if (this.weatherFilters[element]["value"]) {
+        list.push(<number>this.weatherFilters[element]["code"]);
       }
     }
     return list;

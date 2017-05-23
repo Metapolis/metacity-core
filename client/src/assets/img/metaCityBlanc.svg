@@ -7,7 +7,7 @@
 	.st1{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;}
 	.st2{opacity:0.5;fill:#FFFFFF;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;enable-background:new    ;}
 	.st3{fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;}
-	.st4{font-family:'AvenirNextLTPro-Demi';}
+	.st4{font-family:"AvenirNextLTPro-Demi";}
 	.st5{font-size:13.2px;}
 </style>
 <circle class="st0" cx="51.8" cy="57.9" r="44.6"/>

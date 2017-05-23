@@ -1,6 +1,6 @@
-import { HttpModule, JsonpModule } from '@angular/http'
+import { HttpModule, JsonpModule } from "@angular/http"
 
-import { ElectionMapSpecific } from '../../map/contents/election-map-content';
+import { ElectionMapSpecific } from "../../map/contents/election-map-content";
 
 export class ElectionMapControl {
   electionMap: ElectionMapSpecific;
@@ -13,17 +13,17 @@ export class ElectionMapControl {
 
   constructor(electionMap: ElectionMapSpecific) {
     this.electionMap = electionMap;
-    this.mockDataPath = 'assets/mock-data/';
-    this.roundFilter = 'election-2012/1';
+    this.mockDataPath = "assets/mock-data/";
+    this.roundFilter = "election-2012/1";
     this.setRoundFilter(this.roundFilter);
   }
 
   pathCreator() {
-    const arr = this.roundFilter.split('/');
+    const arr = this.roundFilter.split("/");
 
-    this.electionDataPath = this.mockDataPath + arr[0] + '-' + arr[1] + '-' + 'winner' + '.json';
-    this.electionCandidateColorPath = this.mockDataPath + arr[0] + 'candidate-color' + '.json';
-    this.pollingStationPath = this.mockDataPath + 'polling-station-la-rochelle' + '.geojson';
+    this.electionDataPath = this.mockDataPath + arr[0] + "-" + arr[1] + "-" + "winner" + ".json";
+    this.electionCandidateColorPath = this.mockDataPath + arr[0] + "candidate-color" + ".json";
+    this.pollingStationPath = this.mockDataPath + "polling-station-la-rochelle" + ".geojson";
   }
 
   getRoundFilter(): string {

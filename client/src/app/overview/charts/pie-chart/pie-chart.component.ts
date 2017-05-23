@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import 'd3pie';
+import { Component, OnInit } from "@angular/core";
+import "d3pie";
 
-import { ChartContentService } from '../../shared/chart-content.service';
+import { ChartContentService } from "../../shared/chart-content.service";
 
 @Component({
-  selector: 'app-pie-chart',
-  templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss'],
+  selector: "app-pie-chart",
+  templateUrl: "./pie-chart.component.html",
+  styleUrls: ["./pie-chart.component.scss"],
 })
 export class PieChartComponent implements OnInit {
 
@@ -20,13 +20,13 @@ export class PieChartComponent implements OnInit {
   }
 
   async getPieChartContent(): Promise<void> {
-    const answer = await this.chartcontentservice.getPieChartContent('accidents-luminosity-pie-chart');
+    const answer = await this.chartcontentservice.getPieChartContent("accidents-luminosity-pie-chart");
     this.chartContent = answer;
   }
 
   public async draw() {
     await this.getPieChartContent();
-    const chart = new d3pie('pieChart', this.chartContent);
+    const chart = new d3pie("pieChart", this.chartContent);
   }
 
 }

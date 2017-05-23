@@ -1,5 +1,5 @@
-import * as d3 from 'd3';
-import { MapSpecific } from './map-specific';
+import * as d3 from "d3";
+import { MapSpecific } from "./map-specific";
 
 export class ElectionMapSpecific implements MapSpecific {
 
@@ -13,8 +13,8 @@ export class ElectionMapSpecific implements MapSpecific {
   map: L.Map;
 
   constructor() {
-    this.electionCandidateColors['Hollande'] = '#f10d47';
-    this.electionCandidateColors['Sarkozy'] = '#0080c5';
+    this.electionCandidateColors["Hollande"] = "#f10d47";
+    this.electionCandidateColors["Sarkozy"] = "#0080c5";
   }
 
   setData(pollingStationPath: string, electionDataPath: string, electionCandidateColorPath: string) {
@@ -29,7 +29,7 @@ export class ElectionMapSpecific implements MapSpecific {
       icon: L.icon({
         iconSize: [50, 50],
         iconAnchor: [0, 0],
-        iconUrl: 'assets/markers.png',
+        iconUrl: "assets/markers.png",
       })
     };
   }
@@ -50,13 +50,13 @@ export class ElectionMapSpecific implements MapSpecific {
             const p = feature.properties as any;
             if (index < 55) {
               layer.bindPopup(
-                '<h4>' + electionData[index].candidate.name + '</h4>' +
-                '<hr>' +
-                '<b>lieu</b>: ' + electionData[index].bureau.name as any +
-                '<br>' +
-                '<b>pourcentages</b>: ' + electionData[index].candidate.percentage + '%' +
-                '<br>' +
-                '<b>votes</b>: ' + electionData[index].candidate.votes as any
+                "<h4>" + electionData[index].candidate.name + "</h4>" +
+                "<hr>" +
+                "<b>lieu</b>: " + electionData[index].bureau.name as any +
+                "<br>" +
+                "<b>pourcentages</b>: " + electionData[index].candidate.percentage + "%" +
+                "<br>" +
+                "<b>votes</b>: " + electionData[index].candidate.votes as any
               );
               index++;
             }

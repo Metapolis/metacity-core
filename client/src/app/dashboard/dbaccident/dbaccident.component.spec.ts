@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DbaccidentComponent } from './dbaccident.component';
+import { DbaccidentComponent } from "./dbaccident.component";
 
-describe('DbaccidentComponent', () => {
+describe("DbaccidentComponent", () => {
   let component: DbaccidentComponent;
   let fixture: ComponentFixture<DbaccidentComponent>;
 
@@ -19,7 +19,7 @@ describe('DbaccidentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

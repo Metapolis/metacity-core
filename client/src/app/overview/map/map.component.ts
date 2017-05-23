@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import * as L from 'leaflet';
+import * as L from "leaflet";
 
-import { MapContentService } from '../shared/map-content.service';
-import {MapSpecific} from './contents/map-specific';
+import { MapContentService } from "../shared/map-content.service";
+import { MapSpecific } from "./contents/map-specific";
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  selector: "app-map",
+  templateUrl: "./map.component.html",
+  styleUrls: ["./map.component.scss"],
 })
 export class MapComponent implements OnInit {
 
@@ -16,10 +16,10 @@ export class MapComponent implements OnInit {
 
   options = {
     layers: [
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         minZoom: 1,
         maxZoom: 18,
-        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: "© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors"
       })
     ],
     minZoom: 1,

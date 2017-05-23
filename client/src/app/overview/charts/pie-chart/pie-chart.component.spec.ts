@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PieChartComponent } from './pie-chart.component';
+import { PieChartComponent } from "./pie-chart.component";
 
-describe('PieChartComponent', () => {
+describe("PieChartComponent", () => {
   let component: PieChartComponent;
   let fixture: ComponentFixture<PieChartComponent>;
 
@@ -19,7 +19,7 @@ describe('PieChartComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });

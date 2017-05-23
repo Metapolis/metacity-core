@@ -2,10 +2,10 @@
 @import "../node_modules/bootstrap/scss/_variables.scss";
 /* Font */
 @import "./src/assets/fonts/fonts.scss";
-@import 'variables';
-@import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/leaflet/dist/leaflet';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "variables";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/leaflet/dist/leaflet";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 .btn {
   text-overflow: ellipsis;

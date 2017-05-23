@@ -1,11 +1,11 @@
 // Modules
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { OverviewRoutingModule } from '../overview-routing.module';
+import { OverviewRoutingModule } from "../overview-routing.module";
 
 // Components
-import { GenericNavPanelComponent } from './generic-nav-panel/generic-nav-panel.component';
+import { GenericNavPanelComponent } from "./generic-nav-panel/generic-nav-panel.component";
 
 
 // Services

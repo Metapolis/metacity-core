@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { BlockContent } from './block-content';
-import { Router, NavigationEnd } from '@angular/router';
-import { Assets } from '../../assets';
+import { Component, OnInit } from "@angular/core";
+import { BlockContent } from "./block-content";
+import { Router, NavigationEnd } from "@angular/router";
+import { Assets } from "../../assets";
 
 @Component({
-  selector: 'catalog-container-3',
-  templateUrl: './container-3.component.html',
-  styleUrls: ['../catalog.component.scss']
+  selector: "catalog-container-3",
+  templateUrl: "./container-3.component.html",
+  styleUrls: ["../catalog.component.scss"]
 })
 export class Container3Component implements OnInit {
   assets = new Assets;
   blocks: BlockContent[] = [
     {
-      title: 'OPEN SOURCE',
+      title: "OPEN SOURCE",
       text: `MetaCity est un outil open source de gestion de données « smart »
       des territoires. La plateforme doit contribuer à faire émerger une
       communauté d’utilisateurs (villes, citoyens,entreprises privées )
@@ -20,7 +20,7 @@ export class Container3Component implements OnInit {
       et les échanges entre chacun.`
     },
     {
-      title: 'INNOVANTE',
+      title: "INNOVANTE",
       text: `MetaCity est un outil open source de gestion de données « smart »
       des territoires. La plateforme doit contribuer à faire émerger une
       communauté d’utilisateurs (villes, citoyens,entreprises privées ) et agir
@@ -28,7 +28,7 @@ export class Container3Component implements OnInit {
       échanges entre chacun.`
     },
     {
-      title: 'ÉVOLUTIVE',
+      title: "ÉVOLUTIVE",
       text: `MetaCity est un outil open source de gestion de données « smart »
       des territoires. La plateforme doit contribuer à faire émerger une
       communauté d’utilisateurs (villes, citoyens,entreprises privées ) et agir
@@ -50,7 +50,7 @@ export class Container3Component implements OnInit {
           let js: any;
           js = d.createElement(s);
           js.id = id;
-          js.src = 'https://platform.twitter.com/widgets.js';
+          js.src = "https://platform.twitter.com/widgets.js";
           fjs.parentNode.insertBefore(js, fjs);
 
           t._e = [];
@@ -59,7 +59,7 @@ export class Container3Component implements OnInit {
           };
 
           return t;
-        } (document, 'script', 'twitter-wjs'));
+        }(document, "script", "twitter-wjs"));
       }
     });
   }

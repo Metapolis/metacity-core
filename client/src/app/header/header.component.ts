@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { Assets } from '../assets';
-import { Link } from '../common/link';
-import { MenuService } from '../shared/menu.service';
+import { Assets } from "../assets";
+import { Link } from "../common/link";
+import { MenuService } from "../shared/menu.service";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
   navlinks: Link[];

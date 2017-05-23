@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { AnimatedBackgroundComponent } from './animated-background.component';
+import { AnimatedBackgroundComponent } from "./animated-background.component";
 
-describe('AnimatedBackgroundComponent', () => {
+describe("AnimatedBackgroundComponent", () => {
   let component: AnimatedBackgroundComponent;
   let fixture: ComponentFixture<AnimatedBackgroundComponent>;
 
@@ -19,7 +19,7 @@ describe('AnimatedBackgroundComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });

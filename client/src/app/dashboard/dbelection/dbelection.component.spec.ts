@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DbelectionComponent } from './dbelection.component';
+import { DbelectionComponent } from "./dbelection.component";
 
-describe('DbelectionComponent', () => {
+describe("DbelectionComponent", () => {
   let component: DbelectionComponent;
   let fixture: ComponentFixture<DbelectionComponent>;
 
@@ -19,7 +19,7 @@ describe('DbelectionComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
