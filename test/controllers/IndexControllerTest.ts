@@ -22,7 +22,7 @@ class IndexControllerTest extends AbstractTestController {
     /**
      * Test function find traffic accident
      */
-    @test
+    // @test
     private async testFindTraffic(): Promise<void> {
         const path: string = "/foo";
         const trafficQueryService: Mock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as Mock<TrafficQueryService>);
