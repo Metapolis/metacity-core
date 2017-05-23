@@ -45,6 +45,7 @@ export class AccidentMapFiltersComponent implements OnInit {
   }
 
   constructor(private mapcontentservice: MapContentService) { }
+
   ngOnInit() {
   }
 

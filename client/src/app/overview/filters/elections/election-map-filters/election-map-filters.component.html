@@ -12,7 +12,10 @@
 <div class="choice choice-content">
   <div class="btn-group btn-block d-flex flex-column" data-toggle="buttons">
     <label *ngFor="let button of buttonListElections" class="btn btn-primary btn-xs btn-block">
-      <input type="radio" name="" value="{{button.value}}"> {{button.label}}
+      <input  type="radio" name="option"
+              value="{{button.value}}"
+              (click)="goTo(button.value)">
+      {{button.label}}
     </label>
   </div>
 </div>

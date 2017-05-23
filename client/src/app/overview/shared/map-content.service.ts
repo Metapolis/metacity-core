@@ -27,12 +27,7 @@ export class MapContentService {
       return Promise.resolve(this.accidentMap);
     }
     if (this.selectedMap === 'election-map') {
-      this.electionColorsCandidates['Hollande'] = '#f10d47';
-      this.electionColorsCandidates['Sarkozy'] = '#0080c5';
-      this.electionMap = new ElectionMapSpecific(
-        'assets/mock-data/vote_winner.json',
-        'assets/mock-data/electoral_bureau_vote_4326.geojson',
-        this.electionColorsCandidates);
+      this.electionMap = new ElectionMapSpecific();
       this.electionMapControl = new ElectionMapControl(this.electionMap);
       return Promise.resolve(this.electionMap);
     }

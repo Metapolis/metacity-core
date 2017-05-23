@@ -8,16 +8,16 @@ export class ElectionMapSpecific implements MapSpecific {
   bureau: string;
   colors: {
     [candidate: string]: string
-  };
+  } = {};
+  map: L.Map;
+  roundFilter: string;
 
-  constructor(winner: string, bureau: string, colors: {[candidate: string]: string}) {
-    this.winner = winner;
-    this.bureau = bureau;
-    this.colors = colors;
-  }
+  constructor() {
+    this.colors['Hollande'] = '#f10d47';
+    this.colors['Sarkozy'] = '#0080c5';
+    this.bureau = 'assets/mock-data/electoral_bureau_vote_4326.geojson';
+    this.winner = 'assets/mock-data/vote_winner.json';
 
-
-  onMapReady(map: L.Map) {
     const icon = {
       icon: L.icon({
         iconSize: [50, 50],
@@ -25,7 +25,21 @@ export class ElectionMapSpecific implements MapSpecific {
         iconUrl: 'assets/markers.png',
       })
     };
+  }
 
+  public setRoundFilter(roundFilter: string) {
+    if (roundFilter !== this.roundFilter) {
+      this.roundFilter = roundFilter;
+      console.log(this.roundFilter);
+    }
+  }
+
+  onMapReady(map: L.Map) {
+    this.map = map;
+    this.draw();
+  }
+
+  public draw(): void {
     d3.json(this.winner, (err, vote_winner) => {
       let index = 0;
 
@@ -39,7 +53,6 @@ export class ElectionMapSpecific implements MapSpecific {
             }
           },
           onEachFeature: (feature, layer) => {
-            // console.log(feature.properties);
             const p = feature.properties as any;
             if (index < 55) {
               layer.bindPopup(
@@ -54,7 +67,7 @@ export class ElectionMapSpecific implements MapSpecific {
               index++;
             }
           },
-        }).addTo(map);
+        }).addTo(this.map);
       });
     });
   }
