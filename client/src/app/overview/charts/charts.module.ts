@@ -5,7 +5,6 @@ import { NgModule } from "@angular/core";
 import { PieChartComponent } from "./pie-chart/pie-chart.component";
 import { BarChartComponent } from "./bar-chart/bar-chart.component";
 
-
 @NgModule({
   imports: [],
   declarations: [

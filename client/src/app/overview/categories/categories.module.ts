@@ -13,7 +13,6 @@ import { ElectionChartComponent } from "./elections/election-chart/election-char
 import { AccidentChartComponent } from "./accidents/accident-chart/accident-chart.component";
 import { AccidentMapComponent } from "./accidents/accident-map/accident-map.component";
 
-
 // Services
 
 @NgModule({

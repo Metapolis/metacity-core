@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
 })
 export class ElectionChartFiltersComponent {
 
-  buttonListElections: {button: string}[] = [
+  private buttonListElections: Array<{button: string}> = [
     {button: "Résultats du 1er tour 2012"},
     {button: "Résultats du 2ème tour 2012"},
     {button: "Résultats du 1er tour 2017"},

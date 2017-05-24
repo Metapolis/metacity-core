@@ -7,7 +7,6 @@ import { OverviewRoutingModule } from "../overview-routing.module";
 // Components
 import { GenericNavPanelComponent } from "./generic-nav-panel/generic-nav-panel.component";
 
-
 // Services
 
 @NgModule({
