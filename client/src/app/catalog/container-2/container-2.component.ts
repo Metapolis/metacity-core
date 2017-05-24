@@ -8,8 +8,8 @@ import { Link } from "../../common/link";
   styleUrls: ["../catalog.component.scss"]
 })
 export class Container2Component {
-  assets = new Assets;
-  thematiqueslinks1: Link[] = [
+  private assets = new Assets();
+  private thematiqueslinks1: Link[] = [
     {src: "#", text: "Accessibilité"},
     {src: "#", text: "Urbanisme"},
     {src: "#", text: "Territoire"},
@@ -17,7 +17,7 @@ export class Container2Component {
     {src: "#", text: "Économie"},
     {src: "#", text: "Éducation & Jeunesse"},
   ];
-  thematiqueslinks2: Link[] = [
+  private thematiqueslinks2: Link[] = [
     {src: "#", text: "Environnement"},
     {src: "#", text: "Sports & Loisirs"},
     {src: "#", text: "Santé"},

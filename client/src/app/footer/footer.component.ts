@@ -7,11 +7,11 @@ import { Link } from "../common/link";
   styleUrls: ["./footer.component.scss"]
 })
 export class FooterComponent {
-  footerlinks: Link[] = [
-    {src: "https://www.metapolis.fr", text: "Metapolis"},
-    {src: "contact", text: "Contact"},
-    {src: "faq", text: "FAQ"},
-    {src: "cgu", text: "CGU"},
-    {src: "mentions-legales", text: "Mentions legales"}
+  private footerlinks: Link[] = [
+    { src: "https://www.metapolis.fr", text: "Metapolis" },
+    { src: "contact", text: "Contact" },
+    { src: "faq", text: "FAQ" },
+    { src: "cgu", text: "CGU" },
+    { src: "mentions-legales", text: "Mentions legales" }
   ];
 }

@@ -7,11 +7,11 @@ import { ConnexionService } from "./connexion.service";
 
 @Injectable()
 export class MenuService {
-  connexionState: boolean;
+  private connexionState: boolean;
 
   constructor(private connexionService: ConnexionService) { }
 
-  async getHeaderNavlinks(): Promise<Link[]> {
+  public async getHeaderNavlinks(): Promise<Link[]> {
     await this.getConnexionState();
     if (!this.connexionState) {
       return Promise.resolve(OFFLINENAVLINKS);

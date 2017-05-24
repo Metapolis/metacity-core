@@ -10,7 +10,6 @@ import { DbaccidentComponent } from "./dashboard/dbaccident/dbaccident.component
 import { DbelectionComponent } from "./dashboard/dbelection/dbelection.component";
 import { CatalogComponent } from "./catalog/catalog.component";
 
-
 const routes: Routes = [
   // Redirect root to home
   {path: "", redirectTo: "/home", pathMatch: "full"},

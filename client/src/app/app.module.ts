@@ -24,9 +24,8 @@ import { AnimatedBackgroundComponent } from "./animated-background/animated-back
 import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
 
-
 @NgModule({
-  imports:      [
+  imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
     AppRoutingModule,
@@ -46,11 +45,11 @@ import { ConnexionService } from "./shared/connexion.service";
     DashboardComponent,
     RegisterComponent,
     AnimatedBackgroundComponent,
-   ],
+  ],
   providers: [
     MenuService,
     ConnexionService
-   ],
-  bootstrap:    [ AppComponent ]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

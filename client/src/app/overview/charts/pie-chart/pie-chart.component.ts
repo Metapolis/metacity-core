@@ -10,16 +10,16 @@ import { ChartContentService } from "../../shared/chart-content.service";
 })
 export class PieChartComponent implements OnInit {
 
-  chartContent: d3pie.ID3PieOptions;
+  private chartContent: d3pie.ID3PieOptions;
 
   constructor(private chartcontentservice: ChartContentService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.draw();
   }
 
-  async getPieChartContent(): Promise<void> {
+  private async getPieChartContent(): Promise<void> {
     const answer = await this.chartcontentservice.getPieChartContent("accidents-luminosity-pie-chart");
     this.chartContent = answer;
   }

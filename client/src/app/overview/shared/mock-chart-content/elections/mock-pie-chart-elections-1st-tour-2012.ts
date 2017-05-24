@@ -41,24 +41,24 @@ export const ELECTION1STTOUR2012GRAPHCONTENT: d3pie.ID3PieOptions = {
     },
     content: [
       {
-        "label": "Tues",
-        "value": 1,
-        "color": "#762222"
+        label: "Tues",
+        value: 1,
+        color: "#762222"
       },
       {
-        "label": "Blesse(s) grave(s)",
-        "value": 9,
-        "color": "#cd2445"
+        label: "Blesse(s) grave(s)",
+        value: 9,
+        color: "#cd2445"
       },
       {
-        "label": "Blesse(s) leger(s)",
-        "value": 45,
-        "color": "#f0793e"
+        label: "Blesse(s) leger(s)",
+        value: 45,
+        color: "#f0793e"
       },
       {
-        "label": "mort(s)",
-        "value": 45,
-        "color": "#f5c2de"
+        label: "mort(s)",
+        value: 45,
+        color: "#f5c2de"
       }
     ]
   },

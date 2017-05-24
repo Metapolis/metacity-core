@@ -7,5 +7,5 @@ import { Link } from "../../common/link";
   styleUrls: ["../header.component.scss"],
 })
 export class VisualisationFormComponent  {
-  searchLink: Link = {src: "catalog", text: "Voir toutes les visualisations de données"};
+  private searchLink: Link = {src: "catalog", text: "Voir toutes les visualisations de données"};
 }

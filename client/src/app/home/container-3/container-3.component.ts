@@ -7,7 +7,7 @@ import { BlockContent } from "./block-content";
   styleUrls: ["../home.component.scss"],
 })
 export class Container3Component {
-  blocks: BlockContent[] = [
+  private blocks: BlockContent[] = [
     {
       title: "OPEN SOURCE",
       text: `MetaCity est un outil open
@@ -47,7 +47,7 @@ nouveaux services urbains.
     },
     {
       title: "ÉVOLUTIVE",
-  text: `La plateforme est pensée pour s’adapter
+      text: `La plateforme est pensée pour s’adapter
       aux évolutions des usages de la donnée urbaine,
        et anticiper l’ouverture croissante des flux de données
         issues des collectivités, des opérateurs et du
