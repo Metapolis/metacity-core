@@ -10,18 +10,18 @@ import { MenuService } from "../shared/menu.service";
   styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
-  navlinks: Link[];
-  assets = new Assets;
+  private navlinks: Link[];
+  private assets = new Assets();
 
   public isCollapsed = true;
 
   constructor(private menuService: MenuService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getMenu();
   }
 
-  async getMenu(): Promise<void> {
+  private async getMenu(): Promise<void> {
     this.navlinks = await this.menuService.getHeaderNavlinks();
   }
 }

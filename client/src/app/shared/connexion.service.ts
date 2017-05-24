@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class ConnexionService {
-  connexionState: boolean = true;
-  getConnexionState(): Promise<boolean> {
+  private connexionState: boolean = true;
+  public getConnexionState(): Promise<boolean> {
     return Promise.resolve(this.connexionState);
   }
 }

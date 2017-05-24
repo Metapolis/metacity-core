@@ -9,8 +9,8 @@ import { Assets } from "../../assets";
   styleUrls: ["../catalog.component.scss"]
 })
 export class Container3Component implements OnInit {
-  assets = new Assets;
-  blocks: BlockContent[] = [
+  private assets = new Assets();
+  private blocks: BlockContent[] = [
     {
       title: "OPEN SOURCE",
       text: `MetaCity est un outil open source de gestion de données « smart »
@@ -39,11 +39,11 @@ export class Container3Component implements OnInit {
   constructor(private _router: Router) { }
 
   public ngOnInit() {
-    this._router.events.subscribe(val => {
+    this._router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        (<any>window).twttr = (function(d, s, id) {
+        (<any>window).twttr = (d, s, id) => {
           const fjs = d.getElementsByTagName(s)[0];
-            const t = (<any>window).twttr || {};
+          const t = (<any>window).twttr || {};
           if (d.getElementById(id)) {
             return t;
           }
@@ -54,12 +54,13 @@ export class Container3Component implements OnInit {
           fjs.parentNode.insertBefore(js, fjs);
 
           t._e = [];
-          t.ready = function(f: any) {
+          t.ready = (f: any) => {
             t._e.push(f);
           };
 
           return t;
-        }(document, "script", "twitter-wjs"));
+        };
+        (<any>window).twttr(document, "script", "twitter-wjs");
       }
     });
   }
