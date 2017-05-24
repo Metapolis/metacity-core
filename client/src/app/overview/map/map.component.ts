@@ -12,14 +12,14 @@ import { MapSpecific } from "./contents/map-specific";
 })
 export class MapComponent implements OnInit {
 
-  mapspecific: MapSpecific;
+  private mapspecific: MapSpecific;
 
-  options = {
+  private options = {
     layers: [
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         minZoom: 1,
         maxZoom: 18,
-        attribution: "© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors"
+        attribution: `© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors"`
       })
     ],
     minZoom: 1,
@@ -34,12 +34,12 @@ export class MapComponent implements OnInit {
 
   ngOnInit() { }
 
-  async onMapReady(map: L.Map) {
+  private async onMapReady(map: L.Map) {
     await this.getMapContent();
     this.mapspecific.onMapReady(map);
   }
 
-  async getMapContent(): Promise<void> {
+  public async getMapContent(): Promise<void> {
     const response = await this.mapcontentservice.getMapContent();
     this.mapspecific = response;
   }

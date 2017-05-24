@@ -11,9 +11,8 @@
     </div>
   </div>
   <div class="choice choice-content d-flex flex-column">
-    <ng2-select [placeholder]="" Les voitures accidentées
-    "" [multiple]="true" [displayBy]=""value"" [identifyBy]=""id"" [options]="vehicules"
-    [(ngModel)]="multipleValuesModel"></ng2-select>
+    <!-- <ng2-select [placeholder]="Les voitures accidentees" [multiple]="true" [displayBy]="value" [identifyBy]="id" [options]="vehicules" [(ngModel)]="multipleValuesModel">
+    </ng2-select> -->
     <p *ngIf="multipleValuesModel.length">
       <span>Vous avez séléctionné
       </span>
@@ -31,7 +30,7 @@
               <div layout="row" layout-wrap flex>
                 <div flex-xs flex="50">
                   <md-checkbox #Pluie value="Pluie" (change)="check(Pluie)" [checked]="true" aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
-                    <span ng-if="isChecked()" >Pluie</span>
+                    <span ng-if="isChecked()">Pluie</span>
                   </md-checkbox>
                 </div>
                 <div flex-xs flex="50">

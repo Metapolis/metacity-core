@@ -13,7 +13,6 @@ import { ElectionChartFiltersComponent } from "./elections/election-chart-filter
 
 // Services
 
-
 @NgModule({
   imports: [
     CommonModule,
