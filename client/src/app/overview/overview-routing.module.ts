@@ -8,8 +8,6 @@ import { ElectionMapComponent } from "./categories/elections/election-map/electi
 import { ElectionChartComponent } from "./categories/elections/election-chart/election-chart.component";
 import { AccidentChartComponent } from "./categories/accidents/accident-chart/accident-chart.component";
 
-
-
 const overviewRoutes: Routes = [
   {
     path: "overview", component: OverviewComponent,
@@ -17,15 +15,15 @@ const overviewRoutes: Routes = [
       {
         path: "accidents",
         children: [
-          {path: "carte", component: AccidentMapComponent},
-          {path: "analyse", component: AccidentChartComponent}
+          { path: "carte", component: AccidentMapComponent },
+          { path: "analyse", component: AccidentChartComponent }
         ]
       },
       {
         path: "elections",
         children: [
-          {path: "carte", component: ElectionMapComponent},
-          {path: "analyse", component: ElectionChartComponent}
+          { path: "carte", component: ElectionMapComponent },
+          { path: "analyse", component: ElectionChartComponent }
         ]
       },
     ]
@@ -33,7 +31,7 @@ const overviewRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forChild(overviewRoutes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forChild(overviewRoutes)],
+  exports: [RouterModule]
 })
-export class OverviewRoutingModule {}
+export class OverviewRoutingModule { }

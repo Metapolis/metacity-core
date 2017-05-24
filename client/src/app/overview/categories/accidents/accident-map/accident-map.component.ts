@@ -10,11 +10,11 @@ import { MapContentService } from "../../../shared/map-content.service";
 export class AccidentMapComponent implements OnInit {
   constructor(private mapcontentservice: MapContentService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.setMapContent("accident-map");
   }
 
-  setMapContent(selectedMap: string): void {
+  public setMapContent(selectedMap: string): void {
     this.mapcontentservice.setSelectedMap(selectedMap);
   }
 }

@@ -7,13 +7,13 @@ import { MapContentService } from "../../../shared/map-content.service";
   templateUrl: "election-chart.component.html",
 })
 export class ElectionChartComponent implements OnInit {
-  constructor(private mapcontentservice: MapContentService) {}
+  constructor(private mapcontentservice: MapContentService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.setMapContent("elections-pie-chart");
   }
 
-  setMapContent(selectedMap: string): void {
+  public setMapContent(selectedMap: string): void {
     this.mapcontentservice.setSelectedMap(selectedMap);
   }
 }
