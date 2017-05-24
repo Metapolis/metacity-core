@@ -41,29 +41,29 @@ export const ACCIDENTLUMINOSITYGRAPHCONTENT: d3pie.ID3PieOptions = {
     },
     content: [
       {
-        "label": "Plein jour",
-        "value": 1,
-        "color": "#762222"
+        label: "Plein jour",
+        value: 1,
+        color: "#762222"
       },
       {
-        "label": "Crépuscule ou aube",
-        "value": 9,
-        "color": "#cd2445"
+        label: "Crépuscule ou aube",
+        value: 9,
+        color: "#cd2445"
       },
       {
-        "label": "Nuit sans éclairage public",
-        "value": 45,
-        "color": "#f0793e"
+        label: "Nuit sans éclairage public",
+        value: 45,
+        color: "#f0793e"
       },
       {
-        "label": " Nuit avec éclairage public non allumé",
-        "value": 44,
-        "color": "#f5c2de"
+        label: " Nuit avec éclairage public non allumé",
+        value: 44,
+        color: "#f5c2de"
       },
       {
-        "label": "Nuit avec éclairage public allumé",
-        "value": 1,
-        "color": "#f5c2de"
+        label: "Nuit avec éclairage public allumé",
+        value: 1,
+        color: "#f5c2de"
       }
     ]
   },

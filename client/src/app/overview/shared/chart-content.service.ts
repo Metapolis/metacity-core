@@ -9,11 +9,9 @@ import { ELECTION1STOUR2017GRAPHCONTENT } from "./mock-chart-content/elections/m
 import { ELECTION2NDTOUR2012GRAPHCONTENT } from "./mock-chart-content/elections/mock-pie-chart-elections-2nd-tour-2012";
 import { ELECTION2NDTOUR2017GRAPHCONTENT } from "./mock-chart-content/elections/mock-pie-chart-elections-2nd-tour-2017";
 
-
-
 @Injectable()
 export class ChartContentService {
-  getPieChartContent(selectedGraph: string): Promise<d3pie.ID3PieOptions> {
+  public getPieChartContent(selectedGraph: string): Promise<d3pie.ID3PieOptions> {
     if (selectedGraph === "accidents-luminosity-pie-chart") {
       return Promise.resolve(ACCIDENTLUMINOSITYGRAPHCONTENT);
     }
