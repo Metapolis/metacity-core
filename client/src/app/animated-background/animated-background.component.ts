@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { TweenLite, EasePack } from "gsap";
 
 @Component({
@@ -6,10 +6,4 @@ import { TweenLite, EasePack } from "gsap";
   templateUrl: "./animated-background.component.html",
   styleUrls: ["./animated-background.component.scss"]
 })
-export class AnimatedBackgroundComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-}
+export class AnimatedBackgroundComponent { }
