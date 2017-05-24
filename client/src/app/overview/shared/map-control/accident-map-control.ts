@@ -1,20 +1,20 @@
 import { AccidentMapSpecific } from "../../map/contents/accident-map-content";
 
 export class AccidentMapControl {
-  accidentMap: AccidentMapSpecific;
-  weatherFilters: { name: string, code: number, value: boolean }[];
+  private accidentMap: AccidentMapSpecific;
+  private weatherFilters: Array<{ name: string, code: number, value: boolean }>;
 
   constructor(accidentMap: AccidentMapSpecific) {
     this.accidentMap = accidentMap;
   }
 
-  setWeatherFilter(weatherFilters: { name: string, code: number, value: boolean }[]) {
+  public setWeatherFilter(weatherFilters: Array<{ name: string, code: number, value: boolean }>) {
     this.weatherFilters = weatherFilters;
     this.accidentMap.setWeatherFilters(this.getWeatherFiltersList());
     this.accidentMap.reDraw();
   }
 
-  getWeatherFiltersList() {
+  public getWeatherFiltersList() {
     const list: number[] = [];
     for (const element in this.weatherFilters) {
       if (this.weatherFilters[element]["value"]) {
