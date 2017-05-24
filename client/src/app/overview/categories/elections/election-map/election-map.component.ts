@@ -9,11 +9,11 @@ import { MapContentService } from "../../../shared/map-content.service";
 export class ElectionMapComponent implements OnInit {
   constructor(private mapcontentservice: MapContentService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.setMapContent("election-map");
   }
 
-  setMapContent(selectedMap: string): void {
+  public setMapContent(selectedMap: string): void {
     this.mapcontentservice.setSelectedMap(selectedMap);
   }
 }

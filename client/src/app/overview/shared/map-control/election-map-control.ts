@@ -17,7 +17,6 @@ export class ElectionMapControl {
 
   public pathCreator() {
     const arr = this.roundFilter.split("/");
-
     this.electionDataPath = this.mockDataPath + arr[0] + "-" + arr[1] + "-" + "winner" + ".json";
     this.electionCandidateColorPath = this.mockDataPath + arr[0] + "candidate-color" + ".json";
     this.pollingStationPath = this.mockDataPath + "polling-station-la-rochelle" + ".geojson";
@@ -27,7 +26,6 @@ export class ElectionMapControl {
     return this.roundFilter;
   }
   public setRoundFilter(roundFilter: string) {
-    // console.log(roundFilter);
     this.roundFilter = roundFilter;
     this.pathCreator();
     this.electionMap.setData(this.pollingStationPath, this.electionDataPath, this.electionCandidateColorPath);

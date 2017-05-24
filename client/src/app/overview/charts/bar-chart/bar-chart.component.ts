@@ -5,11 +5,8 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./bar-chart.component.html",
   styleUrls: ["./bar-chart.component.scss"]
 })
-export class BarChartComponent implements OnInit {
+export class BarChartComponent {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

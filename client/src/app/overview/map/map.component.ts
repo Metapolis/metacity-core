@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 import * as L from "leaflet";
 
@@ -10,7 +10,7 @@ import { MapSpecific } from "./contents/map-specific";
   templateUrl: "./map.component.html",
   styleUrls: ["./map.component.scss"],
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
 
   private mapspecific: MapSpecific;
 
@@ -31,8 +31,6 @@ export class MapComponent implements OnInit {
     // we should think about having an observable to load map content much sooner
     // this.getMapContent();
   }
-
-  ngOnInit() { }
 
   private async onMapReady(map: L.Map) {
     await this.getMapContent();
