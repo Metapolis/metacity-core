@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
 })
 export class AccidentChartFiltersComponent {
 
-  buttonList: {button: string}[] = [
+  private buttonList: Array<{button: string}> = [
     {button: "Nombre de bléssés"},
     {button: "Évolution des accidents"},
     {button: "Luminosité lors des accidents"},

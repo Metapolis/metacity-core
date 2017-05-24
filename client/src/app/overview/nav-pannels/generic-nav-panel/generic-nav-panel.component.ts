@@ -9,8 +9,9 @@ import { Img } from "../../../common/img";
   styleUrls: ["generic-nav-panel.component.scss"]
 })
 export class GenericNavPanelComponent {
-  assets = new Assets;
-  visuallinks: { link: Link, img: Img }[] = [
+  private assets = new Assets();
+
+  private visuallinks: Array<{ link: Link, img: Img }> = [
     {
       link: {src: "/404", text: "Dashboard"},
       img: { src: this.assets.home.src, alt: this.assets.home.alt }
