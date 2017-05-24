@@ -1,4 +1,4 @@
 export class BlockContent {
-  title: string;
-  text: string;
+  public title: string;
+  public text: string;
 }
