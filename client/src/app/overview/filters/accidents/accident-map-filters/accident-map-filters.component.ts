@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Ng2SelectModule } from "ng2-material-select";
 import "hammerjs";
 
@@ -9,34 +9,37 @@ import { MapContentService } from "../../../shared/map-content.service";
   templateUrl: "./accident-map-filters.component.html",
   styleUrls: ["../../generique-filters.component.scss"]
 })
-export class AccidentMapFiltersComponent implements OnInit {
 
-  vehicules = [
+export class AccidentMapFiltersComponent {
+  private vehicules = [
     {value: "voiture", id: 0},
     {value: "vélo", id: 1},
     {value: "bus", id: 2}
 
   ];
 
-  multipleValuesModel = [
+  private multipleValuesModel = [
     {value: "voiture", id: 0},
     {value: "vélo", id: 1},
     {value: "bus", id: 2}
   ];
 
-  weatherFilters: {name: string, code: number, value: boolean}[] = [
+  private weatherFilters: Array<{name: string, code: number, value: boolean}> = [
     {name: "Pluie", code: 2, value: true},
     {name: "Vent", code: 6, value: true},
     {name: "Brouillard", code: 5, value: true},
     {name: "Beau", code: 1, value: true},
     {name: "Neige", code: 4, value: true},
   ];
-  check(curentBox: HTMLInputElement) {
+
+  constructor(private mapcontentservice: MapContentService) { }
+
+  private check(curentBox: HTMLInputElement) {
     this.setWeatherFilter(curentBox.value, curentBox.checked);
     this.setWeatherFilterService();
   }
 
-  setWeatherFilter(name: string, value: boolean) {
+  public setWeatherFilter(name: string, value: boolean) {
     for (const element in this.weatherFilters) {
       if (this.weatherFilters[element]["name"] === name) {
         this.weatherFilters[element]["value"] = value;
@@ -44,12 +47,7 @@ export class AccidentMapFiltersComponent implements OnInit {
     }
   }
 
-  constructor(private mapcontentservice: MapContentService) { }
-
-  ngOnInit() {
-  }
-
-  setWeatherFilterService() {
+  public setWeatherFilterService() {
     this.mapcontentservice.accidentMapControl.setWeatherFilter(this.weatherFilters);
   }
 
