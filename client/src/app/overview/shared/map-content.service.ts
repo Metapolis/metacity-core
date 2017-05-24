@@ -9,20 +9,20 @@ import { MapSpecific } from "../map/contents/map-specific";
 
 @Injectable()
 export class MapContentService {
-  selectedMap: string;
-  accidentMap: AccidentMapSpecific;
-  accidentMapControl: AccidentMapControl;
-  electionMap: ElectionMapSpecific;
-  electionMapControl: ElectionMapControl;
-  electionColorsCandidates: {
+  public selectedMap: string;
+  public accidentMap: AccidentMapSpecific;
+  public accidentMapControl: AccidentMapControl;
+  public electionMap: ElectionMapSpecific;
+  public electionMapControl: ElectionMapControl;
+  public electionColorsCandidates: {
     [candidate: string]: string
   } = {};
 
   constructor() { }
 
-  getMapContent(): Promise<MapSpecific> {
+  public getMapContent(): Promise<MapSpecific> {
     if (this.selectedMap === "accident-map") {
-      this.accidentMap = new AccidentMapSpecific;
+      this.accidentMap = new AccidentMapSpecific();
       this.accidentMapControl = new AccidentMapControl(this.accidentMap);
       return Promise.resolve(this.accidentMap);
     }
@@ -33,7 +33,7 @@ export class MapContentService {
     }
   }
 
-  setSelectedMap(selectedMap: string): void {
+  public setSelectedMap(selectedMap: string): void {
     this.selectedMap = selectedMap;
   }
 }
