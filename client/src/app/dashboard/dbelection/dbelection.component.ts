@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Assets } from "../../assets";
 
 @Component({
@@ -6,12 +6,6 @@ import { Assets } from "../../assets";
   templateUrl: "./dbelection.component.html",
   styleUrls: ["./dbelection.component.scss", "../dashboard.component.scss"]
 })
-export class DbelectionComponent implements OnInit {
-  assets = new Assets;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class DbelectionComponent {
+  private assets = new Assets();
 }

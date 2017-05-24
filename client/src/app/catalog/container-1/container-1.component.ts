@@ -7,5 +7,5 @@ import { Assets } from "../../assets";
   styleUrls: ["../catalog.component.scss"]
 })
 export class Container1Component {
-  assets = new Assets;
+  private assets = new Assets();
 }
