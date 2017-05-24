@@ -1,4 +1,4 @@
 export class Img {
-  src: string;
-  alt: string;
+  public src: string;
+  public alt: string;
 }
