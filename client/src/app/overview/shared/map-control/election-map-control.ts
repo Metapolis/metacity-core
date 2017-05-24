@@ -1,24 +1,21 @@
-import { HttpModule, JsonpModule } from "@angular/http"
-
 import { ElectionMapSpecific } from "../../map/contents/election-map-content";
 
 export class ElectionMapControl {
-  electionMap: ElectionMapSpecific;
-  roundFilter: string;
-  candidateFilter: string;
-  mockDataPath: string;
-  electionDataPath: string;
-  electionCandidateColorPath: string;
-  pollingStationPath: string;
+  private electionMap: ElectionMapSpecific;
+  private roundFilter: string;
+  private candidateFilter: string;
+  private mockDataPath: string;
+  private electionDataPath: string;
+  private electionCandidateColorPath: string;
+  private pollingStationPath: string;
 
   constructor(electionMap: ElectionMapSpecific) {
     this.electionMap = electionMap;
     this.mockDataPath = "assets/mock-data/";
-    this.roundFilter = "election-2012/1";
-    this.setRoundFilter(this.roundFilter);
+    this.setRoundFilter("election-2012/1");
   }
 
-  pathCreator() {
+  public pathCreator() {
     const arr = this.roundFilter.split("/");
 
     this.electionDataPath = this.mockDataPath + arr[0] + "-" + arr[1] + "-" + "winner" + ".json";
@@ -26,20 +23,14 @@ export class ElectionMapControl {
     this.pollingStationPath = this.mockDataPath + "polling-station-la-rochelle" + ".geojson";
   }
 
-  getRoundFilter(): string {
+  public getRoundFilter(): string {
     return this.roundFilter;
   }
-  setRoundFilter(roundFilter: string) {
+  public setRoundFilter(roundFilter: string) {
+    // console.log(roundFilter);
     this.roundFilter = roundFilter;
     this.pathCreator();
     this.electionMap.setData(this.pollingStationPath, this.electionDataPath, this.electionCandidateColorPath);
     this.electionMap.draw();
-  }
-
-  getCandidateFilter(): string {
-    return this.candidateFilter;
-  }
-  setCandidateFilter(candidateFilter: string) {
-    this.candidateFilter = candidateFilter;
   }
 }

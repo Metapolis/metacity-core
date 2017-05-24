@@ -1,39 +1,43 @@
-import * as d3 from "d3";
+import * as d3 from "d3-request";
 import { MapSpecific } from "./map-specific";
+
+const ICON_SIZE: number = 50;
+const MAX_POLLING: number = 55;
 
 export class ElectionMapSpecific implements MapSpecific {
 
-  option: L.GeoJSONOptions;
-  electionDataPath: string;
-  pollingStationPath: string;
-  electionCandidateColors: {
+  private option: L.GeoJSONOptions;
+  private electionDataPath: string;
+  private pollingStationPath: string;
+  private electionCandidateColors: {
     [candidate: string]: string
   } = {};
-  electionCandidateColorPath: string;
-  map: L.Map;
+  private electionCandidateColorPath: string;
+  private map: L.Map;
 
   constructor() {
     this.electionCandidateColors["Hollande"] = "#f10d47";
     this.electionCandidateColors["Sarkozy"] = "#0080c5";
   }
 
-  setData(pollingStationPath: string, electionDataPath: string, electionCandidateColorPath: string) {
+  public setData(pollingStationPath: string, electionDataPath: string, electionCandidateColorPath: string) {
     this.pollingStationPath = pollingStationPath;
     this.electionDataPath = electionDataPath;
     this.electionCandidateColorPath = electionCandidateColorPath;
   }
 
-  onMapReady(map: L.Map) {
+  public onMapReady(map: L.Map) {
     this.map = map;
     const icon = {
       icon: L.icon({
-        iconSize: [50, 50],
+        iconSize: [ICON_SIZE, ICON_SIZE],
         iconAnchor: [0, 0],
         iconUrl: "assets/markers.png",
       })
     };
   }
-  draw () {
+
+  public draw() {
     d3.json(this.electionDataPath, (err, electionData) => {
       let index = 0;
 
@@ -42,21 +46,21 @@ export class ElectionMapSpecific implements MapSpecific {
 
         L.geoJSON(featureCollection, {
           style: (feature) => {
-            if (index < 55) {
+            if (index < MAX_POLLING) {
               return { color: this.electionCandidateColors[electionData[index].candidate.name] };
             }
           },
           onEachFeature: (feature, layer) => {
             const p = feature.properties as any;
-            if (index < 55) {
+            if (index < MAX_POLLING) {
               layer.bindPopup(
                 "<h4>" + electionData[index].candidate.name + "</h4>" +
                 "<hr>" +
-                "<b>lieu</b>: " + electionData[index].bureau.name as any +
+                "<b>lieu</b>: " + electionData[index].bureau.name +
                 "<br>" +
                 "<b>pourcentages</b>: " + electionData[index].candidate.percentage + "%" +
                 "<br>" +
-                "<b>votes</b>: " + electionData[index].candidate.votes as any
+                "<b>votes</b>: " + electionData[index].candidate.votes
               );
               index++;
             }

@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import * as d3 from "d3-request";
 import { MapSpecific } from "./map-specific";
 
 const ICON_SIZE: number = 50;
@@ -16,7 +16,7 @@ export class AccidentMapSpecific implements MapSpecific {
   private layerGroup: L.LayerGroup;
 
   constructor() {
-    this.weatherFilters = Array.from({length: 9}, (v, k) => k + 1); 
+    this.weatherFilters = Array.from({length: 9}, (v, k) => k + 1);
     this.layers = new Array<L.Layer>();
     this.icon = {
       icon: L.icon({
@@ -74,7 +74,6 @@ export class AccidentMapSpecific implements MapSpecific {
         collisionType: number
       }>;
 
-      console.log(this.weatherFilters);
       pdata.forEach((item, index, array) => {
         if (this.weatherFilters.indexOf(item.climatology.atmosphericCondition) >= 0) {
           const lat_lon = [item.location.lat_lon[0] / ONE_HUNDRED_THOUSAND, item.location.lat_lon[1] / ONE_HUNDRED_THOUSAND] as L.LatLngExpression;
