@@ -52,9 +52,8 @@ export class TrafficController implements interfaces.Controller {
             accidentMinimal.setId(accident.getId());
             accidentMinimal.setLocation(new Location());
             accidentMinimal.getLocation().setAddress(accident.getLocation().getAddress());
-            accidentMinimal.getLocation().setLatLon(
-                [accident.getLocation().getLatitude(), accident.getLocation().getLongitude()]
-            );
+            accidentMinimal.getLocation().setLatitude(accident.getLocation().getLatitude());
+            accidentMinimal.getLocation().setlongitude(accident.getLocation().getLongitude());
 
             returnedAccidents.push(accidentMinimal);
         }
