@@ -1,7 +1,6 @@
 import * as d3 from "d3-request";
 import { MapSpecific } from "./map-specific";
 
-const ICON_SIZE: number = 50;
 const MAX_POLLING: number = 55;
 
 export class ElectionMapSpecific implements MapSpecific {
@@ -28,13 +27,6 @@ export class ElectionMapSpecific implements MapSpecific {
 
   public onMapReady(map: L.Map) {
     this.map = map;
-    const icon = {
-      icon: L.icon({
-        iconSize: [ICON_SIZE, ICON_SIZE],
-        iconAnchor: [0, 0],
-        iconUrl: "assets/markers.png",
-      })
-    };
   }
 
   public draw() {

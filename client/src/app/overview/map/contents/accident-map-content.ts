@@ -1,5 +1,6 @@
 import * as d3 from "d3-request";
 import { MapSpecific } from "./map-specific";
+import * as fmt from "sprintf-js";
 
 const ICON_SIZE: number = 50;
 const ICON_OFFSET: number = 25;
@@ -15,6 +16,7 @@ export class AccidentMapSpecific implements MapSpecific {
   private map: L.Map;
   private layers: L.Layer[];
   private layerGroup: L.LayerGroup;
+  private boundaries: L.LatLngBounds;
 
   constructor() {
     this.weatherFilters = Array.from({length: 9}, (v, k) => k + 1);
@@ -26,6 +28,12 @@ export class AccidentMapSpecific implements MapSpecific {
         iconUrl: "assets/markers.png",
       })
     };
+
+    this.boundaries = L.latLngBounds(
+        L.latLng(46.20360, -1.29690),
+        L.latLng(46.12037, -1.05623)
+      );
+
 
     this.weatherFiltersMap = new Array<string>(
       "Normale",
@@ -78,7 +86,6 @@ export class AccidentMapSpecific implements MapSpecific {
       pdata.forEach((item, index, array) => {
         if (this.weatherFilters.indexOf(item.climatology.atmosphericCondition) >= 0) {
           const lat_lon = [item.location.lat_lon[0] / ONE_HUNDRED_THOUSAND, item.location.lat_lon[1] / ONE_HUNDRED_THOUSAND] as L.LatLngExpression;
-          console.log(lat_lon);
           const layer = L.marker(lat_lon, this.icon);
           layer.bindPopup(
             "<h6>" + item.location.address + "</h6>" +
@@ -93,6 +100,25 @@ export class AccidentMapSpecific implements MapSpecific {
 
       this.layerGroup = L.layerGroup(this.layers);
       this.layerGroup.addTo(this.map);
+
+      this.map.on("movestart", () => {
+        console.log("Move start event fired");
+        const bounds: L.LatLngBounds = this.map.getBounds();
+        const nw: L.LatLng = bounds.getNorthWest();
+        const se: L.LatLng = bounds.getSouthEast();
+
+        const bounds_query = [
+          [nw.lat, nw.lng],
+          [se.lat, se.lng]
+        ];
+        const bounds_query_string: string = fmt.sprintf("[[%f|%f][%f|%f]]", nw.lat, nw.lng, se.lat, se.lng);
+        console.log(bounds_query_string);
+      });
+
+      this.map.on("moveend", () => {
+        console.log("Move end event fired");
+        // Refresh data
+      })
     });
   }
 }

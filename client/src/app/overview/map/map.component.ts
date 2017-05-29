@@ -17,14 +17,15 @@ export class MapComponent {
   private options = {
     layers: [
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        minZoom: 1,
-        maxZoom: 18,
-        attribution: `© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors"`
+        attribution: `© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors"`,
+        noWrap: true
       })
     ],
-    minZoom: 1,
+    minZoom: 4,
     zoom: 13,
-    center: L.latLng({ lat: 46.1621, lng: -1.1980 })
+    maxZoom: 18,
+    // https://nominatim.openstreetmap.org/details.php?place_id=158673407 (La Rochelle, France)
+    center: L.latLng({ lat: 46.16204, lng: -1.17651 })
   };
 
   constructor(private mapcontentservice: MapContentService) {
