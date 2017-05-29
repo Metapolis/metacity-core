@@ -1,0 +1,2 @@
+app/shared/connexion.service.ts[5, 19]: Type boolean trivially inferred from a boolean literal, remove type annotation
+app/catalog/container-1/container-1.component.ts[5, 13]: The selector of the component "Container1Component" should have prefix "app" (https://goo.gl/cix8BY)
