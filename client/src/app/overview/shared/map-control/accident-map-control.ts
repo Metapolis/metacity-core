@@ -11,7 +11,7 @@ export class AccidentMapControl {
   public setWeatherFilter(weatherFilters: Array<{ name: string, code: number, value: boolean }>) {
     this.weatherFilters = weatherFilters;
     this.accidentMap.setWeatherFilters(this.getWeatherFiltersList());
-    this.accidentMap.reDraw();
+    this.accidentMap.refresh();
   }
 
   public getWeatherFiltersList() {

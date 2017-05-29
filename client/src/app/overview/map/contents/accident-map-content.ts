@@ -2,9 +2,17 @@ import * as d3 from "d3-request";
 import { MapSpecific } from "./map-specific";
 import * as fmt from "sprintf-js";
 
+interface InitialBoundsInterface {
+  northWest: L.LatLng;
+  southEast: L.LatLng;
+}
 const ICON_SIZE: number = 50;
 const ICON_OFFSET: number = 25;
 const ONE_HUNDRED_THOUSAND: number = 100000;
+const initialBounds: InitialBoundsInterface = {
+  northWest: L.latLng(46.20360, -1.29690),
+  southEast: L.latLng(46.12037, -1.05623)
+};
 
 export class AccidentMapSpecific implements MapSpecific {
   private weatherFilters: number[];
@@ -30,10 +38,9 @@ export class AccidentMapSpecific implements MapSpecific {
     };
 
     this.boundaries = L.latLngBounds(
-        L.latLng(46.20360, -1.29690),
-        L.latLng(46.12037, -1.05623)
+        initialBounds.northWest,
+        initialBounds.southEast
       );
-
 
     this.weatherFiltersMap = new Array<string>(
       "Normale",
@@ -63,7 +70,7 @@ export class AccidentMapSpecific implements MapSpecific {
     this.draw();
   }
 
-  public reDraw(): void {
+  public refresh(): void {
     this.layerGroup.clearLayers();
     this.layers = [];
     this.draw();
