@@ -2,6 +2,7 @@ import * as d3 from "d3-request";
 import { MapSpecific } from "./map-specific";
 
 const ICON_SIZE: number = 50;
+const ICON_OFFSET: number = 25;
 const ONE_HUNDRED_THOUSAND: number = 100000;
 
 export class AccidentMapSpecific implements MapSpecific {
@@ -21,7 +22,7 @@ export class AccidentMapSpecific implements MapSpecific {
     this.icon = {
       icon: L.icon({
         iconSize: [ICON_SIZE, ICON_SIZE],
-        iconAnchor: [0, 0],
+        iconAnchor: [ICON_OFFSET, ICON_OFFSET],
         iconUrl: "assets/markers.png",
       })
     };
@@ -77,6 +78,7 @@ export class AccidentMapSpecific implements MapSpecific {
       pdata.forEach((item, index, array) => {
         if (this.weatherFilters.indexOf(item.climatology.atmosphericCondition) >= 0) {
           const lat_lon = [item.location.lat_lon[0] / ONE_HUNDRED_THOUSAND, item.location.lat_lon[1] / ONE_HUNDRED_THOUSAND] as L.LatLngExpression;
+          console.log(lat_lon);
           const layer = L.marker(lat_lon, this.icon);
           layer.bindPopup(
             "<h6>" + item.location.address + "</h6>" +
