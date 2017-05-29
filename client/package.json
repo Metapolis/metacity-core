@@ -35,6 +35,7 @@
     "ng2-material-select": "^0.1.8",
     "ngx-bootstrap": "^1.6.6",
     "rxjs": "^5.1.0",
+    "sprintf-js": "^1.1.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@types/jasmine": "2.5.38",
     "@types/leaflet": "^1.0.60",
     "@types/node": "~6.0.60",
+    "@types/sprintf-js": "0.0.27",
     "codelyzer": "~2.0.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
