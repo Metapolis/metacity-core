@@ -43,7 +43,7 @@
     "font-awesome": "^4.7.0",
     "http-status-codes": "1.1.6",
     "inversify": "3.3.0",
-    "inversify-express-utils": "3.5.1",
+    "inversify-express-utils": "3.5.2",
     "leaflet": "^1.0.3",
     "method-override": "2.3.8",
     "morgan": "1.8.1",
