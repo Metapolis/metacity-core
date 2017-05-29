@@ -7,10 +7,18 @@ import { Response, ResponseOptions } from "@angular/http";
 import { MockBackend, MockConnection } from "@angular/http/testing";
 
 describe("Set server parameters", () => {
-  const httpRequestService = new HttpRequestService();
+  this.injector = ReflectiveInjector.resolveAndCreate([
+    { provide: ConnectionBackend, useClass: MockBackend },
+    { provide: RequestOptions, useClass: BaseRequestOptions },
+    Http,
+    HttpRequestService,
+  ]);
+  this.backend = this.injector.get(ConnectionBackend) as MockBackend;
+  this.backend.connections.subscribe((connection: any) => this.lastConnection = connection);
+  this.httpRequestService = this.injector.get(HttpRequestService);
   it("Set server adress Get server adress", (done) => {
-    httpRequestService.setServerAddress("localhost");
-    httpRequestService.getServerAddress()
+    this.httpRequestService.setServerAddress("localhost");
+    this.httpRequestService.getServerAddress()
       .then((address) => {
         expect(address).toBe("localhost");
         done();
@@ -19,8 +27,8 @@ describe("Set server parameters", () => {
   });
   it("Set server Port Get server Port", (done) => {
     const mockPort: number = 2525;
-    httpRequestService.setServerPort(mockPort);
-    httpRequestService.getServerPort()
+    this.httpRequestService.setServerPort(mockPort);
+    this.httpRequestService.getServerPort()
       .then((port) => {
         expect(port).toBe(mockPort);
         done();
