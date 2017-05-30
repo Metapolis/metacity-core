@@ -7,6 +7,7 @@ import { Config } from "../../../Config";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
 import { LocationDTO } from "../dto/accident/LocationDTO";
 import { ClimatologyDTO } from "../dto/accident/ClimatologyDTO";
+import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -30,11 +31,13 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
     /**
      * Override
      */
-    public async findTrafficAccidents(): Promise<CarAccidentDTO[]> {
+    public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<CarAccidentDTO[]> {
         this.logger.info("Retrieve all traffic accident in elastic search");
         const jsonAccidents = (await this.esClient.search({
-            index: Config.getIndexNameTraffic(),
-            type: Config.getDocumentNameAccident()
+            index: query.getIndex(),
+            type: query.getType(),
+            size: query.getSize(),
+            from: query.getOffset()
         })).hits;
 
         const accidents: CarAccidentDTO[] = [];

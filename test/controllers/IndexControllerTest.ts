@@ -6,6 +6,7 @@ import ChaiHttp = require("chai-http");
 import { TrafficQueryService } from "../../src/services/query/TrafficQueryService";
 import { Mock } from "moq.ts";
 import { ContextApp } from "../ContextApp";
+import { FindTrafficAccidentQuery } from "../../src/common/query/FindTrafficAccidentQuery";
 
 // TODO delete
 // Temporary waiting working code
@@ -26,7 +27,7 @@ class IndexControllerTest extends AbstractTestController {
     private async testFindTraffic(): Promise<void> {
         const path: string = "/foo";
         const trafficQueryService: Mock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as Mock<TrafficQueryService>);
-        trafficQueryService.setup((instance) => instance.findTrafficAccidents()).returns({
+        trafficQueryService.setup((instance) => instance.findTrafficAccidents(new FindTrafficAccidentQuery())).returns({
             test: "WORKED"
         });
 
