@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
+import { LA_ROCHELLE } from "./mock-location/la-rochelle-mock-location";
+import { BORDEAUX } from "./mock-location/bordeaux-mock-location";
 import * as L from "leaflet";
 
-interface Location {
+export interface Location {
   name: string;
   gpsCoordinates: {
     center: L.LatLng,
@@ -12,21 +14,27 @@ interface Location {
 @Injectable()
 export class LocationService {
 
-  private locations: Location[];
+  private locations: Map<string, Location>;
 
   constructor() {
-    this.locations = new Array<Location>();
+    this.locations = new Map<string, Location>();
+    this.addLocation("LA_ROCHELLE", LA_ROCHELLE);
+    this.addLocation("BORDEAUX", BORDEAUX);
   }
 
-  public getLocations(): Location[] {
+  public getLocations(): Map<string, Location> {
     return this.locations;
   }
 
-  public setLocations(locations: Location[]): void {
+  public setLocations(locations: Map<string, Location>): void {
     this.locations = locations;
   }
 
-  public addLocation(location: Location): void {
-    this.locations.push(location);
+  public getLocation(key: string): Location {
+    return this.locations.get(key);
+  }
+
+  public addLocation(locationKey: string, location: Location): void {
+    this.locations.set(locationKey, location);
   }
 }
