@@ -1,10 +1,11 @@
-import { HttpRequestService } from "./http-request.service";
 import {} from "jasmine";
 import { Injectable, ReflectiveInjector } from "@angular/core";
 import { async, fakeAsync, tick } from "@angular/core/testing";
 import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions } from "@angular/http";
 import { Response, ResponseOptions } from "@angular/http";
 import { MockBackend, MockConnection } from "@angular/http/testing";
+
+import { HttpRequestService } from "./http-request.service";
 import { RequestForm } from "../common/request-form";
 
 describe("Set server parameters", () => {
@@ -79,7 +80,7 @@ describe("get data from server", () => {
         {key: "password", value: "shut"}
       ]
     };
-    expect(this.httpRequestService.generateURL(mockUrlValue)).toBe("/api/trafic/accidents?login=roberto&password=shut");
+    expect(this.httpRequestService.forgeURL(mockUrlValue)).toBe("/api/trafics/accidents?login=roberto&password=shut");
   });
 
 });

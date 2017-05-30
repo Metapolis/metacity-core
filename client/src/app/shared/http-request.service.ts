@@ -3,6 +3,8 @@ import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions } from "@an
 import { Response, ResponseOptions } from "@angular/http";
 import "rxjs/add/operator/toPromise";
 
+import { RequestForm } from "../common/request-form";
+
 @Injectable()
 export class HttpRequestService {
   private serverAddress: string;
@@ -31,6 +33,19 @@ export class HttpRequestService {
       .toPromise()
       .then((answer) => answer.text().toString())
       .catch((e) => this.handleError(e));
+  }
+
+  public forgeURL(requestForm: RequestForm): string {
+    let url: string = "/api/" + requestForm.root + "?";
+    let first: boolean = true;
+    for (const entry of requestForm.filters) {
+      if (!first) {
+        url += "&";
+      }
+      url += entry["key"] + "=" + entry["value"];
+      first = false;
+    }
+    return url;
   }
 
   private handleError(error: any): Promise<any> {
