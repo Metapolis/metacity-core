@@ -23,6 +23,7 @@ import { AnimatedBackgroundComponent } from "./animated-background/animated-back
 // Services
 import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
+import { LocationService } from "./shared/location.service";
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { ConnexionService } from "./shared/connexion.service";
   ],
   providers: [
     MenuService,
-    ConnexionService
+    ConnexionService,
+    LocationService
   ],
   bootstrap: [AppComponent]
 })
