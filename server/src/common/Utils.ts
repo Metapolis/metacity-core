@@ -1,11 +1,25 @@
 import * as Winston from "winston";
 import { Config } from "../Config";
 import { IllegalArgumentError } from "./error/IllegalArgumentError";
+import { GeoShape } from "./GeoShape";
+import { LocationPoint } from "./LocationPoint";
 
 /**
  * It's an util class
  */
 export class Utils {
+
+    /**
+     * Split point in Geo shape
+     * @type {string}
+     */
+    private static POINT_SPLITTER_CHAR: string = "]|[";
+
+    /**
+     * Split element in Geo shape
+     * @type {string}
+     */
+    private static ELEMENT_SPLITTER_CHAR: string = "|";
 
     /**
      * Create a new logger
@@ -59,5 +73,22 @@ export class Utils {
      */
     public static isNullOrEmpty(str: string): boolean {
         return !str;
+    }
+
+    /**
+     * Parse GeoShape from string
+     *
+     * @param geoShapeStr string to parse with a specific format "[[(d+)|(d+)]|[(d+)|(d+)]"
+     *
+     * @returns {GeoShape}
+     */
+    public static parseGeoShape(geoShapeStr: string): GeoShape {
+        Utils.checkArguments(/^\[\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]\|\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]]/.test(geoShapeStr), "Geo shape query format incorrect");
+        const splittedPoints: string[] =  geoShapeStr.split(Utils.POINT_SPLITTER_CHAR);
+        const arrayLatLongLeftUpPoint: string[] = splittedPoints[0].replace(/\[/gi, "").split(Utils.ELEMENT_SPLITTER_CHAR);
+        const arrayLatLongRightDownPoint: string[] = splittedPoints[1].replace(/]/gi, "").split(Utils.ELEMENT_SPLITTER_CHAR);
+
+        return new GeoShape(new LocationPoint(Number(arrayLatLongLeftUpPoint[0]), Number(arrayLatLongLeftUpPoint[1])),
+                            new LocationPoint(Number(arrayLatLongRightDownPoint[0]), Number(arrayLatLongRightDownPoint[1])));
     }
 }
