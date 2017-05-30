@@ -1,7 +1,7 @@
 import { Injectable, ReflectiveInjector } from "@angular/core";
-import { async, fakeAsync, tick } from "@angular/core/testing";
 import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions } from "@angular/http";
 import { Response, ResponseOptions } from "@angular/http";
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class HttpRequestService {
@@ -26,8 +26,11 @@ export class HttpRequestService {
     return Promise.resolve(this.serverPort);
   }
 
-  public sendRequest(request: string): void {
-    this.http.get(this.serverAddress + ":" + this.serverPort + request);
+  public sendRequest(request: string): Promise<string> {
+     return this.http.get(this.serverAddress + ":" + this.serverPort + request)
+      .toPromise()
+      .then((answer) => answer.text().toString())
+      .catch((e) => this.handleError(e));
   }
 
   private handleError(error: any): Promise<any> {

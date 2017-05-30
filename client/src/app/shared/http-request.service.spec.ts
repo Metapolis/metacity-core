@@ -68,7 +68,7 @@ describe("get data from server", () => {
       body: mockRespond
     })));
     tick();
-    expect(result).toBe(mockRespond);
+    expect(result).toEqual(mockRespond);
   }));
 
 });
