@@ -27,7 +27,7 @@ export class HttpRequestService {
   }
 
   public sendRequest(request: string): void {
-    this.http.get(this.serverAddress + request);
+    this.http.get(this.serverAddress + ":" + this.serverPort + request);
   }
 
   private handleError(error: any): Promise<any> {

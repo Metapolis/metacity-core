@@ -49,15 +49,26 @@ describe("get data from server", () => {
     this.backend.connections.subscribe((connection: any) => this.lastConnection = connection);
     this.httpRequestService = this.injector.get(HttpRequestService);
     const serverPort: number = 4200;
-    const serverAdress: string = "metacity.xyz";
+    const serverAdress: string = "https://metacity.xyz";
     this.httpRequestService.setServerPort(serverPort);
     this.httpRequestService.setServerAddress(serverAdress);
   });
 
-  it("Fetch Data try to connect to the server address and port", () => {
+  it("Fetch Data try to connect to the server address and port work on server side", () => {
     this.httpRequestService.sendRequest("/api/foobar");
     expect(this.lastConnection).toBeDefined("no http service connection at all?");
     expect(this.lastConnection.request.url).toMatch(/api\/foobar$/, "url invalid");
+    expect(this.lastConnection.request.url).toBe("https://metacity.xyz:4200/api/foobar", "url not fully written");
   });
+  it("Request Content fetch a content string", fakeAsync(() => {
+    let result: string;
+    const mockRespond: string = "It could be a JSON";
+    this.httpRequestService.sendRequest().then((answer: string) => result = answer);
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: mockRespond
+    })));
+    tick();
+    expect(result).toBe(mockRespond);
+  }));
 
 });
