@@ -1,7 +1,9 @@
 import { Injectable, ReflectiveInjector } from "@angular/core";
-import { async, fakeAsync, tick } from "@angular/core/testing";
 import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions } from "@angular/http";
 import { Response, ResponseOptions } from "@angular/http";
+import "rxjs/add/operator/toPromise";
+
+import { RequestForm } from "../common/request-form";
 
 @Injectable()
 export class HttpRequestService {
@@ -26,8 +28,24 @@ export class HttpRequestService {
     return Promise.resolve(this.serverPort);
   }
 
-  public sendRequest(request: string): void {
-    this.http.get(this.serverAddress + request);
+  public sendRequest(request: string): Promise<string> {
+     return this.http.get(this.serverAddress + ":" + this.serverPort + request)
+      .toPromise()
+      .then((answer) => answer.text().toString())
+      .catch((e) => this.handleError(e));
+  }
+
+  public forgeURL(requestForm: RequestForm): string {
+    let url: string = "/api/" + requestForm.root + "?";
+    let first: boolean = true;
+    for (const entry of requestForm.filters) {
+      if (!first) {
+        url += "&";
+      }
+      url += entry["key"] + "=" + entry["value"];
+      first = false;
+    }
+    return url;
   }
 
   private handleError(error: any): Promise<any> {
