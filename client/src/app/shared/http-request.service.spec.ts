@@ -54,6 +54,14 @@ describe("get data from server", () => {
     const serverAdress: string = "https://metacity.xyz";
     this.httpRequestService.setServerPort(serverPort);
     this.httpRequestService.setServerAddress(serverAdress);
+    const mockUrlValue: RequestForm = {
+      root: "trafics/accidents",
+      filters: [
+        {key: "login", value: "roberto"},
+        {key: "password", value: "shut"}
+      ]
+    };
+    this.mockUrlValue = mockUrlValue;
   });
 
   it("Fetch Data try to connect to the server address and port work on server side", () => {
@@ -73,14 +81,16 @@ describe("get data from server", () => {
     expect(result).toEqual(mockRespond);
   }));
   it("Give key/values retrive URL with simple data", () => {
-    const mockUrlValue: RequestForm = {
-      root: "trafics/accidents",
-      filters: [
-        {key: "login", value: "roberto"},
-        {key: "password", value: "shut"}
-      ]
-    };
-    expect(this.httpRequestService.forgeURL(mockUrlValue)).toBe("/api/trafics/accidents?login=roberto&password=shut");
+    expect(this.httpRequestService.forgeURL(this.mockUrlValue)).toBe("/api/trafics/accidents?login=roberto&password=shut");
   });
-
+  it("Request get data return the data", fakeAsync(() => {
+    let result: string;
+    const mockRespond: string = "It could be a JSON as well";
+    this.httpRequestService.getRequestData(this.mockUrlValue).then((answer: string) => result = answer);
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: mockRespond
+    })));
+    tick();
+    expect(result).toEqual(mockRespond);
+  }));
 });

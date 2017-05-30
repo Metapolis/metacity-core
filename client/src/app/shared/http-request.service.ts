@@ -48,6 +48,9 @@ export class HttpRequestService {
     return url;
   }
 
+  public getRequestData(requestForm: RequestForm): Promise<string> {
+    return this.sendRequest(this.forgeURL(requestForm));
+  }
   private handleError(error: any): Promise<any> {
     console.error("An error occurred", error);
     return Promise.reject(error.message || error);
