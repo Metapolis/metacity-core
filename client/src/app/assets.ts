@@ -1,6 +1,7 @@
 import { Img } from "./common/img";
 
 export class Assets {
+
   public whiteLogo: Img = { src: "../assets/img/metaCityBlanc.svg", alt: "metacity small logo" };
   public homeIcon: Img = { src: "../assets/img/home.svg", alt: "Home icon" };
   public metacityLogo: Img = { src: "../assets/img/metaCity.svg", alt: "metacity logo" };
@@ -16,5 +17,6 @@ export class Assets {
   public search: Img = { src: "../assets/img/search.svg", alt: "" };
   public worldwide: Img = { src: "../assets/img/worldwide.svg", alt: "" };
   public world: Img = { src: "../assets/img/monde.png", alt: "image statique Monde" };
-  public larochelLogo: Img = { src: "../assets/img/Logo_ville_la_rochelle.svg.png", alt: "logo de la rochelle" };
+  public larochelLogo: Img = { src: "../assets/img/Logo_ville_la_rochelle.png", alt: "logo de la rochelle" };
+
 }
