@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import "hammerjs";
 
 import { MapContentService } from "../../../shared/map-content.service";
+import { LocationService } from "../../../../shared/location.service";
 
 @Component({
   selector: "overview-election-map-filters",
@@ -19,7 +20,7 @@ export class ElectionMapFiltersComponent {
     {label: "Résultats du 2nd tour 2017", value: "election-2017/2"},
   ];
 
-  constructor(private mapcontentservice: MapContentService) { }
+  constructor(private mapcontentservice: MapContentService, private locationService: LocationService) { }
 
   public goTo(selected: string) {
     if (selected !== this.current_election_layer) {
