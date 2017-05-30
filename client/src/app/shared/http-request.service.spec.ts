@@ -5,6 +5,7 @@ import { async, fakeAsync, tick } from "@angular/core/testing";
 import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions } from "@angular/http";
 import { Response, ResponseOptions } from "@angular/http";
 import { MockBackend, MockConnection } from "@angular/http/testing";
+import { RequestForm } from "../common/request-form";
 
 describe("Set server parameters", () => {
   this.injector = ReflectiveInjector.resolveAndCreate([
@@ -70,5 +71,15 @@ describe("get data from server", () => {
     tick();
     expect(result).toEqual(mockRespond);
   }));
+  it("Give key/values retrive URL with simple data", () => {
+    const mockUrlValue: RequestForm = {
+      root: "trafics/accidents",
+      filters: [
+        {key: "login", value: "roberto"},
+        {key: "password", value: "shut"}
+      ]
+    };
+    expect(this.httpRequestService.generateURL(mockUrlValue)).toBe("/api/trafic/accidents?login=roberto&password=shut");
+  });
 
 });
