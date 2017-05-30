@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Assets } from "../../assets";
+import { AssetService } from "../../shared/asset.service";
 import { Link } from "../../common/link";
 
 @Component({
@@ -8,7 +8,6 @@ import { Link } from "../../common/link";
   styleUrls: ["../home.component.scss"],
 })
 export class Container2Component {
-  private assets = new Assets();
   private thematiqueslinks1: Link[] = [
     {src: "/", text: "Accessibilité"},
     {src: "/", text: "Urbanisme"},
@@ -25,5 +24,6 @@ export class Container2Component {
     {src: "/", text: "Mobilité"},
     {src: "/", text: "Culture & Tourisme"},
   ];
+  constructor(private assets: AssetService) {}
 
 }

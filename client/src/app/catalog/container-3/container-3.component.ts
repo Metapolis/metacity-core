@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BlockContent } from "./block-content";
 import { Router, NavigationEnd } from "@angular/router";
-import { Assets } from "../../assets";
+import { AssetService } from "../../shared/asset.service";
 
 @Component({
   selector: "catalog-container-3",
@@ -9,7 +9,6 @@ import { Assets } from "../../assets";
   styleUrls: ["../catalog.component.scss"]
 })
 export class Container3Component implements OnInit {
-  private assets = new Assets();
   private blocks: BlockContent[] = [
     {
       title: "OPEN SOURCE",
@@ -36,7 +35,8 @@ export class Container3Component implements OnInit {
       échanges entre chacun.`
     }
   ];
-  constructor(private _router: Router) { }
+
+  constructor(private _router: Router, private assets: AssetService) {}
 
   public ngOnInit() {
     this._router.events.subscribe((val) => {

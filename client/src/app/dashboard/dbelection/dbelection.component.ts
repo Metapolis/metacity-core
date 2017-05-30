@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Assets } from "../../assets";
+import { AssetService } from "../../shared/asset.service";
 
 @Component({
   selector: "app-dbelection",
@@ -7,5 +7,5 @@ import { Assets } from "../../assets";
   styleUrls: ["./dbelection.component.scss", "../dashboard.component.scss"]
 })
 export class DbelectionComponent {
-  private assets = new Assets();
+  constructor(private assets: AssetService) {}
 }
