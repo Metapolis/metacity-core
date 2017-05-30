@@ -9,10 +9,6 @@ interface InitialBoundsInterface {
 const ICON_SIZE: number = 50;
 const ICON_OFFSET: number = 25;
 const ONE_HUNDRED_THOUSAND: number = 100000;
-const initialBounds: InitialBoundsInterface = {
-  northWest: L.latLng(46.20360, -1.29690),
-  southEast: L.latLng(46.12037, -1.05623)
-};
 
 export class AccidentMapSpecific implements MapSpecific {
   private weatherFilters: number[];
@@ -27,7 +23,7 @@ export class AccidentMapSpecific implements MapSpecific {
   private boundaries: L.LatLngBounds;
 
   constructor() {
-    this.weatherFilters = Array.from({length: 9}, (v, k) => k + 1);
+    this.weatherFilters = Array.from({ length: 9 }, (v, k) => k + 1);
     this.layers = new Array<L.Layer>();
     this.icon = {
       icon: L.icon({
@@ -36,11 +32,6 @@ export class AccidentMapSpecific implements MapSpecific {
         iconUrl: "assets/markers.png",
       })
     };
-
-    this.boundaries = L.latLngBounds(
-        initialBounds.northWest,
-        initialBounds.southEast
-      );
 
     this.weatherFiltersMap = new Array<string>(
       "Normale",

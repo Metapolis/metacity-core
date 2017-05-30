@@ -3,6 +3,7 @@ import { Ng2SelectModule } from "ng2-material-select";
 import "hammerjs";
 
 import { MapContentService } from "../../../shared/map-content.service";
+import { LocationService } from "../../../../shared/location.service";
 
 @Component({
   selector: "overview-accident-map-filters",
@@ -32,7 +33,7 @@ export class AccidentMapFiltersComponent {
     {name: "Neige", code: 4, value: true},
   ];
 
-  constructor(private mapcontentservice: MapContentService) { }
+  constructor(private mapcontentservice: MapContentService, private locationService: LocationService) { }
 
   private check(curentBox: HTMLInputElement) {
     this.setWeatherFilter(curentBox.value, curentBox.checked);

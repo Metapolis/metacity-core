@@ -5,6 +5,7 @@ import { AbstractTestService } from "../inversify/AbstractTestService";
 import { TrafficQueryService } from "../../../src/services/query/TrafficQueryService";
 import { It, Mock, Times } from "moq.ts";
 import { ContextApp } from "../../ContextApp";
+import { FindTrafficAccidentQuery } from "../../../src/common/query/FindTrafficAccidentQuery";
 
 /**
  * All test for traffic query service
@@ -22,7 +23,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
         esClient.setup((instance) => instance.search(It.IsAny<SearchParams>())).returns({
             test: "WORKED"
         });
-        trafficQueryService.findTrafficAccidents();
+        trafficQueryService.findTrafficAccidents(new FindTrafficAccidentQuery());
         esClient.verify((instance) => instance.search(It.IsAny<SearchParams>()), Times.Once());
     }
 

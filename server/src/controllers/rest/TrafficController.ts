@@ -1,11 +1,14 @@
-import { Controller, Delete, Get, interfaces, Post } from "inversify-express-utils";
+import { Controller, Delete, Get, interfaces, Post, QueryParam } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { TrafficQueryService } from "../../services/query/TrafficQueryService";
-import * as Express from "express";
 import { AccidentSummary } from "./model/accident/AccidentSummary";
 import { Location } from "./model/accident/Location";
+import { SearchFilter } from "./model/common/SearchFilter";
+import { FindTrafficAccidentQuery } from "../../common/query/FindTrafficAccidentQuery";
+import { LogicalQueryCriteria } from "../../common/query/LogicalQueryCriteria";
+import { GeoShape } from "../../common/GeoShape";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -34,17 +37,51 @@ export class TrafficController implements interfaces.Controller {
     /**
      * Get traffic accident information
      *
-     * @param req it's call request
-     * @param res it's response
-     * @param next it's middleware to handle error
+     * @param area area search filter
+     * @param offset result offset
+     * @param size size of return result
      *
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    public async findAccidents(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<AccidentSummary[]> {
-        this.logger.info("Find all traffic information");
+    public async findAccidents(@QueryParam("area") area: string,
+                               @QueryParam("offset") offset: number,
+                               @QueryParam("size") size: number): Promise<AccidentSummary[]> {
+        Utils.checkArguments(offset != null, "Offset must be set");
+        Utils.checkArguments(offset >= 0, "Offset cannot be negative");
+        Utils.checkArguments(size != null, "Size must be set");
+        Utils.checkArguments(size > 0, "Size must be superior to zero");
 
-        const accidents = await this.trafficQueryService.findTrafficAccidents();
+        this.logger.info("Find all traffic information");
+        let areaSearchFilter: SearchFilter;
+        if (!Utils.isNullOrEmpty(area)) {
+            areaSearchFilter = new SearchFilter(area);
+        }
+        const query: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
+        query.setOffset(Number(offset));
+        query.setSize(Number(size));
+
+        // Prepare the area filter
+        if (areaSearchFilter != null) {
+            const mustParam: GeoShape[] = [];
+            const shouldParams: GeoShape[] = [];
+
+            // Parse must params
+            for (const must of areaSearchFilter.getMustValues()){
+                mustParam.push(Utils.parseGeoShape(must));
+            }
+
+            // Parse should params
+            for (const should of areaSearchFilter.getShouldValues()){
+                shouldParams.push(Utils.parseGeoShape(should));
+            }
+
+            // Create criteria
+            const geoFilter: LogicalQueryCriteria<GeoShape> = new LogicalQueryCriteria<GeoShape>(mustParam, shouldParams);
+            query.setGeoFilter(geoFilter);
+        }
+
+        const accidents = await this.trafficQueryService.findTrafficAccidents(query);
         const returnedAccidents: AccidentSummary[] = [];
 
         for (const accident of accidents) {
