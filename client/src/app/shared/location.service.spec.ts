@@ -13,14 +13,23 @@ describe("LocationService", () => {
     expect(service).toBeTruthy();
   }));
 
-  it("should get an empty list of cities when not set", inject([LocationService], (service: LocationService) => {
-    expect(service.getList()).toBeDefined();
-    expect(service.getList()).toEqual([]);
+  it("should get an empty Location interface", inject([LocationService], (service: LocationService) => {
+    const locations = service.getLocations();
+    expect(locations).toBeDefined();
+    expect(locations).toEqual([]);
   }));
 
-  it("should set a list of cities", inject([LocationService], (service: LocationService) => {
-    expect(service.getList()).toEqual([]);
-    service.setList(["Bordeaux", "Salt Lake City", "Boston"]);
-    expect(service.getList()).toContain("Salt Lake City");
+  it("should set a list of Locations", inject([LocationService], (service: LocationService) => {
+    expect(service.getLocations()).toEqual([]);
+    service.setLocations(
+      [{
+        name: "Salt Lake City",
+        gpsCoordinates: {
+          center: new L.LatLng(0, 0),
+          bounds: new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1))
+        }
+      }]
+    );
+    expect(service.getLocations()[0].name).toEqual("Salt Lake City");
   }));
 });

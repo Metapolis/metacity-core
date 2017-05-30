@@ -1,19 +1,32 @@
 import { Injectable } from "@angular/core";
+import * as L from "leaflet";
+
+interface Location {
+  name: string;
+  gpsCoordinates: {
+    center: L.LatLng,
+    bounds: L.LatLngBounds
+  };
+}
 
 @Injectable()
 export class LocationService {
 
-  private list: string[];
+  private locations: Location[];
 
   constructor() {
-    this.list = new Array<string>();
+    this.locations = new Array<Location>();
   }
 
-  public getList(): string[] {
-    return this.list;
+  public getLocations(): Location[] {
+    return this.locations;
   }
 
-  public setList(list: string[]): void {
-    this.list = list;
+  public setLocations(locations: Location[]): void {
+    this.locations = locations;
+  }
+
+  public addLocation(location: Location): void {
+    this.locations.push(location);
   }
 }
