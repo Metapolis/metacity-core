@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { LocationService } from "../../../../shared/location.service";
 
 @Component({
   selector: "overview-accident-chart-filters",
@@ -15,4 +16,6 @@ export class AccidentChartFiltersComponent {
     {button: "Météo lors des accidents"},
     {button: "Âge des victimes"},
   ];
+
+  constructor(private locationService: LocationService) { }
 }

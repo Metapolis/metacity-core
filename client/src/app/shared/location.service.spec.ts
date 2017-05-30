@@ -25,8 +25,7 @@ describe("LocationService", () => {
       "SALT_LAKE_CITY", {
         name: "Salt Lake City",
         gpsCoordinates: {
-          center: new L.LatLng(0, 0),
-          bounds: new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1))
+          center: new L.LatLng(0, 0)
         }
       }
     );
@@ -38,8 +37,7 @@ describe("LocationService", () => {
       {
         name: "Salt Lake City",
         gpsCoordinates: {
-          center: new L.LatLng(0, 0),
-          bounds: new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1))
+          center: new L.LatLng(0, 0)
         }
       }
     );
@@ -47,8 +45,7 @@ describe("LocationService", () => {
       {
         name: "Ocean Town",
         gpsCoordinates: {
-          center: new L.LatLng(0, 0),
-          bounds: new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1))
+          center: new L.LatLng(0, 0)
         }
       }
     );
@@ -65,19 +62,31 @@ describe("LocationService", () => {
         {
           name: "Salt Lake City",
           gpsCoordinates: {
-            center: new L.LatLng(0, 0),
-            bounds: new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1))
+            center: new L.LatLng(0, 0)
           }
         });
     service.addLocation("OCEAN_TOWN",
         {
           name: "Ocean Town",
           gpsCoordinates: {
-            center: new L.LatLng(0, 0),
-            bounds: new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1))
+            center: new L.LatLng(0, 0)
           }
         });
     expect(service.getLocation("SALT_LAKE_CITY")).toBeDefined();
   }));
 
+  it("should return current Location", inject([LocationService], (service: LocationService) => {
+    service.setCurrentLocationKey("SALT_LAKE_CITY");
+    expect(service.getCurrentLocationKey()).toEqual("SALT_LAKE_CITY");
+  }));
+
+  it("should have current Location set up by mock data", inject([LocationService], (service: LocationService) => {
+    service.setCurrentLocationKey("LA_ROCHELLE");
+    expect(service.getCurrentLocationKey()).toEqual("LA_ROCHELLE");
+    expect(service.getCurrentLocation().name).toEqual("La Rochelle");
+  }));
+
+  it("should have helper to get current location name", inject([LocationService], (service: LocationService) => {
+    expect(service.getCurrentLocationName()).toBe(service.getCurrentLocation().name);
+  }));
 });
