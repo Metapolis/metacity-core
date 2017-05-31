@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">{{card.title}}</h4>
+    <div class="card-text">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div class="rounded_buttons text-center">
+    <a routerLink="{{card.link.src}}" routerLinkActive="active" class="btn btn-primary btn-lg rounded_buttons" role="button">{{card.link.text}}</a>
+  </div>
+</div>

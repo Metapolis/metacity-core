@@ -1,48 +1,14 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-7">
-      <div class="card">
-        <div class="card-block" id="no_padding">
-          <h4 class="card-title" id="lacarte">La carte</h4>
-          <ng-content select="[map]"></ng-content>
-          <div class=" rounded_buttons text-center">
-            <button type="button" class="btn btn-primary btn-lg button_map">Intéragir avec la carte</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="card">
-        <div class="card-block">
-          <h4 class="card-title">Les analyses</h4>
-          <div class="card-text">
-            <ng-content select="[analysis]"></ng-content>
-          </div>
-        </div>
-        <div class="rounded_buttons text-center">
-          <button type="button" class="btn btn-primary btn-lg">Visualiser toutes les analyses</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    <ng-content select="[main-cards]"></ng-content>
 </div>
 
-<!-- Move this part -->
 <div class="container ">
   <div class="row">
     <div class="col-md-5">
-      <div class="card">
-        <div class="card-block">
-          <h4 class="card-title">Mots clés</h4>
-          <img [src]="assets.wordCloud.src" alt="{{assets.wordCloud.alt}}" id="motscles_dashboard">
-        </div>
-      </div>
-      <div class="card sources">
-        <div class="card-block">
-          <h4 class="card-title">Sources</h4>
-          <ng-content select="[source-links]"></ng-content>
-        </div>
-      </div>
+      <app-wordcloud-card-container></app-wordcloud-card-container>
+      <app-source-card-container>
+        <ng-content select="[source-links]"></ng-content>
+      </app-source-card-container>
     </div>
     <div class="col-md-7">
       <ng-content select="[used-data]"></ng-content>

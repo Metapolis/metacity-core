@@ -1,6 +1,16 @@
-<app-dashboard>datasets
-  <img [src]="assets.presidentMap.src" alt="{{assets.presidentMap.alt}}" class="carte" map>
-  <img [src]="assets.presidentGraph.src" alt="{{assets.presidentGraph.alt}}" id="analyses" analysis>
+<app-dashboard>
+  <div class="row" main-cards>
+    <div class="col-md-7">
+      <app-dashboard-card-container [card]="cardMap">
+        <img [src]="assets.presidentMap.src" alt="{{assets.presidentMap.alt}}" class="carte">
+      </app-dashboard-card-container>
+    </div>
+    <div class="col-md-5">
+      <app-dashboard-card-container [card]="cardGraph">
+        <img [src]="assets.presidentGraph.src" alt="{{assets.presidentGraph.alt}}" id="analyses">
+      </app-dashboard-card-container>
+    </div>
+  </div>
   <app-used-data [datasets]="datasets" used-data></app-used-data>
   <div source-links>
     <a href="#">www.datagouv.fr</a>

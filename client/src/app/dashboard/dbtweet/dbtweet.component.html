@@ -1,4 +1,12 @@
 <app-dashboard>
+  <div class="row" main-cards>
+    <app-dashboard-card-container [card]="card">
+      <div class="row">
+        <div class="col"><!-- INSERT PIE CHARTS HERE --></div>
+        <div class="col"><!-- INSERT PIE CHARTS HERE --></div>
+      </div>
+    </app-dashboard-card-container>
+  </div>
   <app-used-data [datasets]="datasets" [theme]="theme" used-data></app-used-data>
   <div source-links>
     <span class="fa-stack fa-2x">

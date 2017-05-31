@@ -27,6 +27,9 @@ import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
 import { LocationService } from "./shared/location.service";
 import { AssetService } from "./shared/asset.service";
+import { DashboardCardContainerComponent } from './dashboard/shared/dashboard-card-container/dashboard-card-container.component';
+import { WordcloudCardContainerComponent } from './dashboard/shared/wordcloud-card-container/wordcloud-card-container.component';
+import { SourceCardContainerComponent } from './dashboard/shared/source-card-container/source-card-container.component';
 
 @NgModule({
   imports: [
@@ -51,6 +54,9 @@ import { AssetService } from "./shared/asset.service";
     AnimatedBackgroundComponent,
     DbtweetComponent,
     UsedDataComponent,
+    DashboardCardContainerComponent,
+    WordcloudCardContainerComponent,
+    SourceCardContainerComponent,
   ],
   providers: [
     MenuService,
