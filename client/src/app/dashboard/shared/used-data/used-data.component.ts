@@ -11,7 +11,11 @@ export class UsedDataComponent {
   @Input()
   public datasets: Dataset[];
 
+  @Input()
+  public theme: string;
+
   constructor() {
+    this.theme = "block_jdd_row";
   }
 
 }

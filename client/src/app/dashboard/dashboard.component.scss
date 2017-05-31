@@ -75,26 +75,42 @@
 }
 
 .block_jdd_row {
-  .block_jdd:nth-child(2n) {
-    background-color: #67A5B3 !important;
-  }
-  .block_jdd:nth-child(3n) {
-    background-color: #AFD3DF !important;
+  .block_jdd {
+    &:nth-child(2n) {
+      background-color: #67A5B3 !important;
+    }
+
+    &:nth-child(3n) {
+      background-color: #AFD3DF !important;
+    }
   }
 }
 
 .block_jdd_row_tweet {
-  .block_jdd:nth-child(1) {
-    background-color: #9faeba !important;
-  }
-  .block_jdd:nth-child(2) {
-    background-color: #f5b2b6 !important;
-  }
-  .block_jdd:nth-child(3) {
-    background-color: #9dbec4 !important;
-  }
-  .block_jdd:nth-child(4) {
-    background-color: #a5b7bb !important;
+  .block_jdd {
+    justify-content: center !important;
+    position: relative !important;
+    display: flex !important;
+
+    .text-center {
+      font-size: -webkit-xxx-large !important;
+    }
+
+    &:nth-child(1) {
+      background-color: #9faeba !important;
+    }
+
+    &:nth-child(2) {
+      background-color: #f5b2b6 !important;
+    }
+
+    &:nth-child(3) {
+      background-color: #9dbec4 !important;
+    }
+
+    &:nth-child(4) {
+      background-color: #a5b7bb !important;
+    }
   }
 }
 

@@ -10,8 +10,11 @@ import { MOCK_TWEET_DATASET } from "../shared/mock-dashboard-datasets/mock-tweet
 export class DbtweetComponent {
 
   private datasets;
+  private theme;
+
   constructor() {
     this.datasets = MOCK_TWEET_DATASET;
+    this.theme = "block_jdd_row_tweet";
   }
 
 }
