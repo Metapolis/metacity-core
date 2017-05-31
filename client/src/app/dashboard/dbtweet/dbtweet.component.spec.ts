@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { DbtweetComponent } from "./dbtweet.component";
+import { DashboardComponent } from "../dashboard.component";
+import { UsedDataComponent } from "../shared/used-data/used-data.component";
+
+import { AssetService } from "../../shared/asset.service";
+import { LocationService } from "../../shared/location.service";
 
 describe("DbtweetComponent", () => {
   let component: DbtweetComponent;
@@ -8,7 +13,8 @@ describe("DbtweetComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbtweetComponent ]
+      declarations: [ DbtweetComponent, DashboardComponent, UsedDataComponent ],
+      providers: [ AssetService, LocationService ]
     })
     .compileComponents();
   }));
