@@ -1,4 +1,4 @@
 export class RequestForm {
-  public root: string;
-  public filters: Array<{key: string, value: string}>;
+  public path: string;
+  public params: Array<{key: string, value: string}>;
 }
