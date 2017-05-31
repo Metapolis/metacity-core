@@ -1,16 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DashboardCardContainerComponent } from './dashboard-card-container.component';
+import { RouterTestingModule } from "@angular/router/testing";
 
-describe('DashboardCardContainerComponent', () => {
+import { DashboardCardContainerComponent } from "./dashboard-card-container.component";
+
+describe("DashboardCardContainerComponent", () => {
   let component: DashboardCardContainerComponent;
   let fixture: ComponentFixture<DashboardCardContainerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardCardContainerComponent ]
+      declarations: [DashboardCardContainerComponent],
+      imports: [RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +22,7 @@ describe('DashboardCardContainerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });

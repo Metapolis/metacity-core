@@ -1,16 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { WordcloudCardContainerComponent } from './wordcloud-card-container.component';
+import { WordcloudCardContainerComponent } from "./wordcloud-card-container.component";
 
-describe('WordcloudCardContainerComponent', () => {
+import { AssetService } from "../../../shared/asset.service";
+import { LocationService } from "../../../shared/location.service";
+
+describe("WordcloudCardContainerComponent", () => {
   let component: WordcloudCardContainerComponent;
   let fixture: ComponentFixture<WordcloudCardContainerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WordcloudCardContainerComponent ]
+      declarations: [WordcloudCardContainerComponent],
+      providers: [AssetService, LocationService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +23,7 @@ describe('WordcloudCardContainerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });
