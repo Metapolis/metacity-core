@@ -3,10 +3,7 @@ import { inject, injectable } from "inversify";
 import { TrafficQueryService } from "../TrafficQueryService";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
-import { Config } from "../../../Config";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
-import { LocationDTO } from "../dto/accident/LocationDTO";
-import { ClimatologyDTO } from "../dto/accident/ClimatologyDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 
 /**
