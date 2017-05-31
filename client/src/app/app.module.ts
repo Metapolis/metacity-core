@@ -1,5 +1,5 @@
 // Modules
-import { NgModule } from "@angular/core";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
@@ -16,17 +16,17 @@ import { LoginComponent } from "./login/login.component";
 import { FooterComponent } from "./footer/footer.component";
 import { DbaccidentComponent } from "./dashboard/dbaccident/dbaccident.component";
 import { DbelectionComponent } from "./dashboard/dbelection/dbelection.component";
+import { DbtweetComponent } from "./dashboard/dbtweet/dbtweet.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { RegisterComponent } from "./register/register.component";
 import { AnimatedBackgroundComponent } from "./animated-background/animated-background.component";
+import { UsedDataComponent } from "./dashboard/shared/used-data/used-data.component";
 
 // Services
 import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
 import { LocationService } from "./shared/location.service";
 import { AssetService } from "./shared/asset.service";
-import { DbtweetComponent } from './dashboard/dbtweet/dbtweet.component';
-import { UsedDataComponent } from './dashboard/shared/used-data/used-data.component';
 
 @NgModule({
   imports: [
@@ -58,6 +58,7 @@ import { UsedDataComponent } from './dashboard/shared/used-data/used-data.compon
     LocationService,
     AssetService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

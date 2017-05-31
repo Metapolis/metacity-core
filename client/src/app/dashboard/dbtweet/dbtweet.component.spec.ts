@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DbtweetComponent } from './dbtweet.component';
+import { DbtweetComponent } from "./dbtweet.component";
 
-describe('DbtweetComponent', () => {
+describe("DbtweetComponent", () => {
   let component: DbtweetComponent;
   let fixture: ComponentFixture<DbtweetComponent>;
 
@@ -19,7 +19,7 @@ describe('DbtweetComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });
