@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { Assets } from "../../assets";
+import { AssetService } from "../../shared/asset.service";
+import { Dataset } from "../../common/dataset";
+import { MOCK_ACCIDENT_DATASET } from "../shared/mock-dashboard-datasets/mock-accident-dataset";
 
 @Component({
   selector: "app-dbaccident",
@@ -7,5 +9,8 @@ import { Assets } from "../../assets";
   styleUrls: ["./dbaccident.component.scss", "../dashboard.component.scss"]
 })
 export class DbaccidentComponent {
-  private assets = new Assets();
+  private datasets;
+  constructor(private assets: AssetService) {
+    this.datasets = MOCK_ACCIDENT_DATASET;
+  }
 }

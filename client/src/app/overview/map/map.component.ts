@@ -4,6 +4,7 @@ import * as L from "leaflet";
 
 import { MapContentService } from "../shared/map-content.service";
 import { MapSpecific } from "./contents/map-specific";
+import { LocationService } from "../../shared/location.service";
 
 @Component({
   selector: "app-map",
@@ -24,11 +25,10 @@ export class MapComponent {
     minZoom: 4,
     zoom: 13,
     maxZoom: 18,
-    // https://nominatim.openstreetmap.org/details.php?place_id=158673407 (La Rochelle, France)
-    center: L.latLng({ lat: 46.16204, lng: -1.17651 })
+    center: this.locationService.getCurrentLocation().gpsCoordinates.center
   };
 
-  constructor(private mapcontentservice: MapContentService) {
+  constructor(private mapcontentservice: MapContentService, private locationService: LocationService) {
     // we should think about having an observable to load map content much sooner
     // this.getMapContent();
   }

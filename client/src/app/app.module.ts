@@ -24,6 +24,9 @@ import { AnimatedBackgroundComponent } from "./animated-background/animated-back
 import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
 import { LocationService } from "./shared/location.service";
+import { AssetService } from "./shared/asset.service";
+import { DbtweetComponent } from './dashboard/dbtweet/dbtweet.component';
+import { UsedDataComponent } from './dashboard/shared/used-data/used-data.component';
 
 @NgModule({
   imports: [
@@ -46,11 +49,14 @@ import { LocationService } from "./shared/location.service";
     DashboardComponent,
     RegisterComponent,
     AnimatedBackgroundComponent,
+    DbtweetComponent,
+    UsedDataComponent,
   ],
   providers: [
     MenuService,
     ConnexionService,
-    LocationService
+    LocationService,
+    AssetService
   ],
   bootstrap: [AppComponent]
 })

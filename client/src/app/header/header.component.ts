@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Assets } from "../assets";
+import { AssetService } from "../shared/asset.service";
 import { Link } from "../common/link";
 import { MenuService } from "../shared/menu.service";
 
@@ -11,11 +11,9 @@ import { MenuService } from "../shared/menu.service";
 })
 export class HeaderComponent implements OnInit {
   private navlinks: Link[];
-  private assets = new Assets();
-
   public isCollapsed = true;
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService, private assets: AssetService) {}
 
   public ngOnInit(): void {
     this.getMenu();

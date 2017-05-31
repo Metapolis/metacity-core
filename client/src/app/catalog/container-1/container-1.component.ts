@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Assets } from "../../assets";
+import { AssetService } from "../../shared/asset.service";
 
 @Component({
   selector: "catalog-container-1",
@@ -7,5 +7,5 @@ import { Assets } from "../../assets";
   styleUrls: ["../catalog.component.scss"]
 })
 export class Container1Component {
-  private assets = new Assets();
+  constructor(private assets: AssetService) {}
 }

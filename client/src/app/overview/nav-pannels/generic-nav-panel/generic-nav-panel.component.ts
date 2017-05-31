@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Assets } from "../../../assets";
+import { AssetService } from "../../../shared/asset.service";
 import { Link } from "../../../common/link";
 import { Img } from "../../../common/img";
 
@@ -9,7 +9,6 @@ import { Img } from "../../../common/img";
   styleUrls: ["generic-nav-panel.component.scss"]
 })
 export class GenericNavPanelComponent {
-  private assets = new Assets();
 
   private visuallinks: Array<{ link: Link, img: Img }> = [
     {
@@ -30,4 +29,5 @@ export class GenericNavPanelComponent {
     },
   ];
 
+  constructor(private assets: AssetService) {}
 }

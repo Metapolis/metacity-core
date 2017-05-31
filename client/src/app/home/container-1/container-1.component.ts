@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Assets } from "../../assets";
+import { AssetService } from "../../shared/asset.service";
 
 @Component({
   selector: "app-container-1",
@@ -7,7 +7,6 @@ import { Assets } from "../../assets";
   styleUrls: ["../home.component.scss"],
 })
 export class Container1Component {
-  private assets = new Assets();
   private text = `MetaCity est une plateforme de collecte et d’échanges de données
 multi-domaines favorisant l’analyse, la visualisation et l’aide au pilotage
 des services et réseaux urbains. Cette plateforme est mise à
@@ -18,4 +17,5 @@ plateforme MetaCity permet de partager la gouvernance territoriale et
 de faciliter l’implémentation et l’opération des services urbains, tout en
 plaçant le citoyen au coeur de la démarche smart city.
 `;
+  constructor(private assets: AssetService) {}
 }
