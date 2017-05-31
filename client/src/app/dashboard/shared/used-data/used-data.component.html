@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-block jdd">
+    <h4 class="card-title">Jeux de données utilisés</h4>
+    <div id="jdd_dahboard">
+      <div class="row block_jdd_row">
+        <div *ngFor="let dataset of datasets" class="block_jdd">
+          <h6 class="text-center">{{dataset.title}}</h6>
+          <p>{{dataset.content}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

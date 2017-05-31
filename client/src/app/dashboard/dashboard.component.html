@@ -19,12 +19,6 @@
             <ng-content select="[analysis]"></ng-content>
           </div>
         </div>
-        <!-- <div class="dataviz_buttons">
-          <button type="button" class="btn btn-primary btn-lg">Nombre</button>
-          <button type="button" class="btn btn-primary btn-lg">Accidents</button>
-          <button type="button" class="btn btn-primary btn-lg">Victimes</button>
-          <button type="button" class="btn btn-primary btn-lg">Endroits</button>
-        </div> -->
         <div class="rounded_buttons text-center">
           <button type="button" class="btn btn-primary btn-lg">Visualiser toutes les analyses</button>
         </div>
@@ -46,44 +40,12 @@
       <div class="card sources">
         <div class="card-block">
           <h4 class="card-title">Sources</h4>
-          <a href="#">www.datagouv.fr</a>
+          <ng-content select="[source-links]"></ng-content>
         </div>
       </div>
     </div>
     <div class="col-md-7">
-      <div class="card">
-        <div class="card-block jdd">
-          <h4 class="card-title">Jeux de données utilisés</h4>
-          <div id="jdd_dahboard">
-            <div class="row">
-              <div class="block_jdd">
-                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-              </div>
-              <div class="block_jdd">
-                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-              </div>
-              <div class="block_jdd" id="color1">
-                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-              </div>
-              <div class="block_jdd" id="color2">
-                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-              </div>
-              <div class="block_jdd" id="color2">
-                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-              </div>
-              <div class="block_jdd" id="color2">
-                <h6 class="text-center">AGENDA DES MANIFESTATIONS CULTURELLES</h6>
-                <p>Modifié il y a 2 jours <br>1120 téléchargements <br>Culture</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ng-content select="[used-data]"></ng-content>
     </div>
   </div>
 </div>

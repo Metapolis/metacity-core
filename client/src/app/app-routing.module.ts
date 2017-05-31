@@ -8,6 +8,7 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { DbaccidentComponent } from "./dashboard/dbaccident/dbaccident.component";
 import { DbelectionComponent } from "./dashboard/dbelection/dbelection.component";
+import { DbtweetComponent } from "./dashboard/dbtweet/dbtweet.component";
 import { CatalogComponent } from "./catalog/catalog.component";
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   // Real pages
   {path: "catalog", component: CatalogComponent},
   {path: "contact", component: NotFound404Component},
+  {path: "tweets", component: DbtweetComponent},
   {path: "accidents", component: DbaccidentComponent},
   {path: "elections", component: DbelectionComponent},
   {path: "register", component: RegisterComponent},
