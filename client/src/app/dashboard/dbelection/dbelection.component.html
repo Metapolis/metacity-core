@@ -1,7 +1,7 @@
 <app-dashboard>datasets
   <img [src]="assets.presidentMap.src" alt="{{assets.presidentMap.alt}}" class="carte" map>
   <img [src]="assets.presidentGraph.src" alt="{{assets.presidentGraph.alt}}" id="analyses" analysis>
-  <app-used-data used-data></app-used-data>
+  <app-used-data [datasets]="datasets" used-data></app-used-data>
   <div source-links>
     <a href="#">www.datagouv.fr</a>
   </div>

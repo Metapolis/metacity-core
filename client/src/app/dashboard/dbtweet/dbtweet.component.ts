@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Dataset } from "../../common/dataset";
+import { MOCK_TWEET_DATASET } from "../shared/mock-dashboard-datasets/mock-tweet-dataset";
 
 @Component({
   selector: "app-dbtweet",
@@ -7,6 +9,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class DbtweetComponent {
 
-  constructor() { }
+  private datasets;
+  constructor() {
+    this.datasets = MOCK_TWEET_DATASET;
+  }
 
 }

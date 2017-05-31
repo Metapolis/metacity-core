@@ -1,9 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-
-interface Dataset {
-  title: string;
-  content: string;
-}
+import { Component, Input } from "@angular/core";
+import { Dataset } from "../../../common/dataset";
 
 @Component({
   selector: "app-used-data",
@@ -12,35 +8,10 @@ interface Dataset {
 })
 export class UsedDataComponent {
 
-  private datasets: Dataset[];
+  @Input()
+  public datasets: Dataset[];
 
   constructor() {
-    this.datasets = new Array<Dataset>(
-      {
-        title: "AGENDA DES MANIFESTATIONS CULTURELLES",
-        content: "Modifié il y a 2 jours <br>1120 téléchargements <br>Culture"
-      },
-      {
-        title: "AGENDA DES MANIFESTATIONS CULTURELLES",
-        content: "Modifié il y a 2 jours <br>1120 téléchargements <br>Culture"
-      },
-      {
-        title: "AGENDA DES MANIFESTATIONS CULTURELLES",
-        content: "Modifié il y a 2 jours <br>1120 téléchargements <br>Culture"
-      },
-      {
-        title: "AGENDA DES MANIFESTATIONS CULTURELLES",
-        content: "Modifié il y a 2 jours <br>1120 téléchargements <br>Culture"
-      },
-      {
-        title: "AGENDA DES MANIFESTATIONS CULTURELLES",
-        content: "Modifié il y a 2 jours <br>1120 téléchargements <br>Culture"
-      },
-      {
-        title: "AGENDA DES MANIFESTATIONS CULTURELLES",
-        content: "Modifié il y a 2 jours <br>1120 téléchargements <br>Culture"
-      }
-    );
   }
 
 }

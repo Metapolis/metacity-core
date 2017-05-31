@@ -83,6 +83,21 @@
   }
 }
 
+.block_jdd_row_tweet {
+  .block_jdd:nth-child(1) {
+    background-color: #9faeba !important;
+  }
+  .block_jdd:nth-child(2) {
+    background-color: #f5b2b6 !important;
+  }
+  .block_jdd:nth-child(3) {
+    background-color: #9dbec4 !important;
+  }
+  .block_jdd:nth-child(4) {
+    background-color: #a5b7bb !important;
+  }
+}
+
 #analyses {
   width: 365px;
 }
