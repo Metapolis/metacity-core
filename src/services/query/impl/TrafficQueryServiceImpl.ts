@@ -36,7 +36,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
         const jsonAccidents = (await this.esClient.search({
             index: query.getIndex(),
             type: query.getType(),
-            size: query.getSize(),
+            size: query.getLimit(),
             from: query.getOffset()
         })).hits;
 
