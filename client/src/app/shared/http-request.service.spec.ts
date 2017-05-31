@@ -93,4 +93,18 @@ describe("get data from server", () => {
     tick();
     expect(result).toEqual(mockRespond);
   }));
+  it("Request doesn't return 2xx raise execption", fakeAsync(() => {
+    let result: string;
+    let error: any;
+    this.httpRequestService.getRequestData(this.mockUrlValue)
+      .then((answer: string) => result = answer)
+      .catch((err: any) => error = err);
+    this.lastConnection.mockRespond(new Response(new ResponseOptions ({
+      status: 404,
+      statusText: "Too Bad"
+    })));
+    tick();
+    expect(result).toBeUndefined();
+    expect(error).toBeDefined();
+  }));
 });
