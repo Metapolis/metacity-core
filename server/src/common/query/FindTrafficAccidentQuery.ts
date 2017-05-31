@@ -23,11 +23,11 @@ export class FindTrafficAccidentQuery {
     private type: string = Config.getDocumentNameAccident();
 
     /**
-     * Query size (default 100)
+     * Query limit (default 100)
      *
      * @type {number}
      */
-    private size: number = 100;
+    private limit: number = 100;
 
     /**
      * Query offset (default 0)
@@ -64,17 +64,17 @@ export class FindTrafficAccidentQuery {
     }
 
     /**
-     * Accident's size getter
+     * Accident's limit getter
      */
-    public getSize(): number {
-        return this.size;
+    public getLimit(): number {
+        return this.limit;
     }
 
     /**
-     * Accident's size setter
+     * Accident's limit setter
      */
-    public setSize(size: number) {
-        this.size = size;
+    public setLimit(limit: number) {
+        this.limit = limit;
     }
 
     /**

@@ -46,11 +46,11 @@ export class TrafficController implements interfaces.Controller {
     @Get("/accidents")
     public async findAccidents(@QueryParam("area") area: string,
                                @QueryParam("offset") offset: number,
-                               @QueryParam("size") size: number): Promise<AccidentSummary[]> {
+                               @QueryParam("limit") limit: number): Promise<AccidentSummary[]> {
         Utils.checkArguments(offset != null, "Offset must be set");
         Utils.checkArguments(offset >= 0, "Offset cannot be negative");
-        Utils.checkArguments(size != null, "Size must be set");
-        Utils.checkArguments(size > 0, "Size must be superior to zero");
+        Utils.checkArguments(limit != null, "Size must be set");
+        Utils.checkArguments(limit > 0, "Size must be superior to zero");
 
         this.logger.info("Find all traffic information");
         let areaSearchFilter: SearchFilter;
@@ -59,7 +59,7 @@ export class TrafficController implements interfaces.Controller {
         }
         const query: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
         query.setOffset(Number(offset));
-        query.setSize(Number(size));
+        query.setLimit(Number(limit));
 
         // Prepare the area filter
         if (areaSearchFilter != null) {
