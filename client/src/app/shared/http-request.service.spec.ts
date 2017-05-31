@@ -56,8 +56,8 @@ describe("get data from server", () => {
     this.httpRequestService.setServerPort(serverPort);
     this.httpRequestService.setServerAddress(serverAdress);
     const mockUrlValue: RequestForm = {
-      root: "trafics/accidents",
-      filters: [
+      path: "trafics/accidents",
+      params: [
         {key: "login", value: "roberto"},
         {key: "password", value: "shut"}
       ]
@@ -107,6 +107,5 @@ describe("get data from server", () => {
     tick();
     expect(result).toBeUndefined();
     expect(error).toBeDefined();
-    console.log(error);
   }));
 });

@@ -43,9 +43,9 @@ export class HttpRequestService {
   }
 
   public forgeURL(requestForm: RequestForm): string {
-    let url: string = "/api/" + requestForm.root + "?";
+    let url: string = "/api/" + requestForm.path + "?";
     let first: boolean = true;
-    for (const entry of requestForm.filters) {
+    for (const entry of requestForm.params) {
       if (!first) {
         url += "&";
       }
