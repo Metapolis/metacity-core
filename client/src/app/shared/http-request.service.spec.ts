@@ -50,6 +50,7 @@ describe("get data from server", () => {
     this.backend = this.injector.get(ConnectionBackend) as MockBackend;
     this.backend.connections.subscribe((connection: any) => this.lastConnection = connection);
     this.httpRequestService = this.injector.get(HttpRequestService);
+    this.http = this.injector.get(Http);
     const serverPort: number = 4200;
     const serverAdress: string = "https://metacity.xyz";
     this.httpRequestService.setServerPort(serverPort);
@@ -93,7 +94,7 @@ describe("get data from server", () => {
     tick();
     expect(result).toEqual(mockRespond);
   }));
-  it("Request doesn't return 2xx raise execption", fakeAsync(() => {
+  it("Request doesn't return 2xx raise exeption", fakeAsync(() => {
     let result: string;
     let error: any;
     this.httpRequestService.getRequestData(this.mockUrlValue)
@@ -106,5 +107,6 @@ describe("get data from server", () => {
     tick();
     expect(result).toBeUndefined();
     expect(error).toBeDefined();
+    console.log(error);
   }));
 });
