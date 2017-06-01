@@ -12,6 +12,7 @@ import { ElectionMapComponent } from "./elections/election-map/election-map.comp
 import { ElectionChartComponent } from "./elections/election-chart/election-chart.component";
 import { AccidentChartComponent } from "./accidents/accident-chart/accident-chart.component";
 import { AccidentMapComponent } from "./accidents/accident-map/accident-map.component";
+import { TweetChartComponent } from "./tweets/tweet-chart/tweet-chart.component";
 
 // Services
 
@@ -27,14 +28,16 @@ import { AccidentMapComponent } from "./accidents/accident-map/accident-map.comp
     ElectionMapComponent,
     ElectionChartComponent,
     AccidentChartComponent,
-    AccidentMapComponent
+    AccidentMapComponent,
+    TweetChartComponent
   ],
   providers: [],
   exports: [
     ElectionMapComponent,
     ElectionChartComponent,
     AccidentChartComponent,
-    AccidentMapComponent
+    AccidentMapComponent,
+    TweetChartComponent
   ]
 })
 export class CategoriesModule { }

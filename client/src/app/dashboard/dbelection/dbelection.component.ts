@@ -16,6 +16,6 @@ export class DbelectionComponent {
   constructor(private assets: AssetService) {
     this.datasets = MOCK_ELECTION_DATASET;
     this.cardMap = { title: "La carte", link: { src: "/overview/elections/carte", text: "Intéragir avec la carte" } };
-    this.cardGraph = { title: "Les analyses", link: { src: "#", text: "Visualiser toutes les analyses" } };
+    this.cardGraph = { title: "Les analyses", link: { src: "/overview/elections/analyse", text: "Visualiser toutes les analyses" } };
   }
 }
