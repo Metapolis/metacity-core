@@ -17,7 +17,7 @@ export class DbtweetComponent {
   constructor() {
     this.datasets = MOCK_TWEET_DATASET;
     this.theme = "block_jdd_row_tweet";
-    this.card = { title: "Les Tweets", link: { src: "", text: "Voir tous les Tweets" } };
+    this.card = { title: "Les Tweets", link: { src: "#", text: "Voir tous les Tweets" } };
   }
 
 }
