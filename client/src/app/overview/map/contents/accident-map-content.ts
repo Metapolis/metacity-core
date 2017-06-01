@@ -2,6 +2,9 @@ import * as d3 from "d3-request";
 import { MapContent } from "./map-specific";
 import * as fmt from "sprintf-js";
 
+import { HttpRequestService } from "../../../shared/http-request.service";
+import { RequestForm } from "../../../common/request-form";
+
 interface InitialBoundsInterface {
   northWest: L.LatLng;
   southEast: L.LatLng;
@@ -22,7 +25,7 @@ export class AccidentMapContent implements MapContent {
   private layerGroup: L.LayerGroup;
   private boundaries: L.LatLngBounds;
 
-  constructor() {
+  constructor(private httpRequestService: HttpRequestService) {
     this.weatherFilters = Array.from({ length: 9 }, (v, k) => k + 1);
     this.layers = new Array<L.Layer>();
     this.icon = {
@@ -71,8 +74,24 @@ export class AccidentMapContent implements MapContent {
     this.weatherFilters = weatherFilters;
   }
 
+  private getMapContent(): string {
+    const tempRequest: RequestForm = {
+      path: "traffics/accidents",
+      params: [
+        {key: "limit", value: "25"},
+        {key: "offset", value: "50"},
+        {key: "areas", value: "[[13.0|53.0]|[14.0|52.0]],[[11.0|55.0]|[12.0|54.0]]"}
+      ]
+    };
+    let mapContent: string;
+    this.httpRequestService.getRequestData(tempRequest)
+      .then((answer: string) => { mapContent = answer; } )
+      .catch((err: any) => { alert("Data not available ==> " + err); });
+    return mapContent;
+  }
+
   public draw(): void {
-    d3.json("assets/mock-data/accidents.json", (err, data) => {
+    d3.json(this.getMapContent(), (err, data) => {
 
       const pdata = data as Array<{
         id: number,

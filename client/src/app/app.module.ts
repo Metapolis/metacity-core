@@ -2,12 +2,14 @@
 import { NgModule } from "@angular/core";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { BrowserModule } from "@angular/platform-browser";
-import { AppRoutingModule } from "./app-routing.module";
 import { FormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
+
 import { HomeModule } from "./home/home.module";
 import { HeaderModule } from "./header/header.module";
 import { CatalogModule } from "./catalog/catalog.module";
 import { OverviewModule } from "./overview/overview.module";
+import { AppRoutingModule } from "./app-routing.module";
 
 // Components
 import { AppComponent } from "./app.component";
@@ -41,7 +43,8 @@ import { HttpRequestService } from "./shared/http-request.service";
     HomeModule,
     HeaderModule,
     CatalogModule,
-    OverviewModule
+    OverviewModule,
+    HttpModule
   ],
   declarations: [
     AppComponent,
