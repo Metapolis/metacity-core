@@ -108,7 +108,6 @@
     "lodash": "^4.16.4",
     "mocha": "3.3.0",
     "mocha-typescript": "1.1.2",
-    "moq.ts": "2.5.1",
     "protractor": "^5.1.1",
     "request": "2.81.0",
     "request-promise": "4.2.0",
@@ -119,6 +118,7 @@
     "sync-request": "4.0.3",
     "ts-node": "^3.0.4",
     "tslint": "^5.2.0",
+    "typemoq": "^1.7.0",
     "typescript": "^2.3.2"
   }
 }

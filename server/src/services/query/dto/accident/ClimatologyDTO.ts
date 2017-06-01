@@ -21,7 +21,7 @@ export class ClimatologyDTO {
      *
      * @param json json used to construction
      */
-    constructor(json: {}) {
+    constructor(json: {} = {}) {
         Object.assign(this, json);
     }
 

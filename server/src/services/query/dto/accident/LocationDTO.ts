@@ -46,7 +46,7 @@ export class LocationDTO {
      *
      * @param json json used to construction
      */
-    constructor(json: {}) {
+    constructor(json: {} = {}) {
         Object.assign(this, json);
     }
 

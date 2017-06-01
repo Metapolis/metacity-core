@@ -21,9 +21,9 @@ export abstract class AbstractTestController {
     /**
      * Method launched before test execution
      */
-    public static before(): void {
+    public static async before(): Promise<void> {
         AbstractTestController.app = new AppTestModule();
-        AbstractTestController.app.bootstrap();
+        await AbstractTestController.app.bootstrap();
     }
 
     /**

@@ -44,11 +44,15 @@ export class CarAccidentDTO {
     private location: LocationDTO;
 
     /**
+     * Allow default constructor
+     */
+
+    /**
      * Constructor from JSON
      *
      * @param json json used to construction
      */
-    constructor(json: {}) {
+    constructor(json: {} = {}) {
         Object.assign(this, json);
         this.climatology = new ClimatologyDTO(this.climatology);
         this.location = new LocationDTO(this.location);

@@ -2,11 +2,10 @@ import { Client } from "elasticsearch";
 import { Container } from "inversify";
 import { TrafficQueryService } from "../../../src/services/query/TrafficQueryService";
 import { TrafficQueryServiceImpl } from "../../../src/services/query/impl/TrafficQueryServiceImpl";
-import { Mock } from "moq.ts";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../../src/common/Utils";
 import { ContextApp } from "../../ContextApp";
-
+import * as TypeMoq from "typemoq";
 /**
  * App test module
  */
@@ -24,14 +23,15 @@ export class AppTestModule {
      *
      * @returns {Container}
      */
-    public bootstrap(): Container {
+    public async bootstrap(): Promise<Container> {
+        await ContextApp.init();
         // Disable elasticsearch client (First execution bind mock)
-        ContextApp.container.bind("ESClientMock").toConstantValue(new Mock<Client>());
-        ContextApp.container.rebind("ESClient").toConstantValue((ContextApp.container.get("ESClientMock") as Mock<Client>).object());
+        ContextApp.container.bind("ESClientMock").toConstantValue(TypeMoq.Mock.ofType(Client));
+        ContextApp.container.rebind("ESClient").toConstantValue((ContextApp.container.get("ESClientMock") as TypeMoq.IMock<Client>).object);
 
         // Disable all services
-        ContextApp.container.bind("TrafficQueryServiceMock").toConstantValue(new Mock<TrafficQueryServiceImpl>());
-        ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as Mock<TrafficQueryServiceImpl>).object());
+        ContextApp.container.bind("TrafficQueryServiceMock").toConstantValue(TypeMoq.Mock.ofType<TrafficQueryService>(TrafficQueryServiceImpl));
+        ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
 
         return ContextApp.container;
     }

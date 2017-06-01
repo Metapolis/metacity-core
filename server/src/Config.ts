@@ -10,7 +10,9 @@ export class Config {
      *
      * @type {Properties}
      */
-    private static properties: Properties = Properties.initialize("config/properties.json");
+    private static properties: Properties = process.env.NODE_ENV === "prod" ? Properties.initialize("config/properties_prod.json")
+                                            : process.env.NODE_ENV === "debug" ? Properties.initialize("config/properties_debug.json")
+                                            : Properties.initialize("config/properties_test.json");
 
     /**
      * Get ElasticSearch host
@@ -18,7 +20,7 @@ export class Config {
      * @returns {string}
      */
     public static getElasticSearchHost(): string {
-        return Config.properties.get("config.elasticsearch.host");
+        return Config.properties.get("elasticsearch.host");
     }
 
     /**
@@ -27,7 +29,7 @@ export class Config {
      * @returns {number}
      */
     public static getElasticSearchLogLevel(): number {
-        return Config.properties.get("config.elasticsearch.log_level");
+        return Config.properties.get("elasticsearch.log_level");
     }
 
     /**
@@ -36,7 +38,7 @@ export class Config {
      * @returns {number}
      */
     public static getAppPort(): number {
-        return Config.properties.get("config.app.port");
+        return Config.properties.get("app.port");
     }
 
     /**
@@ -45,7 +47,7 @@ export class Config {
      * @returns {string}
      */
     public static getAppHost(): string {
-        return Config.properties.get("config.app.host");
+        return Config.properties.get("app.host");
     }
 
     /**
@@ -54,7 +56,7 @@ export class Config {
      * @returns {string}
      */
     public static getAppLogLevel(): string {
-        return Config.properties.get("config.app.log_level");
+        return Config.properties.get("app.log_level");
     }
 
     /**
@@ -63,7 +65,7 @@ export class Config {
      * @returns {string}
      */
     public static getIndexNameTraffic(): string {
-        return Config.properties.get("config.index_name_traffic");
+        return Config.properties.get("index_name_traffic");
     }
 
     /**
@@ -72,7 +74,7 @@ export class Config {
      * @returns {string}
      */
     public static getDocumentNameAccident(): string {
-        return Config.properties.get("config.document_name_accident");
+        return Config.properties.get("document_name_accident");
     }
 
     /**
@@ -81,7 +83,7 @@ export class Config {
      * @returns {string}
      */
     public static getIndexNamePolitic(): string {
-        return Config.properties.get("config.index_name_politic");
+        return Config.properties.get("index_name_politic");
     }
 
     /**
@@ -90,7 +92,7 @@ export class Config {
      * @returns {string}
      */
     public static getDocumentNameVote(): string {
-        return Config.properties.get("config.document_name_vote");
+        return Config.properties.get("document_name_vote");
     }
 
     /**
@@ -99,7 +101,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabaseName(): string {
-        return Config.properties.get("config.database.name");
+        return Config.properties.get("database.name");
     }
 
     /**
@@ -108,7 +110,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabaseUser(): string {
-        return Config.properties.get("config.database.user");
+        return Config.properties.get("database.user");
     }
 
     /**
@@ -117,7 +119,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabasePassword(): string {
-        return Config.properties.get("config.database.password");
+        return Config.properties.get("database.password");
     }
 
     /**
@@ -126,7 +128,7 @@ export class Config {
      * @returns {string}
      */
     public static getDatabaseHost(): string {
-        return Config.properties.get("config.database.host");
+        return Config.properties.get("database.host");
     }
 
     /**
@@ -135,6 +137,24 @@ export class Config {
      * @returns {number}
      */
     public static getDatabasePort(): number {
-        return Config.properties.get("config.database.port");
+        return Config.properties.get("database.port");
+    }
+
+    /**
+     * Get database dropSchema
+     *
+     * @returns {string}
+     */
+    public static isDatabaseDropSchema(): boolean {
+        return Config.properties.get("database.drop_schema");
+    }
+
+    /**
+     * Get database autooSchemaSync
+     *
+     * @returns {number}
+     */
+    public static isDatabaseAutoSchemaSync(): boolean {
+        return Config.properties.get("database.auto_schema_sync");
     }
 }
