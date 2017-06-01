@@ -7,6 +7,7 @@ import { AccidentMapComponent } from "./categories/accidents/accident-map/accide
 import { ElectionMapComponent } from "./categories/elections/election-map/election-map.component";
 import { ElectionChartComponent } from "./categories/elections/election-chart/election-chart.component";
 import { AccidentChartComponent } from "./categories/accidents/accident-chart/accident-chart.component";
+import { TweetChartComponent } from "./categories/tweets/tweet-chart/tweet-chart.component";
 
 const overviewRoutes: Routes = [
   {
@@ -24,6 +25,12 @@ const overviewRoutes: Routes = [
         children: [
           { path: "carte", component: ElectionMapComponent },
           { path: "analyse", component: ElectionChartComponent }
+        ]
+      },
+      {
+        path: "tweets",
+        children: [
+          { path: "analyse", component:  TweetChartComponent }
         ]
       },
     ]

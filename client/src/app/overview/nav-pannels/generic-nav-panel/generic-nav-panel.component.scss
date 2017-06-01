@@ -75,3 +75,15 @@
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+
+.dashboard {
+  ul {
+    list-style: none;
+  }
+
+  li {
+    margin-bottom: 5px;
+    color: "black";
+    font-size: 13px;
+  }
+}

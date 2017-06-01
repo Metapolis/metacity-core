@@ -5,7 +5,7 @@ import { CommonModule } from "@angular/common";
 
 // Components
 import { ThreeColumnsTemplateComponent } from "./three-columns/three-columns-template.component";
-import { TwoColumsComponent } from "./two-colums/two-colums.component";
+import { TwoColumnsTemplateComponent } from "./two-columns/two-columns-template.component";
 
 // Services
 
@@ -13,12 +13,12 @@ import { TwoColumsComponent } from "./two-colums/two-colums.component";
   imports: [],
   declarations: [
     ThreeColumnsTemplateComponent,
-    TwoColumsComponent
+    TwoColumnsTemplateComponent
   ],
   providers: [],
   exports: [
     ThreeColumnsTemplateComponent,
-    TwoColumsComponent
+    TwoColumnsTemplateComponent
   ]
 })
 export class TemplatesModule { }
