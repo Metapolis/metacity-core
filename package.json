@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "concurrently \"grunt watch\" \"cd client/ && ng build --watch \" \"node ./dist/server/src/bootstrap\"",
     "build:server": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json && grunt ts:server && tsc -p . && find ./dist/server/test -name '*Test.js' | xargs mocha -R spec",
-    "build:client": "cd client/ && ng lint --type-check && ng e2e && ng build && cd ../ && grunt copy:client",
+    "build:client": "cd client/ && ng lint --type-check && ng build && cd ../ && grunt copy:client",
     "build": "npm run build:server && npm run build:client",
     "check:server": "tslint --exclude 'server/src/**/*.d.ts' -c tslint.json 'server/src/**/*.ts' --type-check --project ./tsconfig.json ",
     "check:client": "cd client/ && ng lint --type-check && cd ../",
