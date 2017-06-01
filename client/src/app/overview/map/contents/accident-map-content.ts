@@ -61,20 +61,20 @@ export class AccidentMapContent implements MapContent {
 
   public onMapReady(map: L.Map) {
     this.map = map;
-    this.draw();
+    this.getMapContentAndDraw();
   }
 
   public refresh(): void {
     this.layerGroup.clearLayers();
     this.layers = [];
-    this.draw();
+    this.getMapContentAndDraw();
   }
 
   public setWeatherFilters(weatherFilters: number[]): void {
     this.weatherFilters = weatherFilters;
   }
 
-  private getMapContent(): string {
+  private getMapContentAndDraw(): void {
     const tempRequest: RequestForm = {
       path: "traffics/accidents",
       params: [
@@ -83,15 +83,14 @@ export class AccidentMapContent implements MapContent {
         {key: "areas", value: "[[13.0|53.0]|[14.0|52.0]],[[11.0|55.0]|[12.0|54.0]]"}
       ]
     };
-    let mapContent: string;
     this.httpRequestService.getRequestData(tempRequest)
-      .then((answer: string) => { mapContent = answer; } )
+      .then((answer: string) => { this.draw(answer); } )
       .catch((err: any) => { alert("Data not available ==> " + err); });
-    return mapContent;
   }
 
-  public draw(): void {
-    d3.json(this.getMapContent(), (err, data) => {
+  public draw(mapContent: string): void {
+    console.log(JSON.parse(mapContent).results[0]);
+    d3.json(JSON.parse(mapContent).results, (err, data) => {
 
       const pdata = data as Array<{
         id: number,
