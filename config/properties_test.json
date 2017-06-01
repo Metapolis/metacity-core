@@ -13,10 +13,12 @@
     "log_level": "debug"
   },
   "database": {
-    "name": "metacity",
+    "name": "metacity-test",
     "user": "metacity",
     "password": "metacity",
-    "host": "163.172.18.177",
-    "port": 5432
+    "host": "127.0.0.1",
+    "port": 5432,
+    "drop_schema": true,
+    "auto_schema_sync": true
   }
 }

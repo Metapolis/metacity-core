@@ -3,11 +3,9 @@ import { inject, injectable } from "inversify";
 import { TrafficQueryService } from "../TrafficQueryService";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
-import { Config } from "../../../Config";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
-import { LocationDTO } from "../dto/accident/LocationDTO";
-import { ClimatologyDTO } from "../dto/accident/ClimatologyDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
+import { ResultList } from "../../../common/ResultList";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -31,12 +29,12 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
     /**
      * Override
      */
-    public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<CarAccidentDTO[]> {
+    public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>> {
         this.logger.info("Retrieve all traffic accident in elastic search");
         const jsonAccidents = (await this.esClient.search({
             index: query.getIndex(),
             type: query.getType(),
-            size: query.getSize(),
+            size: query.getLimit(),
             from: query.getOffset()
         })).hits;
 
@@ -45,6 +43,6 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
             accidents.push(new CarAccidentDTO(jsonAccident._source));
         }
 
-        return accidents;
+        return new ResultList<CarAccidentDTO>(jsonAccidents.total, accidents);
     }
 }

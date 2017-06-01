@@ -9,6 +9,8 @@ import { SearchFilter } from "./model/common/SearchFilter";
 import { FindTrafficAccidentQuery } from "../../common/query/FindTrafficAccidentQuery";
 import { LogicalQueryCriteria } from "../../common/query/LogicalQueryCriteria";
 import { GeoShape } from "../../common/GeoShape";
+import { ResultList } from "../../common/ResultList";
+import { CarAccidentDTO } from "../../services/query/dto/accident/CarAccidentDTO";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -37,29 +39,29 @@ export class TrafficController implements interfaces.Controller {
     /**
      * Get traffic accident information
      *
-     * @param area area search filter
+     * @param areas area search filter
      * @param offset result offset
-     * @param size size of return result
+     * @param limit size of return result
      *
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    public async findAccidents(@QueryParam("area") area: string,
+    public async findAccidents(@QueryParam("areas") areas: string,
                                @QueryParam("offset") offset: number,
-                               @QueryParam("size") size: number): Promise<AccidentSummary[]> {
+                               @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {
         Utils.checkArguments(offset != null, "Offset must be set");
         Utils.checkArguments(offset >= 0, "Offset cannot be negative");
-        Utils.checkArguments(size != null, "Size must be set");
-        Utils.checkArguments(size > 0, "Size must be superior to zero");
+        Utils.checkArguments(limit != null, "Size must be set");
+        Utils.checkArguments(limit > 0, "Size must be superior to zero");
 
         this.logger.info("Find all traffic information");
         let areaSearchFilter: SearchFilter;
-        if (!Utils.isNullOrEmpty(area)) {
-            areaSearchFilter = new SearchFilter(area);
+        if (!Utils.isNullOrEmpty(areas)) {
+            areaSearchFilter = new SearchFilter(areas);
         }
         const query: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
         query.setOffset(Number(offset));
-        query.setSize(Number(size));
+        query.setLimit(Number(limit));
 
         // Prepare the area filter
         if (areaSearchFilter != null) {
@@ -81,20 +83,20 @@ export class TrafficController implements interfaces.Controller {
             query.setGeoFilter(geoFilter);
         }
 
-        const accidents = await this.trafficQueryService.findTrafficAccidents(query);
+        const resultListAccidents: ResultList<CarAccidentDTO> = await this.trafficQueryService.findTrafficAccidents(query);
         const returnedAccidents: AccidentSummary[] = [];
 
-        for (const accident of accidents) {
+        for (const accident of resultListAccidents.results) {
             const accidentMinimal: AccidentSummary = new AccidentSummary();
-            accidentMinimal.setId(accident.getId());
-            accidentMinimal.setLocation(new Location());
-            accidentMinimal.getLocation().setAddress(accident.getLocation().getAddress());
-            accidentMinimal.getLocation().setLatitude(accident.getLocation().getLatitude());
-            accidentMinimal.getLocation().setlongitude(accident.getLocation().getLongitude());
+            accidentMinimal.id = accident.getId();
+            accidentMinimal.location = new Location();
+            accidentMinimal.location.address = accident.getLocation().getAddress();
+            accidentMinimal.location.latitude = accident.getLocation().getLatitude();
+            accidentMinimal.location.longitude = accident.getLocation().getLongitude();
 
             returnedAccidents.push(accidentMinimal);
         }
 
-        return returnedAccidents;
+        return new ResultList<AccidentSummary>(resultListAccidents.total, returnedAccidents);
     }
 }
