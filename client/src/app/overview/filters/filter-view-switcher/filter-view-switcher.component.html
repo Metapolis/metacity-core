@@ -1,0 +1,7 @@
+<div class="choice choice-title">
+  <div class="d-flex justify-content-center">
+    <div *ngFor="let link of links" class="p-2">
+      <a routerLink="{{link.src}}" routerLinkActive="active" class="btn btn-primary btn-xs" role="button">{{link.text}}</a>
+    </div>
+  </div>
+</div>

@@ -5,17 +5,20 @@ import { CommonModule } from "@angular/common";
 
 // Components
 import { ThreeColumnsTemplateComponent } from "./three-columns/three-columns-template.component";
+import { TwoColumsComponent } from "./two-colums/two-colums.component";
 
 // Services
 
 @NgModule({
   imports: [],
   declarations: [
-    ThreeColumnsTemplateComponent
+    ThreeColumnsTemplateComponent,
+    TwoColumsComponent
   ],
   providers: [],
   exports: [
-    ThreeColumnsTemplateComponent
+    ThreeColumnsTemplateComponent,
+    TwoColumsComponent
   ]
 })
 export class TemplatesModule { }

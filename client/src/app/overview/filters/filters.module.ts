@@ -10,6 +10,10 @@ import { AccidentMapFiltersComponent } from "./accidents/accident-map-filters/ac
 import { AccidentChartFiltersComponent } from "./accidents/accident-chart-filters/accident-chart-filters.component";
 import { ElectionMapFiltersComponent } from "./elections/election-map-filters/election-map-filters.component";
 import { ElectionChartFiltersComponent } from "./elections/election-chart-filters/election-chart-filters.component";
+import { AccidentViewSwitcherComponent } from "./accidents/accident-view-switcher/accident-view-switcher.component";
+import { FilterViewSwitcherComponent } from "./filter-view-switcher/filter-view-switcher.component";
+import { ElectionViewSwitcherComponent } from "./elections/election-view-switcher/election-view-switcher.component";
+import { OverviewRoutingModule } from "../overview-routing.module";
 
 // Services
 
@@ -20,20 +24,27 @@ import { ElectionChartFiltersComponent } from "./elections/election-chart-filter
     Ng2SelectModule,
     MaterialModule,
     MdButtonModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    OverviewRoutingModule
   ],
   declarations: [
     AccidentMapFiltersComponent,
     AccidentChartFiltersComponent,
     ElectionChartFiltersComponent,
-    ElectionMapFiltersComponent
+    ElectionMapFiltersComponent,
+    AccidentViewSwitcherComponent,
+    FilterViewSwitcherComponent,
+    ElectionViewSwitcherComponent
   ],
   providers: [],
   exports: [
     AccidentMapFiltersComponent,
     AccidentChartFiltersComponent,
     ElectionChartFiltersComponent,
-    ElectionMapFiltersComponent
+    ElectionMapFiltersComponent,
+    AccidentViewSwitcherComponent,
+    FilterViewSwitcherComponent,
+    ElectionViewSwitcherComponent
   ]
 })
 export class FiltersModule { }

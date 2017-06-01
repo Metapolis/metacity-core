@@ -1,14 +1,5 @@
 <div class="title align-middle">Les résultats à la présidentielle à {{ locationService.getCurrentLocationName() }}</div>
-<div class="choice choice-title">
-  <div class="d-flex justify-content-center">
-    <div class="p-2">
-      <button type="button" class="btn btn-primary btn-xs">La carte</button>
-    </div>
-    <div class="p-2">
-      <button type="button" class="btn btn-primary btn-xs">Les analyses</button>
-    </div>
-  </div>
-</div>
+<app-election-view-switcher></app-election-view-switcher>
 <div class="choice choice-content">
   <div class="btn-group btn-block d-flex flex-column" data-toggle="buttons">
     <label *ngFor="let button of buttonListElections" class="btn btn-primary btn-xs btn-block">

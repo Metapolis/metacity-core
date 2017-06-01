@@ -1,19 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 
-import { MapContentService } from "../../../shared/map-content.service";
+import { ChartContentService } from "../../../shared/chart-content.service";
 
 @Component({
   selector: "overview-accident-chart",
   templateUrl: "accident-chart.component.html",
 })
 export class AccidentChartComponent implements OnInit {
-  constructor(private mapcontentservice: MapContentService) {}
+  constructor(private chartContentService: ChartContentService) {}
 
   public ngOnInit() {
-    this.setMapContent("accident-chart");
+    // this.setChartContent("accidents-luminosity-pie-chart");
+    this.setChartContent("accidents-meteo-pie-chart");
   }
 
-  public setMapContent(selectedMap: string): void {
-    this.mapcontentservice.setSelectedMap(selectedMap);
+  public setChartContent(selectedChart: string): void {
+    this.chartContentService.setSelectedChart(selectedChart);
   }
 }
