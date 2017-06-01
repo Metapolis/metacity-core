@@ -116,7 +116,7 @@ export class AccidentMapSpecific implements MapSpecific {
       this.map.on("moveend", () => {
         console.log("Move end event fired");
         // Refresh data
-      })
+      });
     });
   }
 }

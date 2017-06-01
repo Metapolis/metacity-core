@@ -10,7 +10,12 @@ export class HttpRequestService {
   private serverAddress: string;
   private serverPort: number;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    const devPort: number = 3000;
+    const devAdress: string = "http://localhost";
+    this.setServerPort(devPort);
+    this.setServerAddress(devAdress);
+  }
 
   public setServerAddress(serverAddress: string) {
     this.serverAddress = serverAddress;
@@ -36,7 +41,9 @@ export class HttpRequestService {
   }
 
   private extractAnswer(answer: Response): string {
-    if (typeof(answer.status) === "number" && (answer.status > 299 || answer.status < 200)) {
+    const max200 = 299;
+    const min200 = 200;
+    if (typeof(answer.status) === "number" && (answer.status > max200 || answer.status < min200)) {
       throw new Error("404");
     }
     return answer.text().toString();
