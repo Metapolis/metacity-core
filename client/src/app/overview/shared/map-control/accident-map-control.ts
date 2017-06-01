@@ -1,10 +1,10 @@
-import { AccidentMapSpecific } from "../../map/contents/accident-map-content";
+import { AccidentMapContent } from "../../map/contents/accident-map-content";
 
 export class AccidentMapControl {
-  private accidentMap: AccidentMapSpecific;
+  private accidentMap: AccidentMapContent;
   private weatherFilters: Array<{ name: string, code: number, value: boolean }>;
 
-  constructor(accidentMap: AccidentMapSpecific) {
+  constructor(accidentMap: AccidentMapContent) {
     this.accidentMap = accidentMap;
   }
 
