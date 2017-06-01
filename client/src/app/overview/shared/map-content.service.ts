@@ -6,6 +6,7 @@ import { ElectionMapContent } from "../map/contents/election-map-content";
 import { AccidentMapControl } from "./map-control/accident-map-control";
 import { ElectionMapControl } from "./map-control/election-map-control";
 import { MapContent } from "../map/contents/map-specific";
+import { HttpRequestService } from "../../shared/http-request.service";
 
 @Injectable()
 export class MapContentService {
@@ -18,12 +19,12 @@ export class MapContentService {
     [candidate: string]: string
   } = {};
 
-  constructor() { }
+  constructor(private httpRequestService: HttpRequestService) { }
 
   public getMapContent(): Promise<MapContent> {
     if (this.selectedMap === "accident-map") {
-      this.accidentMap = new AccidentMapContent();
-      this.accidentMapControl = new AccidentMapControl(this.accidentMap);
+      this.accidentMap = new AccidentMapContent(this.httpRequestService);
+      this.accidentMapControl = new AccidentMapControl(this.accidentMap); 
       return Promise.resolve(this.accidentMap);
     }
     if (this.selectedMap === "election-map") {
