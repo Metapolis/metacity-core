@@ -13,6 +13,7 @@ import { ElectionChartComponent } from "./elections/election-chart/election-char
 import { AccidentChartComponent } from "./accidents/accident-chart/accident-chart.component";
 import { AccidentMapComponent } from "./accidents/accident-map/accident-map.component";
 import { TweetChartComponent } from "./tweets/tweet-chart/tweet-chart.component";
+import { SimpleCardComponent } from "../common/simple-card/simple-card.component";
 
 // Services
 
@@ -29,7 +30,8 @@ import { TweetChartComponent } from "./tweets/tweet-chart/tweet-chart.component"
     ElectionChartComponent,
     AccidentChartComponent,
     AccidentMapComponent,
-    TweetChartComponent
+    TweetChartComponent,
+    SimpleCardComponent
   ],
   providers: [],
   exports: [

@@ -19,12 +19,13 @@ import { MapContentService } from "./shared/map-content.service";
     CategoriesModule
   ],
   declarations: [
-    OverviewComponent
+    OverviewComponent,
   ],
   providers: [
     ChartContentService,
     MapContentService
   ],
-  exports: []
+  exports: [
+  ]
 })
 export class OverviewModule { }
