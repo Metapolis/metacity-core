@@ -1,5 +1,6 @@
 import { CarAccidentDTO } from "./dto/accident/CarAccidentDTO";
 import { FindTrafficAccidentQuery } from "../../common/query/FindTrafficAccidentQuery";
+import { ResultList } from "../../common/ResultList";
 
 /**
  * Contains method to perform traffic query
@@ -13,5 +14,5 @@ export interface TrafficQueryService {
      *
      * @returns {string}
      */
-    findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<CarAccidentDTO[]>;
+    findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>>;
 }

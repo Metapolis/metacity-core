@@ -71,13 +71,13 @@ export class App {
      * @static
      * @return Returns the newly created injector for this app.
      */
-    public bootstrap(): Container {
+    public async bootstrap(): Promise<Container> {
         this.logger.info("Metacity core is launching");
         // set up container
         this.container = new Container();
 
         // bind all service
-        this.initModule();
+        await this.initModule();
 
         return this.container;
     }
@@ -139,7 +139,8 @@ export class App {
     private async initModule(): Promise<void> {
         this.logger.debug("Connect to database");
         await TypeORM.createConnection({
-            autoSchemaSync: true,
+            dropSchemaOnConnection: Config.isDatabaseDropSchema(),
+            autoSchemaSync: Config.isDatabaseAutoSchemaSync(),
             driver: {
                 database: Config.getDatabaseName(),
                 host: Config.getDatabaseHost(),
