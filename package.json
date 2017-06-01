@@ -4,7 +4,7 @@
   "description": "",
   "main": "./server/bin/www",
   "scripts": {
-    "watch": "concurrently \"grunt watch\" \"cd client/ && ng build --watch \" \"node ./dist/server/src/bootstrap\"",
+    "watch": "concurrently \"grunt watch\" \"cd client/ && ng build --watch \" \"NODE_ENV=debug node ./dist/server/src/bootstrap\"",
     "build:server": "npm run check:server && grunt ts:server && tsc -p . && npm run test:server",
     "build:client": "cd client/ && ng lint --type-check && ng build && cd ../ && grunt copy:client",
     "build": "npm run build:server && npm run build:client",
