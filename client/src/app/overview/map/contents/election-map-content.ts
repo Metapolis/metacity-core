@@ -1,9 +1,9 @@
 import * as d3 from "d3-request";
-import { MapSpecific } from "./map-specific";
+import { MapContent } from "./map-specific";
 
 const MAX_POLLING: number = 55;
 
-export class ElectionMapSpecific implements MapSpecific {
+export class ElectionMapContent implements MapContent {
 
   private option: L.GeoJSONOptions;
   private electionDataPath: string;

@@ -1,7 +1,7 @@
-import { ElectionMapSpecific } from "../../map/contents/election-map-content";
+import { ElectionMapContent } from "../../map/contents/election-map-content";
 
 export class ElectionMapControl {
-  private electionMap: ElectionMapSpecific;
+  private electionMap: ElectionMapContent;
   private roundFilter: string;
   private candidateFilter: string;
   private mockDataPath: string;
@@ -9,7 +9,7 @@ export class ElectionMapControl {
   private electionCandidateColorPath: string;
   private pollingStationPath: string;
 
-  constructor(electionMap: ElectionMapSpecific) {
+  constructor(electionMap: ElectionMapContent) {
     this.electionMap = electionMap;
     this.mockDataPath = "assets/mock-data/";
     this.setRoundFilter("election-2012/1");

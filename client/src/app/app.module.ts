@@ -30,6 +30,7 @@ import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
 import { LocationService } from "./shared/location.service";
 import { AssetService } from "./shared/asset.service";
+import { HttpRequestService } from "./shared/http-request.service";
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { AssetService } from "./shared/asset.service";
     MenuService,
     ConnexionService,
     LocationService,
-    AssetService
+    AssetService,
+    HttpRequestService
   ],
   bootstrap: [AppComponent]
 })
