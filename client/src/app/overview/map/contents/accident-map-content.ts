@@ -1,5 +1,5 @@
 import * as d3 from "d3-request";
-import { MapSpecific } from "./map-specific";
+import { MapContent } from "./map-specific";
 import * as fmt from "sprintf-js";
 
 interface InitialBoundsInterface {
@@ -10,7 +10,7 @@ const ICON_SIZE: number = 50;
 const ICON_OFFSET: number = 25;
 const ONE_HUNDRED_THOUSAND: number = 100000;
 
-export class AccidentMapSpecific implements MapSpecific {
+export class AccidentMapContent implements MapContent {
   private weatherFilters: number[];
   private weatherFiltersMap: string[];
   private collisionMap: string[];
@@ -116,7 +116,7 @@ export class AccidentMapSpecific implements MapSpecific {
       this.map.on("moveend", () => {
         console.log("Move end event fired");
         // Refresh data
-      })
+      });
     });
   }
 }

@@ -1,3 +1,3 @@
-export interface MapSpecific {
+export interface MapContent {
   onMapReady(map: L.Map);
 }

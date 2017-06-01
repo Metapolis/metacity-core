@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 
-import { AccidentMapSpecific } from "../map/contents/accident-map-content";
-import { ElectionMapSpecific } from "../map/contents/election-map-content";
+import { AccidentMapContent } from "../map/contents/accident-map-content";
+import { ElectionMapContent } from "../map/contents/election-map-content";
 
 import { AccidentMapControl } from "./map-control/accident-map-control";
 import { ElectionMapControl } from "./map-control/election-map-control";
-import { MapSpecific } from "../map/contents/map-specific";
+import { MapContent } from "../map/contents/map-specific";
 
 @Injectable()
 export class MapContentService {
   public selectedMap: string;
-  public accidentMap: AccidentMapSpecific;
+  public accidentMap: AccidentMapContent;
   public accidentMapControl: AccidentMapControl;
-  public electionMap: ElectionMapSpecific;
+  public electionMap: ElectionMapContent;
   public electionMapControl: ElectionMapControl;
   public electionColorsCandidates: {
     [candidate: string]: string
@@ -20,14 +20,14 @@ export class MapContentService {
 
   constructor() { }
 
-  public getMapContent(): Promise<MapSpecific> {
+  public getMapContent(): Promise<MapContent> {
     if (this.selectedMap === "accident-map") {
-      this.accidentMap = new AccidentMapSpecific();
+      this.accidentMap = new AccidentMapContent();
       this.accidentMapControl = new AccidentMapControl(this.accidentMap);
       return Promise.resolve(this.accidentMap);
     }
     if (this.selectedMap === "election-map") {
-      this.electionMap = new ElectionMapSpecific();
+      this.electionMap = new ElectionMapContent();
       this.electionMapControl = new ElectionMapControl(this.electionMap);
       return Promise.resolve(this.electionMap);
     }

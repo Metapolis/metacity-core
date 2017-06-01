@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 import * as L from "leaflet";
 
 import { MapContentService } from "../shared/map-content.service";
-import { MapSpecific } from "./contents/map-specific";
+import { MapContent } from "./contents/map-specific";
 import { LocationService } from "../../shared/location.service";
 
 @Component({
@@ -13,7 +13,7 @@ import { LocationService } from "../../shared/location.service";
 })
 export class MapComponent {
 
-  private mapspecific: MapSpecific;
+  private mapspecific: MapContent;
 
   private options = {
     layers: [

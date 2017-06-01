@@ -16,6 +16,7 @@ export class UsedDataComponent {
 
   constructor() {
     this.theme = "block_jdd_row";
+    this.datasets = [{ title: "", content: "" }];
   }
 
 }

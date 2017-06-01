@@ -8,7 +8,6 @@ import { Link } from "../common/link";
 })
 export class FooterComponent {
   private footerlinks: Link[] = [
-    { src: "https://www.metapolis.fr", text: "Metapolis" },
     { src: "contact", text: "Contact" },
     { src: "faq", text: "FAQ" },
     { src: "cgu", text: "CGU" },

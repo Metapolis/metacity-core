@@ -10,7 +10,12 @@ export class HttpRequestService {
   private serverAddress: string;
   private serverPort: number;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    const devPort: number = 3000;
+    const devAdress: string = "http://localhost";
+    this.setServerPort(devPort);
+    this.setServerAddress(devAdress);
+  }
 
   public setServerAddress(serverAddress: string) {
     this.serverAddress = serverAddress;
@@ -29,16 +34,25 @@ export class HttpRequestService {
   }
 
   public sendRequest(request: string): Promise<string> {
-     return this.http.get(this.serverAddress + ":" + this.serverPort + request)
+    return this.http.get(this.serverAddress + ":" + this.serverPort + request)
       .toPromise()
-      .then((answer) => answer.text().toString())
+      .then((answer: Response) => this.extractAnswer(answer))
       .catch((e) => this.handleError(e));
   }
 
+  private extractAnswer(answer: Response): string {
+    const max200 = 299;
+    const min200 = 200;
+    if (typeof(answer.status) === "number" && (answer.status > max200 || answer.status < min200)) {
+      throw new Error("404");
+    }
+    return answer.text().toString();
+  }
+
   public forgeURL(requestForm: RequestForm): string {
-    let url: string = "/api/" + requestForm.root + "?";
+    let url: string = "/api/" + requestForm.path + "?";
     let first: boolean = true;
-    for (const entry of requestForm.filters) {
+    for (const entry of requestForm.params) {
       if (!first) {
         url += "&";
       }
@@ -52,7 +66,6 @@ export class HttpRequestService {
     return this.sendRequest(this.forgeURL(requestForm));
   }
   private handleError(error: any): Promise<any> {
-    console.error("An error occurred", error);
     return Promise.reject(error.message || error);
   }
 }

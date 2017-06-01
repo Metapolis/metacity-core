@@ -16,17 +16,21 @@ import { LoginComponent } from "./login/login.component";
 import { FooterComponent } from "./footer/footer.component";
 import { DbaccidentComponent } from "./dashboard/dbaccident/dbaccident.component";
 import { DbelectionComponent } from "./dashboard/dbelection/dbelection.component";
+import { DbtweetComponent } from "./dashboard/dbtweet/dbtweet.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { RegisterComponent } from "./register/register.component";
 import { AnimatedBackgroundComponent } from "./animated-background/animated-background.component";
+import { UsedDataComponent } from "./dashboard/shared/used-data/used-data.component";
+import { DashboardCardContainerComponent } from "./dashboard/shared/dashboard-card-container/dashboard-card-container.component";
+import { WordcloudCardContainerComponent } from "./dashboard/shared/wordcloud-card-container/wordcloud-card-container.component";
+import { SourceCardContainerComponent } from "./dashboard/shared/source-card-container/source-card-container.component";
 
 // Services
 import { MenuService } from "./shared/menu.service";
 import { ConnexionService } from "./shared/connexion.service";
 import { LocationService } from "./shared/location.service";
 import { AssetService } from "./shared/asset.service";
-import { DbtweetComponent } from './dashboard/dbtweet/dbtweet.component';
-import { UsedDataComponent } from './dashboard/shared/used-data/used-data.component';
+import { HttpRequestService } from "./shared/http-request.service";
 
 @NgModule({
   imports: [
@@ -51,12 +55,16 @@ import { UsedDataComponent } from './dashboard/shared/used-data/used-data.compon
     AnimatedBackgroundComponent,
     DbtweetComponent,
     UsedDataComponent,
+    DashboardCardContainerComponent,
+    WordcloudCardContainerComponent,
+    SourceCardContainerComponent,
   ],
   providers: [
     MenuService,
     ConnexionService,
     LocationService,
-    AssetService
+    AssetService,
+    HttpRequestService
   ],
   bootstrap: [AppComponent]
 })
