@@ -80,7 +80,7 @@ export class AccidentMapContent implements MapContent {
       params: [
         {key: "limit", value: "25"},
         {key: "offset", value: "50"},
-        {key: "areas", value: "[[{13.0}|{53.0}]|[{14.0}|{52.0}]], [[{11.0}|{55.0}]|[{12.0}|{54.0}]]"}
+        {key: "areas", value: "[[13.0|53.0]|[14.0|52.0]],[[11.0|55.0]|[12.0|54.0]]"}
       ]
     };
     let mapContent: string;
