@@ -11,6 +11,10 @@ import { LogicalQueryCriteria } from "../../common/query/LogicalQueryCriteria";
 import { GeoShape } from "../../common/GeoShape";
 import { ResultList } from "../../common/ResultList";
 import { CarAccidentDTO } from "../../services/query/dto/accident/CarAccidentDTO";
+import { Climatology } from "./model/accident/Climatology";
+import { Luminosity } from "../../common/enum/accident/Luminosity";
+import { AtmosphericCondition } from "../../common/enum/accident/AtmosphericCondition";
+import { CollisionType } from "../../common/enum/accident/CollisionType";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -51,8 +55,8 @@ export class TrafficController implements interfaces.Controller {
                                @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {
         Utils.checkArguments(offset != null, "Offset must be set");
         Utils.checkArguments(offset >= 0, "Offset cannot be negative");
-        Utils.checkArguments(limit != null, "Size must be set");
-        Utils.checkArguments(limit > 0, "Size must be superior to zero");
+        Utils.checkArguments(limit != null, "Limit must be set");
+        Utils.checkArguments(limit > 0, "Limit must be superior to zero");
 
         this.logger.info("Find all traffic information");
         let areaSearchFilter: SearchFilter;
@@ -87,14 +91,19 @@ export class TrafficController implements interfaces.Controller {
         const returnedAccidents: AccidentSummary[] = [];
 
         for (const accident of resultListAccidents.results) {
-            const accidentMinimal: AccidentSummary = new AccidentSummary();
-            accidentMinimal.id = accident.getId();
-            accidentMinimal.location = new Location();
-            accidentMinimal.location.address = accident.getLocation().getAddress();
-            accidentMinimal.location.latitude = accident.getLocation().getLatitude();
-            accidentMinimal.location.longitude = accident.getLocation().getLongitude();
+            const accidentSummary: AccidentSummary = new AccidentSummary();
+            accidentSummary.id = accident.getId();
+            accidentSummary.location = new Location();
+            accidentSummary.collisionType = CollisionType[accident.getCollisionType()];
+            accidentSummary.location.address = accident.getLocation().getAddress();
+            accidentSummary.location.latitude = accident.getLocation().getLatitude();
+            accidentSummary.location.longitude = accident.getLocation().getLongitude();
 
-            returnedAccidents.push(accidentMinimal);
+            accidentSummary.climatology = new Climatology();
+            accidentSummary.climatology.luminosity = Luminosity[accident.getClimatology().getLuminosity()];
+            accidentSummary.climatology.atmosphericCondition = AtmosphericCondition[accident.getClimatology().getAtmosphericCondition()];
+
+            returnedAccidents.push(accidentSummary);
         }
 
         return new ResultList<AccidentSummary>(resultListAccidents.total, returnedAccidents);

@@ -13,13 +13,13 @@ export enum AtmosphericCondition {
      * 8 – Temps couvert
      * 9 – Autre
      */
-    Normal          = 1,
-    LightRain       = 2,
-    HeavyRain       = 3,
-    SnowOrHail      = 4,
-    FogOrSmoke      = 5,
-    StrongWind      = 6,
-    DazzlingWeather = 7,
-    CloudyWeather   = 8,
-    Others          = 9
+    NORMAL          = 1,
+    LIGHT_RAIN      = 2,
+    HEAVY_RAIN      = 3,
+    SNOW_OR_HAIL    = 4,
+    FOR_OR_SMOG     = 5,
+    STRONG_WIND     = 6,
+    DAZZLING_WEATHER= 7,
+    CLOUDY_WEATHER  = 8,
+    OTHERS          = 9
 }
