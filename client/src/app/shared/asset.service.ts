@@ -9,7 +9,6 @@ export class AssetService {
   public homeIcon: Img = { src: "../assets/img/home.svg", alt: "Home icon" };
   public metacityLogo: Img = { src: "../assets/img/metaCity.svg", alt: "metacity logo" };
   public thematiques: Img = { src: "../assets/img/thematiquesimg.jpg", alt: "metacity logo" };
-  public accidentsCarte: Img = { src: "../assets/img/accidents_carte.png", alt: "accidents map" };
   public victimes: Img = { src: "../assets/img/victimes.png", alt: "victimes" };
   public wordCloud: Img = { src: "../assets/img/wordcloud.svg", alt: "word cloud " };
   public presidentMap: Img = { src: "../assets/img/president_map.png", alt: "" };
@@ -27,6 +26,13 @@ export class AssetService {
     return {
       src: "../assets/img/logo_" + this.locationService.getCurrentLocationKey().toLowerCase() + ".png",
       alt: "logo de " + this.locationService.getCurrentLocationKey().toLowerCase()
+    };
+  }
+
+  public accidentsCarte(): Img {
+    return {
+      src: "../assets/img/accidents_carte_" + this.locationService.getCurrentLocationKey().toLowerCase() + ".png",
+      alt: "accidents de " + this.locationService.getCurrentLocationKey().toLowerCase()
     };
   }
 }
