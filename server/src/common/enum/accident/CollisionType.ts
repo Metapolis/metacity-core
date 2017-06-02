@@ -11,11 +11,11 @@ export enum CollisionType {
      * 6 – Autre collision
      * 7 – Sans collision
      */
-    TwoCarsFrontal                = 1,
-    TwoCarsBackside               = 2,
-    TwoCarsOnSide                 = 3,
-    ThreeAndMoreInChain           = 4,
-    ThreeAndMoreMultipleCollision = 5,
-    Others                        = 6,
-    WithoutCollision              = 7
+    TWO_CARS_FRONTAL                 = 1,
+    TWO_CARS_BACKSIDE                = 2,
+    TWO_CARS_ON_SIDE                 = 3,
+    THREE_AND_MORE_IN_CHAIN          = 4,
+    THREE_AND_MORE_MULTIPLE_COLLISION= 5,
+    OTHERS                           = 6,
+    WITHOUT_COLLISION                 = 7
 }

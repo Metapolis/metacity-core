@@ -14,6 +14,10 @@ import { LocationDTO } from "../../src/services/query/dto/accident/LocationDTO";
 import * as TypeMoq from "typemoq";
 import * as HTTPStatusCodes from "http-status-codes";
 import { GeoShape } from "../../src/common/GeoShape";
+import { CollisionType } from "../../src/common/enum/accident/CollisionType";
+import { Luminosity } from "../../src/common/enum/accident/Luminosity";
+import { AtmosphericCondition } from "../../src/common/enum/accident/AtmosphericCondition";
+import { ClimatologyDTO } from "../../src/services/query/dto/accident/ClimatologyDTO";
 
 /**
  * All test for traffic query service
@@ -32,13 +36,23 @@ class TrafficControllerTest extends AbstractTestController {
         const trafficQueryService: TypeMoq.IMock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>);
 
         const mockAccidents: CarAccidentDTO[] = [];
-        for (let i = 0; i < 10 ; i++) {
+        for (let i = 0; i < 10; i++) {
             const mockAccident: CarAccidentDTO = new CarAccidentDTO();
             mockAccident.setId(i);
             mockAccident.setLocation(new LocationDTO());
-            mockAccident.getLocation().setAddress("134 rue michel de la porterie 32000 San Francisco");
+            if (i % 2 === 0) {
+                mockAccident.getLocation().setAddress("134 rue michel de la porterie 32000 San Francisco" + i);
+            } else {
+                mockAccident.getLocation().setAddress(undefined);
+            }
             mockAccident.getLocation().setLongitude(Math.random() % 40);
             mockAccident.getLocation().setLatitude(Math.random() % 40);
+            mockAccident.setCollisionType((i % Object.keys(CollisionType).length + 1) as CollisionType);
+
+            mockAccident.setClimatology(new ClimatologyDTO());
+            mockAccident.getClimatology().setAtmosphericCondition((i % Object.keys(AtmosphericCondition).length + 1) as AtmosphericCondition);
+            mockAccident.getClimatology().setLuminosity((i % Object.keys(Luminosity).length + 1) as Luminosity);
+
             mockAccidents.push(mockAccident);
         }
 
@@ -74,7 +88,7 @@ class TrafficControllerTest extends AbstractTestController {
         let actual: ResultList<AccidentSummary> = JSON.parse(responseValue);
         Chai.assert.equal(actual.total, 200, "Expected same total");
 
-        for (let j = 0; j < 10; j++){
+        for (let j = 0; j < 10; j++) {
             this.assertAccidentSummary(actual.results[j], mockAccidents[j]);
         }
 
@@ -107,7 +121,7 @@ class TrafficControllerTest extends AbstractTestController {
             ret = ret && query.getGeoFilter().getShouldParams()[0].getLeftUpPointParams().getLongitudeParams() === 5.01;
             ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLatitudeParams() === 2.0001;
             ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLongitudeParams() === 30.01;
-            
+
             ret = ret && query.getGeoFilter().getShouldParams().length === 1;
 
             return ret;
@@ -123,7 +137,7 @@ class TrafficControllerTest extends AbstractTestController {
         actual = JSON.parse(responseValue);
         Chai.assert.equal(actual.total, 200, "Expected same total");
 
-        for (let j = 0; j < 10; j++){
+        for (let j = 0; j < 10; j++) {
             this.assertAccidentSummary(actual.results[j], mockAccidents[j]);
         }
     }
@@ -183,9 +197,19 @@ class TrafficControllerTest extends AbstractTestController {
     private assertAccidentSummary(actual: AccidentSummary, expected: CarAccidentDTO) {
         Chai.assert.equal(actual.id, expected.getId(), "Expected same identifier");
         Chai.assert.isNotNull(actual.location, "Expected Location not null");
-        Chai.assert.equal(actual.location.address, expected.getLocation().getAddress(), "Expected same address");
+        Chai.assert.equal(actual.collisionType, CollisionType[expected.getCollisionType()], "Expected same collision type");
+        if (expected.getLocation().getAddress() !== undefined) {
+            Chai.assert.equal(actual.location.address, expected.getLocation().getAddress(), "Expected same address");
+        } else {
+            Chai.assert.isUndefined(actual.location.address, "Expected undefined");
+        }
         Chai.assert.equal(actual.location.longitude, expected.getLocation().getLongitude(), "Expected same longitude");
         Chai.assert.equal(actual.location.latitude, expected.getLocation().getLatitude(), "Expected same latitude");
+
+        Chai.assert.isNotNull(actual.climatology, "Expected climatology not null");
+        Chai.assert.equal(actual.climatology.luminosity, Luminosity[expected.getClimatology().getLuminosity()], "Expected same climatology luminosity");
+        Chai.assert.equal(actual.climatology.atmosphericCondition, AtmosphericCondition[expected.getClimatology().getLuminosity()], "Expected same climatology atmospheric condition");
+
     }
 
 }
