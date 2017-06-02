@@ -94,7 +94,7 @@ export class AccidentMapContent implements MapContent {
 
   public draw(mapContent: string): void {
     const data = JSON.parse(mapContent);
-
+    console.log(data);
     const pdata = data as Array<{
       id: number,
       location: { address: string, lat_lon: L.LatLngExpression },
@@ -104,7 +104,7 @@ export class AccidentMapContent implements MapContent {
 
     pdata.forEach((item, index, array) => {
       if (this.weatherFilters.indexOf(item.climatology.atmosphericCondition) >= 0) {
-        const lat_lon = [item.location.lat_lon[0] / ONE_HUNDRED_THOUSAND, item.location.lat_lon[1] / ONE_HUNDRED_THOUSAND] as L.LatLngExpression;
+        const lat_lon = [item.location.lat_lon[0], item.location.lat_lon[1]] as L.LatLngExpression;
         const layer = L.marker(lat_lon, this.icon);
         layer.bindPopup(
           "<h6>" + item.location.address + "</h6>" +
