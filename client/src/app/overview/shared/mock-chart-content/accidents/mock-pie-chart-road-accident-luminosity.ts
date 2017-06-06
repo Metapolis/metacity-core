@@ -3,7 +3,7 @@ import "d3pie";
 export const ACCIDENTLUMINOSITYGRAPHCONTENT: d3pie.ID3PieOptions = {
   header: {
     title: {
-      text: "Luminosité lors des accidents de la route a la Rochelle 2015",
+      text: "Luminosité lors des accidents de la route a Bordeaux 2015",
       color: "#333333",
       fontSize: 24,
       font: "open sans"
