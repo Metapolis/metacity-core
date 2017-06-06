@@ -49,7 +49,7 @@ export class LocationDTO {
      */
     constructor(json: {} = {}) {
         Object.assign(this, json);
-        if (Utils.isNullOrEmpty(this.address)){
+        if (Utils.isNullOrEmpty(this.address)) {
             this.address = undefined;
         }
     }
