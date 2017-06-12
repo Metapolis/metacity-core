@@ -78,6 +78,24 @@ export class Config {
     }
 
     /**
+     * Get index name traffic
+     *
+     * @returns {string}
+     */
+    public static getIndexNameSocialNetwork(): string {
+        return Config.properties.get("index_name_social_network");
+    }
+
+    /**
+     * Get document name accident
+     *
+     * @returns {string}
+     */
+    public static getDocumentNameTweet(): string {
+        return Config.properties.get("document_name_tweet");
+    }
+
+    /**
      * Get index name politic
      *
      * @returns {string}

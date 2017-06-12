@@ -59,7 +59,7 @@ export class Utils {
      * @param expression expression to test
      * @param message message to throw
      */
-    public static checkArguments(expression: boolean, message?: string) {
+    public static checkArgument(expression: boolean, message?: string) {
         if (!expression) {
             throw new IllegalArgumentError(message);
         }
@@ -83,7 +83,7 @@ export class Utils {
      * @returns {GeoShape}
      */
     public static parseGeoShape(geoShapeStr: string): GeoShape {
-        Utils.checkArguments(/^\[\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]\|\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]]/.test(geoShapeStr), "Geo shape query format incorrect");
+        Utils.checkArgument(/^\[\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]\|\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]]/.test(geoShapeStr), "Geo shape query format incorrect");
         const splittedPoints: string[] =  geoShapeStr.split(Utils.POINT_SPLITTER_CHAR);
         const arrayLatLongLeftUpPoint: string[] = splittedPoints[0].replace(/\[/gi, "").split(Utils.ELEMENT_SPLITTER_CHAR);
         const arrayLatLongRightDownPoint: string[] = splittedPoints[1].replace(/]/gi, "").split(Utils.ELEMENT_SPLITTER_CHAR);

@@ -24,7 +24,7 @@ import { CarAccidentDTO } from "../../services/query/dto/accident/CarAccidentDTO
 export class TrafficController implements interfaces.Controller {
 
     /**
-     * IndexController logger
+     * TrafficController logger
      *
      * @type {winston.LoggerInstance}
      */
@@ -49,10 +49,10 @@ export class TrafficController implements interfaces.Controller {
     public async findAccidents(@QueryParam("areas") areas: string,
                                @QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {
-        Utils.checkArguments(offset != null, "Offset must be set");
-        Utils.checkArguments(offset >= 0, "Offset cannot be negative");
-        Utils.checkArguments(limit != null, "Size must be set");
-        Utils.checkArguments(limit > 0, "Size must be superior to zero");
+        Utils.checkArgument(offset != null, "Offset must be set");
+        Utils.checkArgument(offset >= 0, "Offset cannot be negative");
+        Utils.checkArgument(limit != null, "Limit must be set");
+        Utils.checkArgument(limit > 0, "Limit must be superior to zero");
 
         this.logger.info("Find all traffic information");
         let areaSearchFilter: SearchFilter;

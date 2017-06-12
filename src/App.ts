@@ -34,6 +34,9 @@ import { UserAuthenticationQueryServiceImpl } from "./services/query/impl/UserAu
 import { UserAuthenticationQueryService } from "./services/query/UserAuthenticationQueryService";
 import { IllegalArgumentError } from "./common/error/IllegalArgumentError";
 import { AccessDeniedError } from "./common/error/AccessDeniedError";
+import { TweetController } from "./controllers/rest/TweetController";
+import { TweetQueryService } from "./services/query/TweetQueryService";
+import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
 
 /**
  * The server.
@@ -119,6 +122,7 @@ export class App {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
         this.container.bind<PoliticQueryService>("PoliticQueryService").to(PoliticQueryServiceImpl);
+        this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
     }
 
@@ -131,6 +135,7 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(PoliticController).whenTargetNamed("PoliticController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
     }
 
     /**

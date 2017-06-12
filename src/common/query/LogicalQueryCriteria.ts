@@ -22,7 +22,7 @@ export class LogicalQueryCriteria<T> {
      * @param shouldParams parameters that should appear
      */
     constructor(mustParams: T[], shouldParams: T[]) {
-        Utils.checkArguments(mustParams != null && shouldParams != null, "Parameters cannot be null");
+        Utils.checkArgument(mustParams != null && shouldParams != null, "Parameters cannot be null");
 
         this.mustParams = mustParams;
         this.shouldParams = shouldParams;
