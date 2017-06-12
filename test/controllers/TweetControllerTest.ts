@@ -94,6 +94,7 @@ class TweetControllerTest extends AbstractTestController {
             ret = ret && query.getIndex() === mockQuery.getIndex();
             ret = ret && query.isSet() === true;
             ret = ret && query.getGeoFilter().getMustParams().length === 2;
+<<<<<<< HEAD:server/test/controllers/TweetControllerTest.ts
             ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLatitudeParams() === 44.0001;
             ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLongitudeParams() === 3.01;
             ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLatitudeParams() === 45.0001;
@@ -106,6 +107,20 @@ class TweetControllerTest extends AbstractTestController {
             ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLongitudeParams() === 5.01;
             ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLatitudeParams() === 2.0001;
             ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLongitudeParams() === 30.01;
+=======
+            ret = ret && query.getGeoFilter().getMustParams()[0].getLeftUpPointParams().getLatitudeParams() === 44.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getLeftUpPointParams().getLongitudeParams() === 3.01;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getRightDownPointParams().getLatitudeParams() === 45.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getRightDownPointParams().getLongitudeParams() === 4.01;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getLeftUpPointParams().getLatitudeParams() === 4.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getLeftUpPointParams().getLongitudeParams() === 1.01;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getRightDownPointParams().getLatitudeParams() === 24.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getRightDownPointParams().getLongitudeParams() === 2.01;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getLeftUpPointParams().getLatitudeParams() === 4.0101;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getLeftUpPointParams().getLongitudeParams() === 5.01;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLatitudeParams() === 2.0001;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLongitudeParams() === 30.01;
+>>>>>>> 9b0233a... First get tweets version, add Moment js (you have to run npm install), trick to convert string to enum in service (wait new Typescript version), no TU (I'm on it):server/test/controllers/IndexControllerTest.ts
 
             ret = ret && query.getGeoFilter().getShouldParams().length === 1;
 
