@@ -11,35 +11,35 @@ export class GPSTypeFactory {
      *
      * @type {string}
      */
-    private static metropole: string = "M";
+    private static METROPOLE: string = "M";
 
     /**
      * Define binding with antille value
      *
      * @type {string}
      */
-    private static antille: string = "A";
+    private static ANTILLE: string = "A";
 
     /**
      * Define binding with guyane value
      *
      * @type {string}
      */
-    private static guyane: string = "G";
+    private static GUYANE: string = "G";
 
     /**
      * Define binding with reunion value
      *
      * @type {string}
      */
-    private static reunion: string = "R";
+    private static REUNION: string = "R";
 
     /**
      * Define binding with mayotte value
      *
      * @type {string}
      */
-    private static mayotte: string = "Y";
+    private static MAYOTTE: string = "Y";
 
     /**
      * Get GPSType from string value ("M", "A", "G", "R", "Y")
@@ -50,16 +50,16 @@ export class GPSTypeFactory {
      */
     public static getGpsType(value: string): GPSType {
         switch (value) {
-            case GPSTypeFactory.metropole:
-                return GPSType.Metropole;
-            case GPSTypeFactory.antille:
-                return GPSType.Antille;
-            case GPSTypeFactory.guyane:
-                return GPSType.Guyane;
-            case GPSTypeFactory.reunion:
-                return GPSType.Reunion;
-            case GPSTypeFactory.mayotte:
-                return GPSType.Mayotte;
+            case GPSTypeFactory.METROPOLE:
+                return GPSType.METROPOLE;
+            case GPSTypeFactory.ANTILLE:
+                return GPSType.ANTILLE;
+            case GPSTypeFactory.GUYANE:
+                return GPSType.GUYANNE;
+            case GPSTypeFactory.REUNION:
+                return GPSType.REUNION;
+            case GPSTypeFactory.MAYOTTE:
+                return GPSType.MAYOTTE;
             default:
                 throw new UnsupportedOperationError("'" + value + "' is not supported");
         }

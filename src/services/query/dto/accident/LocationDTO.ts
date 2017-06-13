@@ -1,4 +1,5 @@
 import { GPSType } from "../../../../common/enum/accident/GPSType";
+import { Utils } from "../../../../common/Utils";
 
 /**
  * Data transfer object with all details about a location
@@ -48,6 +49,9 @@ export class LocationDTO {
      */
     constructor(json: {} = {}) {
         Object.assign(this, json);
+        if (Utils.isNullOrEmpty(this.address)) {
+            this.address = undefined;
+        }
     }
 
     /**

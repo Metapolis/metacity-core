@@ -39,7 +39,6 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
             size: query.getLimit(),
             from: query.getOffset(),
         })).hits;
-
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
             accidents.push(new CarAccidentDTO(jsonAccident._source));
