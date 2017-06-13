@@ -6,6 +6,7 @@ import { Utils } from "../../../common/Utils";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 import { ResultList } from "../../../common/ResultList";
+import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -31,11 +32,12 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
      */
     public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>> {
         this.logger.info("Retrieve all traffic accident in elastic search");
+
         const jsonAccidents = (await this.esClient.search({
             index: query.getIndex(),
             type: query.getType(),
             size: query.getLimit(),
-            from: query.getOffset()
+            from: query.getOffset(),
         })).hits;
 
         const accidents: CarAccidentDTO[] = [];
