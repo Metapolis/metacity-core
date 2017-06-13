@@ -7,6 +7,8 @@ import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 import { ResultList } from "../../../common/ResultList";
 import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
+import { GeoShape } from "../../../common/GeoShape";
+import { BoundingBoxQueryParam } from "../builder/elasticsearch/model/BoundingBoxQueryParam";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -32,12 +34,25 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
      */
     public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>> {
         this.logger.info("Retrieve all traffic accident in elastic search");
+        let queryBuilder: QueryBuilder;
+        if (query.isSet()) {
+            queryBuilder = new QueryBuilder();
+            if (query.getGeoFilter() !== null) {
+                for (const geoShape of query.getGeoFilter().getMustParams()) {
+                    queryBuilder.must(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
+                }
+                for (const geoShape of query.getGeoFilter().getShouldParams()) {
+                    queryBuilder.should(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
+                }
+            }
+        }
 
         const jsonAccidents = (await this.esClient.search({
             index: query.getIndex(),
             type: query.getType(),
             size: query.getLimit(),
             from: query.getOffset(),
+            body: queryBuilder.build()
         })).hits;
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {

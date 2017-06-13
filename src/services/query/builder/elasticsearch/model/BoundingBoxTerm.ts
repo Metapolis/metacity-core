@@ -1,3 +1,4 @@
+import { LocationPoint } from "../../../../../common/LocationPoint";
 /**
  * Represents {
  *              "top_left": [46.1859966659, -1.0898875706],
@@ -22,9 +23,11 @@ export class BoundingBoxTerm {
      * @param topLeft
      * @param bottomRight
      */
-    constructor(topLeft: [number, number], bottomRight: [number, number]) {
-        this.topLeft = topLeft;
-        this.bottomRight = bottomRight;
+    constructor(topLeft: LocationPoint, bottomRight: LocationPoint) {
+        this.topLeft[0] = topLeft.getLatitudeParams();
+        this.topLeft[1] = topLeft.getLongitudeParams();
+        this.bottomRight[0] = bottomRight.getLatitudeParams();
+        this.bottomRight[1] = bottomRight.getLongitudeParams();
     }
 
     /**

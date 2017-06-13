@@ -1,5 +1,6 @@
 import { Query } from "./Query";
 import { BoundingBoxTerm } from "./model/BoundingBoxTerm";
+import { LocationPoint } from "../../../../common/LocationPoint";
 
 /**
  * Contains bounding box query
@@ -18,7 +19,7 @@ export class BoundingBoxQuery implements Query {
      * @param topLeft
      * @param bottomRight
      */
-    constructor(field: string, topLeft: [number, number], bottomRight: [number, number]) {
+    constructor(field: string, topLeft: LocationPoint, bottomRight: LocationPoint) {
         const boundingBoxTerm = new BoundingBoxTerm(topLeft, bottomRight);
         this.geoBoundingBox.set(field, boundingBoxTerm);
     }
