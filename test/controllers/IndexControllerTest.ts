@@ -4,7 +4,6 @@ import * as Request from "request-promise";
 import * as Chai from "chai";
 import ChaiHttp = require("chai-http");
 import { TrafficQueryService } from "../../src/services/query/TrafficQueryService";
-import { Mock } from "moq.ts";
 import { ContextApp } from "../ContextApp";
 import { FindTrafficAccidentQuery } from "../../src/common/query/FindTrafficAccidentQuery";
 import { AccidentSummary } from "../../src/controllers/rest/model/accident/AccidentSummary";
@@ -13,7 +12,6 @@ import { CarAccidentDTO } from "../../src/services/query/dto/accident/CarAcciden
 import { LocationDTO } from "../../src/services/query/dto/accident/LocationDTO";
 import * as TypeMoq from "typemoq";
 import * as HTTPStatusCodes from "http-status-codes";
-import { GeoShape } from "../../src/common/GeoShape";
 
 /**
  * All test for traffic query service
@@ -88,6 +86,7 @@ class TrafficControllerTest extends AbstractTestController {
             }
         };
 
+
         trafficQueryService.setup((instance) => instance.findTrafficAccidents(TypeMoq.It.is((query: FindTrafficAccidentQuery) => {
             let ret = query.getLimit() === mockQuery.getLimit();
             ret = ret && query.getOffset() === mockQuery.getOffset();
@@ -107,7 +106,7 @@ class TrafficControllerTest extends AbstractTestController {
             ret = ret && query.getGeoFilter().getShouldParams()[0].getLeftUpPointParams().getLongitudeParams() === 5.01;
             ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLatitudeParams() === 2.0001;
             ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLongitudeParams() === 30.01;
-            
+
             ret = ret && query.getGeoFilter().getShouldParams().length === 1;
 
             return ret;

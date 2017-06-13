@@ -48,7 +48,7 @@ export class GPSTypeFactory {
      *
      * @return {GPSType}
      */
-    public getGpsType(value: string): GPSType {
+    public static getGpsType(value: string): GPSType {
         switch (value) {
             case GPSTypeFactory.metropole:
                 return GPSType.Metropole;

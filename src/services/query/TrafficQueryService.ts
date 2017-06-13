@@ -12,7 +12,7 @@ export interface TrafficQueryService {
      *
      * @param query Query use to find CarAccident
      *
-     * @returns {string}
+     * @returns {Promise<ResultList<CarAccidentDTO>>}
      */
     findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>>;
 }
