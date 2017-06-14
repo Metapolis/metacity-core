@@ -45,6 +45,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
                     queryBuilder.should(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
                 }
             }
+            this.logger.info("Query elastic : '%s'", queryBuilder.build());
         }
 
         const jsonAccidents = (await this.esClient.search({

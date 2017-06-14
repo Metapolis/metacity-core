@@ -1,4 +1,3 @@
-
 import { FindTweetQuery } from "../../common/query/FindTweetQuery";
 import { ResultList } from "../../common/ResultList";
 import { TweetDTO } from "./dto/tweet/TweetDTO";
