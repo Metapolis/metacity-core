@@ -36,16 +36,16 @@ export class BoolQuery implements Query {
     public render(): string {
         let strQuery = "{" +
             "\"bool\" : {";
-        for ( let key of this.bool.keys() ){
-            strQuery += "\"" + key + "\": [" ;
+        for (const key of this.bool.keys()) {
+            strQuery += "\"" + key + "\": [";
             /*
              Temporary hack cause I have a headache! :P
              */
             let index: number = 0;
-            for ( let boolTerm of this.bool.get(key) ) {
+            for (const boolTerm of this.bool.get(key)) {
                 strQuery += boolTerm.render();
-                if ( index !== (this.bool.get(key).length - 1)  ) {
-                    index ++;
+                if (index !== (this.bool.get(key).length - 1)) {
+                    index++;
                     strQuery += ",";
                 }
             }

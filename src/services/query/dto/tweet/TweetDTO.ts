@@ -1,4 +1,3 @@
-
 import { TweetCategory } from "../../../../common/enum/tweet/TweetCategory";
 import { TweetType } from "../../../../common/enum/tweet/TweetType";
 import { TweetTypeFactory } from "../../../../common/factory/TweetTypeFactory";
@@ -64,7 +63,7 @@ export class TweetDTO {
      *
      * @param json json used to construction
      */
-    constructor(json: {type: string, category: string} = {type: "", category: ""}) {
+    constructor(json: { type: string, category: string } = {type: "", category: ""}) {
         Object.assign(this, json);
         this.type = TweetTypeFactory.getTweetType(json.type);
         this.category = TweetCategoryFactory.getTweetCategory(json.category);

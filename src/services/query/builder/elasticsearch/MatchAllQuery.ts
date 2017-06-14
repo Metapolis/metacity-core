@@ -1,5 +1,8 @@
 import { Query } from "./Query";
 
+/**
+ * This query match with all elements
+ */
 export class MatchAllQuery implements Query {
     /**
      * render function
@@ -7,7 +10,7 @@ export class MatchAllQuery implements Query {
      */
     public render(): string {
         const jsonQuery = {
-          match_all: {}
+            match_all: {}
         };
         return JSON.stringify(jsonQuery);
     }

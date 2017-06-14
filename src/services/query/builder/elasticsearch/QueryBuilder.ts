@@ -1,14 +1,14 @@
-import {BoundingBoxQuery} from "./BoundingBoxQuery";
-import {Query} from "./Query";
-import {BoolQuery} from "./BoolQuery";
-import {TermQuery} from "./TermQuery";
-import {RangeQuery} from "./RangeQuery";
-import {MatchAllQuery} from "./MatchAllQuery";
-import {QueryParam} from "./model/QueryParam";
-import {TermQueryParam} from "./model/TermQueryParam";
-import {RangeQueryParam} from "./model/RangeQueryParam";
-import {BoundingBoxQueryParam} from "./model/BoundingBoxQueryParam";
-import {Utils} from "../../../../common/Utils";
+import { BoundingBoxQuery } from "./BoundingBoxQuery";
+import { Query } from "./Query";
+import { BoolQuery } from "./BoolQuery";
+import { TermQuery } from "./TermQuery";
+import { RangeQuery } from "./RangeQuery";
+import { MatchAllQuery } from "./MatchAllQuery";
+import { QueryParam } from "./model/QueryParam";
+import { TermQueryParam } from "./model/TermQueryParam";
+import { RangeQueryParam } from "./model/RangeQueryParam";
+import { BoundingBoxQueryParam } from "./model/BoundingBoxQueryParam";
+import { Utils } from "../../../../common/Utils";
 
 /**
  * Contains methods to build an elasticsearch query

@@ -1,5 +1,4 @@
-
-import {QueryParam} from "./QueryParam";
+import { QueryParam } from "./QueryParam";
 
 /**
  * Contains all information to build term query

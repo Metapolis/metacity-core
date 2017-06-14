@@ -41,7 +41,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
 
         const accidents: TweetDTO[] = [];
         for (const jsonTweet of jsonTweets.hits) {
-            accidents.push(new TweetDTO(jsonTweet._source as {type: string, category: string}));
+            accidents.push(new TweetDTO(jsonTweet._source as { type: string, category: string }));
         }
 
         return new ResultList<TweetDTO>(jsonTweets.total, accidents);
