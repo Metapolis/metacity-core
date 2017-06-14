@@ -183,13 +183,13 @@ export class App {
             }));
             app.use(BodyParser.json());
             // Add static file server to serve angular resources
-            const publicPath = Path.join(__dirname, "../../dist/client/src");
+            const publicPath = Path.join(__dirname, "../../client/src");
             this.logger.debug("Static file location: '%s'", publicPath);
             app.use("/", Express.static(publicPath));
             app.use(methodOverride());
             app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
                 if (!/^\/api/.test(req.path)) {
-                    res.sendFile(Path.join(__dirname, "../../dist/client/src/index.html"));
+                    res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
                     return;
                 }
                 next();
