@@ -1,6 +1,9 @@
 import { Query } from "./Query";
 import { ValueTerm } from "./model/ValueTerm";
 
+/**
+ * Term query use to search on field a text or a number is equals
+ */
 export class TermQuery implements Query {
     /**
      * Term map containing field => value
@@ -25,7 +28,7 @@ export class TermQuery implements Query {
     public render(): string {
         let strQuery = "{" +
             "\"term\" : {";
-        for ( let key of this.term.keys() ){
+        for (const key of this.term.keys()) {
             strQuery += "\"" + key + "\": " + this.term.get(key).render();
         }
         strQuery += "}}";

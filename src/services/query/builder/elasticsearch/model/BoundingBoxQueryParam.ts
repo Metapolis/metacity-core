@@ -1,5 +1,4 @@
-
-import {QueryParam} from "./QueryParam";
+import { QueryParam } from "./QueryParam";
 import { LocationPoint } from "../../../../../common/LocationPoint";
 
 /**

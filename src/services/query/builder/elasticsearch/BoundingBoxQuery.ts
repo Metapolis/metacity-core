@@ -31,7 +31,7 @@ export class BoundingBoxQuery implements Query {
     public render(): string {
         let strQuery = "{" +
             "\"geo_bounding_box\" : {";
-        for ( let key of this.geoBoundingBox.keys() ){
+        for (const key of this.geoBoundingBox.keys()) {
             strQuery += "\"" + key + "\": " + this.geoBoundingBox.get(key).render();
         }
         strQuery += "}}";

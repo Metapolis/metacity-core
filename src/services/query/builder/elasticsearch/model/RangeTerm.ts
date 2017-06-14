@@ -1,4 +1,4 @@
-import {RangeQueryParam} from "./RangeQueryParam";
+import { RangeQueryParam } from "./RangeQueryParam";
 /**
  * Represents { "gte": 10, "lte": 20 } for e.g.
  */
@@ -23,7 +23,11 @@ export class RangeTerm {
      */
     private lt: number | string;
 
-
+    /**
+     * Constructor
+     *
+     * @param rangeQueryParam range query param use to create a range term
+     */
     constructor(rangeQueryParam: RangeQueryParam) {
         this.gte = rangeQueryParam.getGTE();
         this.lte = rangeQueryParam.getLTE();
