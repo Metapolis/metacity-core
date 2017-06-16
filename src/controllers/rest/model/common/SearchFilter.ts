@@ -45,7 +45,7 @@ export class SearchFilter {
      */
     constructor(query: string) {
         const splittedElements: string[] = query.split(SearchFilter.MAIN_SPLITTER_CHAR);
-        Utils.checkArgument(splittedElements.length <= SearchFilter.MAXIMUM_MAIN_PART, "SearchQuery has not enough main elements");
+        Utils.checkArgument(splittedElements.length <= SearchFilter.MAXIMUM_MAIN_PART, "SearchQuery has too much main elements");
 
         this.mustValues = this.mustValues.concat(splittedElements[0].split(SearchFilter.EXPRESSION_SPLITTER_CHAR));
         if (splittedElements.length === SearchFilter.MAXIMUM_MAIN_PART) {

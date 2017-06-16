@@ -78,115 +78,189 @@ class TweetControllerTest extends AbstractTestController {
             responseValue += data;
         });
 
-        const actual: ResultList<Tweet> = JSON.parse(responseValue);
+        let actual: ResultList<Tweet> = JSON.parse(responseValue);
         Chai.assert.equal(actual.total, 200, "Expected same total");
 
         for (let j = 0; j < 10; j++) {
             this.assertTweet(actual.results[j], mockTweets[j]);
         }
 
-        // let optsFilter = {
-        //     method: "GET",
-        //     uri: AbstractTestController.getBackend() + path,
-        //     qs: {
-        //         offset: offset,
-        //         limit: limit,
-        //         areas: ""
-        //     }
-        // };
-        //
-        //
-        // tweetQueryService.setup((instance) => instance.findTrafficAccidents(TypeMoq.It.is((query: FindTrafficAccidentQuery) => {
-        //     let ret = query.getLimit() === mockQuery.getLimit();
-        //     ret = ret && query.getOffset() === mockQuery.getOffset();
-        //     ret = ret && query.getType() === mockQuery.getType();
-        //     ret = ret && query.getIndex() === mockQuery.getIndex();
-        //     ret = ret && query.isSet() === true;
-        //     ret = ret && query.getGeoFilter().getMustParams().length === 2;
-        //     ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLatitudeParams() === 44.0001;
-        //     ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLongitudeParams() === 3.01;
-        //     ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLatitudeParams() === 45.0001;
-        //     ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLongitudeParams() === 4.01;
-        //     ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLatitudeParams() === 4.0001;
-        //     ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLongitudeParams() === 1.01;
-        //     ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLatitudeParams() === 24.0001;
-        //     ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLongitudeParams() === 2.01;
-        //     ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLatitudeParams() === 4.0101;
-        //     ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLongitudeParams() === 5.01;
-        //     ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLatitudeParams() === 2.0001;
-        //     ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLongitudeParams() === 30.01;
-        //
-        //     ret = ret && query.getGeoFilter().getShouldParams().length === 1;
-        //
-        //     return ret;
-        // }))).returns(() => Promise.resolve(new ResultList<CarAccidentDTO>(200, mockTweets)));
-        //
-        //
-        // // Check with a standard call, no filter, pass
-        // responseValue = "";
-        // await Request(optsFilter).then((data: string) => {
-        //     responseValue += data;
-        // });
-        //
-        // actual = JSON.parse(responseValue);
-        // Chai.assert.equal(actual.total, 200, "Expected same total");
-        //
-        // for (let j = 0; j < 10; j++) {
-        //     this.assertTweet(actual.results[j], mockTweets[j]);
-        // }
+        let optsFilter = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path,
+            qs: {
+                offset: offset,
+                limit: limit,
+                dates: "1977-04-22T06:00:00Z|1979-04-22T06:00:00Z",
+                mentions: "",
+                hashtags: ""
+
+            }
+        };
+
+        tweetQueryService.setup((instance) => instance.findTweets(TypeMoq.It.is((query: FindTweetQuery) => {
+            let ret = query.getLimit() === mockQuery.getLimit();
+            ret = ret && query.getOffset() === mockQuery.getOffset();
+            ret = ret && query.getType() === mockQuery.getType();
+            ret = ret && query.getIndex() === mockQuery.getIndex();
+            ret = ret && query.isSet() === true;
+            ret = ret && query.getDateFilter().getMustParams().length === 1;
+            ret = ret && query.getDateFilter().getMustParams()[0].getStart() === 230536800000;
+            ret = ret && query.getDateFilter().getMustParams()[0].getEnd() === 293608800000;
+
+            ret = ret && query.getDateFilter().getShouldParams().length === 0;
+
+            return ret;
+        }))).returns(() => Promise.resolve(new ResultList<TweetDTO>(200, mockTweets)));
+
+
+        // Check with a standard call, no filter, pass
+        responseValue = "";
+        await Request(optsFilter).then((data: string) => {
+            responseValue += data;
+        });
+
+        actual = JSON.parse(responseValue);
+        Chai.assert.equal(actual.total, 200, "Expected same total");
+
+        for (let j = 0; j < 10; j++) {
+            this.assertTweet(actual.results[j], mockTweets[j]);
+        }
+
+        optsFilter.qs.dates = "1977-04-22T06:00:00Z;|1979-04-22T10:00:00Z";
+        optsFilter.qs.mentions = "toto;tbm,titi";
+        optsFilter.qs.hashtags = "beer;eratum,stark";
+
+        tweetQueryService.setup((instance) => instance.findTweets(TypeMoq.It.is((query: FindTweetQuery) => {
+            let ret = query.getLimit() === mockQuery.getLimit();
+            ret = ret && query.getOffset() === mockQuery.getOffset();
+            ret = ret && query.getType() === mockQuery.getType();
+            ret = ret && query.getIndex() === mockQuery.getIndex();
+            ret = ret && query.isSet() === true;
+            ret = ret && query.getDateFilter().getMustParams().length === 1;
+            ret = ret && query.getDateFilter().getMustParams()[0].getStart() === 230536800000;
+            ret = ret && query.getDateFilter().getMustParams()[0].getEnd() === Number.MAX_VALUE;
+            ret = ret && query.getDateFilter().getShouldParams().length === 1;
+            ret = ret && query.getDateFilter().getShouldParams()[0].getStart() === Number.MIN_VALUE;
+            ret = ret && query.getDateFilter().getShouldParams()[0].getEnd() === 293623200000;
+
+            ret = ret && query.getMentionFilter().getMustParams().length === 1;
+            ret = ret && query.getMentionFilter().getMustParams()[0] === "toto";
+            ret = ret && query.getMentionFilter().getShouldParams().length === 2;
+            ret = ret && query.getMentionFilter().getShouldParams()[0] === "tbm";
+            ret = ret && query.getMentionFilter().getShouldParams()[1] === "titi";
+
+            ret = ret && query.getHashtagFilter().getMustParams().length === 1;
+            ret = ret && query.getHashtagFilter().getMustParams()[0] === "beer";
+            ret = ret && query.getHashtagFilter().getShouldParams().length === 2;
+            ret = ret && query.getHashtagFilter().getShouldParams()[0] === "eratum";
+            ret = ret && query.getHashtagFilter().getShouldParams()[1] === "stark";
+
+            return ret;
+        }))).returns(() => Promise.resolve(new ResultList<TweetDTO>(200, mockTweets)));
+
+        // Check with a standard call, no filter, pass
+        responseValue = "";
+        await Request(optsFilter).then((data: string) => {
+            responseValue += data;
+        });
+
+        actual = JSON.parse(responseValue);
+        Chai.assert.equal(actual.total, 200, "Expected same total");
+
+        for (let j = 0; j < 10; j++) {
+            this.assertTweet(actual.results[j], mockTweets[j]);
+        }
     }
 
-    // @test
-    // public async testFindTrafficError(): Promise<void> {
-    //     const path: string = "/api/tweets";
-    //     const offset: number = 0;
-    //     const limit: number = 20;
-    //
-    //     // Check no offset
-    //     let opts = {
-    //         method: "GET",
-    //         uri: AbstractTestController.getBackend() + path,
-    //         qs: {
-    //             offset: offset,
-    //             limit: limit
-    //         }
-    //     };
-    //     opts.qs.offset = null;
-    //     let statusCode = HTTPStatusCodes.OK;
-    //     await Request(opts).catch((error) => {
-    //         statusCode = error.statusCode;
-    //     });
-    //
-    //     Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
-    //
-    //     // Check negative offset
-    //     opts.qs.offset = -1;
-    //     statusCode = HTTPStatusCodes.OK;
-    //     await Request(opts).catch((error) => {
-    //         statusCode = error.statusCode;
-    //     });
-    //
-    //     Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
-    //
-    //     // Check null limit
-    //     opts.qs.offset = offset;
-    //     opts.qs.limit = null;
-    //     statusCode = HTTPStatusCodes.OK;
-    //     await Request(opts).catch((error) => {
-    //         statusCode = error.statusCode;
-    //     });
-    //
-    //     Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
-    //
-    //     // Check negative limit
-    //     opts.qs.limit = -1;
-    //     statusCode = HTTPStatusCodes.OK;
-    //     await Request(opts).catch((error) => {
-    //         statusCode = error.statusCode;
-    //     });
-    //
-    //     Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
-    // }
+    @test
+    public async testFindTrafficError(): Promise<void> {
+        const path: string = "/api/tweets";
+        const offset: number = 0;
+        const limit: number = 20;
+
+        // Check no offset
+        let opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path,
+            qs: {
+                offset: offset,
+                limit: limit,
+                dates: "",
+                mentions: "",
+                hashtags: ""
+            }
+        };
+        opts.qs.offset = null;
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        // Check negative offset
+        opts.qs.offset = -1;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        // Check null limit
+        opts.qs.offset = offset;
+        opts.qs.limit = null;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        // Check negative limit
+        opts.qs.limit = -1;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        // Check invalid format date
+        opts.qs.limit = 1;
+        opts.qs.dates = "TOTO";
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        opts.qs.dates = "TOTO";
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        opts.qs.dates = "1977-04-22T06:00:00Z|1977-04-22T06:00:00Z|1977-04-22T06:00:00Z";
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+        opts.qs.dates = "1977-04-22T06:00:00Z|1977-04-22T06:00:00Z;|1977-04-22T06:00:00Z;|1977-04-22T06:00:00Z";
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+    }
 
     private assertTweet(actual: Tweet, expected: TweetDTO) {
         Chai.assert.equal(actual.id, expected.getId(), "Expected same identifier");
