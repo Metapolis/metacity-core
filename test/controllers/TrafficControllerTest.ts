@@ -29,7 +29,7 @@ class TrafficControllerTest extends AbstractTestController {
      * Test function find traffic accident
      */
     @test
-    private async testFindTraffic(): Promise<void> {
+    private async testFindAccidents(): Promise<void> {
         const path: string = "/api/traffics/accidents";
         const offset: number = 0;
         const limit: number = 20;
@@ -109,18 +109,18 @@ class TrafficControllerTest extends AbstractTestController {
             ret = ret && query.getIndex() === mockQuery.getIndex();
             ret = ret && query.isSet() === true;
             ret = ret && query.getGeoFilter().getMustParams().length === 2;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getLeftUpPointParams().getLatitudeParams() === 44.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getLeftUpPointParams().getLongitudeParams() === 3.01;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getRightDownPointParams().getLatitudeParams() === 45.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getRightDownPointParams().getLongitudeParams() === 4.01;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getLeftUpPointParams().getLatitudeParams() === 4.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getLeftUpPointParams().getLongitudeParams() === 1.01;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getRightDownPointParams().getLatitudeParams() === 24.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getRightDownPointParams().getLongitudeParams() === 2.01;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getLeftUpPointParams().getLatitudeParams() === 4.0101;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getLeftUpPointParams().getLongitudeParams() === 5.01;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLatitudeParams() === 2.0001;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getRightDownPointParams().getLongitudeParams() === 30.01;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLatitudeParams() === 44.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLongitudeParams() === 3.01;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLatitudeParams() === 45.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLongitudeParams() === 4.01;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLatitudeParams() === 4.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLongitudeParams() === 1.01;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLatitudeParams() === 24.0001;
+            ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLongitudeParams() === 2.01;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLatitudeParams() === 4.0101;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLongitudeParams() === 5.01;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLatitudeParams() === 2.0001;
+            ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLongitudeParams() === 30.01;
 
             ret = ret && query.getGeoFilter().getShouldParams().length === 1;
 

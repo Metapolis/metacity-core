@@ -7,40 +7,40 @@ import { LocationPoint } from "./LocationPoint";
 export class GeoShape {
 
     /**
-     * Left up point of shape
+     * Top left point of shape
      */
-    private leftUpPoint: LocationPoint;
+    private topLeft: LocationPoint;
 
     /**
-     * Right down point of shape
+     * Bottom right point of shape
      */
-    private rightDownPoint: LocationPoint;
+    private bottomRight: LocationPoint;
 
     /**
      * Constructs geo shape
-     * @param leftUpPoint Left up point of shape
-     * @param rightDownPoint Right down point of shape
+     * @param topLeft Left up point of shape
+     * @param bottomRight Right down point of shape
      */
-    constructor(leftUpPoint: LocationPoint, rightDownPoint: LocationPoint) {
-        this.leftUpPoint = leftUpPoint;
-        this.rightDownPoint = rightDownPoint;
+    constructor(topLeft: LocationPoint, bottomRight: LocationPoint) {
+        this.topLeft = topLeft;
+        this.bottomRight = bottomRight;
     }
 
     /**
-     * Gets Parameters that leftUpPoint appear
+     * Gets Parameters that top left appear
      *
-     * @return Value of Parameters that leftUpPoint appear
+     * @return Value of Parameters that topLeft appear
      */
-    public getLeftUpPointParams(): LocationPoint {
-        return this.leftUpPoint;
+    public getTopLeft(): LocationPoint {
+        return this.topLeft;
     }
 
     /**
-     * Gets Parameters that rightDownPoint appear
+     * Gets Parameters that bottomRight appear
      *
-     * @return Value of Parameters that rightDownPoint appear
+     * @return Value of Parameters that bottomRight appear
      */
-    public getRightDownPointParams(): LocationPoint {
-        return this.rightDownPoint;
+    public getBottomRight(): LocationPoint {
+        return this.bottomRight;
     }
 }
