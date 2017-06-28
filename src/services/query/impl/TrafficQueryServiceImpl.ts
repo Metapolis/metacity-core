@@ -7,7 +7,6 @@ import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 import { ResultList } from "../../../common/ResultList";
 import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
-import { GeoShape } from "../../../common/GeoShape";
 import { BoundingBoxQueryParam } from "../builder/elasticsearch/model/BoundingBoxQueryParam";
 
 /**
@@ -34,9 +33,8 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
      */
     public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>> {
         this.logger.info("Retrieve all traffic accident in elastic search");
-        let queryBuilder: QueryBuilder;
+        const queryBuilder: QueryBuilder = new QueryBuilder();
         if (query.isSet()) {
-            queryBuilder = new QueryBuilder();
             if (query.getGeoFilter() !== null) {
                 for (const geoShape of query.getGeoFilter().getMustParams()) {
                     queryBuilder.must(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));

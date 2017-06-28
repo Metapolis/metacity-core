@@ -173,6 +173,10 @@ export class QueryBuilder {
      * @returns {string}
      */
     public build(): string {
-        return "{ \"query\":" + this.query.get("query").render() + "}";
+        if (this.query.get("query") !== undefined) {
+            return "{ \"query\":" + this.query.get("query").render() + "}";
+        } else {
+            return undefined;
+        }
     }
 }

@@ -38,10 +38,8 @@ export class TweetQueryServiceImpl implements TweetQueryService {
         this.logger.info("Retrieve all traffic accident in elastic search");
 
         // Create query builder
-        let queryBuilder: QueryBuilder;
+        const queryBuilder: QueryBuilder = new QueryBuilder();
         if (query.isSet()) {
-            queryBuilder = new QueryBuilder();
-
             // Create date range filter
             if (query.getDateFilter() !== null) {
                 for (const dateRange of query.getDateFilter().getMustParams()) {
