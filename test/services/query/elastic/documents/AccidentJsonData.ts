@@ -1,10 +1,10 @@
 /**
  * Definition of return object from elastic search
- *   /\
- *  /!\ It's a really ugly method but it's the trick used by elastic search to return information
- * /__\
+ *     /\
+ *    /!\ It's a really ugly method but it's the trick used by elastic search to return information
+ *   /__\
  */
-export interface AccidentJsonData {
+export class AccidentJsonData {
     sources: string[];
     latLon: number[];
     meta: {

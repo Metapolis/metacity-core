@@ -194,6 +194,11 @@ class TrafficControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
     }
 
+    /**
+     * Check equality into actual and expected accident summary
+     * @param actual
+     * @param expected
+     */
     private assertAccidentSummary(actual: AccidentSummary, expected: CarAccidentDTO) {
         Chai.assert.equal(actual.id, expected.getId(), "Expected same identifier");
         Chai.assert.isNotNull(actual.location, "Expected Location not null");
@@ -209,7 +214,6 @@ class TrafficControllerTest extends AbstractTestController {
         Chai.assert.isNotNull(actual.climatology, "Expected climatology not null");
         Chai.assert.equal(actual.climatology.luminosity, Luminosity[expected.getClimatology().getLuminosity()], "Expected same climatology luminosity");
         Chai.assert.equal(actual.climatology.atmosphericCondition, AtmosphericCondition[expected.getClimatology().getLuminosity()], "Expected same climatology atmospheric condition");
-
     }
 
 }
