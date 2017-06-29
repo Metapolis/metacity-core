@@ -16,6 +16,9 @@ import { CollisionType } from "../../../src/common/enum/accident/CollisionType";
 import { Luminosity } from "../../../src/common/enum/accident/Luminosity";
 import { AtmosphericCondition } from "../../../src/common/enum/accident/AtmosphericCondition";
 import * as Chai from "chai";
+import { LogicalQueryCriteria } from "../../../src/common/query/LogicalQueryCriteria";
+import { GeoShape } from "../../../src/common/GeoShape";
+import { LocationPoint } from "../../../src/common/LocationPoint";
 
 /**
  * All test for traffic query service
@@ -38,17 +41,9 @@ class TrafficQueryServiceTest extends AbstractTestService {
         const mockAccident: SearchResponseAccident = new SearchResponseAccident();
         Object.assign(mockAccident, AccidentData.accidents);
 
-        esClient.setup((instance) => instance.search<AccidentJsonData>(TypeMoq.It.is((searchParams: SearchParams) => {
-            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
-            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
-            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
-            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
-            ret = ret && searchParams.body === undefined;
+        esClient.setup((instance) => instance.search<AccidentJsonData>(TypeMoq.It.isAny())).returns(() => Promise.resolve(mockAccident));
 
-            return ret;
-        }))).returns(() => Promise.resolve(mockAccident));
-
-        const careAccidentDTOs: ResultList<CarAccidentDTO> = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+        let careAccidentDTOs: ResultList<CarAccidentDTO> = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
 
         for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
             const accidentJson: AccidentJsonData = new AccidentJsonData();
@@ -56,7 +51,82 @@ class TrafficQueryServiceTest extends AbstractTestService {
             this.assertAccident(careAccidentDTOs.results[i], accidentJson);
         }
 
-        esClient.verify((instance) => instance.search(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === undefined;
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // With geo shape in query
+        // Just Must
+        const mustGeoShape: GeoShape[] = [];
+        mustGeoShape.push(new GeoShape(new LocationPoint(1, 2), new LocationPoint(3, 4)));
+        mustGeoShape.push(new GeoShape(new LocationPoint(5, 2), new LocationPoint(7, 4)));
+        findTrafficAccidentsQuery.setGeoFilter(new LogicalQueryCriteria<GeoShape>(mustGeoShape, []));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[2,1],\"bottom_right\":[4,3]}}},{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[2,5],\"bottom_right\":[4,7]}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Just should
+        const shouldGeoShape: GeoShape[] = [];
+        shouldGeoShape.push(new GeoShape(new LocationPoint(3, 6), new LocationPoint(8, 3)));
+        shouldGeoShape.push(new GeoShape(new LocationPoint(2, 7), new LocationPoint(9, 2)));
+        findTrafficAccidentsQuery.setGeoFilter(new LogicalQueryCriteria<GeoShape>([], shouldGeoShape));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"should\": [{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[6,3],\"bottom_right\":[3,8]}}},{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[7,2],\"bottom_right\":[2,9]}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Should and must
+        findTrafficAccidentsQuery.setGeoFilter(new LogicalQueryCriteria<GeoShape>(mustGeoShape, shouldGeoShape));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[2,1],\"bottom_right\":[4,3]}}},{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[2,5],\"bottom_right\":[4,7]}}}]\"should\": [{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[6,3],\"bottom_right\":[3,8]}}},{\"geo_bounding_box\" : {\"latLon\": {\"top_left\":[7,2],\"bottom_right\":[2,9]}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
     }
 
     /**
