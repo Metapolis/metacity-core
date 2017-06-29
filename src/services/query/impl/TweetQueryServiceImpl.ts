@@ -36,6 +36,10 @@ export class TweetQueryServiceImpl implements TweetQueryService {
      */
     public async findTweets(query: FindTweetQuery): Promise<ResultList<TweetDTO>> {
         this.logger.info("Retrieve all traffic accident in elastic search");
+        Utils.checkArgument(query.getOffset() != null, "Offset must be set");
+        Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
+        Utils.checkArgument(query.getLimit() != null, "Limit must be set");
+        Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
 
         // Create query builder
         const queryBuilder: QueryBuilder = new QueryBuilder();

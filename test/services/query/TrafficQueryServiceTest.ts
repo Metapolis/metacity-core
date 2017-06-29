@@ -19,6 +19,7 @@ import * as Chai from "chai";
 import { LogicalQueryCriteria } from "../../../src/common/query/LogicalQueryCriteria";
 import { GeoShape } from "../../../src/common/GeoShape";
 import { LocationPoint } from "../../../src/common/LocationPoint";
+import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 
 /**
  * All test for traffic query service
@@ -127,6 +128,78 @@ class TrafficQueryServiceTest extends AbstractTestService {
 
             return ret;
         })), TypeMoq.Times.once());
+    }
+
+    @test
+    private async testFindTrafficAccidentQueryNull() {
+        const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
+
+        await trafficQueryService.findTrafficAccidents(null).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Query cannot be null");
+        });
+    }
+
+    @test
+    private async testFindTrafficAccidentQueryOffsetNull() {
+        const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
+
+        const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
+        findTrafficAccidentsQuery.setOffset(null);
+
+        await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Offset must be set");
+        });
+    }
+
+    @test
+    private async testFindTrafficAccidentQueryOffsetNegative() {
+        const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
+
+        const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
+        findTrafficAccidentsQuery.setOffset(-1);
+
+        await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Offset cannot be negative");
+        });
+    }
+
+    @test
+    private async testFindTrafficAccidentQueryLimitNull() {
+        const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
+
+        const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
+        findTrafficAccidentsQuery.setLimit(null);
+
+        await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Limit must be set");
+        });
+    }
+
+    @test
+    private async testFindTrafficAccidentQueryLimitZero() {
+        const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
+
+        const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
+        findTrafficAccidentsQuery.setLimit(0);
+
+        await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Limit must be superior to zero");
+        });
     }
 
     /**
