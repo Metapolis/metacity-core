@@ -12,7 +12,7 @@ export class Tweet {
     /**
      * tweet's creation date
      */
-    public createdAt: number;
+    public createdAt: string;
 
     /**
      * tweet's author pseudo
@@ -50,7 +50,7 @@ export class Tweet {
     public mentions: string[];
 
     /**
-     * tweet's keywords
+     * tweet's tags
      */
-    public keywords: string[];
+    public tags: string[];
 }

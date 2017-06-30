@@ -32,7 +32,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
      * Override
      */
     public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>> {
-        this.logger.info("Retrieve all traffic accident in elastic search");
+        this.logger.info("Retrieve all tweets in elastic search");
         Utils.checkArgument(query != null, "Query cannot be null");
         Utils.checkArgument(query.getOffset() != null, "Offset must be set");
         Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
@@ -43,7 +43,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
         const queryBuilder: QueryBuilder = new QueryBuilder();
         if (query.isSet()) {
             // Build geo shape filter
-            if (query.getGeoFilter() !== null) {
+            if (query.getGeoFilter()) {
                 for (const geoShape of query.getGeoFilter().getMustParams()) {
                     queryBuilder.must(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
                 }

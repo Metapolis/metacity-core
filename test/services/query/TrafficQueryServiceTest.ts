@@ -31,7 +31,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
      * Test function find traffic accident
      */
     @test
-    private async testFindTrafficAccident(): Promise<void> {
+    private async testFindTrafficAccidents(): Promise<void> {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
         const esClient: TypeMoq.IMock<Client> = (ContextApp.container.get("ESClientMock") as TypeMoq.IMock<Client>);
 
@@ -131,7 +131,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testFindTrafficAccidentQueryNull() {
+    private async testFindTrafficAccidentsQueryNull() {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
 
         await trafficQueryService.findTrafficAccidents(null).then((result) => {
@@ -143,7 +143,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testFindTrafficAccidentQueryOffsetNull() {
+    private async testFindTrafficAccidentsQueryOffsetNull() {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
 
         const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
@@ -158,7 +158,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testFindTrafficAccidentQueryOffsetNegative() {
+    private async testFindTrafficAccidentsQueryOffsetNegative() {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
 
         const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
@@ -173,7 +173,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testFindTrafficAccidentQueryLimitNull() {
+    private async testFindTrafficAccidentsQueryLimitNull() {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
 
         const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
@@ -188,7 +188,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testFindTrafficAccidentQueryLimitZero() {
+    private async testFindTrafficAccidentsQueryLimitZero() {
         const trafficQueryService: TrafficQueryService = (ContextApp.container.get("TrafficQueryService") as TrafficQueryService);
 
         const findTrafficAccidentsQuery: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();

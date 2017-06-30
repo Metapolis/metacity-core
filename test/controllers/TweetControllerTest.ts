@@ -39,10 +39,10 @@ class TweetControllerTest extends AbstractTestController {
             mockTweet.setCategory((i % Object.keys(TweetCategory).length + 1) as TweetCategory);
             mockTweet.setType((i % Object.keys(TweetType).length + 1) as TweetType);
             mockTweet.setId(i);
-            mockTweet.setCreatedAt(i);
+            mockTweet.setCreatedAt(String(i));
             mockTweet.setFeeling(Math.random());
             mockTweet.setHashtags([TestUtils.randomString(i), TestUtils.randomString(i), TestUtils.randomString(i), TestUtils.randomString(i)]);
-            mockTweet.setKeywords([TestUtils.randomString(i + 12), TestUtils.randomString(i + 12), TestUtils.randomString(i + 12), TestUtils.randomString(i + 12)]);
+            mockTweet.setTags([TestUtils.randomString(i + 12), TestUtils.randomString(i + 12), TestUtils.randomString(i + 12), TestUtils.randomString(i + 12)]);
             mockTweet.setMentions([TestUtils.randomString(i + 22), TestUtils.randomString(i + 22), TestUtils.randomString(i + 22), TestUtils.randomString(i + 22)]);
             mockTweet.setText(TestUtils.randomString(140));
             mockTweet.setPseudo(TestUtils.randomString(20));
@@ -271,8 +271,8 @@ class TweetControllerTest extends AbstractTestController {
         for (let i = 0; i < expected.getMentions().length; i++) {
             Chai.assert.equal(actual.mentions[i], expected.getMentions()[i], "Expected same mentions");
         }
-        for (let i = 0; i < expected.getKeywords().length; i++) {
-            Chai.assert.equal(actual.keywords[i], expected.getKeywords()[i], "Expected same mentions");
+        for (let i = 0; i < expected.getTags().length; i++) {
+            Chai.assert.equal(actual.tags[i], expected.getTags()[i], "Expected same mentions");
         }
         for (let i = 0; i < expected.getHashtags().length; i++) {
             Chai.assert.equal(actual.hashtags[i], expected.getHashtags()[i], "Expected same mentions");

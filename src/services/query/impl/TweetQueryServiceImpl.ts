@@ -36,6 +36,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
      */
     public async findTweets(query: FindTweetQuery): Promise<ResultList<TweetDTO>> {
         this.logger.info("Retrieve all traffic accident in elastic search");
+        Utils.checkArgument(query != null, "Query cannot be null");
         Utils.checkArgument(query.getOffset() != null, "Offset must be set");
         Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
         Utils.checkArgument(query.getLimit() != null, "Limit must be set");
@@ -45,7 +46,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
         const queryBuilder: QueryBuilder = new QueryBuilder();
         if (query.isSet()) {
             // Create date range filter
-            if (query.getDateFilter() !== null) {
+            if (query.getDateFilter()) {
                 for (const dateRange of query.getDateFilter().getMustParams()) {
                     const rangeQuery: RangeQueryParam = new RangeQueryParam();
                     rangeQuery.field = "createdAt";
@@ -61,7 +62,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
             }
 
             // Create mention filter
-            if (query.getMentionFilter() !== null) {
+            if (query.getMentionFilter()) {
                 for (const mention of query.getMentionFilter().getMustParams()) {
                     queryBuilder.must(new TermQueryParam("mentions", mention));
                 }
@@ -71,12 +72,12 @@ export class TweetQueryServiceImpl implements TweetQueryService {
             }
 
             // Create hashtag filter
-            if (query.getHashtagFilter() !== null) {
+            if (query.getHashtagFilter()) {
                 for (const hashtag of query.getHashtagFilter().getMustParams()) {
-                    queryBuilder.must(new TermQueryParam("mentions", hashtag));
+                    queryBuilder.must(new TermQueryParam("hashtags", hashtag));
                 }
                 for (const hashtag of query.getHashtagFilter().getShouldParams()) {
-                    queryBuilder.should(new TermQueryParam("mentions", hashtag));
+                    queryBuilder.should(new TermQueryParam("hashtags", hashtag));
                 }
             }
             this.logger.info("Query elastic : '%s'", queryBuilder.build());
