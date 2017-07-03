@@ -6,8 +6,8 @@ import { Utils } from "../../../common/Utils";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 import { ResultList } from "../../../common/ResultList";
-import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
 import { BoundingBoxQueryParam } from "../builder/elasticsearch/model/BoundingBoxQueryParam";
+import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
 
 /**
  * Implementation of {@link TrafficQueryService}
