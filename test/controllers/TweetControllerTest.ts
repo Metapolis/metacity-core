@@ -4,7 +4,6 @@ import * as Request from "request-promise";
 import * as Chai from "chai";
 import ChaiHttp = require("chai-http");
 import { ContextApp } from "../ContextApp";
-import { FindTrafficAccidentQuery } from "../../src/common/query/FindTrafficAccidentQuery";
 import { ResultList } from "../../src/common/ResultList";
 import * as TypeMoq from "typemoq";
 import * as HTTPStatusCodes from "http-status-codes";
@@ -17,7 +16,7 @@ import { FindTweetQuery } from "../../src/common/query/FindTweetQuery";
 import { Tweet } from "../../src/controllers/rest/model/tweet/Tweet";
 
 /**
- * All test for traffic query service
+ * All test for tweet controller
  */
 @suite
 class TweetControllerTest extends AbstractTestController {

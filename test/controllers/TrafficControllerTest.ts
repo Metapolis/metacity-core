@@ -20,7 +20,7 @@ import { AtmosphericCondition } from "../../src/common/enum/accident/Atmospheric
 import { ClimatologyDTO } from "../../src/services/query/dto/accident/ClimatologyDTO";
 
 /**
- * All test for traffic query service
+ * All test for traffic controller
  */
 @suite
 class TrafficControllerTest extends AbstractTestController {
