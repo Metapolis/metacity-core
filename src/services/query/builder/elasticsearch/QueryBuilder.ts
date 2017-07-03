@@ -8,7 +8,6 @@ import { QueryParam } from "./model/QueryParam";
 import { TermQueryParam } from "./model/TermQueryParam";
 import { RangeQueryParam } from "./model/RangeQueryParam";
 import { BoundingBoxQueryParam } from "./model/BoundingBoxQueryParam";
-import { Utils } from "../../../../common/Utils";
 
 /**
  * Contains methods to build an elasticsearch query
