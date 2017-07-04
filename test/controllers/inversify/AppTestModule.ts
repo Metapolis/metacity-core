@@ -8,6 +8,8 @@ import { ContextApp } from "../../ContextApp";
 import * as TypeMoq from "typemoq";
 import { TweetQueryService } from "../../../src/services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "../../../src/services/query/impl/TweetQueryServiceImpl";
+import { UserAuthenticationQueryService } from "../../../src/services/query/UserAuthenticationQueryService";
+import { UserAuthenticationQueryServiceImpl } from "../../../src/services/query/impl/UserAuthenticationQueryServiceImpl";
 /**
  * App test module
  */
@@ -38,6 +40,10 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("TweetQueryServiceMock")) {
             ContextApp.container.bind("TweetQueryServiceMock").toConstantValue(TypeMoq.Mock.ofType<TweetQueryService>(TweetQueryServiceImpl));
         }
+        if (!ContextApp.container.isBound("UserAuthenticationQueryServiceMock")) {
+            ContextApp.container.bind("UserAuthenticationQueryServiceMock").toConstantValue(TypeMoq.Mock.ofType<UserAuthenticationQueryService>(UserAuthenticationQueryServiceImpl));
+        }
+        ContextApp.container.rebind("UserAuthenticationQueryService").toConstantValue((ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>).object);
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
 
@@ -47,6 +53,7 @@ export class AppTestModule {
     public rebind(): void {
         ContextApp.container.rebind("TrafficQueryService").to(TrafficQueryServiceImpl);
         ContextApp.container.rebind("TweetQueryService").to(TweetQueryServiceImpl);
+        ContextApp.container.rebind("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");
         }

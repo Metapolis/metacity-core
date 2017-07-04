@@ -41,6 +41,7 @@ export class AuthenticationController implements interfaces.Controller {
     @Post("/")
     public async authenticate(@RequestBody() userToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<Labeled> {
         this.logger.debug("Begin authentication");
+        // User token cannot be undefined or null
         // Build DTO
         const userTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
         userTokenDTO.setUsername(userToken.username);
