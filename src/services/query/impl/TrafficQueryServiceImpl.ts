@@ -6,9 +6,8 @@ import { Utils } from "../../../common/Utils";
 import { CarAccidentDTO } from "../dto/accident/CarAccidentDTO";
 import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccidentQuery";
 import { ResultList } from "../../../common/ResultList";
-import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
-import { GeoShape } from "../../../common/GeoShape";
 import { BoundingBoxQueryParam } from "../builder/elasticsearch/model/BoundingBoxQueryParam";
+import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -33,11 +32,18 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
      * Override
      */
     public async findTrafficAccidents(query: FindTrafficAccidentQuery): Promise<ResultList<CarAccidentDTO>> {
-        this.logger.info("Retrieve all traffic accident in elastic search");
-        let queryBuilder: QueryBuilder;
+        this.logger.info("Retrieve all tweets in elastic search");
+        Utils.checkArgument(query != null, "Query cannot be null");
+        Utils.checkArgument(query.getOffset() != null, "Offset must be set");
+        Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
+        Utils.checkArgument(query.getLimit() != null, "Limit must be set");
+        Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
+
+        // Create query builder
+        const queryBuilder: QueryBuilder = new QueryBuilder();
         if (query.isSet()) {
-            queryBuilder = new QueryBuilder();
-            if (query.getGeoFilter() !== null) {
+            // Build geo shape filter
+            if (query.getGeoFilter()) {
                 for (const geoShape of query.getGeoFilter().getMustParams()) {
                     queryBuilder.must(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
                 }
@@ -48,6 +54,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
             this.logger.info("Query elastic : '%s'", queryBuilder.build());
         }
 
+        // Call elastic search
         const jsonAccidents = (await this.esClient.search({
             index: query.getIndex(),
             type: query.getType(),
@@ -55,6 +62,8 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
             from: query.getOffset(),
             body: queryBuilder.build()
         })).hits;
+
+        // Build dto list
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
             accidents.push(new CarAccidentDTO(jsonAccident._source));

@@ -10,16 +10,13 @@ import { Utils } from "./common/Utils";
 
 // Import QueryServicesImpl
 import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServiceImpl";
-import { PoliticQueryServiceImpl } from "./services/query/impl/PoliticQueryServiceImpl";
 
 // Import QueryServices
 import { TrafficQueryService } from "./services/query/TrafficQueryService";
-import { PoliticQueryService } from "./services/query/PoliticQueryService";
 
 // Import Controllers
 import { TrafficController } from "./controllers/rest/TrafficController";
 import { AuthenticationController } from "./controllers/rest/AuthenticationController";
-import { PoliticController } from "./controllers/rest/PoliticController";
 
 import * as Express from "express";
 import * as Path from "path";
@@ -121,7 +118,6 @@ export class App {
     private bindQueries(): void {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
-        this.container.bind<PoliticQueryService>("PoliticQueryService").to(PoliticQueryServiceImpl);
         this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
     }
@@ -133,7 +129,6 @@ export class App {
         this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(PoliticController).whenTargetNamed("PoliticController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
     }
@@ -200,10 +195,13 @@ export class App {
                 if (/^\/api/.test(req.path)) {
                     this.logger.error("An error occurred on api resources");
                     if (err instanceof IllegalArgumentError) {
+                        this.logger.error("Message: %s \n Stack: %s", err.message, err.stack);
                         res.status(HTTPStatusCodes.BAD_REQUEST).send({message: err.message});
                     } else if (err instanceof AccessDeniedError) {
+                        this.logger.error("Message: %s \n Stack: %s", err.message, err.stack);
                         res.status(HTTPStatusCodes.FORBIDDEN).send({message: err.message});
                     } else {
+                        this.logger.error("Message: %s \n Stack: %s", err.message, err.stack);
                         res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).send({message: err.message});
                     }
                 }

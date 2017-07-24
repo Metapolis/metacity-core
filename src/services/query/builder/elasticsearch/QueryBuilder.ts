@@ -8,7 +8,6 @@ import { QueryParam } from "./model/QueryParam";
 import { TermQueryParam } from "./model/TermQueryParam";
 import { RangeQueryParam } from "./model/RangeQueryParam";
 import { BoundingBoxQueryParam } from "./model/BoundingBoxQueryParam";
-import { Utils } from "../../../../common/Utils";
 
 /**
  * Contains methods to build an elasticsearch query
@@ -173,6 +172,10 @@ export class QueryBuilder {
      * @returns {string}
      */
     public build(): string {
-        return "{ \"query\":" + this.query.get("query").render() + "}";
+        if (this.query.get("query") !== undefined) {
+            return "{ \"query\":" + this.query.get("query").render() + "}";
+        } else {
+            return undefined;
+        }
     }
 }

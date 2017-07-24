@@ -14,9 +14,9 @@ export class TweetDTO {
     private id: number;
 
     /**
-     * tweet's creation date
+     * tweet's creation date (ISO8601)
      */
-    private createdAt: number;
+    private createdAt: string;
 
     /**
      * tweet's author pseudo
@@ -56,17 +56,19 @@ export class TweetDTO {
     /**
      * tweet's keywords
      */
-    private keywords: string[];
+    private tags: string[];
 
     /**
      * Constructor from JSON
      *
      * @param json json used to construction
      */
-    constructor(json: { type: string, category: string } = {type: "", category: ""}) {
-        Object.assign(this, json);
-        this.type = TweetTypeFactory.getTweetType(json.type);
-        this.category = TweetCategoryFactory.getTweetCategory(json.category);
+    constructor(json?: { type: string, category: string }) {
+        if (json !== undefined) {
+            Object.assign(this, json);
+            this.type = TweetTypeFactory.getTweetType(json.type);
+            this.category = TweetCategoryFactory.getTweetCategory(json.category);
+        }
     }
 
     /**
@@ -90,9 +92,9 @@ export class TweetDTO {
     /**
      * Getter createdAt
      *
-     * @returns {number}
+     * @returns {string}
      */
-    public getCreatedAt(): number {
+    public getCreatedAt(): string {
         return this.createdAt;
     }
 
@@ -101,7 +103,7 @@ export class TweetDTO {
      *
      * @param createdAt new createdAtvalue
      */
-    public setCreatedAt(createdAt: number): void {
+    public setCreatedAt(createdAt: string): void {
         this.createdAt = createdAt;
     }
 
@@ -232,20 +234,20 @@ export class TweetDTO {
     }
 
     /**
-     * Getter keywords
+     * Getter tags
      *
      * @returns {string[]}
      */
-    public getKeywords(): string[] {
-        return this.keywords;
+    public getTags(): string[] {
+        return this.tags;
     }
 
     /**
-     * Setter keywords
+     * Setter tags
      *
-     * @param keywords new keywords value
+     * @param tags new tags value
      */
-    public setKeywords(keywords: string[]): void {
-        this.keywords = keywords;
+    public setTags(tags: string[]): void {
+        this.tags = tags;
     }
 }

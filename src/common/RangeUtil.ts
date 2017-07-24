@@ -24,10 +24,22 @@ export class RangeUtil {
         Utils.checkArgument(range.length <= RangeUtil.DATE_RANGE_LIMIT_MEMBER, "Date range cannot have more than two params");
 
         if (range.length === 1) {
-            return new Range<number>(Moment(range[0]).millisecond(), Number.MAX_VALUE);
+            const startDate: Moment.Moment = Moment(range[0], Moment.ISO_8601);
+            Utils.checkArgument(startDate.isValid(), "Start date is not valid");
+            return new Range<number>(Number(startDate.format("x")), Number.MAX_VALUE);
         } else {
-            const start = Utils.isNullOrEmpty(range[0]) ? Number.MIN_VALUE : Moment(range[0]).millisecond();
-            return new Range<number>(start, Moment(range[1]).millisecond());
+            let start: number;
+            if (Utils.isNullOrEmpty(range[0])) {
+                start = Number.MIN_VALUE;
+            } else {
+                const startDate: Moment.Moment = Moment(range[0], Moment.ISO_8601);
+                Utils.checkArgument(startDate.isValid(), "Start date is not valid");
+                start = Number(startDate.format("x"));
+            }
+            const endDate: Moment.Moment = Moment(range[1], Moment.ISO_8601);
+            Utils.checkArgument(endDate.isValid(), "Start date is not valid");
+
+            return new Range<number>(start, Number(endDate.format("x")));
         }
     }
 }

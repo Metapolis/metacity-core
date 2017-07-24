@@ -148,7 +148,7 @@ export class TweetController implements interfaces.Controller {
             tweet.createdAt = tweetDTO.getCreatedAt();
             tweet.feeling = tweetDTO.getFeeling();
             tweet.hashtags = tweetDTO.getHashtags();
-            tweet.keywords = tweetDTO.getKeywords();
+            tweet.tags = tweetDTO.getTags();
             tweet.mentions = tweetDTO.getMentions();
             tweet.pseudo = tweetDTO.getPseudo();
             tweet.text = tweetDTO.getText();
