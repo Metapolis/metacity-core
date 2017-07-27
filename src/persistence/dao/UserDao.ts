@@ -8,4 +8,11 @@ export interface UserDao {
      * @param username username to find
      */
     findByUsername(username: string): Promise<User> | undefined;
+
+    /**
+     * Retrieve user by id
+     *
+     * @param id identifier to find
+     */
+    findById(id: number): Promise<User> | undefined;
 }

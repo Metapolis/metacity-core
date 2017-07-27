@@ -7,6 +7,13 @@ import { UserAuthenticationQueryService } from "../../services/query/UserAuthent
 import { Labeled } from "../../common/Labeled";
 import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAuthenticationTokenDTO";
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
+import { UserToken } from "./model/user/UserToken";
+import { RequestAccessor } from "../../RequestAccessor";
+import { CollectivityDTO } from "../../services/query/dto/collectivity/CollectivityDTO";
+import { CollectivityQueryService } from "../../services/query/CollectivityQueryService";
+import * as JWT from "jsonwebtoken";
+import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
+
 
 /**
  * API resources to delivery service to authentication
@@ -33,21 +40,35 @@ export class AuthenticationController implements interfaces.Controller {
     private userAuthenticationQueryService: UserAuthenticationQueryService;
 
     /**
+     * Collectivity query service
+     */
+    @inject("CollectivityQueryService")
+    private collectivityQueryService: CollectivityQueryService;
+
+    /**
      * Authentication resources
      *
-     * @param userToken user credential use to authentication
+     * @param userAuthenticationToken user credential use to authentication
      * @param next next express function
      */
     @Post("/")
-    public async authenticate(@RequestBody() userToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<Labeled> {
+    public async authenticate(@RequestBody() userAuthenticationToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<UserToken> {
         this.logger.debug("Begin authentication");
         // User token cannot be undefined or null
         // Build DTO
-        const userTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
-        userTokenDTO.setUsername(userToken.username);
-        userTokenDTO.setPassword(userToken.password);
+        const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
+        const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
+        userAuthenticationTokenDTO.setUsername(userAuthenticationToken.username);
+        userAuthenticationTokenDTO.setPassword(userAuthenticationToken.password);
+        userAuthenticationTokenDTO.setDomain(domain);
         try {
-            return await this.userAuthenticationQueryService.authenticate(userTokenDTO);
+            const user: UserTokenDTO = await this.userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO);
+            const userToken: UserToken = new UserToken();
+            userToken.id = user.getId();
+            userToken.username = user.getUsername();
+            userToken.token = user.getToken()
+
+            return userToken;
         } catch (e) {
             next(e);
         }

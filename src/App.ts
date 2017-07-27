@@ -34,6 +34,13 @@ import { AccessDeniedError } from "./common/error/AccessDeniedError";
 import { TweetController } from "./controllers/rest/TweetController";
 import { TweetQueryService } from "./services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
+import { RequestAccessor } from "./RequestAccessor";
+import { Collectivity } from "./persistence/domain/Collectivity";
+import { CollectivityDaoImpl } from "./persistence/dao/impl/CollectivityDaoImpl";
+import { CollectivityDao } from "./persistence/dao/CollectivityDao";
+import { ContextApp } from "./ContextApp";
+import { CollectivityQueryService } from "./services/query/CollectivityQueryService";
+import { CollectivityQueryServiceImpl } from "./services/query/impl/CollectivityQueryServiceImpl";
 
 /**
  * The server.
@@ -78,6 +85,7 @@ export class App {
 
         // bind all service
         await this.initModule();
+        ContextApp.setContainer(this.container);
 
         return this.container;
     }
@@ -119,6 +127,7 @@ export class App {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
         this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
+        this.container.bind<CollectivityQueryService>("CollectivityQueryService").to(CollectivityQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
     }
 
@@ -168,7 +177,7 @@ export class App {
     }
 
     /**
-     * Instatiate a new server with specific configuration
+     * Create a new server with specific configuration
      */
     private createServer(): void {
         const server = new InversifyExpressServer(this.container);
@@ -176,6 +185,7 @@ export class App {
             app.use(BodyParser.urlencoded({
                 extended: true
             }));
+            // app.use(JWT({secret: "test"}));
             app.use(BodyParser.json());
             // Add static file server to serve angular resources
             const publicPath = Path.join(__dirname, "../../client/src");
@@ -187,6 +197,7 @@ export class App {
                     res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
                     return;
                 }
+                RequestAccessor.setRequest(req);
                 next();
             });
         });
@@ -220,6 +231,7 @@ export class App {
     private bindDao(): void {
         this.logger.debug("Binding DAO");
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
+        this.container.bind<CollectivityDao>("CollectivityDao").to(CollectivityDaoImpl);
     }
 
     /**
@@ -229,5 +241,6 @@ export class App {
      */
     private bindRepository(connection: TypeORM.Connection): void {
         this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(connection.entityManager.getRepository(User));
+        this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(connection.entityManager.getRepository(Collectivity));
     }
 }

@@ -14,6 +14,11 @@ export class UserAuthenticationTokenDTO {
     private password: string;
 
     /**
+     * User's domain request
+     */
+    private domain: string;
+
+    /**
      * Getter username
      *
      * @returns {number}
@@ -47,5 +52,23 @@ export class UserAuthenticationTokenDTO {
      */
     public setPassword(password: string): void {
         this.password = password;
+    }
+
+    /**
+     * Getter domain
+     *
+     * @returns {number}
+     */
+    public getDomain(): string {
+        return this.domain;
+    }
+
+    /**
+     * Setter domain
+     *
+     * @param domain new domain value
+     */
+    public setDomain(domain: string): void {
+        this.domain = domain;
     }
 }

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { ActivityCircle } from "./ActivityCircle";
 
 /**
  * Represents a user
@@ -25,6 +26,20 @@ export class User {
     private password: string;
 
     /**
+     * User's last connection
+     */
+    @Column({nullable: true, type: "bigint"})
+    private lastConnection: number;
+
+    /**
+     * User's circles
+     *
+     * You have to use getter and setter
+     */
+    @ManyToMany((type) => ActivityCircle, (activityCircle) => "users")
+    private circles: Promise<ActivityCircle[]>;
+
+    /**
      * Getter identifier
      *
      * @returns {number}
@@ -43,9 +58,27 @@ export class User {
     }
 
     /**
-     * Getter username
+     * Getter lastConnection
      *
      * @returns {number}
+     */
+    public getLastConnection(): number {
+        return this.lastConnection;
+    }
+
+    /**
+     * Setter lastConnection
+     *
+     * @param lastConnection new lastConnection value
+     */
+    public setLastConnection(lastConnection: number): void {
+        this.lastConnection = lastConnection;
+    }
+
+    /**
+     * Getter username
+     *
+     * @returns {string}
      */
     public getUsername(): string {
         return this.username;
@@ -63,7 +96,7 @@ export class User {
     /**
      * Getter password
      *
-     * @returns {number}
+     * @returns {string}
      */
     public getPassword(): string {
         return this.password;
@@ -76,5 +109,37 @@ export class User {
      */
     public setPassword(password: string): void {
         this.password = password;
+    }
+
+    /**
+     * Getter circles
+     *
+     * @returns {ActivityCircle[]}
+     */
+    public getCircles(): Promise<ActivityCircle[]> {
+        return this.circles;
+    }
+
+    /**
+     * Setter circles
+     *
+     * @param circles new circles value
+     */
+    public setCircles(circles: Promise<ActivityCircle[]>): void {
+        this.circles = circles;
+    }
+
+    /**
+     * Return all roles of a user (retrieve these in all circle)
+     *
+     * @returns {Promise<string[]>}
+     */
+    public async getRoles(): Promise<string[]> {
+        const roles: string[] = [];
+        for (const circle of await this.getCircles()) {
+            roles.concat(circle.getRoles());
+        }
+
+        return roles;
     }
 }

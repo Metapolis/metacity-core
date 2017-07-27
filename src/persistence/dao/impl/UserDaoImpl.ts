@@ -33,4 +33,12 @@ export class UserDaoImpl implements UserDao {
             username: username
         });
     }
+
+    /**
+     * Override
+     */
+    public async findById(id: number): Promise<User> | undefined {
+        this.logger.info("Retrieve user with identifier '%s'", id);
+        return await this.userRepository.findOneById(id);
+    }
 }

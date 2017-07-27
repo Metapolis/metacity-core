@@ -1,5 +1,7 @@
 import { UserAuthenticationTokenDTO } from "./dto/user/UserAuthenticationTokenDTO";
 import { Labeled } from "../../common/Labeled";
+import { UserTokenDTO } from "./dto/user/UserTokenDTO";
+
 /**
  * Contains method to perform user authentication query
  */
@@ -12,5 +14,5 @@ export interface UserAuthenticationQueryService {
      *
      * @returns {Labeled}
      */
-    authenticate(userAuthenticationToken: UserAuthenticationTokenDTO): Promise<Labeled>;
+    authenticate(userAuthenticationToken: UserAuthenticationTokenDTO): Promise<UserTokenDTO>;
 }

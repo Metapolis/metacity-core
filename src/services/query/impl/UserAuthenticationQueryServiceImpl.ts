@@ -4,10 +4,14 @@ import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { UserAuthenticationQueryService } from "../UserAuthenticationQueryService";
 import { UserAuthenticationTokenDTO } from "../dto/user/UserAuthenticationTokenDTO";
-import { Labeled } from "../../../common/Labeled";
+import * as JWT from "jsonwebtoken";
 import { UserDao } from "../../../persistence/dao/UserDao";
 import { User } from "../../../persistence/domain/User";
 import { AccessDeniedError } from "../../../common/error/AccessDeniedError";
+import { UserTokenDTO } from "../dto/user/UserTokenDTO";
+import { JWTPayload } from "../../../common/JWTToken";
+import { Collectivity } from "../../../persistence/domain/Collectivity";
+import { CollectivityDao } from "../../../persistence/dao/CollectivityDao";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -29,12 +33,19 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
     private userDao: UserDao;
 
     /**
+     * Collectivity data access object
+     */
+    @inject("CollectivityDao")
+    private collectivityDao: CollectivityDao;
+    
+    /**
      * Override
      */
-    public async authenticate(userAuthenticationToken: UserAuthenticationTokenDTO): Promise<Labeled> {
+    public async authenticate(userAuthenticationToken: UserAuthenticationTokenDTO): Promise<UserTokenDTO> {
         Utils.checkArgument(userAuthenticationToken != null, "Token cannot be null or empty");
         this.logger.info("Begin authentication for user '%s'", userAuthenticationToken.getUsername());
         Utils.checkArgument(!Utils.isNullOrEmpty(userAuthenticationToken.getUsername()), "Username cannot be null or empty");
+        Utils.checkArgument(!Utils.isNullOrEmpty(userAuthenticationToken.getDomain()), "Domain cannot be null or empty");
         const user: User = await this.userDao.findByUsername(userAuthenticationToken.getUsername());
 
         // Check user exists
@@ -48,8 +59,30 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
             this.logger.info("Wrong password");
             throw new AccessDeniedError("Wrong password");
         }
+
+        const collectivity: Collectivity = await this.collectivityDao.findById(userAuthenticationToken.getDomain());
+        // Check collectivity exists
+        if (collectivity === undefined) {
+            this.logger.info("Collectivity '%s' not found", collectivity.getName());
+            throw new AccessDeniedError("Collectivity not found");
+
+        }
         this.logger.info("User '%s' is authenticated", userAuthenticationToken.getUsername());
-        return new Labeled(user.getId(), user.getUsername());
+
+        const userTokenDTO: UserTokenDTO = new UserTokenDTO();
+        userTokenDTO.setId(user.getId());
+        userTokenDTO.setUsername(user.getUsername());
+
+        const jwtPayload: JWTPayload = new JWTPayload();
+        jwtPayload.username = user.getUsername();
+        jwtPayload.id = user.getId();
+        // TODO update last connection of user after create JWT
+        jwtPayload.lastConnection = user.getLastConnection();
+        jwtPayload.roles = await user.getRoles();
+
+        userTokenDTO.setToken(JWT.sign(jwtPayload, collectivity.getSecret()));
+
+        return userTokenDTO;
     }
 
 }

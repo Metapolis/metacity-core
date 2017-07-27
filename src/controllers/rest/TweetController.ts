@@ -13,6 +13,9 @@ import { Tweet } from "./model/tweet/Tweet";
 import { TweetType } from "../../common/enum/tweet/TweetType";
 import { TweetQueryService } from "../../services/query/TweetQueryService";
 import { TweetCategory } from "../../common/enum/tweet/TweetCategory";
+import * as JWT from "express-jwt";
+import { Secured } from "../../common/Decorators";
+import { Role } from "../../common/enum/Role";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -50,6 +53,7 @@ export class TweetController implements interfaces.Controller {
      * @returns {Promise<ResultList<Tweet>>}
      */
     @Get("/")
+    @Secured([Role[Role.READ_ALL]])
     public async findAccidents(@QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number,
                                @QueryParam("dates") dates: string,
