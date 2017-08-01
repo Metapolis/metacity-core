@@ -12,6 +12,8 @@ import { UserAuthenticationTokenDTO } from "../../src/services/query/dto/user/Us
 import { Labeled } from "../../src/common/Labeled";
 import { AccessDeniedError } from "../../src/common/error/AccessDeniedError";
 import { IllegalArgumentError } from "../../src/common/error/IllegalArgumentError";
+import { UserTokenDTO } from "../../src/services/query/dto/user/UserTokenDTO";
+import { UserToken } from "../../src/controllers/rest/model/user/UserToken";
 
 /**
  * All test for authentication service
@@ -31,12 +33,17 @@ class AuthenticationControllerTest extends AbstractTestController {
         userToken.username = "stark";
         userToken.password = "password";
 
+        const userTokenDTOMock: UserTokenDTO = new UserTokenDTO();
+        userTokenDTOMock.setToken("POST.MODERN.JUKEBOX");
+        userTokenDTOMock.setUsername(userToken.username);
+        userTokenDTOMock.setId(1);
+
         userAuthenticationQueryService.setup((instance) => instance.authenticate(TypeMoq.It.is((token: UserAuthenticationTokenDTO) => {
             let ret = token.getUsername() === userToken.username;
             ret = ret && token.getPassword() === userToken.password;
 
             return ret;
-        }))).returns(() => Promise.resolve(new Labeled(1, userToken.username)));
+        }))).returns(() => Promise.resolve(userTokenDTOMock));
 
         let opts = {
             method: "Post",
@@ -46,13 +53,14 @@ class AuthenticationControllerTest extends AbstractTestController {
         };
 
         // Check with a standard call, parsing is different because use privates attributes
-        let actual: Labeled = new Labeled(-1, "");
+        let actual: UserToken = new UserToken();
         await Request(opts).then((data: Labeled) => {
             Object.assign(actual, data);
         });
         console.log(actual);
-        Chai.assert.equal(actual.getLabel(), userToken.username, "Expected same username");
-        Chai.assert.equal(actual.getId(), 1, "Expected same id");
+        Chai.assert.equal(actual.username, userToken.username, "Expected same username");
+        Chai.assert.equal(actual.id, 1, "Expected same id");
+        Chai.assert.equal(actual.token, "POST.MODERN.JUKEBOX", "Expected same token");
     }
 
     @test

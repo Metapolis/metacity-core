@@ -9,7 +9,7 @@ import { UserDao } from "../../../persistence/dao/UserDao";
 import { User } from "../../../persistence/domain/User";
 import { AccessDeniedError } from "../../../common/error/AccessDeniedError";
 import { UserTokenDTO } from "../dto/user/UserTokenDTO";
-import { JWTPayload } from "../../../common/JWTToken";
+import { JWTPayload } from "../../../common/security/JWTToken";
 import { Collectivity } from "../../../persistence/domain/Collectivity";
 import { CollectivityDao } from "../../../persistence/dao/CollectivityDao";
 
@@ -63,7 +63,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
         const collectivity: Collectivity = await this.collectivityDao.findById(userAuthenticationToken.getDomain());
         // Check collectivity exists
         if (collectivity === undefined) {
-            this.logger.info("Collectivity '%s' not found", collectivity.getName());
+            this.logger.info("Collectivity '%s' not found", userAuthenticationToken.getDomain());
             throw new AccessDeniedError("Collectivity not found");
 
         }

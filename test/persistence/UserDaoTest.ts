@@ -19,7 +19,6 @@ export class UserDaoTest {
         userMock.setPassword("password");
 
         await userRepository.persist(userMock);
-
         const find: User = await userDao.findByUsername("Toto");
 
         Chai.assert.isNotNull(find);

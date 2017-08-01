@@ -14,7 +14,6 @@ import { CollectivityQueryService } from "../../services/query/CollectivityQuery
 import * as JWT from "jsonwebtoken";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
 
-
 /**
  * API resources to delivery service to authentication
  *
@@ -66,7 +65,7 @@ export class AuthenticationController implements interfaces.Controller {
             const userToken: UserToken = new UserToken();
             userToken.id = user.getId();
             userToken.username = user.getUsername();
-            userToken.token = user.getToken()
+            userToken.token = user.getToken();
 
             return userToken;
         } catch (e) {

@@ -14,6 +14,12 @@ import { TweetType } from "../../src/common/enum/tweet/TweetType";
 import { TestUtils } from "../common/TestUtils";
 import { FindTweetQuery } from "../../src/common/query/FindTweetQuery";
 import { Tweet } from "../../src/controllers/rest/model/tweet/Tweet";
+import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
+import { Collectivity } from "../../src/persistence/domain/Collectivity";
+import { CollectivityDao } from "../../src/persistence/dao/CollectivityDao";
+import { UserDao } from "../../src/persistence/dao/UserDao";
+import { User } from "../../src/persistence/domain/User";
+import { Role } from "../../src/common/enum/Role";
 
 /**
  * All test for tweet controller
@@ -30,6 +36,21 @@ class TweetControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const tweetQueryService: TypeMoq.IMock<TweetQueryService> = (ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>);
+        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+
+        const collectivityMock: Collectivity = new Collectivity();
+        collectivityMock.setSecret("secret");
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+
+        const userMock: User = new User();
+        (await userMock.getCircles()).push(activityCircle);
+
+        activityCircle.setRoles([Role[Role.READ_ALL]]);
+
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
 
         const mockTweets: TweetDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -68,6 +89,9 @@ class TweetControllerTest extends AbstractTestController {
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
             }
         };
 
@@ -93,7 +117,9 @@ class TweetControllerTest extends AbstractTestController {
                 dates: "1977-04-22T06:00:00Z|1979-04-22T06:00:00Z",
                 mentions: "",
                 hashtags: ""
-
+            },
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
             }
         };
 
@@ -114,6 +140,8 @@ class TweetControllerTest extends AbstractTestController {
 
 
         // Check with a standard call, no filter, pass
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         responseValue = "";
         await Request(optsFilter).then((data: string) => {
             responseValue += data;
@@ -159,6 +187,8 @@ class TweetControllerTest extends AbstractTestController {
         }))).returns(() => Promise.resolve(new ResultList<TweetDTO>(200, mockTweets)));
 
         // Check with a standard call, no filter, pass
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         responseValue = "";
         await Request(optsFilter).then((data: string) => {
             responseValue += data;
@@ -178,7 +208,7 @@ class TweetControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
 
-        // Check no offset
+        // Check no authentication
         let opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
@@ -188,6 +218,9 @@ class TweetControllerTest extends AbstractTestController {
                 dates: "",
                 mentions: "",
                 hashtags: ""
+            },
+            headers: {
+                Authorization: undefined
             }
         };
         opts.qs.offset = null;
@@ -196,9 +229,50 @@ class TweetControllerTest extends AbstractTestController {
             statusCode = error.statusCode;
         });
 
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        // Check no offset
+        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+
+        const collectivityMock: Collectivity = new Collectivity();
+        collectivityMock.setSecret("secret");
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+
+        const userMock: User = new User();
+        (await userMock.getCircles()).push(activityCircle);
+
+        activityCircle.setRoles([Role[Role.READ_ALL]]);
+
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
+
+        opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path,
+            qs: {
+                offset: offset,
+                limit: limit,
+                dates: "",
+                mentions: "",
+                hashtags: ""
+            },
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
+            }
+        };
+        opts.qs.offset = null;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check negative offset
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.offset = -1;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -208,6 +282,8 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check null limit
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.offset = offset;
         opts.qs.limit = null;
         statusCode = HTTPStatusCodes.OK;
@@ -218,6 +294,8 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check negative limit
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.limit = -1;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -227,6 +305,8 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check invalid format date
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.limit = 1;
         opts.qs.dates = "TOTO";
         statusCode = HTTPStatusCodes.OK;
@@ -236,6 +316,8 @@ class TweetControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.dates = "TOTO";
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -244,6 +326,8 @@ class TweetControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.dates = "1977-04-22T06:00:00Z|1977-04-22T06:00:00Z|1977-04-22T06:00:00Z";
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -252,6 +336,8 @@ class TweetControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.dates = "1977-04-22T06:00:00Z|1977-04-22T06:00:00Z;|1977-04-22T06:00:00Z;|1977-04-22T06:00:00Z";
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {

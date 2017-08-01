@@ -41,6 +41,7 @@ import { CollectivityDao } from "./persistence/dao/CollectivityDao";
 import { ContextApp } from "./ContextApp";
 import { CollectivityQueryService } from "./services/query/CollectivityQueryService";
 import { CollectivityQueryServiceImpl } from "./services/query/impl/CollectivityQueryServiceImpl";
+import { SecurityManager } from "./common/security/SecurityManager";
 
 /**
  * The server.
@@ -168,6 +169,9 @@ export class App {
         }).catch((error) => {
             this.logger.error(error);
         });
+        // Bind security manager
+        this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
+
         this.bindDao();
         this.bindQueries();
         this.bindControllers();

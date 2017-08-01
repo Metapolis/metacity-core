@@ -135,9 +135,9 @@ export class User {
      * @returns {Promise<string[]>}
      */
     public async getRoles(): Promise<string[]> {
-        const roles: string[] = [];
-        for (const circle of await this.getCircles()) {
-            roles.concat(circle.getRoles());
+        let roles: string[] = [];
+        for (const circle of await this.circles) {
+            roles = roles.concat(circle.getRoles());
         }
 
         return roles;

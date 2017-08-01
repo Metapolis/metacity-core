@@ -16,7 +16,7 @@ export abstract class AbstractTestController {
      *
      * @type {string}
      */
-    private static backend: string = "http://127.0.0.1:3000";
+    private static backend: string = "http://localhost:3000";
 
     /**
      * Method launched before test execution

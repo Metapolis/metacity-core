@@ -4,7 +4,6 @@ import * as Request from "request-promise";
 import * as Chai from "chai";
 import ChaiHttp = require("chai-http");
 import { TrafficQueryService } from "../../src/services/query/TrafficQueryService";
-import { Mock } from "moq.ts";
 import { ContextApp } from "../ContextApp";
 import { FindTrafficAccidentQuery } from "../../src/common/query/FindTrafficAccidentQuery";
 import { AccidentSummary } from "../../src/controllers/rest/model/accident/AccidentSummary";
@@ -18,6 +17,12 @@ import { CollisionType } from "../../src/common/enum/accident/CollisionType";
 import { Luminosity } from "../../src/common/enum/accident/Luminosity";
 import { AtmosphericCondition } from "../../src/common/enum/accident/AtmosphericCondition";
 import { ClimatologyDTO } from "../../src/services/query/dto/accident/ClimatologyDTO";
+import { CollectivityDao } from "../../src/persistence/dao/CollectivityDao";
+import { Collectivity } from "../../src/persistence/domain/Collectivity";
+import { UserDao } from "../../src/persistence/dao/UserDao";
+import { User } from "../../src/persistence/domain/User";
+import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
+import { Role } from "../../src/common/enum/Role";
 
 /**
  * All test for traffic controller
@@ -34,6 +39,21 @@ class TrafficControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const trafficQueryService: TypeMoq.IMock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>);
+        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+
+        const collectivityMock: Collectivity = new Collectivity();
+        collectivityMock.setSecret("secret");
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+
+        const userMock: User = new User();
+        (await userMock.getCircles()).push(activityCircle);
+
+        activityCircle.setRoles([Role[Role.READ_ALL]]);
+
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
 
         const mockAccidents: CarAccidentDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -76,6 +96,9 @@ class TrafficControllerTest extends AbstractTestController {
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
             }
         };
 
@@ -99,6 +122,9 @@ class TrafficControllerTest extends AbstractTestController {
                 offset: offset,
                 limit: limit,
                 areas: "[[44.0001|3.01]|[45.0001|4.01]],[[4.0001|1.01]|[24.0001|2.01]];[[4.0101|5.01]|[2.0001|30.01]]"
+            },
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
             }
         };
 
@@ -148,13 +174,16 @@ class TrafficControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
 
-        // Check no offset
+        // Check no authentication
         let opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                Authorization: undefined
             }
         };
         opts.qs.offset = null;
@@ -162,10 +191,48 @@ class TrafficControllerTest extends AbstractTestController {
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        // Check no offset
+        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+
+        const collectivityMock: Collectivity = new Collectivity();
+        collectivityMock.setSecret("secret");
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+
+        const userMock: User = new User();
+        (await userMock.getCircles()).push(activityCircle);
+
+        activityCircle.setRoles([Role[Role.READ_ALL]]);
+
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
+
+        opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path,
+            qs: {
+                offset: offset,
+                limit: limit
+            },
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
+            }
+        };
+        opts.qs.offset = null;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check negative offset
+        // Have to be reset after crash
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
         opts.qs.offset = -1;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -175,6 +242,8 @@ class TrafficControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check null limit
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
         opts.qs.offset = offset;
         opts.qs.limit = null;
         statusCode = HTTPStatusCodes.OK;
@@ -185,6 +254,8 @@ class TrafficControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check negative limit
+        userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
+        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
         opts.qs.limit = -1;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
