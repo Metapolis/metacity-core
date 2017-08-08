@@ -5,7 +5,6 @@ import * as TypeMoq from "typemoq";
 import { ContextApp } from "../../ContextApp";
 import SearchResponse = Elasticsearch.SearchResponse;
 import * as Chai from "chai";
-;
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 import { UserAuthenticationQueryService } from "../../../src/services/query/UserAuthenticationQueryService";
 import { UserDao } from "../../../src/persistence/dao/UserDao";
@@ -23,9 +22,6 @@ import { Collectivity } from "../../../src/persistence/domain/Collectivity";
 @suite
 class UserAuthenticationQueryServiceTest extends AbstractTestService {
 
-    /**
-     * Test function find traffic accident
-     */
     @test
     private async testAuthenticate(): Promise<void> {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
