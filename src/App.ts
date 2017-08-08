@@ -1,23 +1,13 @@
 import "reflect-metadata";
-import errorHandler = require("errorhandler");
-import { LoggerInstance } from "winston";
-import methodOverride = require("method-override");
+import * as Winston from "winston";
 import { Client } from "elasticsearch";
 import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
-import { IndexController } from "./controllers/IndexController";
 import { Utils } from "./common/Utils";
-
-// Import QueryServicesImpl
 import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServiceImpl";
-
-// Import QueryServices
 import { TrafficQueryService } from "./services/query/TrafficQueryService";
-
-// Import Controllers
 import { TrafficController } from "./controllers/rest/TrafficController";
 import { AuthenticationController } from "./controllers/rest/AuthenticationController";
-
 import * as Express from "express";
 import * as Path from "path";
 import { Config } from "./Config";
@@ -42,6 +32,9 @@ import { ContextApp } from "./ContextApp";
 import { CollectivityQueryService } from "./services/query/CollectivityQueryService";
 import { CollectivityQueryServiceImpl } from "./services/query/impl/CollectivityQueryServiceImpl";
 import { SecurityManager } from "./common/security/SecurityManager";
+import errorHandler = require("errorhandler");
+import methodOverride = require("method-override");
+import { ActivityCircle } from "./persistence/domain/ActivityCircle";
 
 /**
  * The server.
@@ -55,7 +48,7 @@ export class App {
      *
      * @type {LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(App.name);
+    private logger: Winston.LoggerInstance = Utils.createLogger(App.name);
 
     /**
      * Container declaration
@@ -137,7 +130,6 @@ export class App {
      */
     private bindControllers(): void {
         this.logger.debug("Binding controllers");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(IndexController).whenTargetNamed("IndexController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
@@ -186,6 +178,21 @@ export class App {
     private createServer(): void {
         const server = new InversifyExpressServer(this.container);
         server.setConfig((app) => {
+            const expressWinston = require("express-winston");
+            app.use(expressWinston.logger({
+                transports: [
+                    new Winston.transports.Console({
+                        json: true,
+                        colorize: true
+                    })
+                ],
+                meta: false, // optional: control whether you want to log the meta data about the request (default to true)
+                msg: "HTTP {{req.method}} {{req.url}} {{res}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+                expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+                colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+                level: "info"
+            }));
+
             app.use(BodyParser.urlencoded({
                 extended: true
             }));
@@ -245,6 +252,7 @@ export class App {
      */
     private bindRepository(connection: TypeORM.Connection): void {
         this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(connection.entityManager.getRepository(User));
+        this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(connection.entityManager.getRepository(ActivityCircle));
         this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(connection.entityManager.getRepository(Collectivity));
     }
 }

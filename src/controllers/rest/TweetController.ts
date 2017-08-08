@@ -53,7 +53,7 @@ export class TweetController implements interfaces.Controller {
      * @returns {Promise<ResultList<Tweet>>}
      */
     @Get("/")
-    @Secured([Role[Role.READ_ALL]])
+    @Secured([Role.READ_ALL])
     public async findAccidents(@QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number,
                                @QueryParam("dates") dates: string,

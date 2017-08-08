@@ -29,7 +29,7 @@ export class Collectivity {
      * Circle's collectivity (owner of circle)
      */
     @OneToMany((type) => ActivityCircle, (circle) => "collectivity")
-    private circles: ActivityCircle[];
+    private circles: Promise<ActivityCircle[]>;
 
     /**
      * Getter identifier
@@ -90,7 +90,7 @@ export class Collectivity {
      *
      * @returns {Circle[]}
      */
-    public getCircles(): ActivityCircle[] {
+    public getCircles(): Promise<ActivityCircle[]> {
         return this.circles;
     }
 
@@ -99,7 +99,7 @@ export class Collectivity {
      *
      * @param circles new circles value
      */
-    public setCircles(circles: ActivityCircle[]): void {
+    public setCircles(circles: Promise<ActivityCircle[]>): void {
         this.circles = circles;
     }
 }

@@ -42,7 +42,7 @@ export class ActivityCircle {
      */
     @ManyToMany((type) => User, (user) => "circles")
     @JoinTable()
-    private users: User[];
+    private users: Promise<User[]>;
 
     /**
      * Circle's collectivity (owner of circle)
@@ -132,7 +132,7 @@ export class ActivityCircle {
      *
      * @returns {User[]}
      */
-    public getUsers(): User[] {
+    public getUsers(): Promise<User[]> {
         return this.users;
     }
 
@@ -141,7 +141,7 @@ export class ActivityCircle {
      *
      * @param users new users value
      */
-    public setUsers(users: User[]): void {
+    public setUsers(users: Promise<User[]>): void {
         this.users = users;
     }
 

@@ -52,7 +52,7 @@ export class TrafficController implements interfaces.Controller {
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    @Secured([Role[Role.READ_ALL]])
+    @Secured([Role.READ_ALL])
     public async findAccidents(@QueryParam("areas") areas: string,
                                @QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {

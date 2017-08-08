@@ -41,6 +41,7 @@ class AuthenticationControllerTest extends AbstractTestController {
         userAuthenticationQueryService.setup((instance) => instance.authenticate(TypeMoq.It.is((token: UserAuthenticationTokenDTO) => {
             let ret = token.getUsername() === userToken.username;
             ret = ret && token.getPassword() === userToken.password;
+            ret = ret && token.getDomain() === "localhost";
 
             return ret;
         }))).returns(() => Promise.resolve(userTokenDTOMock));
