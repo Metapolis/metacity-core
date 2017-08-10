@@ -175,7 +175,7 @@ export class App {
     /**
      * Create a new server with specific configuration
      */
-    private createServer(): void {
+    private async createServer(): Promise<void> {
         const server = new InversifyExpressServer(this.container);
         server.setConfig((app) => {
             const expressWinston = require("express-winston");
@@ -230,7 +230,7 @@ export class App {
                 next();
             });
         });
-        this.expressServer = server.build();
+        this.expressServer = await server.build();
         this.logger.info("server conf:" + Config.getAppHost() + ":" + Config.getAppPort());
         this.expressServer.listen(Config.getAppPort(), Config.getAppHost());
         this.logger.info("Server launched");

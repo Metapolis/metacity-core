@@ -183,9 +183,10 @@ class TrafficControllerTest extends AbstractTestController {
                 limit: limit
             },
             headers: {
-                Authorization: undefined
+                Authorization: ""
             }
         };
+        opts.headers.Authorization = undefined;
         opts.qs.offset = null;
         let statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {

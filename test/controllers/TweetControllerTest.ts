@@ -220,9 +220,10 @@ class TweetControllerTest extends AbstractTestController {
                 hashtags: ""
             },
             headers: {
-                Authorization: undefined
+                Authorization: ""
             }
         };
+        opts.headers.Authorization = undefined;
         opts.qs.offset = null;
         let statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {

@@ -343,8 +343,8 @@ class TweetQueryServiceTest extends AbstractTestService {
      */
     private assertTweet(actual: TweetDTO, expected: TweetJsonData) {
         Chai.assert.equal(actual.getId(), Number(expected.id), "Expected same identifier");
-        Chai.assert.equal(TweetType[TweetType[actual.getType()]], TweetType[expected.type], "Expected same tweet type");
-        Chai.assert.equal(TweetCategory[TweetCategory[actual.getCategory()]], TweetCategory[expected.category], "Expected same tweet category");
+        Chai.assert.equal(TweetType[Number(TweetType[Number(actual.getType())])], TweetType[Number(expected.type)], "Expected same tweet type");
+        Chai.assert.equal(TweetCategory[Number(TweetCategory[Number(actual.getCategory())])], TweetCategory[Number(expected.category)], "Expected same tweet category");
         Chai.assert.equal(actual.getText(), expected.text, "Expected same text");
         Chai.assert.equal(actual.getCreatedAt(), expected.createdAt, "Expected same created at");
         Chai.assert.equal(actual.getFeeling(), expected.feeling, "Expected same feeling");
