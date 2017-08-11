@@ -12,7 +12,7 @@ export class AccidentData {
     public static accidents = {
         took: 16,
         timed_out: false,
-        _shards: null,
+        _shards: "",
         hits: {
             hits: [
                 {

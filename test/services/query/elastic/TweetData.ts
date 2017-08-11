@@ -8,7 +8,7 @@ export class TweetData {
                     _index: "social-network",
                     _type: "tweet",
                     _id: "AVxZpvGL9XxBDkV0m9It",
-                    _score: null,
+                    _score: 0,
                     _source: {
                         hashtags: [],
                         feeling: 0.71,
@@ -45,7 +45,7 @@ export class TweetData {
                     _index: "social-network",
                     _type: "tweet",
                     _id: "AVxZpvKy9XxBDkV0m9I8",
-                    _score: null,
+                    _score: 0,
                     _source: {
                         hashtags: [],
                         feeling: 0.92,
@@ -82,7 +82,7 @@ export class TweetData {
                     _index: "social-network",
                     _type: "tweet",
                     _id: "AVxZpvKy9XxBDkV0m9I9",
-                    _score: null,
+                    _score: 0,
                     _source: {
                         hashtags: [],
                         feeling: 0.74,
