@@ -19,7 +19,7 @@ export class AccidentData {
                     _index: "traffic",
                     _type: "accident",
                     _id: "AVymL2sG9XxBDkV0nAd8",
-                    _score: null,
+                    _score: 0,
                     _source: {
                         sources: [
                             "Opendata"
@@ -61,7 +61,7 @@ export class AccidentData {
                     _index: "traffic",
                     _type: "accident",
                     _id: "AVymL27l9XxBDkV0nCPg",
-                    _score: null,
+                    _score: 0,
                     _source: {
                         sources: [
                             "Opendata"
@@ -103,7 +103,7 @@ export class AccidentData {
                     _index: "traffic",
                     _type: "accident",
                     _id: "AVymL2-u9XxBDkV0nCmW",
-                    _score: null,
+                    _score: 0,
                     _source: {
                         sources: [
                             "Opendata"
