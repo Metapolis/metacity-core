@@ -4,7 +4,6 @@ import * as Request from "request-promise";
 import * as Chai from "chai";
 import ChaiHttp = require("chai-http");
 import { TrafficQueryService } from "../../src/services/query/TrafficQueryService";
-import { Mock } from "moq.ts";
 import { ContextApp } from "../ContextApp";
 import { FindTrafficAccidentQuery } from "../../src/common/query/FindTrafficAccidentQuery";
 import { AccidentSummary } from "../../src/controllers/rest/model/accident/AccidentSummary";
