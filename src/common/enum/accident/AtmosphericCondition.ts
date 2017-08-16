@@ -17,7 +17,7 @@ export enum AtmosphericCondition {
     LIGHT_RAIN      = 2,
     HEAVY_RAIN      = 3,
     SNOW_OR_HAIL    = 4,
-    FOG_OR_SMOG = 5,
+    FOG_OR_SMOG     = 5,
     STRONG_WIND     = 6,
     DAZZLING_WEATHER= 7,
     CLOUDY_WEATHER  = 8,
