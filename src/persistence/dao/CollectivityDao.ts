@@ -1,5 +1,8 @@
 import { Collectivity } from "../domain/Collectivity";
 
+/**
+ * Data Access Object of {@link CollectivityDao}
+ */
 export interface CollectivityDao {
 
     /**

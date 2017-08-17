@@ -1,5 +1,8 @@
 import { User } from "../domain/User";
 
+/**
+ * Data Access Object of {@link User}
+ */
 export interface UserDao {
 
     /**

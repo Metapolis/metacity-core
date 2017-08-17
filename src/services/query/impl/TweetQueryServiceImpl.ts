@@ -11,13 +11,13 @@ import { RangeQueryParam } from "../builder/elasticsearch/model/RangeQueryParam"
 import { TermQueryParam } from "../builder/elasticsearch/model/TermQueryParam";
 
 /**
- * Implementation of {@link TrafficQueryService}
+ * Implementation of {@link TweetQueryService}
  */
 @injectable()
 export class TweetQueryServiceImpl implements TweetQueryService {
 
     /**
-     * TrafficQueryServiceImpl logger
+     * TweetQueryServiceImpl logger
      *
      * @type {winston.LoggerInstance}
      */

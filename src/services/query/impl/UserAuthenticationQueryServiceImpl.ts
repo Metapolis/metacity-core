@@ -14,13 +14,13 @@ import { Collectivity } from "../../../persistence/domain/Collectivity";
 import { CollectivityDao } from "../../../persistence/dao/CollectivityDao";
 
 /**
- * Implementation of {@link TrafficQueryService}
+ * Implementation of {@link UserAuthenticationQueryService}
  */
 @injectable()
 export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQueryService {
 
     /**
-     * TrafficQueryServiceImpl logger
+     * UserAuthenticationQueryServiceImpl logger
      *
      * @type {winston.LoggerInstance}
      */

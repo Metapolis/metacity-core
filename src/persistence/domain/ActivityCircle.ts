@@ -30,7 +30,7 @@ export class ActivityCircle {
     private name: string;
 
     /**
-     * Client's comma separated roles
+     * Circle's comma separated roles
      */
     @Column({type: "text", nullable: false})
     private roles: string;

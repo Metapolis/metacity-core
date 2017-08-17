@@ -196,7 +196,6 @@ export class App {
             app.use(BodyParser.urlencoded({
                 extended: true
             }));
-            // app.use(JWT({secret: "test"}));
             app.use(BodyParser.json());
             // Add static file server to serve angular resources
             const publicPath = Path.join(__dirname, "../../client/src");

@@ -8,13 +8,13 @@ import { CollectivityDTO } from "../dto/collectivity/CollectivityDTO";
 import { Collectivity } from "../../../persistence/domain/Collectivity";
 
 /**
- * Implementation of {@link TrafficQueryService}
+ * Implementation of {@link CollectivityQueryService}
  */
 @injectable()
 export class CollectivityQueryServiceImpl implements CollectivityQueryService {
 
     /**
-     * TrafficQueryServiceImpl logger
+     * CollectivityQueryServiceImpl logger
      *
      * @type {winston.LoggerInstance}
      */
