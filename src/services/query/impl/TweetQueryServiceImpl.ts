@@ -35,7 +35,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
      * @param query
      */
     public async findTweets(query: FindTweetQuery): Promise<ResultList<TweetDTO>> {
-        this.logger.info("Retrieve all traffic accident in elastic search");
+        this.logger.info("Retrieve tweets in elastic search");
         Utils.checkArgument(query != null, "Query cannot be null");
         Utils.checkArgument(query.getOffset() != null, "Offset must be set");
         Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");

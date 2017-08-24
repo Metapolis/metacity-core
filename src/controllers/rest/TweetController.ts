@@ -64,7 +64,7 @@ export class TweetController implements interfaces.Controller {
         Utils.checkArgument(limit != null, "Size must be set");
         Utils.checkArgument(limit > 0, "Size must be superior to zero");
 
-        this.logger.info("Find all traffic information");
+        this.logger.info("Find tweets information");
         let dateSearchFilter: SearchFilter;
         let hashtagSearchFilter: SearchFilter;
         let mentionSearchFilter: SearchFilter;

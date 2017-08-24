@@ -22,6 +22,7 @@ function Secured(roles: string[]) {
 
         // Add code before execute method
         descriptor.value = async function(...args: any[]) {
+            this.logger.info("Begin authentication");
             const userDao: UserDao = ContextApp.getContainer().get("UserDao") as UserDao;
 
             // retrive the authorization in header
@@ -64,6 +65,7 @@ function Secured(roles: string[]) {
                     throw new AccessDeniedError("Access denied");
                 }
             }
+            this.logger.info("Authentication succeed");
 
             return originalMethod.apply(this, args);
         };

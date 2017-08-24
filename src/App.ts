@@ -37,9 +37,9 @@ import methodOverride = require("method-override");
 import { ActivityCircle } from "./persistence/domain/ActivityCircle";
 
 /**
- * The server.
+ * The App.
  *
- * @class Server
+ * @class App
  */
 export class App {
 
