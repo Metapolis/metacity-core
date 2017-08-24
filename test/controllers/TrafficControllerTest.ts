@@ -192,7 +192,7 @@ class TrafficControllerTest extends AbstractTestController {
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
-        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check no offset
         const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
