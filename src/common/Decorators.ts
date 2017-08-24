@@ -9,6 +9,7 @@ import { User } from "../persistence/domain/User";
 import { UserDao } from "../persistence/dao/UserDao";
 import { JWTPayload } from "./security/JWTToken";
 import { SecurityManager } from "./security/SecurityManager";
+import { IllegalArgumentError } from "./error/IllegalArgumentError";
 
 /**
  * Check if user can access to resource
@@ -29,7 +30,7 @@ function Secured(roles: string[]) {
             const authorizationRaw: string = RequestAccessor.getRequest().headers.authorization;
             if (authorizationRaw === undefined) {
                 this.logger.error("Token not found");
-                throw new AccessDeniedError("No token found");
+                throw new IllegalArgumentError("No token found");
             }
 
             // Split authorization value to retrieve the jwt value
@@ -39,7 +40,7 @@ function Secured(roles: string[]) {
             const bearer: string = authorizationArray[0];
             if (bearer !== "Bearer") {
                 this.logger.error("No bearer found in authorization field");
-                throw new AccessDeniedError("Bad authentication method");
+                throw new IllegalArgumentError("Bad authentication method");
             }
 
             const jwtEncoded = authorizationArray[1];
