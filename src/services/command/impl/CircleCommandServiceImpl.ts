@@ -7,6 +7,7 @@ import { SaveCircleCommandDTO } from "../dto/circles/SaveCircleCommandDTO";
 import { CollectivityDao } from "../../../persistence/dao/CollectivityDao";
 import { Collectivity } from "../../../persistence/domain/Collectivity";
 import { ActivityCircle } from "../../../persistence/domain/ActivityCircle";
+import {CircleDao} from "../../../persistence/dao/CircleDao";
 
 /**
  * Implementation of {@link CircleCommandService}
