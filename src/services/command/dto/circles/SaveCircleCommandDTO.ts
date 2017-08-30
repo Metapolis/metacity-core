@@ -1,7 +1,12 @@
 /**
- * Represents a circle
+ * Represents a command to create a circle
  */
 export class SaveCircleCommandDTO {
+
+    /**
+     * Collectivity's identifier
+     */
+    private accessKey: string;
 
     /**
      * Circle's name
@@ -9,7 +14,7 @@ export class SaveCircleCommandDTO {
     private name: string;
 
     /**
-     * Circle's role
+     * Circle's roles
      */
     private roles: string[];
 
@@ -23,6 +28,23 @@ export class SaveCircleCommandDTO {
      */
     private avatarURL: string;
 
+    /**
+     * Getter accessKey
+     * @returns {string}
+     */
+    public getAccessKey(): string {
+        return this.accessKey;
+
+    }
+
+    /**
+     * Setter accessKey
+     * @param {string} accessKey
+     */
+    public setAccessKey(accessKey: string): void {
+        this.accessKey = accessKey;
+    }
+    
     /**
      * Getter name
      * @returns {string}
