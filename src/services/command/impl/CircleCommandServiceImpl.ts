@@ -54,11 +54,11 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
         // Retrieve description if given by client
-        if (Utils.checkArgument(command.getDescription() != null && command.getDescription() !== undefined, "Null or undefined description can't be written")) {
+        if (command.getDescription() != null && command.getDescription() !== undefined) {
             circle.setDescription(command.getDescription());
         }
         // Retrieve avatarURL if given by client
-        if (Utils.checkArgument(command.getAvatarURL() != null && command.getAvatarURL() !== undefined, "Null or undefined avatarURL can't be written")) {
+        if (command.getAvatarURL() != null && command.getAvatarURL() !== undefined) {
             circle.setAvatarUrl(command.getAvatarURL());
         }
 
