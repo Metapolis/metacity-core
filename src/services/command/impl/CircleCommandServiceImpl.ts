@@ -53,17 +53,18 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setCollectivity(collectivity);
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
-        // Retrieve description if given by client
+        // Check if description is set
         if (command.getDescription() != null && command.getDescription() !== undefined) {
             circle.setDescription(command.getDescription());
         }
-        // Retrieve avatarURL if given by client
+        // Check if avatar url is set
         if (command.getAvatarURL() != null && command.getAvatarURL() !== undefined) {
             circle.setAvatarUrl(command.getAvatarURL());
         }
-
+        this.logger.debug("Create new circle");
         await this.circleDao.saveOrUpdate(circle);
 
+        this.logger.debug("New circle created with id: '%s'", circle.getId());
         return circle.getId();
     }
 }
