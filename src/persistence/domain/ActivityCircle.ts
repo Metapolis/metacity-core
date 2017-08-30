@@ -30,6 +30,18 @@ export class ActivityCircle {
     private name: string;
 
     /**
+     * Activity Circle's description
+     */
+    @Column({nullable: true})
+    private description: string;
+
+    /**
+     * Activity Circle's avatar url
+     */
+    @Column({nullable: false})
+    private avatarUrl: string;
+
+    /**
      * Circle's comma separated roles
      */
     @Column({type: "text", nullable: false})
@@ -97,6 +109,42 @@ export class ActivityCircle {
      */
     public setName(name: string): void {
         this.name = name;
+    }
+
+    /**
+     * Getter avatarUrl
+     *
+     * @returns {string}
+     */
+    public getAvatarUrl(): string {
+        return this.avatarUrl;
+    }
+
+    /**
+     * Setter avatarUrl
+     *
+     * @param avatarUrl new avatarUrl value
+     */
+    public setAvatarUrl(avatarUrl: string): void {
+        this.avatarUrl = avatarUrl;
+    }
+
+    /**
+     * Getter description
+     *
+     * @returns {string}
+     */
+    public getDescription(): string {
+        return this.description;
+    }
+
+    /**
+     * Setter description
+     *
+     * @param description new description value
+     */
+    public setDescription(description: string): void {
+        this.description = description;
     }
 
     /**
