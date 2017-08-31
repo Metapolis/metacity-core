@@ -38,7 +38,7 @@ export class ActivityCircle {
     /**
      * Activity Circle's avatar url
      */
-    @Column({nullable: false})
+    @Column({nullable: true})
     private avatarUrl: string;
 
     /**
