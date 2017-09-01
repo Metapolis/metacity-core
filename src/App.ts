@@ -35,6 +35,11 @@ import { SecurityManager } from "./common/security/SecurityManager";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import { ActivityCircle } from "./persistence/domain/ActivityCircle";
+import {CircleCommandService} from "./services/command/CircleCommandService";
+import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandServiceImpl";
+import {CollectivityController} from "./controllers/rest/CollectivityController";
+import {CircleDao} from "./persistence/dao/CircleDao";
+import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
 
 /**
  * The App.
@@ -115,6 +120,14 @@ export class App {
     }
 
     /**
+     * Bind all commands
+     */
+    private bindCommands(): void {
+        this.logger.debug("Binding command");
+        this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
+
+    }
+    /**
      * Bind all query services
      */
     private bindQueries(): void {
@@ -133,6 +146,8 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(CollectivityController).whenTargetNamed("CollectivityController");
+
     }
 
     /**
@@ -165,6 +180,7 @@ export class App {
         this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
 
         this.bindDao();
+        this.bindCommands();
         this.bindQueries();
         this.bindControllers();
         this.bindElasticClient();
@@ -242,6 +258,8 @@ export class App {
         this.logger.debug("Binding DAO");
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
         this.container.bind<CollectivityDao>("CollectivityDao").to(CollectivityDaoImpl);
+        this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
+
     }
 
     /**
