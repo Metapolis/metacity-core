@@ -23,7 +23,9 @@ export class CollectivityController implements interfaces.Controller {
      * @type {winston.LoggerInstance}
      */
     private logger: LoggerInstance = Utils.createLogger(CollectivityController.name);
-
+    /**
+     * Circle command service
+     */
     @inject("CircleCommandService")
     private circleCommandService: CircleCommandService;
 
