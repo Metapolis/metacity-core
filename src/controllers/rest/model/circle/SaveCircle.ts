@@ -1,17 +1,25 @@
 /**
- * Contains circle's identifier
+ * Contains circle's info
  */
-export class NumberIdentifier {
-    /**
-     * Circle Identifier
-     */
-    public identifier: number;
+export class SaveCircle {
 
     /**
-     * Constructor to set object identifier
-     * @param {number} identifier
+     * Circle's name
      */
-    constructor(identifier: number) {
-        this.identifier = identifier;
-    }
+    public name: string;
+
+    /**
+     * Circle's roles
+     */
+    public roles: string[];
+
+    /**
+     * Circle's description
+     */
+    public description: string;
+
+    /**
+     * Circle's avatarURL
+     */
+    public avatarURL: string;
 }

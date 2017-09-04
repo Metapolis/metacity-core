@@ -16,7 +16,7 @@ import { Role } from "../../src/common/enum/Role";
 
 import { CircleCommandService } from "../../src/services/command/CircleCommandService";
 import { SaveCircleCommandDTO } from "../../src/services/command/dto/circles/SaveCircleCommandDTO";
-import {NumberIdentifier} from "../../src/controllers/rest/model/circle/SaveCircle";
+import {NumberIdentifier} from "../../src/controllers/rest/model/common/NumberIdentifier";
 
 @suite
 export class CollectivityControllerTest extends AbstractTestController {

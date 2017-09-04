@@ -5,8 +5,9 @@ import { Utils } from "../../common/Utils";
 import * as Express from "express";
 import { SaveCircleCommandDTO } from "../../services/command/dto/circles/SaveCircleCommandDTO";
 import {CircleCommandService} from "../../services/command/CircleCommandService";
-import { ActivityCircle } from "../../persistence/domain/ActivityCircle";
-import { NumberIdentifier } from "./model/circle/SaveCircle";
+import { NumberIdentifier } from "./model/common/NumberIdentifier";
+import {SaveCircle} from "./model/circle/SaveCircle";
+
 /**
  * API resources to circle creation service
  *
@@ -17,6 +18,7 @@ import { NumberIdentifier } from "./model/circle/SaveCircle";
 @Controller("/api/collectivity/id/circles")
 @injectable()
 export class CollectivityController implements interfaces.Controller {
+
     /**
      * CollectivityController Logger
      *
@@ -32,21 +34,20 @@ export class CollectivityController implements interfaces.Controller {
     /**
      * Create a circle
      *
-     * @param {ActivityCircle} activityCircle
+     * @param {ActivityCircle} circle
      * @param {string} accessKey
      * @param {e.NextFunction} next
      * @param {e.Response} response
      * @returns {Promise<NumberIdentifier>}
      */
     @Post("/:accessKey/circles")
-
-    public async createCollectivityCircle(@RequestBody() activityCircle: ActivityCircle, @RequestParam("accessKey") accessKey: string, @Next() next: Express.NextFunction, @Response() response: Express.Response): Promise<NumberIdentifier> {
+    public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @Next() next: Express.NextFunction, @Response() response: Express.Response): Promise<NumberIdentifier> {
         this.logger.debug("Begin creation");
         const saveCircleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-        saveCircleCommandDTO.setAvatarURL(activityCircle.getAvatarUrl());
-        saveCircleCommandDTO.setName(activityCircle.getName());
-        saveCircleCommandDTO.setRoles(activityCircle.getRoles());
-        saveCircleCommandDTO.setDescription(activityCircle.getDescription());
+        saveCircleCommandDTO.setAvatarURL(circle.avatarURL);
+        saveCircleCommandDTO.setName(circle.name);
+        saveCircleCommandDTO.setRoles(circle.roles);
+        saveCircleCommandDTO.setDescription(circle.description);
         saveCircleCommandDTO.setAccessKey(accessKey);
 
         const circleIdentifier: number = await this.circleCommandService.createCircle(saveCircleCommandDTO);
