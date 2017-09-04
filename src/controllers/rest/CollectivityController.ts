@@ -9,11 +9,19 @@ import { ActivityCircle } from "../../persistence/domain/ActivityCircle";
 import { NumberIdentifier } from "./model/circle/SaveCircle";
 /**
  * API resources to circle creation service
+ *
+ * /api/collectivity/id/circles route
+ *
+ * @class CollectivityController
  */
 @Controller("/api/collectivity/id/circles")
 @injectable()
-
 export class CollectivityController implements interfaces.Controller {
+    /**
+     * CollectivityController Logger
+     *
+     * @type {winston.LoggerInstance}
+     */
     private logger: LoggerInstance = Utils.createLogger(CollectivityController.name);
 
     @inject("CircleCommandService")
