@@ -27,13 +27,19 @@ export class CollectivityControllerTest extends AbstractTestController {
         // mock the comportment of createCircle to get the Id
         // compare the Id with DTO'expected Id
         const circleCommandServiceMock: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
-        circleCommandServiceMock.setup((instance) => instance.createCircle(/*DTO*/)).returns(() => Promise.resolve(NumberIdentifier));
-
-
         const circleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
+        const circle: ActivityCircle = new ActivityCircle();
+
+
+
         circleDTO.setAccessKey("accesskey");
         circleDTO.setRoles(["Michel"]);
         circleDTO.setName("CercleDesMichelsDisparus");
+
+        circleCommandServiceMock.setup((instance) => instance.createCircle(circleDTO)).returns(() => Promise.resolve(NumberIdentifier)){
+            let ret = ;
+
+        }
 
         Chai.assert.equal(,)
     }
