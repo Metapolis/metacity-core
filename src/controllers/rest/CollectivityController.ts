@@ -15,7 +15,7 @@ import {SaveCircle} from "./model/circle/SaveCircle";
  *
  * @class CollectivityController
  */
-@Controller("/api/collectivity/id/circles")
+@Controller("/api/collectivities")
 @injectable()
 export class CollectivityController implements interfaces.Controller {
 

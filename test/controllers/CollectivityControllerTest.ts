@@ -13,6 +13,7 @@ import {SaveCircle} from "../../src/controllers/rest/model/circle/SaveCircle";
 import {Labeled} from "../../src/common/Labeled";
 import {isNullOrUndefined} from "util";
 import {IllegalArgumentError} from "../../src/common/error/IllegalArgumentError";
+import circle = L.circle;
 
 /**
  * All test for circle creation
@@ -26,7 +27,7 @@ export class CollectivityControllerTest extends AbstractTestController {
     @test
     public async testCreateCollectivityCircle(): Promise<void> {
 
-        const path: string = "/api/collectivity/{accesskey}/circles";
+        const path: string = "/api/collectivities/{accesskey}/circles";
         const accessKey: string = "starkindustries";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         // Hello im a rigid linter
@@ -38,9 +39,12 @@ export class CollectivityControllerTest extends AbstractTestController {
         circle.description = "Il va de ville en ville";
         circle.avatarURL = "Pour vendre des velux";
 
-        circleCommandService.setup((instance) => instance.createCircle(TypeMoq.It.is((collectivityCircle: SaveCircleCommandDTO) => {
+        circleCommandService.setup((instance: CircleCommandService) => instance.createCircle(TypeMoq.It.is((collectivityCircle: SaveCircleCommandDTO) => {
             let ret = collectivityCircle.getDescription() === circle.description;
-            ret = ret && collectivityCircle.getRoles() === circle.roles;
+            ret = ret && collectivityCircle.getRoles().length === circle.roles.length;
+            for (let i = 0; i < circle.roles.length; i++) {
+                ret = ret && collectivityCircle.getRoles()[i] === circle.roles[i];
+            }
             ret = ret && collectivityCircle.getName() === circle.name;
             ret = ret && collectivityCircle.getAvatarURL() === circle.avatarURL;
             ret = ret && collectivityCircle.getAccessKey() === accessKey;
@@ -50,11 +54,13 @@ export class CollectivityControllerTest extends AbstractTestController {
         const opts = {
             method: "POST",
             uri: AbstractTestController.getBackend() + path.replace("{accesskey}", accessKey),
-            body: JSON.stringify({circle})
+            body: circle,
+            json: true
         };
 
         const actual: NumberIdentifier = new NumberIdentifier(0);
         await Request(opts).then((data: Labeled) => {
+            console.log(data);
             Object.assign(actual, data);
 
         });
@@ -63,11 +69,11 @@ export class CollectivityControllerTest extends AbstractTestController {
         Chai.assert.equal(actual.identifier, circleIdentifier, "Expected same identifier");
 
     }
-    //@test
+    @test.only()
     public async testCreateCollectivityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
-        const path: string = "/api/collectivity/{accesskey}/circles";
+        const path: string = "/api/collectivities/{accesskey}/circles";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
 
         const circle: SaveCircle = new SaveCircle();
@@ -77,15 +83,11 @@ export class CollectivityControllerTest extends AbstractTestController {
         const opts = {
             method: "POST",
             uri: AbstractTestController.getBackend() + path,
-            body: circle
+            body: circle,
+            json: true
         };
 
-        circleCommandService.setup((instance) => instance.createCircle(TypeMoq.It.is((collectivityCircle: SaveCircleCommandDTO) => {
-            let ret = isNullOrUndefined(collectivityCircle.getName());
-            ret = ret && collectivityCircle.getRoles() != null;
-
-            return ret;
-        }))).throws(new IllegalArgumentError("ERROR"));
+        circleCommandService.setup((instance) => instance.createCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
 
         let statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
