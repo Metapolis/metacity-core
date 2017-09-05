@@ -13,7 +13,6 @@ import {SaveCircle} from "../../src/controllers/rest/model/circle/SaveCircle";
 import {Labeled} from "../../src/common/Labeled";
 import {isNullOrUndefined} from "util";
 import {IllegalArgumentError} from "../../src/common/error/IllegalArgumentError";
-import circle = L.circle;
 
 /**
  * All test for circle creation
