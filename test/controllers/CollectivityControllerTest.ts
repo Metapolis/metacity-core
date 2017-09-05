@@ -69,7 +69,7 @@ export class CollectivityControllerTest extends AbstractTestController {
         Chai.assert.equal(actual.identifier, circleIdentifier, "Expected same identifier");
 
     }
-    @test.only()
+    @test
     public async testCreateCollectivityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
