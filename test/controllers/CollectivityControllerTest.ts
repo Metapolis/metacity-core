@@ -2,46 +2,96 @@ import { AbstractTestController } from "./inversify/AbstractTestController";
 import { suite, test } from "mocha-typescript";
 import * as Request from "request-promise";
 import * as Chai from "chai";
-import ChaiHttp = require("chai-http");
 import { ContextApp } from "../ContextApp";
-import { ResultList } from "../../src/common/ResultList";
 import * as TypeMoq from "typemoq";
 import * as HTTPStatusCodes from "http-status-codes";
-import { TestUtils } from "../common/TestUtils";
-import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
-import { Collectivity } from "../../src/persistence/domain/Collectivity";
-import { CollectivityDao } from "../../src/persistence/dao/CollectivityDao";
-import { UserDao } from "../../src/persistence/dao/UserDao";
-import { Role } from "../../src/common/enum/Role";
-
+import {  } from "../../src/persistence/domain/ActivityCircle";
 import { CircleCommandService } from "../../src/services/command/CircleCommandService";
 import { SaveCircleCommandDTO } from "../../src/services/command/dto/circles/SaveCircleCommandDTO";
 import {NumberIdentifier} from "../../src/controllers/rest/model/common/NumberIdentifier";
+import {SaveCircle} from "../../src/controllers/rest/model/circle/SaveCircle";
+import {Labeled} from "../../src/common/Labeled";
+import {isNullOrUndefined} from "util";
+import {IllegalArgumentError} from "../../src/common/error/IllegalArgumentError";
 
+/**
+ * All test for circle creation
+ */
 @suite
 export class CollectivityControllerTest extends AbstractTestController {
 
+    /**
+     * Test function create collectivity circle
+     */
     @test
     public async testCreateCollectivityCircle(): Promise<void> {
-        // create a DTO from a circle
-        // mock the comportment of createCircle to get the Id
-        // compare the Id with DTO'expected Id
-        const circleCommandServiceMock: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
-        const circleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-        const circle: ActivityCircle = new ActivityCircle();
 
+        const path: string = "/api/collectivity/{accesskey}/circles";
+        const accessKey: string = "starkindustries";
+        const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
+        // Hello im a rigid linter
+        const circleIdentifier = 42;
 
+        const circle: SaveCircle = new SaveCircle();
+        circle.name = "michel";
+        circle.roles = ["Champion"];
+        circle.description = "Il va de ville en ville";
+        circle.avatarURL = "Pour vendre des velux";
 
-        circleDTO.setAccessKey("accesskey");
-        circleDTO.setRoles(["Michel"]);
-        circleDTO.setName("CercleDesMichelsDisparus");
+        circleCommandService.setup((instance) => instance.createCircle(TypeMoq.It.is((collectivityCircle: SaveCircleCommandDTO) => {
+            let ret = collectivityCircle.getDescription() === circle.description;
+            ret = ret && collectivityCircle.getRoles() === circle.roles;
+            ret = ret && collectivityCircle.getName() === circle.name;
+            ret = ret && collectivityCircle.getAvatarURL() === circle.avatarURL;
+            ret = ret && collectivityCircle.getAccessKey() === accessKey;
+            return ret;
+        }))).returns(() => Promise.resolve(circleIdentifier));
 
-        circleCommandServiceMock.setup((instance) => instance.createCircle(circleDTO)).returns(() => Promise.resolve(NumberIdentifier)){
-            let ret = ;
+        const opts = {
+            method: "POST",
+            uri: AbstractTestController.getBackend() + path.replace("{accesskey}", accessKey),
+            body: JSON.stringify({circle})
+        };
 
-        }
+        const actual: NumberIdentifier = new NumberIdentifier(0);
+        await Request(opts).then((data: Labeled) => {
+            Object.assign(actual, data);
 
-        Chai.assert.equal(,)
+        });
+
+        console.log(actual);
+        Chai.assert.equal(actual.identifier, circleIdentifier, "Expected same identifier");
+
     }
+    //@test
+    public async testCreateCollectivityCircleError(): Promise<void> {
+        // 400 bad request => name or role is null or undefined
+        // 403 not enough rights => role is not high enough to create a circle
+        const path: string = "/api/collectivity/{accesskey}/circles";
+        const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
 
+        const circle: SaveCircle = new SaveCircle();
+        circle.name = "michel";
+        circle.roles = ["Champion"];
+
+        const opts = {
+            method: "POST",
+            uri: AbstractTestController.getBackend() + path,
+            body: circle
+        };
+
+        circleCommandService.setup((instance) => instance.createCircle(TypeMoq.It.is((collectivityCircle: SaveCircleCommandDTO) => {
+            let ret = isNullOrUndefined(collectivityCircle.getName());
+            ret = ret && collectivityCircle.getRoles() != null;
+
+            return ret;
+        }))).throws(new IllegalArgumentError("ERROR"));
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+    }
 }

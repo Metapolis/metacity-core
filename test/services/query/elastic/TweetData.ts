@@ -10,10 +10,10 @@ export class TweetData {
                     _id: "AVxZpvGL9XxBDkV0m9It",
                     _score: 0,
                     _source: {
-                        hashtags: [],
+                        hashtags: ["test"],
                         feeling: 0.71,
                         type: "RT",
-                        tags: [],
+                        tags: ["test"],
                         createdAt: "2017-05-24T16:59:36Z",
                         meta: {
                             documentType: "tweet",
@@ -47,10 +47,10 @@ export class TweetData {
                     _id: "AVxZpvKy9XxBDkV0m9I8",
                     _score: 0,
                     _source: {
-                        hashtags: [],
+                        hashtags: ["test"],
                         feeling: 0.92,
                         type: "RT",
-                        tags: [],
+                        tags: ["test"],
                         createdAt: "2017-05-24T10:22:50Z",
                         meta: {
                             documentType: "tweet",
@@ -84,10 +84,10 @@ export class TweetData {
                     _id: "AVxZpvKy9XxBDkV0m9I9",
                     _score: 0,
                     _source: {
-                        hashtags: [],
+                        hashtags: ["test!1"],
                         feeling: 0.74,
                         type: "RT",
-                        tags: [],
+                        tags: ["test!1"],
                         createdAt: "2017-05-24T09:42:35Z",
                         meta: {
                             documentType: "tweet",

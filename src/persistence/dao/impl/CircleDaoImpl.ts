@@ -21,15 +21,15 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Circle data access
      */
-    @inject("CircleRepository")
-    private circleRepository: TypeORM.Repository<ActivityCircle>;
+    @inject("ActivityCircleRepository")
+    private activityCircleRepository: TypeORM.Repository<ActivityCircle>;
 
     /**
      * Override
      */
     public async saveOrUpdate(circle: ActivityCircle): Promise<void> | undefined {
         this.logger.info("Persist new circle '%s'", circle.getName);
-        await this.circleRepository.persist(circle);
+        await this.activityCircleRepository.persist(circle);
         this.logger.info("Circle saved");
     }
 }

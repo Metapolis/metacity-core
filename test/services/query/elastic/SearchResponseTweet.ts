@@ -1,10 +1,10 @@
-import SearchResponse = Elasticsearch.SearchResponse;
 import { TweetJsonData } from "./documents/TweetJsonData";
+import * as Elasticsearch from "elasticsearch";
 
 /**
  * Search response use to format mocked response of tweet
  */
-export class SearchResponseTweet implements SearchResponse<TweetJsonData> {
+export class SearchResponseTweet implements Elasticsearch.SearchResponse<TweetJsonData> {
     public took: number;
     public timed_out: boolean;
     public _shards: Elasticsearch.ShardsResponse;

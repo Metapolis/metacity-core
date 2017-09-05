@@ -1,13 +1,10 @@
-/**
- * Created by mbayou on 28/06/2017.
- */
-import SearchResponse = Elasticsearch.SearchResponse;
+import * as Elasticsearch from "elasticsearch";
 import { AccidentJsonData } from "./documents/AccidentJsonData";
 
 /**
  * Search response use to format mocked response of accident
  */
-export class SearchResponseAccident implements SearchResponse<AccidentJsonData> {
+export class SearchResponseAccident implements Elasticsearch.SearchResponse<AccidentJsonData> {
     public took: number;
     public timed_out: boolean;
     public _shards: Elasticsearch.ShardsResponse;
