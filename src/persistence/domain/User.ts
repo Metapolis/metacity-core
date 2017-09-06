@@ -32,6 +32,22 @@ export class User {
     private lastConnection: number;
 
     /**
+     * User's avatar URL
+     */
+    @Column({nullable: true})
+    private avatarURL: string;
+    /**
+     * User's email address
+     */
+    @Column({nullable: true})
+    private emailAddress: string;
+    /**
+     * User's address
+     */
+    @Column({nullable: true})
+    private address: string;
+
+    /**
      * User's circles
      *
      * You have to use getter and setter
@@ -109,6 +125,54 @@ export class User {
      */
     public setPassword(password: string): void {
         this.password = password;
+    }
+
+    /**
+     * Getter email address
+     * @returns {string}
+     */
+    public getEmailAddress(): string {
+        return this.emailAddress;
+    }
+
+    /**
+     * Setter email address
+     * @param {string} emailAddress
+     */
+    public setEmailAddress(emailAddress: string): void {
+        this.emailAddress = emailAddress;
+    }
+
+    /**
+     * Getter address
+     * @returns {string}
+     */
+    public getAddress(): string {
+        return this.address;
+    }
+
+    /**
+     * Setter address
+     * @param {string} address
+     */
+    public setAddress(address: string): void {
+        this.address = address;
+    }
+
+    /**
+     * Getter avatarURL
+     * @returns {string}
+     */
+    public getAvatarURL(): string {
+        return this.avatarURL;
+    }
+
+    /**
+     * Setter avatarURL
+     * @param {string} avatarURL
+     */
+    public setAvatarURL(avatarURL: string): void {
+        this.avatarURL = avatarURL;
     }
 
     /**
