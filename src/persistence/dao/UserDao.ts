@@ -24,6 +24,5 @@ export interface UserDao {
      * @param {User} user
      * @returns {void}
      */
-
-    saveOrUpdate(user: User): void | undefined;
+    saveOrUpdate(user: User): Promise<void>;
 }

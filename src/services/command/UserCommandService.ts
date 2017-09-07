@@ -6,8 +6,8 @@ import { SaveUserCommandDTO} from "./dto/users/SaveUserCommandDTO";
 export interface UserCommandService {
     /**
      * Create a new user
-     * @param {} saveUserCommandDTO
-     * @returns {Promise<number>}
+     * @param {SaveUserCommandDTO} saveUserCommandDTO command used to create new user
+     * @returns {Promise<number>} return user created identifier
      */
     createUser(saveUserCommandDTO: SaveUserCommandDTO): Promise<number>;
 }

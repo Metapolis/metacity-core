@@ -1,11 +1,12 @@
-import { UserCommandService} from "../UserCommandService";
+import {UserCommandService} from "../UserCommandService";
 import {inject, injectable} from "inversify";
-import { Client } from "elasticsearch";
-import { Utils } from "../../../common/Utils";
-import { LoggerInstance } from "winston";
+import {Client} from "elasticsearch";
+import {Utils} from "../../../common/Utils";
+import {LoggerInstance} from "winston";
 import {UserDao} from "../../../persistence/dao/UserDao";
 import {SaveUserCommandDTO} from "../dto/users/SaveUserCommandDTO";
 import {User} from "../../../persistence/domain/User";
+import {isNullOrUndefined} from "util";
 
 /**
  * Implementation of {@link UserCommandService}
@@ -28,37 +29,27 @@ export class UserCommandServiceImpl implements UserCommandService {
     /**
      * Override
      */
+    public async createUser(command: SaveUserCommandDTO): Promise<number> {
+        Utils.checkArgument(isNullOrUndefined(command), "Command cannot be undefined or null");
+        Utils.checkArgument(Utils.isNullOrEmpty(command.getUsername()), "Username cannot be null or empty");
+        Utils.checkArgument(Utils.isNullOrEmpty(command.getPassword()), "Username cannot be null or empty");
+        Utils.checkArgument(Utils.isNullOrEmpty(command.getEmailAddress()), "Username cannot be null or empty");
 
-public async createUser(command: SaveUserCommandDTO): Promise<number> {
+        this.logger.debug("Begin user creation for '%s'", command.getUsername());
 
-    Utils.checkArgument(command != null && command !== undefined, "Command cannot be undefined or null");
-    Utils.checkArgument(Utils.isNullOrEmpty(command.getUsername()), "Username cannot be null or empty");
-    Utils.checkArgument(Utils.isNullOrEmpty(command.getPassword()), "Username cannot be null or empty");
-
-    this.logger.debug("Begin user creation for '%s'", command.getUsername());
-
-    const user: User = new User();
-    user.setPassword(command.getPassword());
-    user.setUsername(command.getUsername());
-    // Check if avatar url is set
-    if (command.getAvatarURL() != null && command.getAvatarURL() !== undefined) {
-        user.setAvatarURL(command.getAvatarURL());
-    }
-    // Check if email address is set
-    if (command.getEmailAddress() != null && command.getEmailAddress() !== undefined) {
+        const user: User = new User();
+        user.setPassword(command.getPassword());
+        user.setUsername(command.getUsername());
         user.setEmailAddress(command.getEmailAddress());
-    }
-    // Check if address is set
-    if (command.getAddress() != null && command.getAddress() !== undefined) {
+        user.setAvatarURL(command.getAvatarURL());
         user.setAddress(command.getAddress());
+
+        this.logger.debug("Create new user");
+        await this.userDao.saveOrUpdate(user);
+
+        this.logger.debug("New user created with id: '%s'", user.getId());
+        return user.getId();
+
     }
-
-    this.logger.debug("Create new user");
-    await this.userDao.saveOrUpdate(user);
-
-    this.logger.debug("New user created with id: '%s'", user.getId());
-    return user.getId();
-
-}
 
 }

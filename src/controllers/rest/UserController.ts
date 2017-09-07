@@ -9,7 +9,7 @@ import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import { SaveUserCommandDTO } from "../../services/command/dto/users/SaveUserCommandDTO";
 
 /**
- * API resources to create user
+ * API resources to manage user
  * /api/users
  * @class UserController
  */
@@ -31,14 +31,16 @@ export class UserController implements interfaces.Controller {
 
     /**
      * Create a user
+     *
      * @param {SaveUser} user
      * @param {e.NextFunction} next
      * @param {e.Response} response
+     *
      * @returns {Promise<NumberIdentifier>}
      */
     @Post("/")
-    public async createCommandUser(@RequestBody() user: SaveUser, @Next() next: Express.NextFunction,  @Response() response: Express.Response): Promise<NumberIdentifier> {
-        this.logger.debug("Begin creation");
+    public async createCommandUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
+        this.logger.debug("Begin user creation");
         const saveUserCommandDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
         saveUserCommandDTO.setAvatarURL(user.avatarURL);
         saveUserCommandDTO.setUsername(user.username);
@@ -48,7 +50,8 @@ export class UserController implements interfaces.Controller {
 
         const userIdentifier: number = await this.userCommandService.createUser(saveUserCommandDTO);
 
-        return new NumberIdentifier(userIdentifier);
+        this.logger.debug("User created with identifier %s", userIdentifier);
 
+        return new NumberIdentifier(userIdentifier);
     }
 }

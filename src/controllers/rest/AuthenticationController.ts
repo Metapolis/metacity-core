@@ -51,7 +51,7 @@ export class AuthenticationController implements interfaces.Controller {
      * @param next next express function
      */
     @Post("/")
-    public async authenticate(@RequestBody() userAuthenticationToken: UserAuthenticationToken, @Next() next: Express.NextFunction): Promise<UserToken> {
+    public async authenticate(@RequestBody() userAuthenticationToken: UserAuthenticationToken): Promise<UserToken> {
         this.logger.debug("Begin authentication");
         // User token cannot be undefined or null
         // Build DTO
@@ -60,16 +60,13 @@ export class AuthenticationController implements interfaces.Controller {
         userAuthenticationTokenDTO.setUsername(userAuthenticationToken.username);
         userAuthenticationTokenDTO.setPassword(userAuthenticationToken.password);
         userAuthenticationTokenDTO.setDomain(domain);
-        try {
-            const user: UserTokenDTO = await this.userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO);
-            const userToken: UserToken = new UserToken();
-            userToken.id = user.getId();
-            userToken.username = user.getUsername();
-            userToken.token = user.getToken();
 
-            return userToken;
-        } catch (e) {
-            next(e);
-        }
+        const user: UserTokenDTO = await this.userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO);
+        const userToken: UserToken = new UserToken();
+        userToken.id = user.getId();
+        userToken.username = user.getUsername();
+        userToken.token = user.getToken();
+
+        return userToken;
     }
 }

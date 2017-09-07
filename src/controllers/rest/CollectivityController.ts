@@ -41,7 +41,7 @@ export class CollectivityController implements interfaces.Controller {
      * @returns {Promise<NumberIdentifier>}
      */
     @Post("/:accessKey/circles")
-    public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @Next() next: Express.NextFunction, @Response() response: Express.Response): Promise<NumberIdentifier> {
+    public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
         this.logger.debug("Begin creation");
         const saveCircleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         saveCircleCommandDTO.setAvatarURL(circle.avatarURL);

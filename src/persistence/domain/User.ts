@@ -39,7 +39,7 @@ export class User {
     /**
      * User's email address
      */
-    @Column({nullable: true})
+    @Column({nullable: false})
     private emailAddress: string;
     /**
      * User's address

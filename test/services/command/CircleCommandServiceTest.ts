@@ -1,3 +1,4 @@
+/*
 import { AbstractTestService } from "../inversify/AbstractTestService";
 import { suite, test } from "mocha-typescript";
 import { Client, GetParams } from "elasticsearch";
@@ -15,9 +16,9 @@ import {CircleCommandService} from "../../../src/services/command/CircleCommandS
 import {Collectivity} from "../../../src/persistence/domain/Collectivity";
 import {ObjectType} from "typeorm";
 
-/**
+/!**
  * All test for user collectivity query service
- */
+ *!/
 // @suite
 class CircleCommandServiceTest extends AbstractTestService {
 
@@ -55,3 +56,4 @@ class CircleCommandServiceTest extends AbstractTestService {
 
     }
 }
+*/

@@ -40,6 +40,9 @@ import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandSer
 import {CollectivityController} from "./controllers/rest/CollectivityController";
 import {CircleDao} from "./persistence/dao/CircleDao";
 import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
+import {UserCommandService} from "./services/command/UserCommandService";
+import {UserCommandServiceImpl} from "./services/command/impl/UserCommandServiceImpl";
+import {UserController} from "./controllers/rest/UserController";
 
 /**
  * The App.
@@ -125,6 +128,7 @@ export class App {
     private bindCommands(): void {
         this.logger.debug("Binding command");
         this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
+        this.container.bind<UserCommandService>("UserCommandService").to(UserCommandServiceImpl);
 
     }
     /**
@@ -147,6 +151,7 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(CollectivityController).whenTargetNamed("CollectivityController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed("UserController");
 
     }
 
@@ -175,6 +180,8 @@ export class App {
             this.bindRepository(connection);
         }).catch((error) => {
             this.logger.error(error);
+            this.logger.error("An error occurred during establishment database connection, server cannot be start");
+            throw new Error("Database error server cannot be start");
         });
         // Bind security manager
         this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
