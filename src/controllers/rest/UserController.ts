@@ -8,15 +8,34 @@ import { UserCommandService } from "../../services/command/UserCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import { SaveUserCommandDTO } from "../../services/command/dto/users/SaveUserCommandDTO";
 
+/**
+ * API resources to create user
+ * /api/users
+ * @class UserController
+ */
 @Controller("/api/users")
 @injectable()
 export class UserController implements interfaces.Controller {
 
+    /**
+     * UserController Logger
+     * @type {winston.LoggerInstance}
+     */
     private logger: LoggerInstance = Utils.createLogger(UserController.name);
 
+    /**
+     * User command service
+     */
     @inject("UserCommandService")
     private userCommandService: UserCommandService;
 
+    /**
+     * Create a user
+     * @param {SaveUser} user
+     * @param {e.NextFunction} next
+     * @param {e.Response} response
+     * @returns {Promise<NumberIdentifier>}
+     */
     @Post("/")
     public async createCommandUser(@RequestBody() user: SaveUser, @Next() next: Express.NextFunction,  @Response() response: Express.Response): Promise<NumberIdentifier> {
         this.logger.debug("Begin creation");

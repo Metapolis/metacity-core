@@ -19,5 +19,11 @@ export interface UserDao {
      */
     findById(id: number): Promise<User> | undefined;
 
+    /**
+     * Save or update a user
+     * @param {User} user
+     * @returns {void}
+     */
+
     saveOrUpdate(user: User): void | undefined;
 }
