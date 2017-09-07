@@ -41,12 +41,4 @@ export class UserDaoImpl implements UserDao {
         this.logger.info("Retrieve user with identifier '%s'", id);
         return await this.userRepository.findOneById(id);
     }
-    /**
-     * Override
-     */
-    public async saveOrUpdate(user: User): Promise<void> | undefined {
-        this.logger.info("Persist new user '%s'", user.getUsername());
-        await this.userRepository.persist(user);
-        this.logger.info("User saved");
-    }
 }

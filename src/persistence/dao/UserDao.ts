@@ -18,6 +18,4 @@ export interface UserDao {
      * @param id identifier to find
      */
     findById(id: number): Promise<User> | undefined;
-
-    saveOrUpdate(user: User): void | undefined;
 }
