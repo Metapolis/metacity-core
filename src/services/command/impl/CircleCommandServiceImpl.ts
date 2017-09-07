@@ -8,6 +8,7 @@ import { CollectivityDao } from "../../../persistence/dao/CollectivityDao";
 import { Collectivity } from "../../../persistence/domain/Collectivity";
 import { ActivityCircle } from "../../../persistence/domain/ActivityCircle";
 import {CircleDao} from "../../../persistence/dao/CircleDao";
+import {isNullOrUndefined} from "util";
 
 /**
  * Implementation of {@link CircleCommandService}
@@ -39,7 +40,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
      * Override
      */
     public async createCircle(command: SaveCircleCommandDTO): Promise<number> {
-        Utils.checkArgument(command != null && command !== undefined, "Command cannot be undefined or null");
+        Utils.checkArgument(isNullOrUndefined(command), "Command cannot be undefined or null");
         Utils.checkArgument(Utils.isNullOrEmpty(command.getName()), "Circle's name cannot be null or empty");
         Utils.checkArgument(command.getRoles() != null, "Circle's roles cannot be null");
         this.logger.debug("Begin circle creation for '%s'", command.getName());
@@ -54,14 +55,9 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setCollectivity(collectivity);
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
-        // Check if description is set
-        if (command.getDescription() != null && command.getDescription() !== undefined) {
-            circle.setDescription(command.getDescription());
-        }
-        // Check if avatar url is set
-        if (command.getAvatarURL() != null && command.getAvatarURL() !== undefined) {
-            circle.setAvatarUrl(command.getAvatarURL());
-        }
+        circle.setDescription(command.getDescription());
+        circle.setAvatarUrl(command.getAvatarURL());
+
         this.logger.debug("Create new circle");
         await this.circleDao.saveOrUpdate(circle);
 
