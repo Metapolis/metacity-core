@@ -1,8 +1,7 @@
-import { Controller, interfaces, Next, Response, Post, RequestBody } from "inversify-express-utils";
+import { Controller, interfaces, Post, RequestBody } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
-import * as Express from "express";
 import { SaveUser } from "./model/user/SaveUser";
 import { UserCommandService } from "../../services/command/UserCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
@@ -33,10 +32,9 @@ export class UserController implements interfaces.Controller {
      * Create a user
      *
      * @param {SaveUser} user
-     * @param {e.NextFunction} next
-     * @param {e.Response} response
      *
-     * @returns {Promise<NumberIdentifier>}
+     *
+     * @returns {Promise<NumberIdentifier>} User identifier
      */
     @Post("/")
     public async createCommandUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
@@ -45,7 +43,7 @@ export class UserController implements interfaces.Controller {
         saveUserCommandDTO.setAvatarURL(user.avatarURL);
         saveUserCommandDTO.setUsername(user.username);
         saveUserCommandDTO.setPassword(user.password);
-        saveUserCommandDTO.setEmailAddress(user.emailAddress);
+        saveUserCommandDTO.setEmail(user.email);
         saveUserCommandDTO.setAddress(user.address);
 
         const userIdentifier: number = await this.userCommandService.createUser(saveUserCommandDTO);

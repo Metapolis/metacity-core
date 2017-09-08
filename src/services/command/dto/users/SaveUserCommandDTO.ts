@@ -15,7 +15,7 @@ export class SaveUserCommandDTO {
     /**
      * User email address
      */
-    private emailAddress: string;
+    private email: string;
 
     /**
      * User address
@@ -63,16 +63,16 @@ export class SaveUserCommandDTO {
      * Getter email address
      * @returns {string}
      */
-    public getEmailAddress(): string {
-        return this.emailAddress;
+    public getEmail(): string {
+        return this.email;
     }
 
     /**
      * Setter email address
-     * @param {string} emailAddress
+     * @param {string} email
      */
-    public setEmailAddress(emailAddress: string): void {
-        this.emailAddress = emailAddress;
+    public setEmail(email: string): void {
+        this.email = email;
     }
 
     /**

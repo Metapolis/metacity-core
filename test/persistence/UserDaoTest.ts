@@ -104,4 +104,26 @@ export class UserDaoTest {
         Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
         Chai.assert.equal(find.getId(), user.getId());
     }
+
+    @test
+    public async testSaveOrUpdate(): Promise<void> {
+        const userDao: UserDao = ContextApp.container.get("CircleDao");
+        const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
+
+        const user: User = new User();
+        user.setUsername("Michel");
+        user.setPassword("Yolo");
+        user.setEmail("michel@bresil");
+
+        await userDao.saveOrUpdate(user);
+
+        const actual: User = await userRepository.findOneById(user.getId());
+
+        Chai.assert.isTrue((await userRepository.find()).length === 1);
+        Chai.assert.equal(actual.getId(), user.getId());
+        Chai.assert.equal(actual.getPassword(), user.getPassword());
+        Chai.assert.equal(actual.getUsername(), user.getUsername());
+        Chai.assert.equal(actual.getEmail(), user.getEmail());
+
+    }
 }

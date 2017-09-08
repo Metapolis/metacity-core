@@ -15,7 +15,7 @@ export class SaveUser {
     /**
      * User email address
      */
-    public emailAddress: string;
+    public email: string;
 
     /**
      * User address
