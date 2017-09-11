@@ -28,7 +28,7 @@ export class UserDaoTest {
 
         // Create circle
         const circle: ActivityCircle = new ActivityCircle();
-        circle.setName("Stark company");
+        circle.setName("Stark assembly");
         circle.setRoles([Role.READ_ALL]);
 
         // Create collectivity
@@ -76,7 +76,7 @@ export class UserDaoTest {
 
         // Create circle
         const circle: ActivityCircle = new ActivityCircle();
-        circle.setName("Stark company");
+        circle.setName("Stark industry");
         circle.setRoles([Role.READ_ALL]);
 
         // Create collectivity
@@ -111,6 +111,8 @@ export class UserDaoTest {
 
     @test
     public async testSaveOrUpdate(): Promise<void> {
+        // Test is not passing because the same repository is used for all tests
+        // DB destruction before and after test to be implemented
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
 

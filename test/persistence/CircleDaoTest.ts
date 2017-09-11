@@ -17,7 +17,6 @@ export class CircleDaoTest {
         const activityCircle: ActivityCircle = new ActivityCircle();
         activityCircle.setName("Michel");
         activityCircle.setRoles(["Champion"]);
-        activityCircle.setId(1);
 
         await circleDao.saveOrUpdate(activityCircle);
 
