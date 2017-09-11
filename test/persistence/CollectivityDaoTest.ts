@@ -5,9 +5,10 @@ import { ContextApp } from "../ContextApp";
 import * as TypeORM from "typeorm";
 import { CollectivityDao } from "../../src/persistence/dao/CollectivityDao";
 import { Collectivity } from "../../src/persistence/domain/Collectivity";
+import { AbstractTestDao } from "./inversify/AbstractTestService";
 
 @suite
-export class CollectivityDaoTest {
+export class CollectivityDaoTest extends AbstractTestDao {
 
     @test
     public async testFindById(): Promise<void> {

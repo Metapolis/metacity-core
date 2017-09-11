@@ -8,9 +8,10 @@ import { User } from "../../src/persistence/domain/User";
 import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
 import { Role } from "../../src/common/enum/Role";
 import { Collectivity } from "../../src/persistence/domain/Collectivity";
+import { AbstractTestDao } from "./inversify/AbstractTestService";
 
 @suite
-export class UserDaoTest {
+export class UserDaoTest extends AbstractTestDao {
 
     @test
     public async testFindByUsername(): Promise<void> {
