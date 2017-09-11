@@ -34,12 +34,13 @@ export class UserControllerTest extends AbstractTestController {
         const user: SaveUser = new SaveUser();
         user.username = "michel";
         user.address = "Maison";
-        user.emailAddress = "john@cena";
+        user.email = "john@cena";
         user.avatarURL = "Pour vendre des velux";
         user.password = "Monique";
 
         userCommandService.setup((instance: UserCommandService) => instance.createUser(TypeMoq.It.is((userDTO: SaveUserCommandDTO) => {
             let ret = userDTO.getUsername() === user.username;
+            console.log(ret);
             ret = ret && userDTO.getEmail() === user.email;
             ret = ret && userDTO.getAvatarURL() === user.avatarURL;
             ret = ret && userDTO.getPassword() === user.password;

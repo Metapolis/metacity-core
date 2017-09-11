@@ -23,6 +23,7 @@ export class UserDaoTest {
         const user: User = new User();
         user.setUsername("Toto");
         user.setPassword("password");
+        user.setEmail("john@cena");
         user.setLastConnection(Date.now());
 
         // Create circle
@@ -54,6 +55,7 @@ export class UserDaoTest {
         Chai.assert.equal(find.getUsername(), user.getUsername());
         Chai.assert.equal(find.getLastConnection(), user.getLastConnection());
         Chai.assert.equal(find.getPassword(), user.getPassword());
+        Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
         Chai.assert.equal(find.getId(), 1);
     }
@@ -69,6 +71,7 @@ export class UserDaoTest {
         const user: User = new User();
         user.setUsername("Toto");
         user.setPassword("password2");
+        user.setEmail("john@cena");
         user.setLastConnection(Date.now());
 
         // Create circle
@@ -101,13 +104,14 @@ export class UserDaoTest {
         Chai.assert.equal(find.getUsername(), user.getUsername());
         Chai.assert.equal(find.getLastConnection(), user.getLastConnection());
         Chai.assert.equal(find.getPassword(), user.getPassword());
+        Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
         Chai.assert.equal(find.getId(), user.getId());
     }
 
     @test
     public async testSaveOrUpdate(): Promise<void> {
-        const userDao: UserDao = ContextApp.container.get("CircleDao");
+        const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
 
         const user: User = new User();
@@ -118,7 +122,8 @@ export class UserDaoTest {
         await userDao.saveOrUpdate(user);
 
         const actual: User = await userRepository.findOneById(user.getId());
-
+        console.log(await userRepository.find());
+        
         Chai.assert.isTrue((await userRepository.find()).length === 1);
         Chai.assert.equal(actual.getId(), user.getId());
         Chai.assert.equal(actual.getPassword(), user.getPassword());
