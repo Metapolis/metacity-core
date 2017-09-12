@@ -1,7 +1,9 @@
+
 /**
- * Contains circle's identifier
+ * Contains object's identifier
  */
 export class NumberIdentifier {
+
     /**
      * Object Identifier
      */

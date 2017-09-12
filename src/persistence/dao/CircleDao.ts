@@ -7,9 +7,9 @@ export interface CircleDao {
 
     /**
      * Save or update a circle
-     * @param {ActivityCircle} circle
-     * @returns {void}
+     *
+     * @param {ActivityCircle} circle to save
+     *
      */
-
     saveOrUpdate(circle: ActivityCircle): void | undefined;
 }

@@ -129,8 +129,8 @@ export class App {
         this.logger.debug("Binding command");
         this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
         this.container.bind<UserCommandService>("UserCommandService").to(UserCommandServiceImpl);
-
     }
+
     /**
      * Bind all query services
      */
