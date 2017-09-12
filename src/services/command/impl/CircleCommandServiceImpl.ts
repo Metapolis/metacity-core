@@ -40,8 +40,8 @@ export class CircleCommandServiceImpl implements CircleCommandService {
      * Override
      */
     public async createCircle(command: SaveCircleCommandDTO): Promise<number> {
-        Utils.checkArgument(isNullOrUndefined(command), "Command cannot be undefined or null");
-        Utils.checkArgument(Utils.isNullOrEmpty(command.getName()), "Circle's name cannot be null or empty");
+        Utils.checkArgument(!isNullOrUndefined(command), "Command cannot be undefined or null");
+        Utils.checkArgument(!Utils.isNullOrEmpty(command.getName()), "Circle's name cannot be null or empty");
         Utils.checkArgument(command.getRoles() != null, "Circle's roles cannot be null");
         this.logger.debug("Begin circle creation for '%s'", command.getName());
 
