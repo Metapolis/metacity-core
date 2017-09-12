@@ -9,9 +9,9 @@ import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import {SaveCircle} from "./model/circle/SaveCircle";
 
 /**
- * API resources to circle services
+ * API resources to collectivities services
  *
- * /api/collectivity/id/circles route
+ * /api/collectivities route
  *
  * @class CollectivityController
  */
@@ -41,7 +41,8 @@ export class CollectivityController implements interfaces.Controller {
      */
     @Post("/:accessKey/circles")
     public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
-       // We don't verify if collectivity exists
+
+        // We don't verify if collectivity exists
         // It will be done with @secured
         // Coming soon
         this.logger.debug("Begin creation");

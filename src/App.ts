@@ -147,7 +147,6 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(CollectivityController).whenTargetNamed("CollectivityController");
-
     }
 
     /**
