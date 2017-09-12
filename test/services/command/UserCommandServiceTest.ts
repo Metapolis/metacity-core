@@ -38,38 +38,3 @@ private async testCreateUser(): Promise<void> {
         })), TypeMoq.Times.exactly(1));
     }
 }
-/*private async testCreateCircle(): Promise<void> {
-
-    const accessKey: string = "starkindustries";
-const circleIdentifier: number = 42;
-const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
-const collectivityDao: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
-const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
-
-const collectivity: Collectivity = new Collectivity();
-collectivity.setSecret("secret");
-collectivity.setName("Rochelle");
-collectivity.setId(accessKey);
-
-const saveCircleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-saveCircleDTO.setAccessKey(accessKey);
-saveCircleDTO.setAvatarURL("avatarUrl");
-saveCircleDTO.setRoles(["Role"]);
-saveCircleDTO.setName("michel");
-saveCircleDTO.setDescription("description");
-
-collectivityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(collectivity));
-
-await circleCommandService.createCircle(saveCircleDTO);
-
-circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((activityCircle: ActivityCircle) => {
-    let ret = activityCircle.getName() === saveCircleDTO.getName();
-    ret = ret && activityCircle.getRoles().length === saveCircleDTO.getRoles().length;
-    for (let i = 0; i < saveCircleDTO.getRoles().length; i++) {
-        ret = ret && activityCircle.getRoles()[i] === saveCircleDTO.getRoles()[i];
-    }
-    ret = ret && activityCircle.getDescription() === saveCircleDTO.getDescription();
-    ret = ret && activityCircle.getAvatarUrl() === saveCircleDTO.getAvatarURL();
-    return ret;
-})), TypeMoq.Times.exactly(1));
-}*/
