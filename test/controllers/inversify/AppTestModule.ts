@@ -12,14 +12,14 @@ import { UserAuthenticationQueryService } from "../../../src/services/query/User
 import { UserAuthenticationQueryServiceImpl } from "../../../src/services/query/impl/UserAuthenticationQueryServiceImpl";
 import { CollectivityDao } from "../../../src/persistence/dao/CollectivityDao";
 import { CollectivityDaoImpl } from "../../../src/persistence/dao/impl/CollectivityDaoImpl";
+import { UserCommandService } from "../../../src/services/command/UserCommandService";
+import { UserCommandServiceImpl} from "../../../src/services/command/impl/UserCommandServiceImpl";
 import { UserDaoImpl } from "../../../src/persistence/dao/impl/UserDaoImpl";
 import { UserDao } from "../../../src/persistence/dao/UserDao";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import { CircleDaoImpl } from "../../../src/persistence/dao/impl/CircleDaoImpl";
 import { CircleCommandService } from "../../../src/services/command/CircleCommandService";
 import { CircleCommandServiceImpl } from "../../../src/services/command/impl/CircleCommandServiceImpl";
-import {UserCommandService} from "../../../src/services/command/UserCommandService";
-import {UserCommandServiceImpl} from "../../../src/services/command/impl/UserCommandServiceImpl";
 
 /**
  * App test module
@@ -70,6 +70,7 @@ export class AppTestModule {
             ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType<CircleDao>(CircleDaoImpl));
         }
 
+        // Rebind all services
         ContextApp.container.rebind("UserDao").toConstantValue((ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDaoImpl>).object);
         ContextApp.container.rebind("CollectivityDao").toConstantValue((ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDaoImpl>).object);
         ContextApp.container.rebind("CircleDao").toConstantValue((ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDaoImpl>).object);
