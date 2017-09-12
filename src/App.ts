@@ -266,7 +266,6 @@ export class App {
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
         this.container.bind<CollectivityDao>("CollectivityDao").to(CollectivityDaoImpl);
         this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
-
     }
 
     /**
