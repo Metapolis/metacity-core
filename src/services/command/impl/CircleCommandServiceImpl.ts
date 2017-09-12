@@ -21,7 +21,6 @@ export class CircleCommandServiceImpl implements CircleCommandService {
      *
      * @type {winston.LoggerInstance}
      */
-
     private logger: LoggerInstance = Utils.createLogger(CircleCommandServiceImpl.name);
 
     /**

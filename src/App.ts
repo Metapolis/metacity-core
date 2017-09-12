@@ -35,11 +35,11 @@ import { SecurityManager } from "./common/security/SecurityManager";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import { ActivityCircle } from "./persistence/domain/ActivityCircle";
-import {CircleCommandService} from "./services/command/CircleCommandService";
-import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandServiceImpl";
-import {CollectivityController} from "./controllers/rest/CollectivityController";
-import {CircleDao} from "./persistence/dao/CircleDao";
-import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
+import { CircleCommandService } from "./services/command/CircleCommandService";
+import { CircleCommandServiceImpl } from "./services/command/impl/CircleCommandServiceImpl";
+import { CollectivityController } from "./controllers/rest/CollectivityController";
+import { CircleDao } from "./persistence/dao/CircleDao";
+import { CircleDaoImpl } from "./persistence/dao/impl/CircleDaoImpl";
 
 /**
  * The App.
@@ -125,8 +125,8 @@ export class App {
     private bindCommands(): void {
         this.logger.debug("Binding command");
         this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
-
     }
+
     /**
      * Bind all query services
      */

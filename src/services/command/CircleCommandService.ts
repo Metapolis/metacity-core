@@ -1,7 +1,7 @@
 import { SaveCircleCommandDTO } from "./dto/circles/SaveCircleCommandDTO";
 
 /**
- * Contains a method to perform a circle command
+ * Contains methods to perform circle commands
  */
 export interface CircleCommandService {
 

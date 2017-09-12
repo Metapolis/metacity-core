@@ -9,7 +9,7 @@ import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import {SaveCircle} from "./model/circle/SaveCircle";
 
 /**
- * API resources to circle creation service
+ * API resources to circle services
  *
  * /api/collectivity/id/circles route
  *
@@ -25,6 +25,7 @@ export class CollectivityController implements interfaces.Controller {
      * @type {winston.LoggerInstance}
      */
     private logger: LoggerInstance = Utils.createLogger(CollectivityController.name);
+
     /**
      * Circle command service
      */
@@ -34,14 +35,15 @@ export class CollectivityController implements interfaces.Controller {
     /**
      * Create a circle
      *
-     * @param {ActivityCircle} circle
-     * @param {string} accessKey
-     * @param {e.NextFunction} next
-     * @param {e.Response} response
-     * @returns {Promise<NumberIdentifier>}
+     * @param {SaveCircle} circle to create
+     * @param {string} accessKey :  collectivity identifier
+     * @returns {Promise<NumberIdentifier>} created circle identifier
      */
     @Post("/:accessKey/circles")
-    public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @Next() next: Express.NextFunction, @Response() response: Express.Response): Promise<NumberIdentifier> {
+    public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
+       // We don't verify if collectivity exists
+        // It will be done with @secured
+        // Coming soon
         this.logger.debug("Begin creation");
         const saveCircleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         saveCircleCommandDTO.setAvatarURL(circle.avatarURL);

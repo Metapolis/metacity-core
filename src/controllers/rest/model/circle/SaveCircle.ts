@@ -1,5 +1,5 @@
 /**
- * Contains circle's info
+ * Contains info to create circle
  */
 export class SaveCircle {
 
