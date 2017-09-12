@@ -41,6 +41,8 @@ export class AppTestModule {
 
     public rebind(): void {
         ContextApp.container.rebind("CollectivityDao").to(CollectivityDaoImpl);
+        ContextApp.container.rebind("UserDao").to(UserDaoImpl);
+
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");
         }
