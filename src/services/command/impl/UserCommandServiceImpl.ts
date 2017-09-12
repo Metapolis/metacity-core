@@ -30,10 +30,10 @@ export class UserCommandServiceImpl implements UserCommandService {
      * Override
      */
     public async createUser(command: SaveUserCommandDTO): Promise<number> {
-        Utils.checkArgument(isNullOrUndefined(command), "Command cannot be undefined or null");
-        Utils.checkArgument(Utils.isNullOrEmpty(command.getUsername()), "Username cannot be null or empty");
-        Utils.checkArgument(Utils.isNullOrEmpty(command.getPassword()), "Password cannot be null or empty");
-        Utils.checkArgument(Utils.isNullOrEmpty(command.getEmail()), "Email cannot be null or empty");
+        Utils.checkArgument(!isNullOrUndefined(command), "Command cannot be undefined or null");
+        Utils.checkArgument(!Utils.isNullOrEmpty(command.getUsername()), "Username cannot be null or empty");
+        Utils.checkArgument(!Utils.isNullOrEmpty(command.getPassword()), "Password cannot be null or empty");
+        Utils.checkArgument(!Utils.isNullOrEmpty(command.getEmail()), "Email cannot be null or empty");
 
         this.logger.debug("Begin user creation for '%s'", command.getUsername());
 
