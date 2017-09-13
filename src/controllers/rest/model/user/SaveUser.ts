@@ -2,6 +2,7 @@
  * Contains user's info
  */
 export class SaveUser {
+
     /**
      * User username
      */

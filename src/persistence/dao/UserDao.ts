@@ -21,7 +21,9 @@ export interface UserDao {
 
     /**
      * Save or update a user
-     * @param {User} user
+     *
+     * @param {User} user to create
+     *
      * @returns {void}
      */
     saveOrUpdate(user: User): Promise<void>;

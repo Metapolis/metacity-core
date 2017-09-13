@@ -152,7 +152,6 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(CollectivityController).whenTargetNamed("CollectivityController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed("UserController");
-
     }
 
     /**
@@ -192,7 +191,6 @@ export class App {
         this.bindControllers();
         this.bindElasticClient();
         this.createServer();
-
     }
 
     /**

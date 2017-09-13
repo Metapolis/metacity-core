@@ -36,11 +36,13 @@ export class User {
      */
     @Column({nullable: true})
     private avatarURL: string;
+
     /**
      * User's email address
      */
     @Column({nullable: false})
     private email: string;
+
     /**
      * User's address
      */

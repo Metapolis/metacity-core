@@ -2,6 +2,7 @@
  * Represents a command to create a user
  */
 export class SaveUserCommandDTO {
+
     /**
      * User username
      */

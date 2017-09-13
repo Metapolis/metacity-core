@@ -31,10 +31,9 @@ export class UserController implements interfaces.Controller {
     /**
      * Create a user
      *
-     * @param {SaveUser} user
+     * @param {SaveUser} user to create
      *
-     *
-     * @returns {Promise<NumberIdentifier>} User identifier
+     * @returns {Promise<NumberIdentifier>} created user identifier
      */
     @Post("/")
     public async createCommandUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
