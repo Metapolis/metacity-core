@@ -131,6 +131,7 @@ export class User {
 
     /**
      * Getter email address
+     *
      * @returns {string}
      */
     public getEmail(): string {
@@ -139,6 +140,7 @@ export class User {
 
     /**
      * Setter email address
+     *
      * @param {string} email
      */
     public setEmail(email: string): void {
@@ -147,6 +149,7 @@ export class User {
 
     /**
      * Getter address
+     *
      * @returns {string}
      */
     public getAddress(): string {
@@ -163,6 +166,7 @@ export class User {
 
     /**
      * Getter avatarURL
+     *
      * @returns {string}
      */
     public getAvatarURL(): string {
@@ -171,6 +175,7 @@ export class User {
 
     /**
      * Setter avatarURL
+     *
      * @param {string} avatarURL
      */
     public setAvatarURL(avatarURL: string): void {

@@ -32,7 +32,6 @@ export class UserController implements interfaces.Controller {
      * Create a user
      *
      * @param {SaveUser} user to create
-     *
      * @returns {Promise<NumberIdentifier>} created user identifier
      */
     @Post("/")

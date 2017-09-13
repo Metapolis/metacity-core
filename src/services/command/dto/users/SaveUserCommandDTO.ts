@@ -30,6 +30,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Getter username
+     *
      * @returns {string}
      */
     public getUsername(): string {
@@ -38,6 +39,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Setter username
+     *
      * @param {string} username
      */
     public setUsername(username: string): void {
@@ -46,6 +48,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Getter password
+     *
      * @returns {string}
      */
     public getPassword(): string {
@@ -54,6 +57,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Setter password
+     *
      * @param {string} password
      */
     public setPassword(password: string): void {
@@ -62,6 +66,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Getter email address
+     *
      * @returns {string}
      */
     public getEmail(): string {
@@ -70,6 +75,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Setter email address
+     *
      * @param {string} email
      */
     public setEmail(email: string): void {
@@ -78,6 +84,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Getter address
+     *
      * @returns {string}
      */
     public getAddress(): string {
@@ -86,6 +93,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Setter address
+     *
      * @param {string} address
      */
     public setAddress(address: string): void {
@@ -94,6 +102,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Getter avatarURL
+     *
      * @returns {string}
      */
     public getAvatarURL(): string {
@@ -102,6 +111,7 @@ export class SaveUserCommandDTO {
 
     /**
      * Setter avatarURL
+     *
      * @param {string} avatarURL
      */
     public setAvatarURL(avatarURL: string): void {
