@@ -60,7 +60,7 @@ export class ActivityCircle {
      * Circle's collectivity (owner of circle)
      */
     @ManyToOne((type) => Collectivity, (collectivity) => "circles")
-    private collectivity: Collectivity;
+    private collectivity: Promise<Collectivity>;
 
     /**
      * Transient role array
@@ -198,7 +198,7 @@ export class ActivityCircle {
      *
      * @returns {Collectivity}
      */
-    public getCollectivity(): Collectivity {
+    public getCollectivity(): Promise<Collectivity> {
         return this.collectivity;
     }
 
@@ -207,7 +207,7 @@ export class ActivityCircle {
      *
      * @param collectivity new collectivity value
      */
-    public setCollectivity(collectivity: Collectivity): void {
+    public setCollectivity(collectivity: Promise<Collectivity>): void {
         this.collectivity = collectivity;
     }
 }

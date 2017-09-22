@@ -1,4 +1,5 @@
 import { SaveCircleCommandDTO } from "./dto/circles/SaveCircleCommandDTO";
+import { UpdateCircleCommandDTO } from "./dto/circles/UpdateCircleCommandDTO";
 
 /**
  * Contains methods to perform circle commands
@@ -13,4 +14,11 @@ export interface CircleCommandService {
      * @returns {Promise<number>} circle created identifier
      */
     createCircle(saveCircleCommandDTO: SaveCircleCommandDTO): Promise<number>;
+
+    /**
+     * Update specific circle
+     *
+     * @param {UpdateCircleCommandDTO} updateCircleCommandDTO used to update a circle
+     */
+    updateCircle(updateCircleCommandDTO: UpdateCircleCommandDTO): Promise<void>;
 }

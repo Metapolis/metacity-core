@@ -32,4 +32,22 @@ export class CircleDaoImpl implements CircleDao {
         await this.activityCircleRepository.persist(circle);
         this.logger.info("Circle saved");
     }
+
+    /**
+     * Override
+     */
+    public async isExists(id: number): Promise<boolean> {
+        this.logger.debug("Check in data base if circle with id '%s' exists", id);
+
+        return (await this.activityCircleRepository.count({id: id})) > 0;
+    }
+
+    /**
+     * Override
+     */
+    public async findById(id: number): Promise<ActivityCircle> | undefined {
+        this.logger.info("Retrieve circle with identifier '%s'", id);
+
+        return await this.activityCircleRepository.findOneById(id);
+    }
 }

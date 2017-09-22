@@ -32,7 +32,6 @@ import { ContextApp } from "./ContextApp";
 import { CollectivityQueryService } from "./services/query/CollectivityQueryService";
 import { CollectivityQueryServiceImpl } from "./services/query/impl/CollectivityQueryServiceImpl";
 import { SecurityManager } from "./common/security/SecurityManager";
-import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import { ActivityCircle } from "./persistence/domain/ActivityCircle";
 import {CircleCommandService} from "./services/command/CircleCommandService";
@@ -43,6 +42,9 @@ import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
 import {UserCommandService} from "./services/command/UserCommandService";
 import {UserCommandServiceImpl} from "./services/command/impl/UserCommandServiceImpl";
 import {UserController} from "./controllers/rest/UserController";
+import { NotFoundError } from "./common/error/NotFoundError";
+import { CircleQueryService } from "./services/query/CircleQueryService";
+import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryServiceImpl";
 
 /**
  * The App.
@@ -140,6 +142,7 @@ export class App {
         this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
         this.container.bind<CollectivityQueryService>("CollectivityQueryService").to(CollectivityQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
+        this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
     }
 
     /**
@@ -242,6 +245,9 @@ export class App {
                     } else if (err instanceof AccessDeniedError) {
                         this.logger.error("Message: %s \n Stack: %s", err.message, err.stack);
                         res.status(HTTPStatusCodes.FORBIDDEN).send({message: err.message});
+                    } else if (err instanceof NotFoundError) {
+                        this.logger.error("Message: %s \n Stack: %s", err.message, err.stack);
+                        res.status(HTTPStatusCodes.NOT_FOUND).send({message: err.message});
                     } else {
                         this.logger.error("Message: %s \n Stack: %s", err.message, err.stack);
                         res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).send({message: err.message});

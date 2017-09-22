@@ -11,5 +11,23 @@ export interface CircleDao {
      * @param {ActivityCircle} circle to save
      *
      */
-    saveOrUpdate(circle: ActivityCircle): void | undefined;
+    saveOrUpdate(circle: ActivityCircle): Promise<void> | undefined;
+
+    /**
+     * Check if this specific circle exists
+     *
+     * @param {number} id circle's identifier
+     *
+     * @returns {Promise<boolean>} true means circle exists in database
+     */
+    isExists(id: number): Promise<boolean>;
+
+    /**
+     * Retrieves a specific circle
+     *
+     * @param {number} id circle identifier
+     *
+     * @returns {Promise<ActivityCircle>} circle found
+     */
+    findById(id: number): Promise<ActivityCircle> | undefined;
 }

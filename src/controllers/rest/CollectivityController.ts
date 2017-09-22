@@ -1,4 +1,4 @@
-import { Controller, interfaces, Next, Response, Post, RequestBody, RequestParam } from "inversify-express-utils";
+import { Controller, interfaces, Next, Response, Post, RequestBody, RequestParam, Put } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
@@ -7,6 +7,10 @@ import { SaveCircleCommandDTO } from "../../services/command/dto/circles/SaveCir
 import {CircleCommandService} from "../../services/command/CircleCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import {SaveCircle} from "./model/circle/SaveCircle";
+import { UpdateCircleCommandDTO } from "../../services/command/dto/circles/UpdateCircleCommandDTO";
+import { CircleQueryService } from "../../services/query/CircleQueryService";
+import { NotFoundError } from "../../common/error/NotFoundError";
+import * as HTTPStatusCodes from "http-status-codes";
 
 /**
  * API resources to collectivities services
@@ -33,6 +37,12 @@ export class CollectivityController implements interfaces.Controller {
     private circleCommandService: CircleCommandService;
 
     /**
+     * Circle query service
+     */
+    @inject("CircleQueryService")
+    private circleQueryService: CircleQueryService;
+
+    /**
      * Create a circle
      *
      * @param {SaveCircle} circle to create
@@ -56,5 +66,38 @@ export class CollectivityController implements interfaces.Controller {
         const circleIdentifier: number = await this.circleCommandService.createCircle(saveCircleCommandDTO);
 
         return new NumberIdentifier(circleIdentifier);
+    }
+
+    /**
+     * Update specific circle
+     *
+     * @param {SaveCircle} circle new values for circle
+     * @param {string} accessKey collectivity identifier
+     * @param {number} circleId circle identifier
+     * @param {Express.Response} res Response to set 204
+     */
+    @Put("/:accessKey/circles/:circleid")
+    public async updateCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
+        if (!(await this.circleQueryService.isExists(circleId))) {
+            this.logger.debug("Circle with id '%s' cannot be found", circleId);
+            throw new NotFoundError("Circle not found");
+        }
+        // We don't verify if collectivity exists
+        // It will be done with @secured
+        // Coming soon
+        this.logger.debug("Begin update");
+        const updateCircleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
+        updateCircleCommandDTO.setAvatarURL(circle.avatarURL);
+        updateCircleCommandDTO.setName(circle.name);
+        updateCircleCommandDTO.setRoles(circle.roles);
+        updateCircleCommandDTO.setDescription(circle.description);
+        updateCircleCommandDTO.setAccessKey(accessKey);
+        updateCircleCommandDTO.setId(circleId);
+
+        await this.circleCommandService.updateCircle(updateCircleCommandDTO);
+
+        this.logger.debug("Circle '%s' is updated", circleId);
+        // empty response temporary just because JS sucks
+        res.sendStatus(HTTPStatusCodes.NO_CONTENT);
     }
 }
