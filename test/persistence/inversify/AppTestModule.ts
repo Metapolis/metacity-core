@@ -1,13 +1,7 @@
-import { Client } from "elasticsearch";
 import { Container } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../../src/common/Utils";
-import * as TypeMoq from "typemoq";
 import { ContextApp } from "../../ContextApp";
-import { UserDao } from "../../../src/persistence/dao/UserDao";
-import { UserDaoImpl } from "../../../src/persistence/dao/impl/UserDaoImpl";
-import { CollectivityDaoImpl } from "../../../src/persistence/dao/impl/CollectivityDaoImpl";
-import { CollectivityDao } from "../../../src/persistence/dao/CollectivityDao";
 
 export class AppTestModule {
 
@@ -31,6 +25,17 @@ export class AppTestModule {
      * Reconnect database
      */
     public async reconnectDB(): Promise<void> {
-        await ContextApp.app.reconnectDB();
+        AppTestModule.logger.debug("Unbinding repositories");
+        // Unbind all repository
+        ContextApp.container.unbind("UserRepository");
+        ContextApp.container.unbind("ActivityCircleRepository");
+        ContextApp.container.unbind("CollectivityRepository");
+
+        // Reconnect database
+        AppTestModule.logger.debug("Disconnect database");
+        await ContextApp.app.getDataBaseConnection().close();
+
+        AppTestModule.logger.debug("Connect database");
+        await ContextApp.app.connectDB();
     }
 }

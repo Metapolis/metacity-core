@@ -182,9 +182,9 @@ export class App {
     }
 
     /**
-     * Connect database
+     * Connect database (Public use to reconnect database)
      */
-    private async connectDB(): Promise<void> {
+    public async connectDB(): Promise<void> {
         this.logger.debug("Connect to database");
         await TypeORM.createConnection({
             dropSchemaOnConnection: Config.isDatabaseDropSchema(),
@@ -210,16 +210,6 @@ export class App {
             this.logger.error("An error occurred during establishment database connection, server cannot be start");
             throw new Error("Database error server cannot be start");
         });
-    }
-
-    /**
-     * Reconnect database
-     */
-    public async reconnectDB(): Promise<void> {
-        this.logger.debug("Disconnect database");
-        this.unbindRepository();
-        await this.dbConnection.close();
-        await this.connectDB();
     }
 
     /**
@@ -302,17 +292,18 @@ export class App {
      * Bind all repositories
      */
     private bindRepository(): void {
+        this.logger.debug("Binding repositories");
         this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
         this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(ActivityCircle));
         this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Collectivity));
     }
 
     /**
-     * Unbind all repositories
+     * Get database connection (Use to disconnect database)
+     *
+     * @returns {Connection} database connection
      */
-    private unbindRepository(): void {
-        this.container.unbind("UserRepository");
-        this.container.unbind("ActivityCircleRepository");
-        this.container.unbind("CollectivityRepository");
+    public getDataBaseConnection(): TypeORM.Connection {
+        return this.dbConnection;
     }
 }
