@@ -78,7 +78,10 @@ export class CollectivityController implements interfaces.Controller {
      */
     @Put("/:accessKey/circles/:circleid")
     public async updateCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
-        if (!(await this.circleQueryService.isExists(circleId))) {
+        // I have to do this, because express can only parse string
+        const circleIdNumber: number = Number(circleId);
+
+        if (!(await this.circleQueryService.isExists(circleIdNumber))) {
             this.logger.debug("Circle with id '%s' cannot be found", circleId);
             throw new NotFoundError("Circle not found");
         }
@@ -92,11 +95,11 @@ export class CollectivityController implements interfaces.Controller {
         updateCircleCommandDTO.setRoles(circle.roles);
         updateCircleCommandDTO.setDescription(circle.description);
         updateCircleCommandDTO.setAccessKey(accessKey);
-        updateCircleCommandDTO.setId(circleId);
+        updateCircleCommandDTO.setId(circleIdNumber);
 
         await this.circleCommandService.updateCircle(updateCircleCommandDTO);
 
-        this.logger.debug("Circle '%s' is updated", circleId);
+        this.logger.debug("Circle '%s' is updated", circleIdNumber);
         // empty response temporary just because JS sucks
         res.sendStatus(HTTPStatusCodes.NO_CONTENT);
     }

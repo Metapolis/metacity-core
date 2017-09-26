@@ -43,13 +43,13 @@ export class UserDaoTest extends AbstractTestDao {
         (await collectivity.getCircles()).push(circle);
 
         // Persist circle
-        circle.setCollectivity(collectivity);
+        circle.setCollectivity(Promise.resolve(collectivity));
         await circleRepository.persist(circle);
         // Persist user
         (await user.getCircles()).push(circle);
         await userRepository.persist(user);
 
-        const find: User = await userDao.findByUsername("Toto");
+        let find: User = await userDao.findByUsername("Toto");
 
         Chai.assert.isNotNull(find);
         Chai.assert.isFalse(find === undefined, "User not found");
@@ -59,6 +59,10 @@ export class UserDaoTest extends AbstractTestDao {
         Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
         Chai.assert.equal(find.getId(), 1);
+
+        find = await userDao.findByUsername("TotoFAKE");
+
+        Chai.assert.isTrue(find === undefined, "User should not be found");
     }
 
     @test
@@ -92,13 +96,13 @@ export class UserDaoTest extends AbstractTestDao {
         console.log(user.getLastConnection());
 
         // Persist circle
-        circle.setCollectivity(collectivity);
+        circle.setCollectivity(Promise.resolve(collectivity));
         await circleRepository.persist(circle);
         // Persist user
         (await user.getCircles()).push(circle);
         await userRepository.persist(user);
         console.log(user.getLastConnection());
-        const find: User = await userDao.findById(user.getId());
+        let find: User = await userDao.findById(user.getId());
 
         Chai.assert.isNotNull(find);
         Chai.assert.isFalse(find === undefined, "User not found");
@@ -108,6 +112,10 @@ export class UserDaoTest extends AbstractTestDao {
         Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
         Chai.assert.equal(find.getId(), user.getId());
+
+        find = await userDao.findById(user.getId() + 2);
+
+        Chai.assert.isTrue(find === undefined, "User should not be found");
     }
 
     @test

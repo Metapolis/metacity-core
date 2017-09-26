@@ -20,6 +20,8 @@ import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import { CircleDaoImpl } from "../../../src/persistence/dao/impl/CircleDaoImpl";
 import { CircleCommandService } from "../../../src/services/command/CircleCommandService";
 import { CircleCommandServiceImpl } from "../../../src/services/command/impl/CircleCommandServiceImpl";
+import { CircleQueryServiceImpl } from "../../../src/services/query/impl/CircleQueryServiceImpl";
+import { CircleQueryService } from "../../../src/services/query/CircleQueryService";
 
 /**
  * App test module
@@ -57,6 +59,9 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("CircleCommandServiceMock")) {
             ContextApp.container.bind("CircleCommandServiceMock").toConstantValue(TypeMoq.Mock.ofType<CircleCommandService>(CircleCommandServiceImpl));
         }
+        if (!ContextApp.container.isBound("CircleQueryServiceMock")) {
+            ContextApp.container.bind("CircleQueryServiceMock").toConstantValue(TypeMoq.Mock.ofType<CircleQueryService>(CircleQueryServiceImpl));
+        }
         if (!ContextApp.container.isBound("UserCommandServiceMock")) {
             ContextApp.container.bind("UserCommandServiceMock").toConstantValue(TypeMoq.Mock.ofType<UserCommandService>(UserCommandServiceImpl));
         }
@@ -76,6 +81,7 @@ export class AppTestModule {
         ContextApp.container.rebind("CircleDao").toConstantValue((ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDaoImpl>).object);
         ContextApp.container.rebind("UserAuthenticationQueryService").toConstantValue((ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>).object);
         ContextApp.container.rebind("CircleCommandService").toConstantValue((ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).object);
+        ContextApp.container.rebind("CircleQueryService").toConstantValue((ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).object);
         ContextApp.container.rebind("UserCommandService").toConstantValue((ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>).object);
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
@@ -91,6 +97,7 @@ export class AppTestModule {
         ContextApp.container.rebind("TweetQueryService").to(TweetQueryServiceImpl);
         ContextApp.container.rebind("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
         ContextApp.container.rebind("CircleCommandService").to(CircleCommandServiceImpl);
+        ContextApp.container.rebind("CircleQueryService").to(CircleQueryServiceImpl);
         ContextApp.container.rebind("UserCommandService").to(UserCommandServiceImpl);
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");

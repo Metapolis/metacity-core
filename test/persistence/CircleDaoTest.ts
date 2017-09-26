@@ -27,4 +27,46 @@ export class CircleDaoTest {
         Chai.assert.deepEqual(actual.getRoles(), activityCircle.getRoles());
         Chai.assert.equal(actual.getName(), activityCircle.getName());
     }
+
+    @test
+    public async testIsExists(): Promise<void> {
+        const circleDao: CircleDao = ContextApp.container.get("CircleDao");
+        const activityCircleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+        activityCircle.setName("Michel");
+        activityCircle.setRoles(["Champion"]);
+
+        await activityCircleRepository.persist(activityCircle);
+
+        let isExists: boolean = await circleDao.isExists(activityCircle.getId());
+
+        Chai.assert.isTrue(isExists);
+
+        isExists = await circleDao.isExists(activityCircle.getId() + 2);
+
+        Chai.assert.isFalse(isExists);
+    }
+
+    @test
+    public async testFindById(): Promise<void> {
+        const circleDao: CircleDao = ContextApp.container.get("CircleDao");
+        const activityCircleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+        activityCircle.setName("Michel");
+        activityCircle.setRoles(["Champion"]);
+
+        await activityCircleRepository.persist(activityCircle);
+
+        let actual: ActivityCircle = await circleDao.findById(activityCircle.getId());
+
+        Chai.assert.equal(actual.getId(), activityCircle.getId());
+        Chai.assert.deepEqual(actual.getRoles(), activityCircle.getRoles());
+        Chai.assert.equal(actual.getName(), activityCircle.getName());
+
+        actual = await circleDao.findById(activityCircle.getId() + 2);
+
+        Chai.assert.isTrue(actual === undefined);
+    }
 }
