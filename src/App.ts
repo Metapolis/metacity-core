@@ -75,6 +75,13 @@ export class App {
     private expressServer: Express.Application;
 
     /**
+     * Data base connection
+     *
+     * @type {TypeORM.Connection}
+     */
+    private dbConnection: TypeORM.Connection;
+
+    /**
      * Bootstrap the application.
      *
      * @class Server
@@ -158,9 +165,26 @@ export class App {
     }
 
     /**
-     * Initialization of data base connection
+     * Initialization of app module
      */
     private async initModule(): Promise<void> {
+        this.logger.debug("Connect to database");
+        await this.connectDB();
+        // Bind security manager
+        this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
+
+        this.bindDao();
+        this.bindCommands();
+        this.bindQueries();
+        this.bindControllers();
+        this.bindElasticClient();
+        this.createServer();
+    }
+
+    /**
+     * Connect database
+     */
+    private async connectDB(): Promise<void> {
         this.logger.debug("Connect to database");
         await TypeORM.createConnection({
             dropSchemaOnConnection: Config.isDatabaseDropSchema(),
@@ -179,21 +203,23 @@ export class App {
         }).then((connection: TypeORM.Connection) => {
             this.logger.debug("Connexion to database succeed");
             this.logger.debug("Begin to bind all services");
-            this.bindRepository(connection);
+            this.dbConnection = connection;
+            this.bindRepository();
         }).catch((error) => {
             this.logger.error(error);
             this.logger.error("An error occurred during establishment database connection, server cannot be start");
             throw new Error("Database error server cannot be start");
         });
-        // Bind security manager
-        this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
+    }
 
-        this.bindDao();
-        this.bindCommands();
-        this.bindQueries();
-        this.bindControllers();
-        this.bindElasticClient();
-        this.createServer();
+    /**
+     * Reconnect database
+     */
+    public async reconnectDB(): Promise<void> {
+        this.logger.debug("Disconnect database");
+        this.unbindRepository();
+        await this.dbConnection.close();
+        await this.connectDB();
     }
 
     /**
@@ -274,12 +300,19 @@ export class App {
 
     /**
      * Bind all repositories
-     *
-     * @param connection
      */
-    private bindRepository(connection: TypeORM.Connection): void {
-        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(connection.entityManager.getRepository(User));
-        this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(connection.entityManager.getRepository(ActivityCircle));
-        this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(connection.entityManager.getRepository(Collectivity));
+    private bindRepository(): void {
+        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
+        this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(ActivityCircle));
+        this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Collectivity));
+    }
+
+    /**
+     * Unbind all repositories
+     */
+    private unbindRepository(): void {
+        this.container.unbind("UserRepository");
+        this.container.unbind("ActivityCircleRepository");
+        this.container.unbind("CollectivityRepository");
     }
 }

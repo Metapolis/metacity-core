@@ -18,8 +18,19 @@ export class AppTestModule {
      */
     private static logger: LoggerInstance = Utils.createLogger(AppTestModule.name);
 
+    /**
+     * Bootstrap application for testing
+     * @returns {Container}
+     */
     public bootstrap(): Container {
         ContextApp.init();
         return ContextApp.container;
+    }
+
+    /**
+     * Reconnect database
+     */
+    public async reconnectDB(): Promise<void> {
+        await ContextApp.app.reconnectDB();
     }
 }

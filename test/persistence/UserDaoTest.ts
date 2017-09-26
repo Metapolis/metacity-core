@@ -134,8 +134,8 @@ export class UserDaoTest extends AbstractTestDao {
 
         const actual: User = await userRepository.findOneById(user.getId());
         console.log(await userRepository.find());
-        
-        Chai.assert.isTrue((await userRepository.find()).length === 3);
+
+        Chai.assert.isTrue((await userRepository.find()).length === 1);
         Chai.assert.equal(actual.getId(), user.getId());
         Chai.assert.equal(actual.getPassword(), user.getPassword());
         Chai.assert.equal(actual.getUsername(), user.getUsername());

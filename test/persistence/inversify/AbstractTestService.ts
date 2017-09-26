@@ -11,8 +11,15 @@ export abstract class AbstractTestDao {
     /**
      * Method launched before test execution
      */
-    public before(): void {
+    public static before(): void {
         AbstractTestDao.app = new AppTestModule();
         AbstractTestDao.app.bootstrap();
+    }
+
+    /**
+     * Reconnect database, use to isolate context for each test
+     */
+    public async after(): Promise<void> {
+        await AbstractTestDao.app.reconnectDB();
     }
 }
