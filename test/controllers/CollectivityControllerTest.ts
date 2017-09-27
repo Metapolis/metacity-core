@@ -109,7 +109,7 @@ export class CollectivityControllerTest extends AbstractTestController {
         circle.description = "Il va de ville en ville";
         circle.avatarURL = "Pour vendre des velux";
 
-        circleQueryService.setup((instance) => instance.isExists(circleIdentifier)).returns(() => Promise.resolve(true));
+        circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
 
         const opts = {
             method: "PUT",
@@ -156,7 +156,7 @@ export class CollectivityControllerTest extends AbstractTestController {
             json: true
         };
 
-        circleQueryService.setup((instance) => instance.isExists(circleIdentifier)).returns(() => Promise.resolve(false));
+        circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(false));
 
         let statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -166,7 +166,7 @@ export class CollectivityControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
         circleCommandService.setup((instance) => instance.updateCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
-        circleQueryService.setup((instance) => instance.isExists(circleIdentifier)).returns(() => Promise.resolve(true));
+        circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
 
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {

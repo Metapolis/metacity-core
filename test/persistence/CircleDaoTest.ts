@@ -39,11 +39,11 @@ export class CircleDaoTest {
 
         await activityCircleRepository.persist(activityCircle);
 
-        let isExists: boolean = await circleDao.isExists(activityCircle.getId());
+        let isExists: boolean = await circleDao.exists(activityCircle.getId());
 
         Chai.assert.isTrue(isExists);
 
-        isExists = await circleDao.isExists(activityCircle.getId() + 2);
+        isExists = await circleDao.exists(activityCircle.getId() + 2);
 
         Chai.assert.isFalse(isExists);
     }

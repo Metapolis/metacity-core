@@ -27,9 +27,9 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     /**
      * Override
      */
-    public async isExists(id: number): Promise<boolean> {
+    public async exists(id: number): Promise<boolean> {
         this.logger.debug("Check if circle with id '%s' exists", id);
 
-        return await this.circleDao.isExists(id);
+        return await this.circleDao.exists(id);
     }
 }

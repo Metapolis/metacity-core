@@ -10,5 +10,5 @@ export interface CircleQueryService {
      *
      * @returns {Promise<boolean>} true means circle with this specific identifier exists
      */
-    isExists(id: number): Promise<boolean>;
+    exists(id: number): Promise<boolean>;
 }

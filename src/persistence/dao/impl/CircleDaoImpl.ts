@@ -36,7 +36,7 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async isExists(id: number): Promise<boolean> {
+    public async exists(id: number): Promise<boolean> {
         this.logger.debug("Check in data base if circle with id '%s' exists", id);
 
         return (await this.activityCircleRepository.count({id: id})) > 0;

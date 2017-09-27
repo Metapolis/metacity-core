@@ -20,7 +20,7 @@ export interface CircleDao {
      *
      * @returns {Promise<boolean>} true means circle exists in database
      */
-    isExists(id: number): Promise<boolean>;
+    exists(id: number): Promise<boolean>;
 
     /**
      * Retrieves a specific circle

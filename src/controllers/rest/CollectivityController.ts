@@ -81,7 +81,7 @@ export class CollectivityController implements interfaces.Controller {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
 
-        if (!(await this.circleQueryService.isExists(circleIdNumber))) {
+        if (!(await this.circleQueryService.exists(circleIdNumber))) {
             this.logger.debug("Circle with id '%s' cannot be found", circleId);
             throw new NotFoundError("Circle not found");
         }
