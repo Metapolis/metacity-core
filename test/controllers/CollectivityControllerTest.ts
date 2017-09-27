@@ -66,7 +66,6 @@ export class CollectivityControllerTest extends AbstractTestController {
         });
 
         Chai.assert.equal(actual.identifier, circleIdentifier, "Expected same identifier");
-
     }
     @test
     public async testCreateCollectivityCircleError(): Promise<void> {
@@ -175,7 +174,5 @@ export class CollectivityControllerTest extends AbstractTestController {
         });
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
-
-
     }
 }

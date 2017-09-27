@@ -10,6 +10,7 @@ import { CircleDao } from "../../../persistence/dao/CircleDao";
  */
 @injectable()
 export class CircleQueryServiceImpl implements CircleQueryService {
+
     /**
      * CircleQueryServiceImpl logger
      *
@@ -31,5 +32,4 @@ export class CircleQueryServiceImpl implements CircleQueryService {
 
         return await this.circleDao.isExists(id);
     }
-
 }

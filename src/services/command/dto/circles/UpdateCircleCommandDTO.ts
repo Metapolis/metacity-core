@@ -39,7 +39,6 @@ export class UpdateCircleCommandDTO {
      */
     public getAccessKey(): string {
         return this.accessKey;
-
     }
 
     /**
@@ -56,7 +55,6 @@ export class UpdateCircleCommandDTO {
      */
     public getId(): number {
         return this.id;
-
     }
 
     /**
@@ -88,7 +86,6 @@ export class UpdateCircleCommandDTO {
      * Getter description
      * @returns {string}
      */
-
     public getDescription(): string {
         return this.description;
     }
@@ -131,6 +128,5 @@ export class UpdateCircleCommandDTO {
      */
     public setRoles(roles: string[]): void {
         this.roles = roles;
-
     }
 }
