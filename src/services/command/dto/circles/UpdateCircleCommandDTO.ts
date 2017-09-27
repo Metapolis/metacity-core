@@ -71,7 +71,6 @@ export class UpdateCircleCommandDTO {
      */
     public getName(): string {
         return this.name;
-
     }
 
     /**
