@@ -1,16 +1,22 @@
-import { Controller, interfaces, Next, Response, Post, RequestBody, RequestParam, Put } from "inversify-express-utils";
+import {
+    Controller, interfaces, Next, Response, Post, RequestBody, RequestParam, Put,
+    Get
+} from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import * as Express from "express";
 import { SaveCircleCommandDTO } from "../../services/command/dto/circles/SaveCircleCommandDTO";
-import {CircleCommandService} from "../../services/command/CircleCommandService";
+import { CircleCommandService } from "../../services/command/CircleCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
-import {SaveCircle} from "./model/circle/SaveCircle";
+import { SaveCircle } from "./model/circle/SaveCircle";
 import { UpdateCircleCommandDTO } from "../../services/command/dto/circles/UpdateCircleCommandDTO";
 import { CircleQueryService } from "../../services/query/CircleQueryService";
 import { NotFoundError } from "../../common/error/NotFoundError";
 import * as HTTPStatusCodes from "http-status-codes";
+import { CircleDetails } from "./model/circle/CircleDetails";
+import { CircleDTO } from "../../services/query/dto/circle/CircleDTO";
+import { User } from "./model/circle/User";
 
 /**
  * API resources to collectivities services
@@ -102,5 +108,47 @@ export class CollectivityController implements interfaces.Controller {
         this.logger.debug("Circle '%s' is updated", circleIdNumber);
         // empty response temporary just because JS sucks
         res.sendStatus(HTTPStatusCodes.NO_CONTENT);
+    }
+
+    /**
+     * Get information details of specific circle
+     * @param {string} accessKey
+     * @param {number} circleId
+     * @returns {Promise<Circle>}
+     */
+    @Get("/:accessKey/circles/:circleid")
+    public async getCollectivityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
+        this.logger.debug("Begin get circle");
+        // I have to do this, because express can only parse string
+        const circleIdNumber: number = Number(circleId);
+
+        // Check if circle and collectivity exist and is circle is owned by collectivity
+        if (!(await this.circleQueryService.isOwnedByCollectivity(circleIdNumber, accessKey))) {
+            throw new NotFoundError("Circle is not owned by collectivity");
+        }
+
+        // We don't verify if collectivity exists
+        // It will be done with @secured
+        // Coming soon
+        // Don't check if circle exists because the previous check all
+        const circleDTO: CircleDTO = await this.circleQueryService.getCircle(circleIdNumber);
+        const circleDetails: CircleDetails = new CircleDetails();
+        circleDetails.id = circleDTO.getId();
+        circleDetails.name = circleDTO.getName();
+        circleDetails.description = circleDTO.getDescription();
+        circleDetails.avatarUrl = circleDTO.getAvatarUrl();
+        circleDetails.roles = circleDTO.getRoles();
+
+        for (const userDTO of circleDTO.getMembers()) {
+            const user: User = new User();
+            user.id = userDTO.getId();
+            user.firstName = userDTO.getFirstName();
+            user.lastName = userDTO.getLastName();
+            circleDetails.members.push(user);
+        }
+
+        this.logger.debug("Circle '%s' is retrieved", circleIdNumber);
+
+        return circleDetails;
     }
 }

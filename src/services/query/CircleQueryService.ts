@@ -1,3 +1,5 @@
+import { CircleDTO } from "./dto/circle/CircleDTO";
+
 /**
  * Contains method to perform circle query
  */
@@ -11,4 +13,22 @@ export interface CircleQueryService {
      * @returns {Promise<boolean>} true means circle with this specific identifier exists
      */
     exists(id: number): Promise<boolean>;
+
+    /**
+     * Check if circle is owned by collectivity
+     *
+     * @param {number} circleId circle identifier
+     * @param {string} accessKey collectivity identifier
+     *
+     * @returns {boolean} true means collectivity own circle
+     */
+    isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean>;
+
+    /**
+     * Get specific circle
+     *
+     * @param {number} circleId circle identifier
+     * @returns {CircleDTO} return the DTO of specific circle
+     */
+    getCircle(circleId: number): Promise<CircleDTO> | null;
 }

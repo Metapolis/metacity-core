@@ -30,4 +30,14 @@ export interface CircleDao {
      * @returns {Promise<ActivityCircle>} circle found
      */
     findById(id: number): Promise<ActivityCircle> | undefined;
+
+    /**
+     * Check if circle is owned by collectivity
+     *
+     * @param {number} circleId circle identifier
+     * @param {string} accessKey collectivity identifier
+     *
+     * @returns {boolean} true means collectivity own circle
+     */
+    isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean>;
 }
