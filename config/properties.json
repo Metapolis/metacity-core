@@ -1,0 +1,8 @@
+{
+  "propertiesFiles":{
+    "cwd":"./",
+    "files":{
+      "config": "properties_dev.json"
+    }
+  }
+}
