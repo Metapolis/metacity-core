@@ -1,7 +1,6 @@
 import { AbstractTestService } from "../inversify/AbstractTestService";
 import { suite, test } from "mocha-typescript";
 import { Client, GetParams } from "elasticsearch";
-import * as Request from "request-promise";
 import * as Chai from "chai";
 import { ContextApp } from "../../ContextApp";
 import * as TypeMoq from "typemoq";
@@ -21,7 +20,7 @@ class UserCommandServiceTest extends AbstractTestService {
      *
      */
     @test
-private async testCreateUser(): Promise<void> {
+    private async testCreateUser(): Promise<void> {
 
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
         const userCommandService: UserCommandService = ContextApp.container.get("UserCommandService");
@@ -44,6 +43,7 @@ private async testCreateUser(): Promise<void> {
             return ret;
         })), TypeMoq.Times.exactly(1));
     }
+
     @test
     private async testCreateUserCommandNull() {
 

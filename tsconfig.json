@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "server/",
+    "baseUrl": "/",
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
@@ -21,7 +21,8 @@
     "declaration": true
   },
   "include": [
-    "server/src/**/*"
+    "src/**/*",
+    "test/**/*"
   ],
   "exclude": [
     "node_modules",

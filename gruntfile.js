@@ -5,21 +5,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.initConfig({
-        copy: {
-            client: {
-                files: [{
-                    expand: true,
-                    cwd: "./client/dist",
-                    src: ["**"],
-                    dest: "./dist/client/src"
-                }]
-            }
-        },
         ts: {
             server: {
                 files: [{
-                    src: ["server/**/*.ts", "!server/.baseDir.ts", "!server/**/*.d.ts"],
-                    dest: "./dist/server"
+                    src: ["src/**/*.ts", "test/**/*.ts", "!server/.baseDir.ts", "!server/**/*.d.ts"],
+                    dest: "./dist"
                 }],
                 options: {
                     module: "commonjs",
@@ -33,15 +23,6 @@ module.exports = function (grunt) {
                     preserveConstEnums: true,
                     outFile: "../../built/local/tsc.js",
                     sourceMap: false
-                }
-            },
-        },
-        watch: {
-            client: {
-                files: 'client/dist/**/*',
-                tasks: ['copy:client'],
-                options: {
-                    livereload: true
                 }
             }
         }
