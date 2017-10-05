@@ -31,11 +31,14 @@ export class CollectivityQueryServiceImpl implements CollectivityQueryService {
      * @param domain
      * @returns {undefined}
      */
-    public async findCollectivity(domain: string): Promise<CollectivityDTO> {
+    public async getCollectivity(domain: string): Promise<CollectivityDTO> | null {
         Utils.checkArgument(!Utils.isNullOrEmpty(domain), "Domain cannot be null or empty");
 
         const collectivity: Collectivity = await this.collectivityDao.findById(domain);
-        Utils.checkArgument(collectivity !== undefined, "Collectivity not found");
+        if (collectivity === undefined) {
+            this.logger.debug("Collectivity '%s' not found", domain);
+            return null;
+        }
 
         const collectivityDto: CollectivityDTO = new CollectivityDTO();
         collectivityDto.setId(collectivity.getId());

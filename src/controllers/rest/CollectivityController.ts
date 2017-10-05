@@ -112,9 +112,11 @@ export class CollectivityController implements interfaces.Controller {
 
     /**
      * Get information details of specific circle
-     * @param {string} accessKey
-     * @param {number} circleId
-     * @returns {Promise<Circle>}
+     *
+     * @param {string} accessKey Collectivity access key
+     * @param {number} circleId Circle identifier
+     *
+     * @returns {Promise<Circle>} information of specific circle
      */
     @Get("/:accessKey/circles/:circleid")
     public async getCollectivityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {

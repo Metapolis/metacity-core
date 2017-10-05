@@ -11,5 +11,5 @@ export interface CollectivityQueryService {
      *
      * @returns {Promise<CollectivityDTO>}
      */
-    findCollectivity(domain: string): Promise<CollectivityDTO>;
+    getCollectivity(domain: string): Promise<CollectivityDTO>;
 }
