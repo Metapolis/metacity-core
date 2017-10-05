@@ -13,10 +13,10 @@ import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentE
  * All test for user collectivity query service
  */
 @suite
-class UserAuthenticationQueryServiceTest extends AbstractTestService {
+class CollectivityQueryServiceTest extends AbstractTestService {
 
     @test
-    private async testFindCollectivity(): Promise<void> {
+    private async testGetCollectivity(): Promise<void> {
         const collectivityQueryService: CollectivityQueryService = (ContextApp.container.get("CollectivityQueryService") as CollectivityQueryService);
         const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
 
@@ -25,18 +25,22 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
         collectivityMock.setName("Domain");
         collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
 
-        const collectivityDTO: CollectivityDTO = await collectivityQueryService.findCollectivity("localhost");
+        let collectivityDTO: CollectivityDTO = await collectivityQueryService.getCollectivity("localhost");
 
         Chai.assert.equal(collectivityDTO.getId(), collectivityMock.getId());
         Chai.assert.equal(collectivityDTO.getSecret(), collectivityMock.getSecret());
         Chai.assert.equal(collectivityDTO.getName(), collectivityMock.getName());
+
+        collectivityDTO = await collectivityQueryService.getCollectivity("localhost2");
+
+        Chai.assert.isNull(collectivityDTO);
     }
 
     @test
     private async testFindCollectivityWithNullDomain() {
         const collectivityQueryService: CollectivityQueryService = (ContextApp.container.get("CollectivityQueryService") as CollectivityQueryService);
 
-        await collectivityQueryService.findCollectivity(null).then((result) => {
+        await collectivityQueryService.getCollectivity(null).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
@@ -48,23 +52,11 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
     private async testFindCollectivityWithEmptyDomain() {
         const collectivityQueryService: CollectivityQueryService = (ContextApp.container.get("CollectivityQueryService") as CollectivityQueryService);
 
-        await collectivityQueryService.findCollectivity("").then((result) => {
+        await collectivityQueryService.getCollectivity("").then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
             Chai.assert.equal(err.message, "Domain cannot be null or empty");
-        });
-    }
-
-    @test
-    private async testFindCollectivityWithCollectivityNotFound() {
-        const collectivityQueryService: CollectivityQueryService = (ContextApp.container.get("CollectivityQueryService") as CollectivityQueryService);
-
-        await collectivityQueryService.findCollectivity("localhost").then((result) => {
-            throw Error("Illegal argument error expected");
-        }, (err) => {
-            Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Collectivity not found");
         });
     }
 }

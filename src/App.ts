@@ -77,7 +77,7 @@ export class App {
     /**
      * Data base connection
      *
-     * @type {TypeORM.Connection}
+     * @type {Connection}
      */
     private dbConnection: TypeORM.Connection;
 
