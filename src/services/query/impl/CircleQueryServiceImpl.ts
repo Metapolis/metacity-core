@@ -67,7 +67,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             if (role in Role) {
                 circleDTO.getRoles().push(role as Role);
             } else {
-                this.logger.debug("The role '*' is not supported", role);
+                this.logger.debug("The role '%s' is not supported", role);
             }
         }
 

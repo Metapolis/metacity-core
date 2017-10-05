@@ -5,6 +5,7 @@ import { ContextApp } from "../ContextApp";
 import * as TypeORM from "typeorm";
 import { CircleDao} from "../../src/persistence/dao/CircleDao";
 import { ActivityCircle} from "../../src/persistence/domain/ActivityCircle";
+import { Collectivity } from "../../src/persistence/domain/Collectivity";
 
 @suite
 export class CircleDaoTest {
@@ -68,5 +69,41 @@ export class CircleDaoTest {
         actual = await circleDao.findById(activityCircle.getId() + 2);
 
         Chai.assert.isTrue(actual === undefined);
+    }
+
+    @test
+    public async testIsOwnedByCollectivity(): Promise<void> {
+        const circleDao: CircleDao = ContextApp.container.get("CircleDao");
+        const activityCircleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
+        const collectivityRepository: TypeORM.Repository<Collectivity> = ContextApp.container.get("CollectivityRepository");
+
+        const collectivity: Collectivity = new Collectivity();
+        collectivity.setName("Stark Corp");
+        collectivity.setId("AccessKey");
+        collectivity.setSecret("danslavieparfoismaispasseulement");
+        await collectivityRepository.persist(collectivity);
+
+        const activityCircle: ActivityCircle = new ActivityCircle();
+        activityCircle.setName("Michel");
+        activityCircle.setRoles(["Champion"]);
+        activityCircle.setCollectivity(Promise.resolve(collectivity));
+
+        await activityCircleRepository.persist(activityCircle);
+
+        let isOwnedByCollectivity: boolean = await circleDao.isOwnedByCollectivity(activityCircle.getId(), collectivity.getId());
+
+        Chai.assert.isTrue(isOwnedByCollectivity);
+
+        isOwnedByCollectivity = await circleDao.isOwnedByCollectivity(activityCircle.getId() + 2, "toto");
+
+        Chai.assert.isFalse(isOwnedByCollectivity);
+
+        isOwnedByCollectivity = await circleDao.isOwnedByCollectivity(activityCircle.getId(), "toto");
+
+        Chai.assert.isFalse(isOwnedByCollectivity);
+
+        isOwnedByCollectivity = await circleDao.isOwnedByCollectivity(activityCircle.getId() + 2, collectivity.getId());
+
+        Chai.assert.isFalse(isOwnedByCollectivity);
     }
 }
