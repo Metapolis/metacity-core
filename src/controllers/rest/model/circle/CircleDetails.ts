@@ -34,5 +34,5 @@ export class CircleDetails {
     /**
      * Circle's members
      */
-    public members: User[];
+    public members: User[] = [];
 }
