@@ -1,10 +1,9 @@
-import { LocalAuthorityDTO } from "./dto/localAuthority/LocalAuthorityDTO";
+import { LocalAuthorityDTO } from "./dto/localauthority/LocalAuthorityDTO";
 
 /**
  * Contains method to perform localAuthority query
  */
 export interface LocalAuthorityQueryService {
-
     /**
      * Retrieve localAuthority by domain
      *

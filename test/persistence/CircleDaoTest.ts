@@ -18,6 +18,7 @@ export class CircleDaoTest {
         const circle: Circle = new Circle();
         circle.setName("Michel");
         circle.setRoles(["Champion"]);
+        circle.setDefaultCircle(true);
 
         await circleDao.saveOrUpdate(circle);
 
@@ -27,6 +28,8 @@ export class CircleDaoTest {
         Chai.assert.equal(actual.getId(), circle.getId());
         Chai.assert.deepEqual(actual.getRoles(), circle.getRoles());
         Chai.assert.equal(actual.getName(), circle.getName());
+        Chai.assert.equal(actual.isDefaultCircle(), circle.isDefaultCircle());
+
     }
 
     @test
@@ -37,6 +40,7 @@ export class CircleDaoTest {
         const circle: Circle = new Circle();
         circle.setName("Michel");
         circle.setRoles(["Champion"]);
+        circle.setDefaultCircle(true);
 
         await circleRepository.persist(circle);
 
@@ -57,6 +61,7 @@ export class CircleDaoTest {
         const circle: Circle = new Circle();
         circle.setName("Michel");
         circle.setRoles(["Champion"]);
+        circle.setDefaultCircle(true);
 
         await circleRepository.persist(circle);
 
@@ -65,6 +70,7 @@ export class CircleDaoTest {
         Chai.assert.equal(actual.getId(), circle.getId());
         Chai.assert.deepEqual(actual.getRoles(), circle.getRoles());
         Chai.assert.equal(actual.getName(), circle.getName());
+        Chai.assert.equal(actual.isDefaultCircle(), circle.isDefaultCircle());
 
         actual = await circleDao.findById(circle.getId() + 2);
 
@@ -87,6 +93,7 @@ export class CircleDaoTest {
         circle.setName("Michel");
         circle.setRoles(["Champion"]);
         circle.setLocalAuthority(Promise.resolve(localAuthority));
+        circle.setDefaultCircle(true);
 
         await circleRepository.persist(circle);
 

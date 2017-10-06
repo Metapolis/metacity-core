@@ -45,6 +45,7 @@ import {UserController} from "./controllers/rest/UserController";
 import { NotFoundError } from "./common/error/NotFoundError";
 import { CircleQueryService } from "./services/query/CircleQueryService";
 import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryServiceImpl";
+import {DataSet} from "./persistence/domain/DataSet";
 
 /**
  * The App.
@@ -296,6 +297,7 @@ export class App {
         this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
         this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Circle));
         this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(LocalAuthority));
+        this.container.bind<TypeORM.Repository<DataSet>>("DataSetRepository").toConstantValue(this.dbConnection.entityManager.getRepository(DataSet));
     }
 
     /**

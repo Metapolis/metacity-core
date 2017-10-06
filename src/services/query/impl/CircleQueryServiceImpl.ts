@@ -60,8 +60,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
         const circleDTO: CircleDTO = new CircleDTO();
         circleDTO.setId(circle.getId());
         circleDTO.setName(circle.getName());
-        circleDTO.setDescription(circle.getDescription());
-        circleDTO.setAvatarUrl(circle.getAvatarUrl());
+        circleDTO.setDefaultCircle(circle.isDefaultCircle());
 
         for (const role of circle.getRoles()) {
             if (role in Role) {
@@ -77,7 +76,6 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             userDTO.setId(user.getId());
             circleDTO.getMembers().push(userDTO);
         }
-
         return circleDTO;
     }
 }

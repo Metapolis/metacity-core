@@ -63,10 +63,9 @@ export class LocalAuthorityController implements interfaces.Controller {
         // Coming soon
         this.logger.debug("Begin creation");
         const saveCircleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-        saveCircleCommandDTO.setAvatarURL(circle.avatarURL);
+        saveCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         saveCircleCommandDTO.setName(circle.name);
         saveCircleCommandDTO.setRoles(circle.roles);
-        saveCircleCommandDTO.setDescription(circle.description);
         saveCircleCommandDTO.setAccessKey(accessKey);
 
         const circleIdentifier: number = await this.circleCommandService.createCircle(saveCircleCommandDTO);
@@ -96,10 +95,9 @@ export class LocalAuthorityController implements interfaces.Controller {
         // Coming soon
         this.logger.debug("Begin update");
         const updateCircleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
-        updateCircleCommandDTO.setAvatarURL(circle.avatarURL);
+        updateCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         updateCircleCommandDTO.setName(circle.name);
         updateCircleCommandDTO.setRoles(circle.roles);
-        updateCircleCommandDTO.setDescription(circle.description);
         updateCircleCommandDTO.setAccessKey(accessKey);
         updateCircleCommandDTO.setId(circleIdNumber);
 
@@ -137,8 +135,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         const circleDetails: CircleDetails = new CircleDetails();
         circleDetails.id = circleDTO.getId();
         circleDetails.name = circleDTO.getName();
-        circleDetails.description = circleDTO.getDescription();
-        circleDetails.avatarUrl = circleDTO.getAvatarUrl();
+        circleDetails.defaultCircle = circleDTO.isDefaultCircle();
         circleDetails.roles = circleDTO.getRoles();
 
         for (const userDTO of circleDTO.getMembers()) {
