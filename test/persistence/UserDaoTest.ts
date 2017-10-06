@@ -5,7 +5,7 @@ import { ContextApp } from "../ContextApp";
 import * as TypeORM from "typeorm";
 import { UserDao } from "../../src/persistence/dao/UserDao";
 import { User } from "../../src/persistence/domain/User";
-import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
+import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { AbstractTestDao } from "./inversify/AbstractTestService";
@@ -17,7 +17,7 @@ export class UserDaoTest extends AbstractTestDao {
     public async testFindByUsername(): Promise<void> {
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
-        const circleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
+        const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
         const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
 
         // Create user
@@ -28,7 +28,7 @@ export class UserDaoTest extends AbstractTestDao {
         user.setLastConnection(Date.now());
 
         // Create circle
-        const circle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
         circle.setName("Stark assembly");
         circle.setRoles([Role.READ_ALL]);
 
@@ -69,7 +69,7 @@ export class UserDaoTest extends AbstractTestDao {
     public async testFindById(): Promise<void> {
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
-        const circleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
+        const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
         const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
 
         // Create user
@@ -80,7 +80,7 @@ export class UserDaoTest extends AbstractTestDao {
         user.setLastConnection(Date.now());
 
         // Create circle
-        const circle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
         circle.setName("Stark industry");
         circle.setRoles([Role.READ_ALL]);
 

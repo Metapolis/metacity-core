@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
-import { ActivityCircle } from "./ActivityCircle";
+import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany } from "typeorm";
+import { Circle } from "./Circle";
+import { DataSet } from "./DataSet";
 
 /**
  * Represents a user
@@ -28,8 +29,16 @@ export class LocalAuthority {
     /**
      * Circle's localAuthority (owner of circle)
      */
-    @OneToMany((type) => ActivityCircle, (circle) => "localAuthority")
-    private circles: Promise<ActivityCircle[]>;
+    @OneToMany((type) => Circle, (circle) => "localAuthority")
+    private circles: Promise<Circle[]>;
+
+    /**
+     * LocalAuthority's data set
+     *
+     * You have to use getter and setter
+     */
+    @ManyToMany((type) => DataSet, (dataSet) => "localAuthorities")
+    private dataSets: Promise<DataSet[]>;
 
     /**
      * Getter identifier
@@ -90,7 +99,7 @@ export class LocalAuthority {
      *
      * @returns {Circle[]}
      */
-    public getCircles(): Promise<ActivityCircle[]> {
+    public getCircles(): Promise<Circle[]> {
         return this.circles;
     }
 
@@ -99,7 +108,25 @@ export class LocalAuthority {
      *
      * @param circles new circle value
      */
-    public setCircles(circles: Promise<ActivityCircle[]>): void {
+    public setCircles(circles: Promise<Circle[]>): void {
         this.circles = circles;
+    }
+
+    /**
+     * Getter dataSet
+     *
+     * @returns {DataSet[]}
+     */
+    public getDataSets(): Promise<DataSet[]> {
+        return this.dataSets;
+    }
+
+    /**
+     * Setter dataSet
+     *
+     * @param dataSets new dataSet value
+     */
+    public setDataSets(dataSets: Promise<DataSet[]>): void {
+        this.dataSets = dataSets;
     }
 }

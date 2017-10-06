@@ -3,7 +3,7 @@ import { suite, test } from "mocha-typescript";
 import * as Chai from "chai";
 import { ContextApp } from "../../ContextApp";
 import * as TypeMoq from "typemoq";
-import { ActivityCircle } from "../../../src/persistence/domain/ActivityCircle";
+import { Circle } from "../../../src/persistence/domain/Circle";
 import { SaveCircleCommandDTO } from "../../../src/services/command/dto/circle/SaveCircleCommandDTO";
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 import { CircleCommandService } from "../../../src/services/command/CircleCommandService";
@@ -47,14 +47,14 @@ class CircleCommandServiceTest extends AbstractTestService {
 
         await circleCommandService.createCircle(saveCircleDTO);
 
-        circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((activityCircle: ActivityCircle) => {
-            let ret = activityCircle.getName() === saveCircleDTO.getName();
-            ret = ret && activityCircle.getRoles().length === saveCircleDTO.getRoles().length;
+        circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((circle: Circle) => {
+            let ret = circle.getName() === saveCircleDTO.getName();
+            ret = ret && circle.getRoles().length === saveCircleDTO.getRoles().length;
             for (let i = 0; i < saveCircleDTO.getRoles().length; i++) {
-                ret = ret && activityCircle.getRoles()[i] === saveCircleDTO.getRoles()[i];
+                ret = ret && circle.getRoles()[i] === saveCircleDTO.getRoles()[i];
             }
-            ret = ret && activityCircle.getDescription() === saveCircleDTO.getDescription();
-            ret = ret && activityCircle.getAvatarUrl() === saveCircleDTO.getAvatarURL();
+            ret = ret && circle.getDescription() === saveCircleDTO.getDescription();
+            ret = ret && circle.getAvatarUrl() === saveCircleDTO.getAvatarURL();
             return ret;
         })), TypeMoq.Times.exactly(1));
     }
@@ -179,14 +179,14 @@ class CircleCommandServiceTest extends AbstractTestService {
         localAuthority.setName("Rochelle");
         localAuthority.setId(accessKey);
 
-        const activityCircle: ActivityCircle = new ActivityCircle();
-        activityCircle.setId(1);
-        activityCircle.setRoles(["READ_ALL"]);
-        activityCircle.setName("Jean de la tourette");
-        activityCircle.setDescription("Pour une fois qu'on me permet de m'exprimer");
-        activityCircle.setAvatarUrl(null);
-        activityCircle.setUsers(Promise.resolve([new User()]));
-        activityCircle.setLocalAuthority(Promise.resolve(localAuthority));
+        const circle: Circle = new Circle();
+        circle.setId(1);
+        circle.setRoles(["READ_ALL"]);
+        circle.setName("Jean de la tourette");
+        circle.setDescription("Pour une fois qu'on me permet de m'exprimer");
+        circle.setAvatarUrl(null);
+        circle.setUsers(Promise.resolve([new User()]));
+        circle.setLocalAuthority(Promise.resolve(localAuthority));
 
         const updateCircleDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         updateCircleDTO.setAccessKey(accessKey);
@@ -194,22 +194,22 @@ class CircleCommandServiceTest extends AbstractTestService {
         updateCircleDTO.setRoles(["Role"]);
         updateCircleDTO.setName("michel");
         updateCircleDTO.setDescription("description");
-        updateCircleDTO.setId(activityCircle.getId());
+        updateCircleDTO.setId(circle.getId());
 
         localAuthorityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(localAuthority));
-        circleDao.setup((instance) => instance.findById(updateCircleDTO.getId())).returns(() => Promise.resolve(activityCircle));
+        circleDao.setup((instance) => instance.findById(updateCircleDTO.getId())).returns(() => Promise.resolve(circle));
 
         await circleCommandService.updateCircle(updateCircleDTO);
 
-        circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((activityCircleToSave: ActivityCircle) => {
-            let ret = activityCircleToSave.getName() === updateCircleDTO.getName();
-            ret = ret && activityCircleToSave.getRoles().length === updateCircleDTO.getRoles().length;
+        circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((circleToSave: Circle) => {
+            let ret = circleToSave.getName() === updateCircleDTO.getName();
+            ret = ret && circleToSave.getRoles().length === updateCircleDTO.getRoles().length;
             for (let i = 0; i < updateCircleDTO.getRoles().length; i++) {
-                ret = ret && activityCircleToSave.getRoles()[i] === updateCircleDTO.getRoles()[i];
+                ret = ret && circleToSave.getRoles()[i] === updateCircleDTO.getRoles()[i];
             }
-            ret = ret && activityCircleToSave.getDescription() === updateCircleDTO.getDescription();
-            ret = ret && activityCircleToSave.getAvatarUrl() === updateCircleDTO.getAvatarURL();
-            ret = ret && activityCircleToSave.getId() === activityCircle.getId();
+            ret = ret && circleToSave.getDescription() === updateCircleDTO.getDescription();
+            ret = ret && circleToSave.getAvatarUrl() === updateCircleDTO.getAvatarURL();
+            ret = ret && circleToSave.getId() === circle.getId();
             return ret;
         })), TypeMoq.Times.exactly(1));
     }
@@ -390,13 +390,13 @@ class CircleCommandServiceTest extends AbstractTestService {
         localAuthority.setName("Rochelle");
         localAuthority.setId("AccessKeyDesFamilles");
 
-        const activityCircle: ActivityCircle = new ActivityCircle();
-        activityCircle.setId(12);
-        activityCircle.setRoles(["READ_ALL"]);
-        activityCircle.setName("Jean de la tourette");
-        activityCircle.setDescription("Pour une fois qu'on me permet de m'exprimer");
-        activityCircle.setAvatarUrl(null);
-        activityCircle.setLocalAuthority(Promise.resolve(new LocalAuthority()));
+        const circle: Circle = new Circle();
+        circle.setId(12);
+        circle.setRoles(["READ_ALL"]);
+        circle.setName("Jean de la tourette");
+        circle.setDescription("Pour une fois qu'on me permet de m'exprimer");
+        circle.setAvatarUrl(null);
+        circle.setLocalAuthority(Promise.resolve(new LocalAuthority()));
 
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
@@ -406,13 +406,13 @@ class CircleCommandServiceTest extends AbstractTestService {
         circleCommandDTO.setId(12);
 
         localAuthorityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
-        circleDao.setup((instance) => instance.findById(circleCommandDTO.getId())).returns(() => Promise.resolve(activityCircle));
+        circleDao.setup((instance) => instance.findById(circleCommandDTO.getId())).returns(() => Promise.resolve(circle));
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Circle '" + activityCircle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
+            Chai.assert.equal(err.message, "Circle '" + circle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
         });
     }
 }

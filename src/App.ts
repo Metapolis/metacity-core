@@ -33,7 +33,7 @@ import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQuery
 import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
 import { SecurityManager } from "./common/security/SecurityManager";
 import methodOverride = require("method-override");
-import { ActivityCircle } from "./persistence/domain/ActivityCircle";
+import { Circle } from "./persistence/domain/Circle";
 import {CircleCommandService} from "./services/command/CircleCommandService";
 import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandServiceImpl";
 import { LocalAuthorityController } from "./controllers/rest/LocalAuthorityController";
@@ -294,7 +294,7 @@ export class App {
     private bindRepository(): void {
         this.logger.debug("Binding repositories");
         this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
-        this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(ActivityCircle));
+        this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Circle));
         this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(LocalAuthority));
     }
 

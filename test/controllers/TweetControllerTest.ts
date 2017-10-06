@@ -14,7 +14,7 @@ import { TweetType } from "../../src/common/enum/tweet/TweetType";
 import { TestUtils } from "../common/TestUtils";
 import { FindTweetQuery } from "../../src/common/query/FindTweetQuery";
 import { Tweet } from "../../src/controllers/rest/model/tweet/Tweet";
-import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
+import { Circle } from "../../src/persistence/domain/Circle";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
 import { UserDao } from "../../src/persistence/dao/UserDao";
@@ -42,12 +42,12 @@ class TweetControllerTest extends AbstractTestController {
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
         localAuthorityMock.setSecret("secret");
 
-        const activityCircle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
 
         const userMock: User = new User();
-        (await userMock.getCircles()).push(activityCircle);
+        (await userMock.getCircles()).push(circle);
 
-        activityCircle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role[Role.READ_ALL]]);
 
         localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
@@ -239,12 +239,12 @@ class TweetControllerTest extends AbstractTestController {
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
         localAuthorityMock.setSecret("secret");
 
-        const activityCircle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
 
         const userMock: User = new User();
-        (await userMock.getCircles()).push(activityCircle);
+        (await userMock.getCircles()).push(circle);
 
-        activityCircle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role[Role.READ_ALL]]);
 
         localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));

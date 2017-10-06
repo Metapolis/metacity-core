@@ -54,11 +54,11 @@ export class DataSet {
     private roles: string;
 
     /**
-     * Dataset's local authority
+     * Dataset's local authorities
      */
     @ManyToMany((type) => LocalAuthority, (localAuthority) => "dataSets")
     @JoinTable()
-    private localAuthority: Promise<LocalAuthority[]>;
+    private localAuthorities: Promise<LocalAuthority[]>;
 
     /**
      * Transient role array
@@ -192,19 +192,19 @@ export class DataSet {
     }
 
     /**
-     * Getter local authority
+     * Getter local authorities
      * @returns {Promise<LocalAuthority[]>}
      */
     public getLocalAuthoritiy(): Promise<LocalAuthority[]> {
-        return this.localAuthority;
+        return this.localAuthorities;
     }
 
     /**
-     * Setter local authority
+     * Setter local authorities
      *
      * @param localAuthority authority new local authority value
      */
     public setLocalAuthoritiy(localAuthority: Promise<LocalAuthority[]>): void {
-        this.localAuthority = localAuthority;
+        this.localAuthorities = localAuthority;
     }
 }

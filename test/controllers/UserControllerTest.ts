@@ -8,7 +8,7 @@ import * as HTTPStatusCodes from "http-status-codes";
 import { UserCommandService } from "../../src/services/command/UserCommandService";
 import { SaveUserCommandDTO } from "../../src/services/command/dto/user/SaveUserCommandDTO";
 import { SaveUser } from "../../src/controllers/rest/model/user/SaveUser";
-import {  } from "../../src/persistence/domain/ActivityCircle";
+import {} from "../../src/persistence/domain/Circle";
 import {NumberIdentifier} from "../../src/controllers/rest/model/common/NumberIdentifier";
 import {Labeled} from "../../src/common/Labeled";
 import {isNullOrUndefined} from "util";

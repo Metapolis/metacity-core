@@ -6,7 +6,7 @@ import { LoggerInstance } from "winston";
 import { SaveCircleCommandDTO } from "../dto/circle/SaveCircleCommandDTO";
 import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
-import { ActivityCircle } from "../../../persistence/domain/ActivityCircle";
+import { Circle } from "../../../persistence/domain/Circle";
 import { CircleDao } from "../../../persistence/dao/CircleDao";
 import { isNullOrUndefined } from "util";
 import { UpdateCircleCommandDTO } from "../dto/circle/UpdateCircleCommandDTO";
@@ -51,7 +51,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         // Check if localAuthority is found in database
         Utils.checkArgument(localAuthority !== undefined, "LocalAuthority for access key : '" + command.getAccessKey() + "' cannot be found");
 
-        const circle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
         circle.setLocalAuthority(Promise.resolve(localAuthority));
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
@@ -82,7 +82,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         Utils.checkArgument(localAuthority !== undefined, "LocalAuthority for access key : '" + command.getAccessKey() + "' cannot be found");
 
         // Retrieve circle with identifier
-        const circle: ActivityCircle = await this.circleDao.findById(command.getId());
+        const circle: Circle = await this.circleDao.findById(command.getId());
 
         // Check if localAuthority is found in database
         Utils.checkArgument(circle !== undefined, "Circle with id '" + command.getId() + "' cannot be found");

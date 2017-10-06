@@ -21,7 +21,7 @@ import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { UserDao } from "../../src/persistence/dao/UserDao";
 import { User } from "../../src/persistence/domain/User";
-import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
+import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 
 /**
@@ -45,12 +45,12 @@ class TrafficControllerTest extends AbstractTestController {
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
         localAuthorityMock.setSecret("secret");
 
-        const activityCircle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
 
         const userMock: User = new User();
-        (await userMock.getCircles()).push(activityCircle);
+        (await userMock.getCircles()).push(circle);
 
-        activityCircle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role[Role.READ_ALL]]);
 
         localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
@@ -201,12 +201,12 @@ class TrafficControllerTest extends AbstractTestController {
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
         localAuthorityMock.setSecret("secret");
 
-        const activityCircle: ActivityCircle = new ActivityCircle();
+        const circle: Circle = new Circle();
 
         const userMock: User = new User();
-        (await userMock.getCircles()).push(activityCircle);
+        (await userMock.getCircles()).push(circle);
 
-        activityCircle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role[Role.READ_ALL]]);
 
         localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));

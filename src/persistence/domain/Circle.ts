@@ -5,38 +5,38 @@ import { User } from "./User";
 import { LocalAuthority } from "./LocalAuthority";
 
 /**
- * Represents a activity circle
+ * Represents a circle
  */
 @Entity()
-export class ActivityCircle {
+export class Circle {
 
     /**
      * DataSet logger
      *
      * @type {winston.LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(ActivityCircle.name);
+    private logger: LoggerInstance = Utils.createLogger(Circle.name);
 
     /**
-     * Activity Circle's identifier
+     * Circle's identifier
      */
     @PrimaryGeneratedColumn({type: "bigint"})
     private id: number;
 
     /**
-     * Activity Circle's name
+     * Circle's name
      */
     @Column({nullable: false, length: 250})
     private name: string;
 
     /**
-     * Activity Circle's description
+     * Circle's description
      */
     @Column({nullable: true})
     private description: string;
 
     /**
-     * Activity Circle's avatar url
+     * Circle's avatar url
      */
     @Column({nullable: true})
     private avatarUrl: string;

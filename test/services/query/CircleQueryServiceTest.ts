@@ -5,7 +5,7 @@ import { CircleQueryService } from "../../../src/services/query/CircleQueryServi
 import { suite, test, slow, timeout, skip, only } from "mocha-typescript";
 import * as TypeMoq from "typemoq";
 import { CircleDTO } from "../../../src/services/query/dto/circle/CircleDTO";
-import { ActivityCircle } from "../../../src/persistence/domain/ActivityCircle";
+import { Circle } from "../../../src/persistence/domain/Circle";
 import { Role } from "../../../src/common/enum/Role";
 import * as Chai from "chai";
 import { User } from "../../../src/persistence/domain/User";
@@ -21,7 +21,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const user: User = new User();
         user.setId(14);
 
-        const circleMock: ActivityCircle = new ActivityCircle();
+        const circleMock: Circle = new Circle();
         circleMock.setId(12);
         circleMock.setName("Stark Company");
         circleMock.setDescription("C'est bien une companie de malade !");

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
-import { ActivityCircle } from "./ActivityCircle";
+import { Circle } from "./Circle";
 
 /**
  * Represents a user
@@ -54,8 +54,8 @@ export class User {
      *
      * You have to use getter and setter
      */
-    @ManyToMany((type) => ActivityCircle, (activityCircle) => "users")
-    private circles: Promise<ActivityCircle[]>;
+    @ManyToMany((type) => Circle, (circle) => "users")
+    private circles: Promise<Circle[]>;
 
     /**
      * Getter identifier
@@ -185,9 +185,9 @@ export class User {
     /**
      * Getter circles
      *
-     * @returns {ActivityCircle[]}
+     * @returns {Circle[]}
      */
-    public getCircles(): Promise<ActivityCircle[]> {
+    public getCircles(): Promise<Circle[]> {
         return this.circles;
     }
 
@@ -196,7 +196,7 @@ export class User {
      *
      * @param circles new circle value
      */
-    public setCircles(circles: Promise<ActivityCircle[]>): void {
+    public setCircles(circles: Promise<Circle[]>): void {
         this.circles = circles;
     }
 

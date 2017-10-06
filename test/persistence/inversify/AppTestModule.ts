@@ -28,7 +28,7 @@ export class AppTestModule {
         AppTestModule.logger.debug("Unbinding repositories");
         // Unbind all repository
         ContextApp.container.unbind("UserRepository");
-        ContextApp.container.unbind("ActivityCircleRepository");
+        ContextApp.container.unbind("CircleRepository");
         ContextApp.container.unbind("LocalAuthorityRepository");
 
         // Reconnect database

@@ -4,7 +4,7 @@ import { Client } from "elasticsearch";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { CircleDao } from "../../../persistence/dao/CircleDao";
-import { ActivityCircle } from "../../../persistence/domain/ActivityCircle";
+import { Circle } from "../../../persistence/domain/Circle";
 import { CircleDTO } from "../dto/circle/CircleDTO";
 import { Role } from "../../../common/enum/Role";
 import { UserDTO } from "../dto/circle/UserDTO";
@@ -50,7 +50,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
      */
     public async getCircle(circleId: number): Promise<CircleDTO> | null {
         this.logger.debug("Retrieve circle '%s'", circleId);
-        const circle: ActivityCircle = await this.circleDao.findById(circleId);
+        const circle: Circle = await this.circleDao.findById(circleId);
 
         if (circle === undefined) {
             this.logger.debug("Cannot retrieve circle '%s'", circleId);

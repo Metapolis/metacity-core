@@ -1,4 +1,4 @@
-import { ActivityCircle } from "../domain/ActivityCircle";
+import { Circle } from "../domain/Circle";
 
 /**
  * Data Access Object of {@link CircleDao}
@@ -8,10 +8,10 @@ export interface CircleDao {
     /**
      * Save or update a circle
      *
-     * @param {ActivityCircle} circle to save
+     * @param {Circle} circle to save
      *
      */
-    saveOrUpdate(circle: ActivityCircle): Promise<void> | undefined;
+    saveOrUpdate(circle: Circle): Promise<void> | undefined;
 
     /**
      * Check if this specific circle exists
@@ -27,9 +27,9 @@ export interface CircleDao {
      *
      * @param {number} id circle identifier
      *
-     * @returns {Promise<ActivityCircle>} circle found
+     * @returns {Promise<Circle>} circle found
      */
-    findById(id: number): Promise<ActivityCircle> | undefined;
+    findById(id: number): Promise<Circle> | undefined;
 
     /**
      * Check if circle is owned by localAuthority
