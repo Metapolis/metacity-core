@@ -19,13 +19,13 @@ import { CircleDTO } from "../../services/query/dto/circle/CircleDTO";
 import { User } from "./model/circle/User";
 
 /**
- * API resources to collectivities services
+ * API resources to local authorities services
  *
- * /api/collectivities route
+ * /api/localauthorities route
  *
  * @class LocalAuthorityController
  */
-@Controller("/api/collectivities")
+@Controller("/api/local-authorities")
 @injectable()
 export class LocalAuthorityController implements interfaces.Controller {
 
