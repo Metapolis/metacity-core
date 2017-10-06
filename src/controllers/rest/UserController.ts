@@ -5,14 +5,14 @@ import { Utils } from "../../common/Utils";
 import { SaveUser } from "./model/user/SaveUser";
 import { UserCommandService } from "../../services/command/UserCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
-import { SaveUserCommandDTO } from "../../services/command/dto/users/SaveUserCommandDTO";
+import { SaveUserCommandDTO } from "../../services/command/dto/user/SaveUserCommandDTO";
 
 /**
  * API resources to manage user
- * /api/users
+ * /api/user
  * @class UserController
  */
-@Controller("/api/users")
+@Controller("/api/user")
 @injectable()
 export class UserController implements interfaces.Controller {
 

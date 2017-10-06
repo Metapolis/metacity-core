@@ -13,8 +13,8 @@ import { User } from "../../../src/persistence/domain/User";
 import { Labeled } from "../../../src/common/Labeled";
 import { AccessDeniedError } from "../../../src/common/error/AccessDeniedError";
 import { UserTokenDTO } from "../../../src/services/query/dto/user/UserTokenDTO";
-import { CollectivityDao } from "../../../src/persistence/dao/CollectivityDao";
-import { Collectivity } from "../../../src/persistence/domain/Collectivity";
+import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
+import { LocalAuthority } from "../../../src/persistence/domain/LocalAuthority";
 
 /**
  * All test for user authentication query service
@@ -26,12 +26,12 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
     private async testAuthenticate(): Promise<void> {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
         const userDaoMock: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
-        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
 
-        const collectivityMock: Collectivity = new Collectivity();
-        collectivityMock.setSecret("secret");
-        collectivityMock.setName("Domain");
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        const localAuthorityMock: LocalAuthority = new LocalAuthority();
+        localAuthorityMock.setSecret("secret");
+        localAuthorityMock.setName("Domain");
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
 
         const token: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
         token.setPassword("password");

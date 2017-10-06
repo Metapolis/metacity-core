@@ -5,7 +5,7 @@ import { ContextApp } from "../ContextApp";
 import * as TypeORM from "typeorm";
 import { CircleDao} from "../../src/persistence/dao/CircleDao";
 import { ActivityCircle} from "../../src/persistence/domain/ActivityCircle";
-import { Collectivity } from "../../src/persistence/domain/Collectivity";
+import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 
 @suite
 export class CircleDaoTest {
@@ -72,38 +72,38 @@ export class CircleDaoTest {
     }
 
     @test
-    public async testIsOwnedByCollectivity(): Promise<void> {
+    public async testIsOwnedByLocalAuthority(): Promise<void> {
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
         const activityCircleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
-        const collectivityRepository: TypeORM.Repository<Collectivity> = ContextApp.container.get("CollectivityRepository");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
 
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setName("Stark Corp");
-        collectivity.setId("AccessKey");
-        collectivity.setSecret("danslavieparfoismaispasseulement");
-        await collectivityRepository.persist(collectivity);
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Stark Corp");
+        localAuthority.setId("AccessKey");
+        localAuthority.setSecret("danslavieparfoismaispasseulement");
+        await localAuthorityRepository.persist(localAuthority);
 
         const activityCircle: ActivityCircle = new ActivityCircle();
         activityCircle.setName("Michel");
         activityCircle.setRoles(["Champion"]);
-        activityCircle.setCollectivity(Promise.resolve(collectivity));
+        activityCircle.setLocalAuthority(Promise.resolve(localAuthority));
 
         await activityCircleRepository.persist(activityCircle);
 
-        let isOwnedByCollectivity: boolean = await circleDao.isOwnedByCollectivity(activityCircle.getId(), collectivity.getId());
+        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(activityCircle.getId(), localAuthority.getId());
 
-        Chai.assert.isTrue(isOwnedByCollectivity);
+        Chai.assert.isTrue(isOwnedByLocalAuthority);
 
-        isOwnedByCollectivity = await circleDao.isOwnedByCollectivity(activityCircle.getId() + 2, "toto");
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(activityCircle.getId() + 2, "toto");
 
-        Chai.assert.isFalse(isOwnedByCollectivity);
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByCollectivity = await circleDao.isOwnedByCollectivity(activityCircle.getId(), "toto");
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(activityCircle.getId(), "toto");
 
-        Chai.assert.isFalse(isOwnedByCollectivity);
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByCollectivity = await circleDao.isOwnedByCollectivity(activityCircle.getId() + 2, collectivity.getId());
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(activityCircle.getId() + 2, localAuthority.getId());
 
-        Chai.assert.isFalse(isOwnedByCollectivity);
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
     }
 }

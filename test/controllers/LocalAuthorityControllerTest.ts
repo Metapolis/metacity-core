@@ -7,12 +7,12 @@ import * as TypeMoq from "typemoq";
 import * as HTTPStatusCodes from "http-status-codes";
 import {  } from "../../src/persistence/domain/ActivityCircle";
 import { CircleCommandService } from "../../src/services/command/CircleCommandService";
-import { SaveCircleCommandDTO } from "../../src/services/command/dto/circles/SaveCircleCommandDTO";
+import { SaveCircleCommandDTO } from "../../src/services/command/dto/circle/SaveCircleCommandDTO";
 import {NumberIdentifier} from "../../src/controllers/rest/model/common/NumberIdentifier";
 import {SaveCircle} from "../../src/controllers/rest/model/circle/SaveCircle";
 import {Labeled} from "../../src/common/Labeled";
 import {IllegalArgumentError} from "../../src/common/error/IllegalArgumentError";
-import { UpdateCircleCommandDTO } from "../../src/services/command/dto/circles/UpdateCircleCommandDTO";
+import { UpdateCircleCommandDTO } from "../../src/services/command/dto/circle/UpdateCircleCommandDTO";
 import { CircleQueryService } from "../../src/services/query/CircleQueryService";
 import { CircleDetails } from "../../src/controllers/rest/model/circle/CircleDetails";
 import { Role } from "../../src/common/enum/Role";
@@ -24,15 +24,15 @@ import { TestUtils } from "../common/TestUtils";
  * All test for circle creation
  */
 @suite
-export class CollectivityControllerTest extends AbstractTestController {
+export class LocalAuthorityControllerTest extends AbstractTestController {
 
     /**
-     * Test function create collectivity circle
+     * Test function create localAuthority circle
      */
     @test
-    public async testCreateCollectivityCircle(): Promise<void> {
+    public async testCreateLocalAuthorityCircle(): Promise<void> {
 
-        const path: string = "/api/collectivities/{accesskey}/circles";
+        const path: string = "/api/collectivities/{accesskey}/circle";
         const accessKey: string = "starkindustries";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         // Hello im a rigid linter
@@ -44,15 +44,15 @@ export class CollectivityControllerTest extends AbstractTestController {
         circle.description = "Il va de ville en ville";
         circle.avatarURL = "Pour vendre des velux";
 
-        circleCommandService.setup((instance: CircleCommandService) => instance.createCircle(TypeMoq.It.is((collectivityCircle: SaveCircleCommandDTO) => {
-            let ret = collectivityCircle.getDescription() === circle.description;
-            ret = ret && collectivityCircle.getRoles().length === circle.roles.length;
+        circleCommandService.setup((instance: CircleCommandService) => instance.createCircle(TypeMoq.It.is((localAuthorityCircle: SaveCircleCommandDTO) => {
+            let ret = localAuthorityCircle.getDescription() === circle.description;
+            ret = ret && localAuthorityCircle.getRoles().length === circle.roles.length;
             for (let i = 0; i < circle.roles.length; i++) {
-                ret = ret && collectivityCircle.getRoles()[i] === circle.roles[i];
+                ret = ret && localAuthorityCircle.getRoles()[i] === circle.roles[i];
             }
-            ret = ret && collectivityCircle.getName() === circle.name;
-            ret = ret && collectivityCircle.getAvatarURL() === circle.avatarURL;
-            ret = ret && collectivityCircle.getAccessKey() === accessKey;
+            ret = ret && localAuthorityCircle.getName() === circle.name;
+            ret = ret && localAuthorityCircle.getAvatarURL() === circle.avatarURL;
+            ret = ret && localAuthorityCircle.getAccessKey() === accessKey;
             return ret;
         }))).returns(() => Promise.resolve(circleIdentifier));
 
@@ -74,10 +74,10 @@ export class CollectivityControllerTest extends AbstractTestController {
     }
 
     @test
-    public async testCreateCollectivityCircleError(): Promise<void> {
+    public async testCreateLocalAuthorityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
-        const path: string = "/api/collectivities/{accesskey}/circles";
+        const path: string = "/api/collectivities/{accesskey}/circle";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
 
         const circle: SaveCircle = new SaveCircle();
@@ -102,8 +102,8 @@ export class CollectivityControllerTest extends AbstractTestController {
     }
 
     @test
-    public async testUpdateCollectivityCircle(): Promise<void> {
-        const path: string = "/api/collectivities/{accesskey}/circles/{circleid}";
+    public async testUpdateLocalAuthorityCircle(): Promise<void> {
+        const path: string = "/api/collectivities/{accesskey}/circle/{circleid}";
         const accessKey: string = "starkindustries";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
@@ -126,26 +126,26 @@ export class CollectivityControllerTest extends AbstractTestController {
 
         await Request(opts);
 
-        circleCommandService.verify((instance: CircleCommandService) => instance.updateCircle(TypeMoq.It.is((collectivityCircle: UpdateCircleCommandDTO) => {
-            let ret = collectivityCircle.getDescription() === circle.description;
-            ret = ret && collectivityCircle.getRoles().length === circle.roles.length;
+        circleCommandService.verify((instance: CircleCommandService) => instance.updateCircle(TypeMoq.It.is((localAuthorityCircle: UpdateCircleCommandDTO) => {
+            let ret = localAuthorityCircle.getDescription() === circle.description;
+            ret = ret && localAuthorityCircle.getRoles().length === circle.roles.length;
             for (let i = 0; i < circle.roles.length; i++) {
-                ret = ret && collectivityCircle.getRoles()[i] === circle.roles[i];
+                ret = ret && localAuthorityCircle.getRoles()[i] === circle.roles[i];
             }
-            ret = ret && collectivityCircle.getName() === circle.name;
-            ret = ret && collectivityCircle.getAvatarURL() === circle.avatarURL;
-            ret = ret && collectivityCircle.getAccessKey() === accessKey;
-            ret = ret && collectivityCircle.getId() === circleIdentifier;
+            ret = ret && localAuthorityCircle.getName() === circle.name;
+            ret = ret && localAuthorityCircle.getAvatarURL() === circle.avatarURL;
+            ret = ret && localAuthorityCircle.getAccessKey() === accessKey;
+            ret = ret && localAuthorityCircle.getId() === circleIdentifier;
             return ret;
         })), TypeMoq.Times.exactly(1));
 
     }
 
     @test
-    public async testUpdateCollectivityCircleError(): Promise<void> {
+    public async testUpdateLocalAuthorityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/collectivities/{accesskey}/circles/{circleid}";
+        const path: string = "/api/collectivities/{accesskey}/circle/{circleid}";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
@@ -182,9 +182,9 @@ export class CollectivityControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
     }
     @test
-    public async testGetCollectivityCircleDetails(): Promise<void> {
+    public async testGetLocalAuthorityCircleDetails(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/collectivities/{accesskey}/circles/{circleid}";
+        const path: string = "/api/collectivities/{accesskey}/circle/{circleid}";
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const accessKey: string = "starkindustries";
@@ -211,7 +211,7 @@ export class CollectivityControllerTest extends AbstractTestController {
             uri: AbstractTestController.getBackend() + path.replace("{accesskey}", accessKey).replace("{circleid}", String(circleIdentifier)),
             json: true
         };
-        circleQueryService.setup((instance) => instance.isOwnedByCollectivity(circleIdentifier, accessKey)).returns(() => Promise.resolve(true));
+        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, accessKey)).returns(() => Promise.resolve(true));
         circleQueryService.setup((instance) => instance.getCircle(circleIdentifier)).returns(() => Promise.resolve(circleDTOMock));
 
         const actual: CircleDetails = new CircleDetails();
@@ -232,9 +232,9 @@ export class CollectivityControllerTest extends AbstractTestController {
         }
     }
     @test
-    public async testGetCollectivityCircleDetailsError(): Promise<void> {
+    public async testGetLocalAuthorityCircleDetailsError(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/collectivities/{accesskey}/circles/{circleid}";
+        const path: string = "/api/collectivities/{accesskey}/circle/{circleid}";
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const accessKey: string = "starkindustries";
@@ -252,7 +252,7 @@ export class CollectivityControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
-        circleQueryService.setup((instance) => instance.isOwnedByCollectivity(circleIdentifier, accessKey)).returns(() => Promise.resolve(true));
+        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, accessKey)).returns(() => Promise.resolve(true));
         circleQueryService.setup((instance) => instance.getCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
 
         opts.uri = AbstractTestController.getBackend() + path.replace("{accesskey}", accessKey).replace("{circleid}", String(circleIdentifier)),

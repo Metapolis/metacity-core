@@ -4,14 +4,14 @@ import * as Chai from "chai";
 import { ContextApp } from "../../ContextApp";
 import * as TypeMoq from "typemoq";
 import { ActivityCircle } from "../../../src/persistence/domain/ActivityCircle";
-import { SaveCircleCommandDTO } from "../../../src/services/command/dto/circles/SaveCircleCommandDTO";
+import { SaveCircleCommandDTO } from "../../../src/services/command/dto/circle/SaveCircleCommandDTO";
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 import { CircleCommandService } from "../../../src/services/command/CircleCommandService";
-import { Collectivity } from "../../../src/persistence/domain/Collectivity";
+import { LocalAuthority } from "../../../src/persistence/domain/LocalAuthority";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
-import { CollectivityDao } from "../../../src/persistence/dao/CollectivityDao";
+import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
 import { User } from "../../../src/persistence/domain/User";
-import { UpdateCircleCommandDTO } from "../../../src/services/command/dto/circles/UpdateCircleCommandDTO";
+import { UpdateCircleCommandDTO } from "../../../src/services/command/dto/circle/UpdateCircleCommandDTO";
 
 /**
  * All test for circle command service
@@ -28,13 +28,13 @@ class CircleCommandServiceTest extends AbstractTestService {
     private async testCreateCircle(): Promise<void> {
         const accessKey: string = "starkindustries";
         const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
-        const collectivityDao: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setSecret("secret");
-        collectivity.setName("Rochelle");
-        collectivity.setId(accessKey);
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setSecret("secret");
+        localAuthority.setName("Rochelle");
+        localAuthority.setId(accessKey);
 
         const saveCircleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         saveCircleDTO.setAccessKey(accessKey);
@@ -43,7 +43,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         saveCircleDTO.setName("michel");
         saveCircleDTO.setDescription("description");
 
-        collectivityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(collectivity));
+        localAuthorityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(localAuthority));
 
         await circleCommandService.createCircle(saveCircleDTO);
 
@@ -151,7 +151,7 @@ class CircleCommandServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testCreateCircleCollectivityNotFound() {
+    private async testCreateCircleLocalAuthorityNotFound() {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         circleCommandDTO.setName("michel");
@@ -163,7 +163,7 @@ class CircleCommandServiceTest extends AbstractTestService {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Collectivity for access key : '" + circleCommandDTO.getAccessKey() + "' cannot be found");
+            Chai.assert.equal(err.message, "LocalAuthority for access key : '" + circleCommandDTO.getAccessKey() + "' cannot be found");
         });
     }
 
@@ -171,13 +171,13 @@ class CircleCommandServiceTest extends AbstractTestService {
     private async testUpdateCircle(): Promise<void> {
         const accessKey: string = "starkindustries";
         const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
-        const collectivityDao: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setSecret("secret");
-        collectivity.setName("Rochelle");
-        collectivity.setId(accessKey);
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setSecret("secret");
+        localAuthority.setName("Rochelle");
+        localAuthority.setId(accessKey);
 
         const activityCircle: ActivityCircle = new ActivityCircle();
         activityCircle.setId(1);
@@ -186,7 +186,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         activityCircle.setDescription("Pour une fois qu'on me permet de m'exprimer");
         activityCircle.setAvatarUrl(null);
         activityCircle.setUsers(Promise.resolve([new User()]));
-        activityCircle.setCollectivity(Promise.resolve(collectivity));
+        activityCircle.setLocalAuthority(Promise.resolve(localAuthority));
 
         const updateCircleDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         updateCircleDTO.setAccessKey(accessKey);
@@ -196,7 +196,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         updateCircleDTO.setDescription("description");
         updateCircleDTO.setId(activityCircle.getId());
 
-        collectivityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(collectivity));
+        localAuthorityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(localAuthority));
         circleDao.setup((instance) => instance.findById(updateCircleDTO.getId())).returns(() => Promise.resolve(activityCircle));
 
         await circleCommandService.updateCircle(updateCircleDTO);
@@ -335,7 +335,7 @@ class CircleCommandServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testUpdateCircleCollectivityNotFound() {
+    private async testUpdateCircleLocalAuthorityNotFound() {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
@@ -348,19 +348,19 @@ class CircleCommandServiceTest extends AbstractTestService {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Collectivity for access key : '" + circleCommandDTO.getAccessKey() + "' cannot be found");
+            Chai.assert.equal(err.message, "LocalAuthority for access key : '" + circleCommandDTO.getAccessKey() + "' cannot be found");
         });
     }
 
     @test
     private async testUpdateCircleCircleNotFound() {
-        const collectivityDao: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setSecret("secret");
-        collectivity.setName("Rochelle");
-        collectivity.setId("AccessKeyDesFamilles");
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setSecret("secret");
+        localAuthority.setName("Rochelle");
+        localAuthority.setId("AccessKeyDesFamilles");
 
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
@@ -369,7 +369,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(12);
 
-        collectivityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(collectivity));
+        localAuthorityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
@@ -380,15 +380,15 @@ class CircleCommandServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testUpdateCircleCircleAndCollectivityDoesntMatch() {
-        const collectivityDao: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+    private async testUpdateCircleCircleAndLocalAuthorityDoesntMatch() {
+        const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setSecret("secret");
-        collectivity.setName("Rochelle");
-        collectivity.setId("AccessKeyDesFamilles");
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setSecret("secret");
+        localAuthority.setName("Rochelle");
+        localAuthority.setId("AccessKeyDesFamilles");
 
         const activityCircle: ActivityCircle = new ActivityCircle();
         activityCircle.setId(12);
@@ -396,7 +396,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         activityCircle.setName("Jean de la tourette");
         activityCircle.setDescription("Pour une fois qu'on me permet de m'exprimer");
         activityCircle.setAvatarUrl(null);
-        activityCircle.setCollectivity(Promise.resolve(new Collectivity()));
+        activityCircle.setLocalAuthority(Promise.resolve(new LocalAuthority()));
 
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
@@ -405,14 +405,14 @@ class CircleCommandServiceTest extends AbstractTestService {
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(12);
 
-        collectivityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(collectivity));
+        localAuthorityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
         circleDao.setup((instance) => instance.findById(circleCommandDTO.getId())).returns(() => Promise.resolve(activityCircle));
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Circle '" + activityCircle.getId() + "' and collectivity '" + collectivity.getId() + "'have to be linked ");
+            Chai.assert.equal(err.message, "Circle '" + activityCircle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
         });
     }
 }

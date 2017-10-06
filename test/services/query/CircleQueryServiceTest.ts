@@ -48,8 +48,8 @@ export class CircleQueryServiceTest extends AbstractTestService {
         for (let i = 0; i < circleDTO.getMembers().length; i = i + 1) {
             Chai.assert.equal(circleDTO.getMembers()[i].getId(), users[i].getId());
             // TODO Wait add first and last name
-            // Chai.assert.equal(circleDTO.getMembers()[i].getFirstName(), users[i].getFirstName());
-            // Chai.assert.equal(circleDTO.getMembers()[i].getLastName(), users[i].getLastName());
+            // Chai.assert.equal(circleDTO.getMembers()[i].getFirstName(), user[i].getFirstName());
+            // Chai.assert.equal(circleDTO.getMembers()[i].getLastName(), user[i].getLastName());
         }
 
         circleDTO = await circleQueryService.getCircle(13);
@@ -57,20 +57,20 @@ export class CircleQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testIsOwnedByCollectivity(): Promise<void> {
+    private async testIsOwnedByLocalAuthority(): Promise<void> {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
 
-        circleDaoMock.setup((instance) => instance.isOwnedByCollectivity(12, "accesskey")).returns(() => Promise.resolve(true));
-        circleDaoMock.setup((instance) => instance.isOwnedByCollectivity(10, "accesskey12")).returns(() => Promise.resolve(false));
+        circleDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(12, "accesskey")).returns(() => Promise.resolve(true));
+        circleDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(10, "accesskey12")).returns(() => Promise.resolve(false));
 
-        let isOwnedByCollectivity: boolean = await circleQueryService.isOwnedByCollectivity(12, "accesskey");
+        let isOwnedByLocalAuthority: boolean = await circleQueryService.isOwnedByLocalAuthority(12, "accesskey");
 
-        Chai.assert.isTrue(isOwnedByCollectivity);
+        Chai.assert.isTrue(isOwnedByLocalAuthority);
 
-        isOwnedByCollectivity = await circleQueryService.isOwnedByCollectivity(10, "accesskey12");
+        isOwnedByLocalAuthority = await circleQueryService.isOwnedByLocalAuthority(10, "accesskey12");
 
-        Chai.assert.isFalse(isOwnedByCollectivity);
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
     }
 
     @test

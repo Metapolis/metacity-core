@@ -2,9 +2,9 @@
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../Utils";
-import { CollectivityDao } from "../../persistence/dao/CollectivityDao";
+import { LocalAuthorityDao } from "../../persistence/dao/LocalAuthorityDao";
 import { JWTPayload } from "./JWTToken";
-import { Collectivity } from "../../persistence/domain/Collectivity";
+import { LocalAuthority } from "../../persistence/domain/LocalAuthority";
 import { AccessDeniedError } from "../error/AccessDeniedError";
 import * as JWT from "jsonwebtoken";
 
@@ -22,25 +22,25 @@ export class SecurityManager {
     private logger: LoggerInstance = Utils.createLogger(SecurityManager.name);
 
     /**
-     * Collectivity data access object
+     * LocalAuthority data access object
      */
-    @inject("CollectivityDao")
-    private collectivityDao: CollectivityDao;
+    @inject("LocalAuthorityDao")
+    private localAuthorityDao: LocalAuthorityDao;
 
     /**
      * Authenticate user with JWT
      *
-     * @param domain domain to determine the collectivity
+     * @param domain domain to determine the localAuthority
      * @param jwt the json web token
      */
     public async authenticate(domain: string, jwt: string): Promise<JWTPayload> {
-        // Retrieve collectivity to get the secret
-        const collectivity: Collectivity = await this.collectivityDao.findById(domain);
-        if (collectivity === undefined) {
-            this.logger.error("Collectivity not found");
+        // Retrieve localAuthority to get the secret
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(domain);
+        if (localAuthority === undefined) {
+            this.logger.error("LocalAuthority not found");
             throw new AccessDeniedError("Access denied");
         }
-        const jwtPayload: JWTPayload = (JWT.verify(jwt, collectivity.getSecret()) as JWTPayload);
+        const jwtPayload: JWTPayload = (JWT.verify(jwt, localAuthority.getSecret()) as JWTPayload);
         // JWT library cannot convert id to number
         jwtPayload.id = Number(jwtPayload.id);
 

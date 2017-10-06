@@ -1,12 +1,17 @@
 /**
- * Represents a command to create a circle
+ * Represents a command to update a circle
  */
-export class SaveCircleCommandDTO {
+export class UpdateCircleCommandDTO {
 
     /**
-     * Collectivity's identifier
+     * LocalAuthority's identifier
      */
     private accessKey: string;
+
+    /**
+     * Circle's identifier
+     */
+    private id: number;
 
     /**
      * Circle's name
@@ -34,7 +39,6 @@ export class SaveCircleCommandDTO {
      */
     public getAccessKey(): string {
         return this.accessKey;
-
     }
 
     /**
@@ -44,14 +48,29 @@ export class SaveCircleCommandDTO {
     public setAccessKey(accessKey: string): void {
         this.accessKey = accessKey;
     }
-    
+
+    /**
+     * Getter id
+     * @returns {number}
+     */
+    public getId(): number {
+        return this.id;
+    }
+
+    /**
+     * Setter id
+     * @param {number} id
+     */
+    public setId(id: number): void {
+        this.id = id;
+    }
+
     /**
      * Getter name
      * @returns {string}
      */
     public getName(): string {
         return this.name;
-
     }
 
     /**
@@ -66,7 +85,6 @@ export class SaveCircleCommandDTO {
      * Getter description
      * @returns {string}
      */
-
     public getDescription(): string {
         return this.description;
     }
@@ -109,6 +127,5 @@ export class SaveCircleCommandDTO {
      */
     public setRoles(roles: string[]): void {
         this.roles = roles;
-
     }
 }

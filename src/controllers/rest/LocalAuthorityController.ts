@@ -6,11 +6,11 @@ import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import * as Express from "express";
-import { SaveCircleCommandDTO } from "../../services/command/dto/circles/SaveCircleCommandDTO";
+import { SaveCircleCommandDTO } from "../../services/command/dto/circle/SaveCircleCommandDTO";
 import { CircleCommandService } from "../../services/command/CircleCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import { SaveCircle } from "./model/circle/SaveCircle";
-import { UpdateCircleCommandDTO } from "../../services/command/dto/circles/UpdateCircleCommandDTO";
+import { UpdateCircleCommandDTO } from "../../services/command/dto/circle/UpdateCircleCommandDTO";
 import { CircleQueryService } from "../../services/query/CircleQueryService";
 import { NotFoundError } from "../../common/error/NotFoundError";
 import * as HTTPStatusCodes from "http-status-codes";
@@ -23,18 +23,18 @@ import { User } from "./model/circle/User";
  *
  * /api/collectivities route
  *
- * @class CollectivityController
+ * @class LocalAuthorityController
  */
 @Controller("/api/collectivities")
 @injectable()
-export class CollectivityController implements interfaces.Controller {
+export class LocalAuthorityController implements interfaces.Controller {
 
     /**
-     * CollectivityController Logger
+     * LocalAuthorityController Logger
      *
      * @type {winston.LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(CollectivityController.name);
+    private logger: LoggerInstance = Utils.createLogger(LocalAuthorityController.name);
 
     /**
      * Circle command service
@@ -52,13 +52,13 @@ export class CollectivityController implements interfaces.Controller {
      * Create a circle
      *
      * @param {SaveCircle} circle to create
-     * @param {string} accessKey :  collectivity identifier
+     * @param {string} accessKey :  localAuthority identifier
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
-    @Post("/:accessKey/circles")
-    public async createCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
+    @Post("/:accessKey/circle")
+    public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
 
-        // We don't verify if collectivity exists
+        // We don't verify if localAuthority exists
         // It will be done with @secured
         // Coming soon
         this.logger.debug("Begin creation");
@@ -78,12 +78,12 @@ export class CollectivityController implements interfaces.Controller {
      * Update specific circle
      *
      * @param {SaveCircle} circle new values for circle
-     * @param {string} accessKey collectivity identifier
+     * @param {string} accessKey localAuthority identifier
      * @param {number} circleId circle identifier
      * @param {Express.Response} res Response to set 204
      */
-    @Put("/:accessKey/circles/:circleid")
-    public async updateCollectivityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
+    @Put("/:accessKey/circle/:circleid")
+    public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
 
@@ -91,7 +91,7 @@ export class CollectivityController implements interfaces.Controller {
             this.logger.debug("Circle with id '%s' cannot be found", circleId);
             throw new NotFoundError("Circle not found");
         }
-        // We don't verify if collectivity exists
+        // We don't verify if localAuthority exists
         // It will be done with @secured
         // Coming soon
         this.logger.debug("Begin update");
@@ -113,23 +113,23 @@ export class CollectivityController implements interfaces.Controller {
     /**
      * Get information details of specific circle
      *
-     * @param {string} accessKey Collectivity access key
+     * @param {string} accessKey LocalAuthority access key
      * @param {number} circleId Circle identifier
      *
      * @returns {Promise<Circle>} information of specific circle
      */
-    @Get("/:accessKey/circles/:circleid")
-    public async getCollectivityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
+    @Get("/:accessKey/circle/:circleid")
+    public async getLocalAuthorityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
         this.logger.debug("Begin get circle");
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
 
-        // Check if circle and collectivity exist and is circle is owned by collectivity
-        if (!(await this.circleQueryService.isOwnedByCollectivity(circleIdNumber, accessKey))) {
-            throw new NotFoundError("Circle is not owned by collectivity");
+        // Check if circle and localAuthority exist and is circle is owned by localAuthority
+        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, accessKey))) {
+            throw new NotFoundError("Circle is not owned by localAuthority");
         }
 
-        // We don't verify if collectivity exists
+        // We don't verify if localAuthority exists
         // It will be done with @secured
         // Coming soon
         // Don't check if circle exists because the previous check all

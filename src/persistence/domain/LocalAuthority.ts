@@ -1,22 +1,35 @@
+import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
+import { ActivityCircle } from "./ActivityCircle";
+
 /**
- * Represents a collectivity
+ * Represents a user
  */
-export class CollectivityDTO {
+@Entity()
+export class LocalAuthority {
 
     /**
-     * Collectivity's identifier
+     * LocalAuthority's identifier
      */
+    @PrimaryColumn()
     private id: string;
 
     /**
-     * Collectivity's name
+     * LocalAuthority's secret
      */
+    @Column({nullable: false, length: 250})
+    private secret: string;
+
+    /**
+     * LocalAuthority's name
+     */
+    @Column({nullable: false, length: 250})
     private name: string;
 
     /**
-     * Collectivity's secret
+     * Circle's localAuthority (owner of circle)
      */
-    private secret: string;
+    @OneToMany((type) => ActivityCircle, (circle) => "localAuthority")
+    private circles: Promise<ActivityCircle[]>;
 
     /**
      * Getter identifier
@@ -70,5 +83,23 @@ export class CollectivityDTO {
      */
     public setName(name: string): void {
         this.name = name;
+    }
+
+    /**
+     * Getter circle
+     *
+     * @returns {Circle[]}
+     */
+    public getCircles(): Promise<ActivityCircle[]> {
+        return this.circles;
+    }
+
+    /**
+     * Setter circle
+     *
+     * @param circles new circle value
+     */
+    public setCircles(circles: Promise<ActivityCircle[]>): void {
+        this.circles = circles;
     }
 }

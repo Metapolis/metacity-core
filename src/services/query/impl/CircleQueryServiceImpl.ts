@@ -40,9 +40,9 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     /**
      * Override
      */
-    public async isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean> {
-        this.logger.debug("Check if circle '%s' is owned by collectivity '%s'", circleId, accessKey);
-        return await this.circleDao.isOwnedByCollectivity(circleId, accessKey);
+    public async isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean> {
+        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s'", circleId, accessKey);
+        return await this.circleDao.isOwnedByLocalAuthority(circleId, accessKey);
     }
 
     /**

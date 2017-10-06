@@ -25,18 +25,18 @@ import { TweetController } from "./controllers/rest/TweetController";
 import { TweetQueryService } from "./services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
 import { RequestAccessor } from "./RequestAccessor";
-import { Collectivity } from "./persistence/domain/Collectivity";
-import { CollectivityDaoImpl } from "./persistence/dao/impl/CollectivityDaoImpl";
-import { CollectivityDao } from "./persistence/dao/CollectivityDao";
+import { LocalAuthority } from "./persistence/domain/LocalAuthority";
+import { LocalAuthorityDaoImpl } from "./persistence/dao/impl/LocalAuthorityDaoImpl";
+import { LocalAuthorityDao } from "./persistence/dao/LocalAuthorityDao";
 import { ContextApp } from "./ContextApp";
-import { CollectivityQueryService } from "./services/query/CollectivityQueryService";
-import { CollectivityQueryServiceImpl } from "./services/query/impl/CollectivityQueryServiceImpl";
+import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQueryService";
+import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
 import { SecurityManager } from "./common/security/SecurityManager";
 import methodOverride = require("method-override");
 import { ActivityCircle } from "./persistence/domain/ActivityCircle";
 import {CircleCommandService} from "./services/command/CircleCommandService";
 import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandServiceImpl";
-import {CollectivityController} from "./controllers/rest/CollectivityController";
+import { LocalAuthorityController } from "./controllers/rest/LocalAuthorityController";
 import {CircleDao} from "./persistence/dao/CircleDao";
 import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
 import {UserCommandService} from "./services/command/UserCommandService";
@@ -147,7 +147,7 @@ export class App {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
         this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
-        this.container.bind<CollectivityQueryService>("CollectivityQueryService").to(CollectivityQueryServiceImpl);
+        this.container.bind<LocalAuthorityQueryService>("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
         this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
     }
@@ -160,7 +160,7 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(CollectivityController).whenTargetNamed("CollectivityController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(LocalAuthorityController).whenTargetNamed("LocalAuthorityController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed("UserController");
     }
 
@@ -284,7 +284,7 @@ export class App {
     private bindDao(): void {
         this.logger.debug("Binding DAO");
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
-        this.container.bind<CollectivityDao>("CollectivityDao").to(CollectivityDaoImpl);
+        this.container.bind<LocalAuthorityDao>("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
     }
 
@@ -295,7 +295,7 @@ export class App {
         this.logger.debug("Binding repositories");
         this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
         this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(ActivityCircle));
-        this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Collectivity));
+        this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(LocalAuthority));
     }
 
     /**

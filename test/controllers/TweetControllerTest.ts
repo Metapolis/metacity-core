@@ -15,8 +15,8 @@ import { TestUtils } from "../common/TestUtils";
 import { FindTweetQuery } from "../../src/common/query/FindTweetQuery";
 import { Tweet } from "../../src/controllers/rest/model/tweet/Tweet";
 import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
-import { Collectivity } from "../../src/persistence/domain/Collectivity";
-import { CollectivityDao } from "../../src/persistence/dao/CollectivityDao";
+import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
+import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
 import { UserDao } from "../../src/persistence/dao/UserDao";
 import { User } from "../../src/persistence/domain/User";
 import { Role } from "../../src/common/enum/Role";
@@ -36,11 +36,11 @@ class TweetControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const tweetQueryService: TypeMoq.IMock<TweetQueryService> = (ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>);
-        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
 
-        const collectivityMock: Collectivity = new Collectivity();
-        collectivityMock.setSecret("secret");
+        const localAuthorityMock: LocalAuthority = new LocalAuthority();
+        localAuthorityMock.setSecret("secret");
 
         const activityCircle: ActivityCircle = new ActivityCircle();
 
@@ -49,7 +49,7 @@ class TweetControllerTest extends AbstractTestController {
 
         activityCircle.setRoles([Role[Role.READ_ALL]]);
 
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
 
         const mockTweets: TweetDTO[] = [];
@@ -140,7 +140,7 @@ class TweetControllerTest extends AbstractTestController {
 
 
         // Check with a standard call, no filter, pass
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         responseValue = "";
         await Request(optsFilter).then((data: string) => {
@@ -187,7 +187,7 @@ class TweetControllerTest extends AbstractTestController {
         }))).returns(() => Promise.resolve(new ResultList<TweetDTO>(200, mockTweets)));
 
         // Check with a standard call, no filter, pass
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         responseValue = "";
         await Request(optsFilter).then((data: string) => {
@@ -233,11 +233,11 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check no offset
-        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
 
-        const collectivityMock: Collectivity = new Collectivity();
-        collectivityMock.setSecret("secret");
+        const localAuthorityMock: LocalAuthority = new LocalAuthority();
+        localAuthorityMock.setSecret("secret");
 
         const activityCircle: ActivityCircle = new ActivityCircle();
 
@@ -246,7 +246,7 @@ class TweetControllerTest extends AbstractTestController {
 
         activityCircle.setRoles([Role[Role.READ_ALL]]);
 
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
 
         opts = {
@@ -272,7 +272,7 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check negative offset
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.offset = -1;
         statusCode = HTTPStatusCodes.OK;
@@ -283,7 +283,7 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check null limit
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.offset = offset;
         opts.qs.limit = null;
@@ -295,7 +295,7 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check negative limit
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.limit = -1;
         statusCode = HTTPStatusCodes.OK;
@@ -306,7 +306,7 @@ class TweetControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
         // Check invalid format date
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.limit = 1;
         opts.qs.dates = "TOTO";
@@ -317,7 +317,7 @@ class TweetControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.dates = "TOTO";
         statusCode = HTTPStatusCodes.OK;
@@ -327,7 +327,7 @@ class TweetControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.dates = "1977-04-22T06:00:00Z|1977-04-22T06:00:00Z|1977-04-22T06:00:00Z";
         statusCode = HTTPStatusCodes.OK;
@@ -337,7 +337,7 @@ class TweetControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
         opts.qs.dates = "1977-04-22T06:00:00Z|1977-04-22T06:00:00Z;|1977-04-22T06:00:00Z;|1977-04-22T06:00:00Z";
         statusCode = HTTPStatusCodes.OK;

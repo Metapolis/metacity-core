@@ -6,7 +6,7 @@ import { ContextApp } from "../../ContextApp";
 import * as TypeMoq from "typemoq";
 import { UserDao } from "../../../src/persistence/dao/UserDao";
 import { UserCommandService } from "../../../src/services/command/UserCommandService";
-import {SaveUserCommandDTO} from "../../../src/services/command/dto/users/SaveUserCommandDTO";
+import { SaveUserCommandDTO } from "../../../src/services/command/dto/user/SaveUserCommandDTO";
 import {User} from "../../../src/persistence/domain/User";
 import { IllegalArgumentError} from "../../../src/common/error/IllegalArgumentError";
 

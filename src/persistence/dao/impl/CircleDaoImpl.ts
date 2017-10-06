@@ -54,11 +54,11 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean> {
-        this.logger.debug("Check if circle '%s' is owned by collectivity '%s' in database", circleId, accessKey);
+    public async isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean> {
+        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s' in database", circleId, accessKey);
 
         return (await this.activityCircleRepository.createQueryBuilder("c")
-            .innerJoin("c.collectivity", "col")
+            .innerJoin("c.localAuthority", "col")
             .where("c.id = :circleid", {circleid: circleId})
             .andWhere("col.id = :accesskey", {accesskey: accessKey})
             .getCount()) === 1;

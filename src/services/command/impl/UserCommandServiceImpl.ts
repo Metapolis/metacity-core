@@ -4,7 +4,7 @@ import {Client} from "elasticsearch";
 import {Utils} from "../../../common/Utils";
 import {LoggerInstance} from "winston";
 import {UserDao} from "../../../persistence/dao/UserDao";
-import {SaveUserCommandDTO} from "../dto/users/SaveUserCommandDTO";
+import { SaveUserCommandDTO } from "../dto/user/SaveUserCommandDTO";
 import {User} from "../../../persistence/domain/User";
 import {isNullOrUndefined} from "util";
 

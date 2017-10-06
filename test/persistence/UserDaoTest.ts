@@ -7,7 +7,7 @@ import { UserDao } from "../../src/persistence/dao/UserDao";
 import { User } from "../../src/persistence/domain/User";
 import { ActivityCircle } from "../../src/persistence/domain/ActivityCircle";
 import { Role } from "../../src/common/enum/Role";
-import { Collectivity } from "../../src/persistence/domain/Collectivity";
+import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { AbstractTestDao } from "./inversify/AbstractTestService";
 
 @suite
@@ -18,7 +18,7 @@ export class UserDaoTest extends AbstractTestDao {
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
         const circleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
-        const collectivityRepository: TypeORM.Repository<Collectivity> = ContextApp.container.get("CollectivityRepository");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
 
         // Create user
         const user: User = new User();
@@ -32,18 +32,18 @@ export class UserDaoTest extends AbstractTestDao {
         circle.setName("Stark assembly");
         circle.setRoles([Role.READ_ALL]);
 
-        // Create collectivity
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setName("Stark corp");
-        collectivity.setId("localhost");
-        collectivity.setSecret("secret");
+        // Create localAuthority
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Stark corp");
+        localAuthority.setId("localhost");
+        localAuthority.setSecret("secret");
 
-        // Persist collectivity
-        await collectivityRepository.persist(collectivity);
-        (await collectivity.getCircles()).push(circle);
+        // Persist localAuthority
+        await localAuthorityRepository.persist(localAuthority);
+        (await localAuthority.getCircles()).push(circle);
 
         // Persist circle
-        circle.setCollectivity(Promise.resolve(collectivity));
+        circle.setLocalAuthority(Promise.resolve(localAuthority));
         await circleRepository.persist(circle);
         // Persist user
         (await user.getCircles()).push(circle);
@@ -70,7 +70,7 @@ export class UserDaoTest extends AbstractTestDao {
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
         const circleRepository: TypeORM.Repository<ActivityCircle> = ContextApp.container.get("ActivityCircleRepository");
-        const collectivityRepository: TypeORM.Repository<Collectivity> = ContextApp.container.get("CollectivityRepository");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
 
         // Create user
         const user: User = new User();
@@ -84,19 +84,19 @@ export class UserDaoTest extends AbstractTestDao {
         circle.setName("Stark industry");
         circle.setRoles([Role.READ_ALL]);
 
-        // Create collectivity
-        const collectivity: Collectivity = new Collectivity();
-        collectivity.setName("Stark corp");
-        collectivity.setId("localhost");
-        collectivity.setSecret("secret");
+        // Create localAuthority
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Stark corp");
+        localAuthority.setId("localhost");
+        localAuthority.setSecret("secret");
 
-        // Persist collectivity
-        await collectivityRepository.persist(collectivity);
-        (await collectivity.getCircles()).push(circle);
+        // Persist localAuthority
+        await localAuthorityRepository.persist(localAuthority);
+        (await localAuthority.getCircles()).push(circle);
         console.log(user.getLastConnection());
 
         // Persist circle
-        circle.setCollectivity(Promise.resolve(collectivity));
+        circle.setLocalAuthority(Promise.resolve(localAuthority));
         await circleRepository.persist(circle);
         // Persist user
         (await user.getCircles()).push(circle);

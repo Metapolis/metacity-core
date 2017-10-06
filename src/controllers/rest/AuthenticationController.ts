@@ -9,8 +9,8 @@ import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAu
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
 import { UserToken } from "./model/user/UserToken";
 import { RequestAccessor } from "../../RequestAccessor";
-import { CollectivityDTO } from "../../services/query/dto/collectivity/CollectivityDTO";
-import { CollectivityQueryService } from "../../services/query/CollectivityQueryService";
+import { LocalAuthorityDTO } from "../../services/query/dto/localAuthority/LocalAuthorityDTO";
+import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 import * as JWT from "jsonwebtoken";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
 
@@ -39,10 +39,10 @@ export class AuthenticationController implements interfaces.Controller {
     private userAuthenticationQueryService: UserAuthenticationQueryService;
 
     /**
-     * Collectivity query service
+     * LocalAuthority query service
      */
-    @inject("CollectivityQueryService")
-    private collectivityQueryService: CollectivityQueryService;
+    @inject("LocalAuthorityQueryService")
+    private localAuthorityQueryService: LocalAuthorityQueryService;
 
     /**
      * Authentication resources

@@ -192,9 +192,9 @@ export class User {
     }
 
     /**
-     * Setter circles
+     * Setter circle
      *
-     * @param circles new circles value
+     * @param circles new circle value
      */
     public setCircles(circles: Promise<ActivityCircle[]>): void {
         this.circles = circles;

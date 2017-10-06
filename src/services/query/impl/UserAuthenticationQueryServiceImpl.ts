@@ -10,8 +10,8 @@ import { User } from "../../../persistence/domain/User";
 import { AccessDeniedError } from "../../../common/error/AccessDeniedError";
 import { UserTokenDTO } from "../dto/user/UserTokenDTO";
 import { JWTPayload } from "../../../common/security/JWTToken";
-import { Collectivity } from "../../../persistence/domain/Collectivity";
-import { CollectivityDao } from "../../../persistence/dao/CollectivityDao";
+import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
+import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 
 /**
  * Implementation of {@link UserAuthenticationQueryService}
@@ -33,10 +33,10 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
     private userDao: UserDao;
 
     /**
-     * Collectivity data access object
+     * LocalAuthority data access object
      */
-    @inject("CollectivityDao")
-    private collectivityDao: CollectivityDao;
+    @inject("LocalAuthorityDao")
+    private localAuthorityDao: LocalAuthorityDao;
     
     /**
      * Override
@@ -60,11 +60,11 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
             throw new AccessDeniedError("Wrong password");
         }
 
-        const collectivity: Collectivity = await this.collectivityDao.findById(userAuthenticationToken.getDomain());
-        // Check collectivity exists
-        if (collectivity === undefined) {
-            this.logger.info("Collectivity '%s' not found", userAuthenticationToken.getDomain());
-            throw new AccessDeniedError("Collectivity not found");
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(userAuthenticationToken.getDomain());
+        // Check localAuthority exists
+        if (localAuthority === undefined) {
+            this.logger.info("LocalAuthority '%s' not found", userAuthenticationToken.getDomain());
+            throw new AccessDeniedError("LocalAuthority not found");
 
         }
         this.logger.info("User '%s' is authenticated", userAuthenticationToken.getUsername());
@@ -80,7 +80,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
         jwtPayload.lastConnection = user.getLastConnection();
         jwtPayload.roles = await user.getRoles();
 
-        userTokenDTO.setToken(JWT.sign(jwtPayload, collectivity.getSecret()));
+        userTokenDTO.setToken(JWT.sign(jwtPayload, localAuthority.getSecret()));
 
         return userTokenDTO;
     }

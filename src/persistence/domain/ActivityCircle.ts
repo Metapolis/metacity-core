@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOn
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { User } from "./User";
-import { Collectivity } from "./Collectivity";
+import { LocalAuthority } from "./LocalAuthority";
 
 /**
  * Represents a activity circle
@@ -48,7 +48,7 @@ export class ActivityCircle {
     private roles: string;
 
     /**
-     * Circle's users
+     * Circle's user
      *
      * You have to use getter and setter
      */
@@ -57,10 +57,10 @@ export class ActivityCircle {
     private users: Promise<User[]>;
 
     /**
-     * Circle's collectivity (owner of circle)
+     * Circle's localAuthority (owner of circle)
      */
-    @ManyToOne((type) => Collectivity, (collectivity) => "circles")
-    private collectivity: Promise<Collectivity>;
+    @ManyToOne((type) => LocalAuthority, (localAuthority) => "circles")
+    private localAuthority: Promise<LocalAuthority>;
 
     /**
      * Transient role array
@@ -176,7 +176,7 @@ export class ActivityCircle {
     }
 
     /**
-     * Getter users
+     * Getter user
      *
      * @returns {User[]}
      */
@@ -185,29 +185,29 @@ export class ActivityCircle {
     }
 
     /**
-     * Setter users
+     * Setter user
      *
-     * @param users new users value
+     * @param users new user value
      */
     public setUsers(users: Promise<User[]>): void {
         this.users = users;
     }
 
     /**
-     * Getter collectivity
+     * Getter localAuthority
      *
-     * @returns {Collectivity}
+     * @returns {LocalAuthority}
      */
-    public getCollectivity(): Promise<Collectivity> {
-        return this.collectivity;
+    public getLocalAuthority(): Promise<LocalAuthority> {
+        return this.localAuthority;
     }
 
     /**
-     * Setter collectivity
+     * Setter localAuthority
      *
-     * @param collectivity new collectivity value
+     * @param localAuthority new localAuthority value
      */
-    public setCollectivity(collectivity: Promise<Collectivity>): void {
-        this.collectivity = collectivity;
+    public setLocalAuthority(localAuthority: Promise<LocalAuthority>): void {
+        this.localAuthority = localAuthority;
     }
 }
