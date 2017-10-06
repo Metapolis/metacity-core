@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOne, JoinTable } from "typeorm";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
+import { LocalAuthority } from "./LocalAuthority";
 
 /**
  * Represents a data set
@@ -40,10 +41,11 @@ export class DataSet {
     private dataType: string;
 
     /**
-     * DataSet is public when true
+     * DataSet is restricted when true
+     * Means to access to data set you have to check roles
      */
     @Column({nullable: false})
-    private isPublic: boolean;
+    private restricted: boolean;
 
     /**
      * Circle's comma separated roles
@@ -70,6 +72,7 @@ export class DataSet {
     private postLoad(): void {
         this.initRoleArray(this.roles);
     }
+
     /**
      * Getter identifier
      *
@@ -125,21 +128,21 @@ export class DataSet {
     }
 
     /**
-     *  Getter isPublic
+     *  Getter restricted
      *
-     * @returns {string}
+     * @returns {boolean}
      */
-    public getIsPublic(): string {
-        return this.isPublic;
+    public isRestricted(): boolean {
+        return this.restricted;
     }
 
     /**
-     * Setter is Public
+     * Setter restricted
      *
-     * @param {boolean} isPublic
+     * @param {boolean} restricted
      */
-    public setIsPublic(isPublic: boolean): void {
-        this.isPublic = isPublic;
+    public setRestricted(restricted: boolean): void {
+        this.restricted = restricted;
     }
 
     /**
@@ -178,29 +181,30 @@ export class DataSet {
     public getRoles(): string[] {
         return this.roleArray;
     }
+
     /**
      * Init role array with roles in string
      *
      * @param roles roles separate by comma
      */
-    private initDataTypeArray(dataType: string): void {
-        this.dataTypeArray = dataType.split(",");
+    private initRoleArray(roles: string): void {
+        this.roleArray = roles.split(",");
     }
 
     /**
      * Getter local authority
-     * @returns {Promise<LocalAuthority>}
+     * @returns {Promise<LocalAuthority[]>}
      */
-    public getLocalAuthoritiy(): Promise<LocalAuthority> {
+    public getLocalAuthoritiy(): Promise<LocalAuthority[]> {
         return this.localAuthority;
     }
 
     /**
      * Setter local authority
      *
-     * @param local authority new local authority value
+     * @param localAuthority authority new local authority value
      */
-    public setLocalAuthoritiy(localAuthority: Promise<LocalAuthoritiy>): void {
+    public setLocalAuthoritiy(localAuthority: Promise<LocalAuthority[]>): void {
         this.localAuthority = localAuthority;
     }
 }
