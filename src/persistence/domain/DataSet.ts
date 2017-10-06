@@ -1,45 +1,49 @@
 import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOne, JoinTable } from "typeorm";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
-import { User } from "./User";
-import { Collectivity } from "./Collectivity";
 
 /**
- * Represents a activity circle
+ * Represents a data set
  */
 @Entity()
-export class ActivityCircle {
+export class DataSet {
 
     /**
      * DataSet logger
      *
      * @type {winston.LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(ActivityCircle.name);
+    private logger: LoggerInstance = Utils.createLogger(DataSet.name);
 
     /**
-     * Activity Circle's identifier
+     * DataSet identifier
      */
     @PrimaryGeneratedColumn({type: "bigint"})
     private id: number;
 
     /**
-     * Activity Circle's name
+     * DataSet name
      */
     @Column({nullable: false, length: 250})
     private name: string;
 
     /**
-     * Activity Circle's description
+     * DataSet description
      */
     @Column({nullable: true})
     private description: string;
 
     /**
-     * Activity Circle's avatar url
+     * DataSet type of data
      */
-    @Column({nullable: true})
-    private avatarUrl: string;
+    @Column({type: "text", nullable: false})
+    private dataType: string;
+
+    /**
+     * DataSet is public when true
+     */
+    @Column({nullable: false})
+    private isPublic: boolean;
 
     /**
      * Circle's comma separated roles
@@ -48,19 +52,11 @@ export class ActivityCircle {
     private roles: string;
 
     /**
-     * Circle's users
-     *
-     * You have to use getter and setter
+     * Dataset's local authority
      */
-    @ManyToMany((type) => User, (user) => "circles")
+    @ManyToMany((type) => LocalAuthority, (localAuthority) => "dataSets")
     @JoinTable()
-    private users: Promise<User[]>;
-
-    /**
-     * Circle's collectivity (owner of circle)
-     */
-    @ManyToOne((type) => Collectivity, (collectivity) => "circles")
-    private collectivity: Promise<Collectivity>;
+    private localAuthority: Promise<LocalAuthority[]>;
 
     /**
      * Transient role array
@@ -74,7 +70,6 @@ export class ActivityCircle {
     private postLoad(): void {
         this.initRoleArray(this.roles);
     }
-
     /**
      * Getter identifier
      *
@@ -112,24 +107,6 @@ export class ActivityCircle {
     }
 
     /**
-     * Getter avatarUrl
-     *
-     * @returns {string}
-     */
-    public getAvatarUrl(): string {
-        return this.avatarUrl;
-    }
-
-    /**
-     * Setter avatarUrl
-     *
-     * @param avatarUrl new avatarUrl value
-     */
-    public setAvatarUrl(avatarUrl: string): void {
-        this.avatarUrl = avatarUrl;
-    }
-
-    /**
      * Getter description
      *
      * @returns {string}
@@ -145,6 +122,42 @@ export class ActivityCircle {
      */
     public setDescription(description: string): void {
         this.description = description;
+    }
+
+    /**
+     *  Getter isPublic
+     *
+     * @returns {string}
+     */
+    public getIsPublic(): string {
+        return this.isPublic;
+    }
+
+    /**
+     * Setter is Public
+     *
+     * @param {boolean} isPublic
+     */
+    public setIsPublic(isPublic: boolean): void {
+        this.isPublic = isPublic;
+    }
+
+    /**
+     * Getter DataType
+     *
+     * @returns {string}
+     */
+    public getDataType(): string {
+        return this.dataType;
+    }
+
+    /**
+     * Setter DataType
+     *
+     * @param dataType new dataType value
+     */
+    public setDataType(dataType: string): void {
+        this.dataType = dataType;
     }
 
     /**
@@ -165,49 +178,29 @@ export class ActivityCircle {
     public getRoles(): string[] {
         return this.roleArray;
     }
-
     /**
      * Init role array with roles in string
      *
      * @param roles roles separate by comma
      */
-    private initRoleArray(roles: string): void {
-        this.roleArray = roles.split(",");
+    private initDataTypeArray(dataType: string): void {
+        this.dataTypeArray = dataType.split(",");
     }
 
     /**
-     * Getter users
-     *
-     * @returns {User[]}
+     * Getter local authority
+     * @returns {Promise<LocalAuthority>}
      */
-    public getUsers(): Promise<User[]> {
-        return this.users;
+    public getLocalAuthoritiy(): Promise<LocalAuthority> {
+        return this.localAuthority;
     }
 
     /**
-     * Setter users
+     * Setter local authority
      *
-     * @param users new users value
+     * @param local authority new local authority value
      */
-    public setUsers(users: Promise<User[]>): void {
-        this.users = users;
-    }
-
-    /**
-     * Getter collectivity
-     *
-     * @returns {Collectivity}
-     */
-    public getCollectivity(): Promise<Collectivity> {
-        return this.collectivity;
-    }
-
-    /**
-     * Setter collectivity
-     *
-     * @param collectivity new collectivity value
-     */
-    public setCollectivity(collectivity: Promise<Collectivity>): void {
-        this.collectivity = collectivity;
+    public setLocalAuthoritiy(localAuthority: Promise<LocalAuthoritiy>): void {
+        this.localAuthority = localAuthority;
     }
 }
