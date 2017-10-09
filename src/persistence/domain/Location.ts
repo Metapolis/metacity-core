@@ -1,5 +1,3 @@
-import { Column} from "typeorm";
-
 /**
  * Location description
  */
@@ -8,19 +6,16 @@ export class Location {
     /**
      * Location's latitude
      */
-    @Column({nullable: false, type: "double"})
     private latitude: number;
 
     /**
      * Location's latitude
      */
-    @Column({nullable: false, type: "double"})
     private longitude: number;
 
     /**
      * Location's zoom factor
      */
-    @Column({nullable: false, type: "float"})
     private zoomFactor: number;
 
     /**
