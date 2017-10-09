@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
+import { UIConfig } from "./UIConfig";
 
 /**
  * Represents a user
@@ -25,6 +26,12 @@ export class LocalAuthority {
      */
     @Column({nullable: false, length: 250})
     private name: string;
+
+    /**
+     * Ui config embedded in local authority
+     */
+    @Column((type: object) => UIConfig)
+    private uiConfig: UIConfig;
 
     /**
      * Circle's localAuthority (owner of circle)
@@ -128,5 +135,23 @@ export class LocalAuthority {
      */
     public setDataSets(dataSets: Promise<DataSet[]>): void {
         this.dataSets = dataSets;
+    }
+
+    /**
+     * Getter Ui config
+     *
+     * @returns {UIConfig}
+     */
+    public getUIConfig(): UIConfig {
+        return this.uiConfig;
+    }
+
+    /**
+     * Setter Ui config
+     *
+     * @param {UIConfig} uiConfig
+     */
+    public setUIConfig(uiConfig: UIConfig): void {
+        this.uiConfig = uiConfig;
     }
 }
