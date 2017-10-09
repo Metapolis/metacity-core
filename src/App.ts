@@ -45,6 +45,9 @@ import {UserController} from "./controllers/rest/UserController";
 import { NotFoundError } from "./common/error/NotFoundError";
 import { CircleQueryService } from "./services/query/CircleQueryService";
 import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryServiceImpl";
+import { Credential } from "./persistence/domain/Credential";
+import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStrategy";
+import { getRepository } from "typeorm";
 import {DataSet} from "./persistence/domain/DataSet";
 
 /**
@@ -188,16 +191,15 @@ export class App {
     public async connectDB(): Promise<void> {
         this.logger.debug("Connect to database");
         await TypeORM.createConnection({
-            dropSchemaOnConnection: Config.isDatabaseDropSchema(),
-            autoSchemaSync: Config.isDatabaseAutoSchemaSync(),
-            driver: {
-                database: Config.getDatabaseName(),
-                host: Config.getDatabaseHost(),
-                password: Config.getDatabasePassword(),
-                port: Config.getDatabasePort(),
-                type: "postgres",
-                username: Config.getDatabaseUser()
-            },
+            dropSchema: Config.isDatabaseDropSchema(),
+            synchronize: Config.isDatabaseAutoSchemaSync(),
+            namingStrategy: new PostgresNamingStrategy(),
+            type: "postgres",
+            database: Config.getDatabaseName(),
+            host: Config.getDatabaseHost(),
+            password: Config.getDatabasePassword(),
+            port: Config.getDatabasePort(),
+            username: Config.getDatabaseUser(),
             entities: [
                 __dirname + "/persistence/domain/*.js"
             ],
@@ -294,9 +296,10 @@ export class App {
      */
     private bindRepository(): void {
         this.logger.debug("Binding repositories");
-        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
-        this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Circle));
-        this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(LocalAuthority));
+        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(getRepository(User));
+        this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(getRepository(Circle));
+        this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(getRepository(LocalAuthority));
+        this.container.bind<TypeORM.Repository<Credential>>("CredentialRepository").toConstantValue(getRepository(Credential));
         this.container.bind<TypeORM.Repository<DataSet>>("DataSetRepository").toConstantValue(this.dbConnection.entityManager.getRepository(DataSet));
     }
 

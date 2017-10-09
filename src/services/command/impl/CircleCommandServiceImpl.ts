@@ -48,7 +48,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         this.logger.debug("Begin circle creation for '%s'", command.getName());
 
         // Retrieve localAuthority with identifier
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(command.getAccessKey());
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(command.getAccessKey());
 
         // Check if localAuthority is found in database
         Utils.checkArgument(localAuthority !== undefined, "LocalAuthority for access key : '" + command.getAccessKey() + "' cannot be found");
@@ -79,7 +79,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         this.logger.debug("Begin update circle with id '%s'", command.getId());
 
         // Retrieve localAuthority with identifier
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(command.getAccessKey());
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(command.getAccessKey());
 
         // Check if localAuthority is found in database
         Utils.checkArgument(localAuthority !== undefined, "LocalAuthority for access key : '" + command.getAccessKey() + "' cannot be found");

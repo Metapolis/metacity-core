@@ -6,6 +6,7 @@ import * as TypeORM from "typeorm";
 import { CircleDao} from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
+import { Credential } from "../../src/persistence/domain/Credential";
 
 @suite
 export class CircleDaoTest {
@@ -42,7 +43,7 @@ export class CircleDaoTest {
         circle.setRoles(["Champion"]);
         circle.setDefaultCircle(true);
 
-        await circleRepository.persist(circle);
+        await circleRepository.save(circle);
 
         let isExists: boolean = await circleDao.exists(circle.getId());
 
@@ -63,7 +64,7 @@ export class CircleDaoTest {
         circle.setRoles(["Champion"]);
         circle.setDefaultCircle(true);
 
-        await circleRepository.persist(circle);
+        await circleRepository.save(circle);
 
         let actual: Circle = await circleDao.findById(circle.getId());
 
@@ -81,13 +82,20 @@ export class CircleDaoTest {
     public async testIsOwnedByLocalAuthority(): Promise<void> {
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
+        const credentialRepository: TypeORM.Repository<Credential> = ContextApp.container.get("CredentialRepository");
         const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
 
         const localAuthority: LocalAuthority = new LocalAuthority();
         localAuthority.setName("Stark Corp");
-        localAuthority.setId("AccessKey");
-        localAuthority.setSecret("danslavieparfoismaispasseulement");
-        await localAuthorityRepository.persist(localAuthority);
+
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKey");
+        await credentialRepository.save(credential);
+
+        localAuthority.setCredential(Promise.resolve(credential));
+
+        await localAuthorityRepository.save(localAuthority);
 
         const circle: Circle = new Circle();
         circle.setName("Michel");
@@ -95,9 +103,9 @@ export class CircleDaoTest {
         circle.setLocalAuthority(Promise.resolve(localAuthority));
         circle.setDefaultCircle(true);
 
-        await circleRepository.persist(circle);
+        await circleRepository.save(circle);
 
-        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(circle.getId(), localAuthority.getId());
+        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(circle.getId(), (await localAuthority.getCredential()).getAccessKey());
 
         Chai.assert.isTrue(isOwnedByLocalAuthority);
 
@@ -109,7 +117,7 @@ export class CircleDaoTest {
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, localAuthority.getId());
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, (await localAuthority.getCredential()).getAccessKey());
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
     }

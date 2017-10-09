@@ -6,7 +6,7 @@ export class LocalAuthorityDTO {
     /**
      * LocalAuthority's identifier
      */
-    private id: string;
+    private id: number;
 
     /**
      * LocalAuthority's name
@@ -21,9 +21,9 @@ export class LocalAuthorityDTO {
     /**
      * Getter identifier
      *
-     * @returns {string}
+     * @returns {number}
      */
-    public getId(): string {
+    public getId(): number {
         return this.id;
     }
 
@@ -32,7 +32,7 @@ export class LocalAuthorityDTO {
      *
      * @param id new identifier value
      */
-    public setId(id: string): void {
+    public setId(id: number): void {
         this.id = id;
     }
 

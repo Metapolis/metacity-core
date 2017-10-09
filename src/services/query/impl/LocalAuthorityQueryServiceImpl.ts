@@ -34,7 +34,7 @@ export class LocalAuthorityQueryServiceImpl implements LocalAuthorityQueryServic
     public async getLocalAuthority(domain: string): Promise<LocalAuthorityDTO> | null {
         Utils.checkArgument(!Utils.isNullOrEmpty(domain), "Domain cannot be null or empty");
 
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(domain);
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(domain);
         if (localAuthority === undefined) {
             this.logger.debug("LocalAuthority '%s' not found", domain);
             return null;
@@ -43,7 +43,7 @@ export class LocalAuthorityQueryServiceImpl implements LocalAuthorityQueryServic
         const localAuthorityDto: LocalAuthorityDTO = new LocalAuthorityDTO();
         localAuthorityDto.setId(localAuthority.getId());
         localAuthorityDto.setName(localAuthority.getName());
-        localAuthorityDto.setSecret(localAuthority.getSecret());
+        localAuthorityDto.setSecret((await localAuthority.getCredential()).getSecret());
 
         return localAuthorityDto;
     }

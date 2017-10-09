@@ -60,7 +60,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
             throw new AccessDeniedError("Wrong password");
         }
 
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(userAuthenticationToken.getDomain());
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(userAuthenticationToken.getDomain());
         // Check localAuthority exists
         if (localAuthority === undefined) {
             this.logger.info("LocalAuthority '%s' not found", userAuthenticationToken.getDomain());
@@ -80,7 +80,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
         jwtPayload.lastConnection = user.getLastConnection();
         jwtPayload.roles = await user.getRoles();
 
-        userTokenDTO.setToken(JWT.sign(jwtPayload, localAuthority.getSecret()));
+        userTokenDTO.setToken(JWT.sign(jwtPayload, (await localAuthority.getCredential()).getSecret()));
 
         return userTokenDTO;
     }

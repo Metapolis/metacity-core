@@ -15,6 +15,7 @@ import { AccessDeniedError } from "../../../src/common/error/AccessDeniedError";
 import { UserTokenDTO } from "../../../src/services/query/dto/user/UserTokenDTO";
 import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../src/persistence/domain/LocalAuthority";
+import { Credential } from "../../../src/persistence/domain/Credential";
 
 /**
  * All test for user authentication query service
@@ -29,9 +30,12 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
         const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
 
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
-        localAuthorityMock.setSecret("secret");
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKeyDesFamilles");
+        localAuthorityMock.setCredential(Promise.resolve(credential));
         localAuthorityMock.setName("Domain");
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
 
         const token: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
         token.setPassword("password");

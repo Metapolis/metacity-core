@@ -35,12 +35,12 @@ export class SecurityManager {
      */
     public async authenticate(domain: string, jwt: string): Promise<JWTPayload> {
         // Retrieve localAuthority to get the secret
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(domain);
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(domain);
         if (localAuthority === undefined) {
             this.logger.error("LocalAuthority not found");
             throw new AccessDeniedError("Access denied");
         }
-        const jwtPayload: JWTPayload = (JWT.verify(jwt, localAuthority.getSecret()) as JWTPayload);
+        const jwtPayload: JWTPayload = (JWT.verify(jwt, (await localAuthority.getCredential()).getSecret()) as JWTPayload);
         // JWT library cannot convert id to number
         jwtPayload.id = Number(jwtPayload.id);
 
