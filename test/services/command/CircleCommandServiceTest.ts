@@ -83,6 +83,7 @@ class CircleCommandServiceTest extends AbstractTestService {
             Chai.assert.equal(err.message, "Command cannot be undefined or null");
         });
     }
+
     @test
     private async testCreateCircleDefaultNull() {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);

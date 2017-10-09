@@ -1,5 +1,5 @@
-import {User} from "../../../../persistence/domain/User";
-import {SaveUserCommandDTO} from "../user/SaveUserCommandDTO";
+import { User } from "../../../../persistence/domain/User";
+import { SaveUserCommandDTO } from "../user/SaveUserCommandDTO";
 
 /**
  * Represents a command to create a circle

@@ -48,7 +48,7 @@ import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryService
 import { Credential } from "./persistence/domain/Credential";
 import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStrategy";
 import { getRepository } from "typeorm";
-import {DataSet} from "./persistence/domain/DataSet";
+import { DataSet } from "./persistence/domain/DataSet";
 
 /**
  * The App.
@@ -300,7 +300,7 @@ export class App {
         this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(getRepository(Circle));
         this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(getRepository(LocalAuthority));
         this.container.bind<TypeORM.Repository<Credential>>("CredentialRepository").toConstantValue(getRepository(Credential));
-        this.container.bind<TypeORM.Repository<DataSet>>("DataSetRepository").toConstantValue(this.dbConnection.entityManager.getRepository(DataSet));
+        this.container.bind<TypeORM.Repository<DataSet>>("DataSetRepository").toConstantValue(getRepository(DataSet));
     }
 
     /**
