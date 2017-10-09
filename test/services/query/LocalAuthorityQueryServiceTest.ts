@@ -3,12 +3,12 @@ import { LocalAuthorityQueryService } from "../../../src/services/query/LocalAut
 import { ContextApp } from "../../ContextApp";
 import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../src/persistence/domain/LocalAuthority";
-import { LocalAuthorityDTO } from "../../../src/services/query/dto/localAuthority/LocalAuthorityDTO";
 import { suite, test, slow, timeout, skip, only } from "mocha-typescript";
 import * as Chai from "chai";
 import * as TypeMoq from "typemoq";
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 import { Credential } from "../../../src/persistence/domain/Credential";
+import {LocalAuthorityDTO} from "../../../src/services/query/dto/localauthority/LocalAuthorityDTO";
 
 /**
  * All test for user localAuthority query service

@@ -24,8 +24,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const circleMock: Circle = new Circle();
         circleMock.setId(12);
         circleMock.setName("Stark Company");
-        circleMock.setDescription("C'est bien une companie de malade !");
-        circleMock.setAvatarUrl("https://i.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f--iron-man-avengers-marvel-iron-man.jpg");
+        circleMock.setDefaultCircle(true);
         circleMock.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
         (await circleMock.getUsers()).push(user);
         circleDaoMock.setup((instance) => instance.findById(12)).returns(() => Promise.resolve(circleMock));
@@ -33,10 +32,8 @@ export class CircleQueryServiceTest extends AbstractTestService {
         let circleDTO: CircleDTO = await circleQueryService.getCircle(12);
 
         Chai.assert.equal(circleDTO.getId(), circleMock.getId());
-        Chai.assert.equal(circleDTO.getAvatarUrl(), circleMock.getAvatarUrl());
+        Chai.assert.equal(circleDTO.isDefaultCircle(), circleMock.isDefaultCircle());
         Chai.assert.equal(circleDTO.getName(), circleMock.getName());
-        Chai.assert.equal(circleDTO.getDescription(), circleMock.getDescription());
-
         Chai.assert.equal(circleDTO.getRoles().length, circleMock.getRoles().length - 1);
         for (let i = 0; i < circleDTO.getRoles().length; i = i + 1) {
             Chai.assert.equal(circleDTO.getRoles()[i], circleMock.getRoles()[i + 1]);

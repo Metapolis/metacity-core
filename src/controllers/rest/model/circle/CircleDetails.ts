@@ -17,19 +17,14 @@ export class CircleDetails {
     public name: string;
 
     /**
-     * Circle's description
+     * When default circle is true, the circle is the circle by default
      */
-    public description: string;
+    public defaultCircle: boolean;
 
     /**
      * Circle's role
      */
     public roles: Role[];
-
-    /**
-     * Circle's avatar url
-     */
-    public avatarUrl: string;
 
     /**
      * Circle's members

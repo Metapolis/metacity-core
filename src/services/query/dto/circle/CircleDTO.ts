@@ -17,14 +17,9 @@ export class CircleDTO {
     private name: string;
 
     /**
-     * Circle's description
+     * Circle by default if true
      */
-    private description: string;
-
-    /**
-     * Circle's avatar url
-     */
-    private avatarUrl: string;
+    private defaultCircle: boolean;
 
     /**
      * Circle's comma separated roles
@@ -73,42 +68,6 @@ export class CircleDTO {
     }
 
     /**
-     * Getter avatarUrl
-     *
-     * @returns {string}
-     */
-    public getAvatarUrl(): string {
-        return this.avatarUrl;
-    }
-
-    /**
-     * Setter avatarUrl
-     *
-     * @param avatarUrl new avatarUrl value
-     */
-    public setAvatarUrl(avatarUrl: string): void {
-        this.avatarUrl = avatarUrl;
-    }
-
-    /**
-     * Getter description
-     *
-     * @returns {string}
-     */
-    public getDescription(): string {
-        return this.description;
-    }
-
-    /**
-     * Setter description
-     *
-     * @param description new description value
-     */
-    public setDescription(description: string): void {
-        this.description = description;
-    }
-
-    /**
      * Set roles for all fields
      *
      * @param roles array of roles
@@ -142,5 +101,23 @@ export class CircleDTO {
      */
     public getMembers(): UserDTO[] {
         return this.members;
+    }
+
+    /**
+     * Setter default circle
+     *
+     * @param {boolean} defaultCircle
+     */
+    public setDefaultCircle(defaultCircle: boolean): void {
+        this.defaultCircle = defaultCircle;
+    }
+
+    /**
+     * Getter default circle
+     *
+     * @returns {boolean}
+     */
+    public isDefaultCircle(): boolean {
+        return this.defaultCircle;
     }
 }

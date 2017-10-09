@@ -41,17 +41,15 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
         circle.roles = ["Champion"];
-        circle.description = "Il va de ville en ville";
-        circle.avatarURL = "Pour vendre des velux";
+        circle.defaultCircle = true;
 
         circleCommandService.setup((instance: CircleCommandService) => instance.createCircle(TypeMoq.It.is((localAuthorityCircle: SaveCircleCommandDTO) => {
-            let ret = localAuthorityCircle.getDescription() === circle.description;
-            ret = ret && localAuthorityCircle.getRoles().length === circle.roles.length;
+            let ret = localAuthorityCircle.getRoles().length === circle.roles.length;
             for (let i = 0; i < circle.roles.length; i++) {
                 ret = ret && localAuthorityCircle.getRoles()[i] === circle.roles[i];
             }
             ret = ret && localAuthorityCircle.getName() === circle.name;
-            ret = ret && localAuthorityCircle.getAvatarURL() === circle.avatarURL;
+            ret = ret && localAuthorityCircle.isDefaultCircle() === circle.defaultCircle;
             ret = ret && localAuthorityCircle.getAccessKey() === accessKey;
             return ret;
         }))).returns(() => Promise.resolve(circleIdentifier));
@@ -112,8 +110,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
         circle.roles = ["Champion"];
-        circle.description = "Il va de ville en ville";
-        circle.avatarURL = "Pour vendre des velux";
+        circle.defaultCircle = true;
 
         circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
 
@@ -127,13 +124,12 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         await Request(opts);
 
         circleCommandService.verify((instance: CircleCommandService) => instance.updateCircle(TypeMoq.It.is((localAuthorityCircle: UpdateCircleCommandDTO) => {
-            let ret = localAuthorityCircle.getDescription() === circle.description;
-            ret = ret && localAuthorityCircle.getRoles().length === circle.roles.length;
+            let ret = localAuthorityCircle.getRoles().length === circle.roles.length;
             for (let i = 0; i < circle.roles.length; i++) {
                 ret = ret && localAuthorityCircle.getRoles()[i] === circle.roles[i];
             }
             ret = ret && localAuthorityCircle.getName() === circle.name;
-            ret = ret && localAuthorityCircle.getAvatarURL() === circle.avatarURL;
+            ret = ret && localAuthorityCircle.isDefaultCircle() === circle.defaultCircle;
             ret = ret && localAuthorityCircle.getAccessKey() === accessKey;
             ret = ret && localAuthorityCircle.getId() === circleIdentifier;
             return ret;
@@ -201,9 +197,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const circleDTOMock: CircleDTO = new CircleDTO();
         circleDTOMock.setId(circleIdentifier);
         circleDTOMock.setRoles([Role.READ_ALL]);
-        circleDTOMock.setName("fdp");
-        circleDTOMock.setAvatarUrl("Nique ta mere");
-        circleDTOMock.setDescription("Sale fdp");
+        circleDTOMock.setName("michel");
+        circleDTOMock.setDefaultCircle(true);
         circleDTOMock.setMembers(mockUsers);
 
         const opts = {
@@ -222,8 +217,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         Chai.assert.equal(actual.id, circleDTOMock.getId(), "Expected same id");
         Chai.assert.equal(actual.name, circleDTOMock.getName(), "Expected same name");
         Chai.assert.deepEqual(actual.roles, circleDTOMock.getRoles(), "Expected same role");
-        Chai.assert.equal(actual.description, circleDTOMock.getDescription(), "Expected same description");
-        Chai.assert.equal(actual.avatarUrl, circleDTOMock.getAvatarUrl(), "Expected same id");
+        Chai.assert.equal(actual.defaultCircle, circleDTOMock.isDefaultCircle(), "Expected same circle default");
         Chai.assert.equal(actual.members.length, circleDTOMock.getMembers().length);
         for (let i = 0; i < circleDTOMock.getMembers().length; i++) {
             Chai.assert.equal(actual.members[i].id, circleDTOMock.getMembers()[i].getId());

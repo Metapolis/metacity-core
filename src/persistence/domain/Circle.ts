@@ -30,16 +30,10 @@ export class Circle {
     private name: string;
 
     /**
-     * Circle's description
+     * When default circle is true, the circle is the circle by default
      */
-    @Column({nullable: true})
-    private description: string;
-
-    /**
-     * Circle's avatar url
-     */
-    @Column({nullable: true})
-    private avatarUrl: string;
+    @Column({nullable: false})
+    private defaultCircle: boolean;
 
     /**
      * Circle's comma separated roles
@@ -112,39 +106,21 @@ export class Circle {
     }
 
     /**
-     * Getter avatarUrl
+     * Getter defaultCircle
      *
-     * @returns {string}
+     * @returns {boolean}
      */
-    public getAvatarUrl(): string {
-        return this.avatarUrl;
+    public isDefaultCircle() {
+        return this.defaultCircle;
     }
 
     /**
-     * Setter avatarUrl
+     * Setter lolilol
      *
-     * @param avatarUrl new avatarUrl value
+     * @param {boolean} defaultCircle
      */
-    public setAvatarUrl(avatarUrl: string): void {
-        this.avatarUrl = avatarUrl;
-    }
-
-    /**
-     * Getter description
-     *
-     * @returns {string}
-     */
-    public getDescription(): string {
-        return this.description;
-    }
-
-    /**
-     * Setter description
-     *
-     * @param description new description value
-     */
-    public setDescription(description: string): void {
-        this.description = description;
+    public setDefaultCircle(defaultCircle: boolean) {
+        this.defaultCircle = defaultCircle;
     }
 
     /**

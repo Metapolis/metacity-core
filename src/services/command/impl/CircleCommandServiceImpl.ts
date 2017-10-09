@@ -43,6 +43,8 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         Utils.checkArgument(!isNullOrUndefined(command), "Command cannot be undefined or null");
         Utils.checkArgument(!Utils.isNullOrEmpty(command.getName()), "Circle's name cannot be null or empty");
         Utils.checkArgument(command.getRoles() != null, "Circle's roles cannot be null");
+        Utils.checkArgument(!isNullOrUndefined(command.isDefaultCircle()), "Default circle cannot be undefined or null");
+
         this.logger.debug("Begin circle creation for '%s'", command.getName());
 
         // Retrieve localAuthority with identifier
@@ -55,8 +57,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setLocalAuthority(Promise.resolve(localAuthority));
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
-        circle.setDescription(command.getDescription());
-        circle.setAvatarUrl(command.getAvatarURL());
+        circle.setDefaultCircle(command.isDefaultCircle());
 
         this.logger.debug("Create new circle");
         await this.circleDao.saveOrUpdate(circle);
@@ -73,6 +74,8 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         Utils.checkArgument(!isNullOrUndefined(command.getId()), "Circle's identifier cannot be undefined or null");
         Utils.checkArgument(!Utils.isNullOrEmpty(command.getName()), "Circle's name cannot be null or empty");
         Utils.checkArgument(command.getRoles() != null, "Circle's roles cannot be null");
+        Utils.checkArgument(!isNullOrUndefined(command.isDefaultCircle()), "Default circle cannot be undefined or null");
+
         this.logger.debug("Begin update circle with id '%s'", command.getId());
 
         // Retrieve localAuthority with identifier
@@ -89,8 +92,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         Utils.checkArgument((await circle.getLocalAuthority()).getId() === localAuthority.getId(), "Circle '" + circle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
 
         // Set new values
-        circle.setAvatarUrl(command.getAvatarURL());
-        circle.setDescription(command.getDescription());
+        circle.setDefaultCircle(command.isDefaultCircle());
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
 

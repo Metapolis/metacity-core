@@ -41,10 +41,9 @@ class CircleCommandServiceTest extends AbstractTestService {
 
         const saveCircleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         saveCircleDTO.setAccessKey(accessKey);
-        saveCircleDTO.setAvatarURL("avatarUrl");
         saveCircleDTO.setRoles(["Role"]);
         saveCircleDTO.setName("michel");
-        saveCircleDTO.setDescription("description");
+        saveCircleDTO.setDefaultCircle(true);
 
         localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
 
@@ -56,8 +55,7 @@ class CircleCommandServiceTest extends AbstractTestService {
             for (let i = 0; i < saveCircleDTO.getRoles().length; i++) {
                 ret = ret && circle.getRoles()[i] === saveCircleDTO.getRoles()[i];
             }
-            ret = ret && circle.getDescription() === saveCircleDTO.getDescription();
-            ret = ret && circle.getAvatarUrl() === saveCircleDTO.getAvatarURL();
+            ret = ret && circle.isDefaultCircle() === saveCircleDTO.isDefaultCircle();
             return ret;
         })), TypeMoq.Times.exactly(1));
     }
@@ -85,13 +83,44 @@ class CircleCommandServiceTest extends AbstractTestService {
             Chai.assert.equal(err.message, "Command cannot be undefined or null");
         });
     }
+    @test
+    private async testCreateCircleDefaultNull() {
+        const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
+        const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
+        circleCommandDTO.setDefaultCircle(null);
+        circleCommandDTO.setName("abab");
+        circleCommandDTO.setRoles([]);
+
+        await circleCommandService.createCircle(circleCommandDTO).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Default circle cannot be undefined or null");
+        });
+    }
+
+    @test
+    private async testCreateCircleCommandDefaultUndefined() {
+        const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
+        const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
+        circleCommandDTO.setDefaultCircle(undefined);
+        circleCommandDTO.setName("a");
+        circleCommandDTO.setRoles([]);
+
+        await circleCommandService.createCircle(circleCommandDTO).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Default circle cannot be undefined or null");
+        });
+    }
 
     @test
     private async testCreateCircleCommandNameNull() {
 
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setName(null);
 
         await circleCommandService.createCircle(circleCommandDTO).then((result) => {
@@ -107,7 +136,7 @@ class CircleCommandServiceTest extends AbstractTestService {
 
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setName("");
 
         await circleCommandService.createCircle(circleCommandDTO).then((result) => {
@@ -124,8 +153,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         circleCommandDTO.setName(undefined);
-        circleCommandDTO.setDescription("bla");
-
+        circleCommandDTO.setDefaultCircle(true);
 
         await circleCommandService.createCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
@@ -142,8 +170,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles(null);
-        circleCommandDTO.setDescription("bla");
-
+        circleCommandDTO.setDefaultCircle(true);
 
         await circleCommandService.createCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
@@ -160,7 +187,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles([]);
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
 
         await circleCommandService.createCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
@@ -188,17 +215,15 @@ class CircleCommandServiceTest extends AbstractTestService {
         circle.setId(1);
         circle.setRoles(["READ_ALL"]);
         circle.setName("Jean de la tourette");
-        circle.setDescription("Pour une fois qu'on me permet de m'exprimer");
-        circle.setAvatarUrl(null);
+        circle.setDefaultCircle(true);
         circle.setUsers(Promise.resolve([new User()]));
         circle.setLocalAuthority(Promise.resolve(localAuthority));
 
         const updateCircleDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         updateCircleDTO.setAccessKey(accessKey);
-        updateCircleDTO.setAvatarURL("avatarUrl");
         updateCircleDTO.setRoles(["Role"]);
         updateCircleDTO.setName("michel");
-        updateCircleDTO.setDescription("description");
+        updateCircleDTO.setDefaultCircle(true);
         updateCircleDTO.setId(circle.getId());
 
         localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
@@ -212,8 +237,7 @@ class CircleCommandServiceTest extends AbstractTestService {
             for (let i = 0; i < updateCircleDTO.getRoles().length; i++) {
                 ret = ret && circleToSave.getRoles()[i] === updateCircleDTO.getRoles()[i];
             }
-            ret = ret && circleToSave.getDescription() === updateCircleDTO.getDescription();
-            ret = ret && circleToSave.getAvatarUrl() === updateCircleDTO.getAvatarURL();
+            ret = ret && circleToSave.isDefaultCircle() === updateCircleDTO.isDefaultCircle();
             ret = ret && circleToSave.getId() === circle.getId();
             return ret;
         })), TypeMoq.Times.exactly(1));
@@ -247,7 +271,7 @@ class CircleCommandServiceTest extends AbstractTestService {
     private async testUpdateCircleCommandIdNull() {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setId(null);
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
@@ -263,8 +287,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setId(undefined);
-        circleCommandDTO.setDescription("bla");
-
+        circleCommandDTO.setDefaultCircle(true);
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
@@ -278,7 +301,7 @@ class CircleCommandServiceTest extends AbstractTestService {
     private async testUpdateCircleCommandNameNull() {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setId(1);
         circleCommandDTO.setName(null);
 
@@ -295,7 +318,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName(undefined);
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setId(1);
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
@@ -311,7 +334,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("");
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setId(1);
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
@@ -328,7 +351,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles(null);
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setId(1);
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
@@ -345,7 +368,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles([]);
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(1);
 
@@ -371,7 +394,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles([]);
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(12);
 
@@ -403,14 +426,13 @@ class CircleCommandServiceTest extends AbstractTestService {
         circle.setId(12);
         circle.setRoles(["READ_ALL"]);
         circle.setName("Jean de la tourette");
-        circle.setDescription("Pour une fois qu'on me permet de m'exprimer");
-        circle.setAvatarUrl(null);
+        circle.setDefaultCircle(true);
         circle.setLocalAuthority(Promise.resolve(new LocalAuthority()));
 
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles([]);
-        circleCommandDTO.setDescription("bla");
+        circleCommandDTO.setDefaultCircle(true);
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(12);
 

@@ -33,6 +33,7 @@ export class UserDaoTest extends AbstractTestDao {
         const circle: Circle = new Circle();
         circle.setName("Stark assembly");
         circle.setRoles([Role.READ_ALL]);
+        circle.setDefaultCircle(true);
 
         // Create localAuthority
         const localAuthority: LocalAuthority = new LocalAuthority();
@@ -91,6 +92,7 @@ export class UserDaoTest extends AbstractTestDao {
         const circle: Circle = new Circle();
         circle.setName("Stark industry");
         circle.setRoles([Role.READ_ALL]);
+        circle.setDefaultCircle(true);
 
         // Create localAuthority
         const localAuthority: LocalAuthority = new LocalAuthority();

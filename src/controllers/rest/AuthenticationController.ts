@@ -9,10 +9,10 @@ import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAu
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
 import { UserToken } from "./model/user/UserToken";
 import { RequestAccessor } from "../../RequestAccessor";
-import { LocalAuthorityDTO } from "../../services/query/dto/localAuthority/LocalAuthorityDTO";
 import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 import * as JWT from "jsonwebtoken";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
+import { LocalAuthorityDTO } from "../../services/query/dto/localauthority/LocalAuthorityDTO";
 
 /**
  * API resources to delivery service to authentication
