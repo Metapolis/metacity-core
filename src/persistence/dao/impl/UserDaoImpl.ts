@@ -29,9 +29,7 @@ export class UserDaoImpl implements UserDao {
      */
     public async findByUsername(username: string): Promise<User> | undefined {
         this.logger.info("Retrieve user with username '%s'", username);
-        return await this.userRepository.findOne({
-            username: username
-        });
+        return await this.userRepository.findOne({where: {username: username}});
     }
 
     /**
@@ -47,7 +45,7 @@ export class UserDaoImpl implements UserDao {
      */
     public async saveOrUpdate(user: User): Promise<void>  {
         this.logger.info("Persist new user '%s'", user.getUsername());
-        await this.userRepository.persist(user);
+        await this.userRepository.save(user);
         this.logger.info("User saved");
     }
 }

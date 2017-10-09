@@ -12,6 +12,7 @@ import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
 import { User } from "../../../src/persistence/domain/User";
 import { UpdateCircleCommandDTO } from "../../../src/services/command/dto/circle/UpdateCircleCommandDTO";
+import { Credential } from "../../../src/persistence/domain/Credential";
 
 /**
  * All test for circle command service
@@ -32,9 +33,11 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
         const localAuthority: LocalAuthority = new LocalAuthority();
-        localAuthority.setSecret("secret");
         localAuthority.setName("Rochelle");
-        localAuthority.setId(accessKey);
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKey");
+        localAuthority.setCredential(Promise.resolve(credential));
 
         const saveCircleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         saveCircleDTO.setAccessKey(accessKey);
@@ -43,7 +46,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         saveCircleDTO.setName("michel");
         saveCircleDTO.setDescription("description");
 
-        localAuthorityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(localAuthority));
+        localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
 
         await circleCommandService.createCircle(saveCircleDTO);
 
@@ -175,9 +178,11 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
         const localAuthority: LocalAuthority = new LocalAuthority();
-        localAuthority.setSecret("secret");
         localAuthority.setName("Rochelle");
-        localAuthority.setId(accessKey);
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKeyDesFamilles");
+        localAuthority.setCredential(Promise.resolve(credential));
 
         const circle: Circle = new Circle();
         circle.setId(1);
@@ -196,7 +201,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         updateCircleDTO.setDescription("description");
         updateCircleDTO.setId(circle.getId());
 
-        localAuthorityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(localAuthority));
+        localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
         circleDao.setup((instance) => instance.findById(updateCircleDTO.getId())).returns(() => Promise.resolve(circle));
 
         await circleCommandService.updateCircle(updateCircleDTO);
@@ -358,10 +363,11 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
         const localAuthority: LocalAuthority = new LocalAuthority();
-        localAuthority.setSecret("secret");
         localAuthority.setName("Rochelle");
-        localAuthority.setId("AccessKeyDesFamilles");
-
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKeyDesFamilles");
+        localAuthority.setCredential(Promise.resolve(credential));
         const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles([]);
@@ -369,7 +375,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(12);
 
-        localAuthorityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
+        localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
@@ -386,9 +392,12 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
         const localAuthority: LocalAuthority = new LocalAuthority();
-        localAuthority.setSecret("secret");
         localAuthority.setName("Rochelle");
-        localAuthority.setId("AccessKeyDesFamilles");
+        localAuthority.setId(123);
+        const credential: Credential = new Credential();
+        credential.setSecret("secret");
+        credential.setAccessKey("AccessKeyDesFamilles");
+        localAuthority.setCredential(Promise.resolve(credential));
 
         const circle: Circle = new Circle();
         circle.setId(12);
@@ -405,7 +414,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
         circleCommandDTO.setId(12);
 
-        localAuthorityDao.setup((instance) => instance.findById(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
+        localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(circleCommandDTO.getAccessKey())).returns(() => Promise.resolve(localAuthority));
         circleDao.setup((instance) => instance.findById(circleCommandDTO.getId())).returns(() => Promise.resolve(circle));
 
         await circleCommandService.updateCircle(circleCommandDTO).then((result) => {

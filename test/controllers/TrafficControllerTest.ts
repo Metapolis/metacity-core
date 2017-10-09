@@ -23,6 +23,7 @@ import { UserDao } from "../../src/persistence/dao/UserDao";
 import { User } from "../../src/persistence/domain/User";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
+import { Credential } from "../../src/persistence/domain/Credential";
 
 /**
  * All test for traffic controller
@@ -43,7 +44,9 @@ class TrafficControllerTest extends AbstractTestController {
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
 
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
-        localAuthorityMock.setSecret("secret");
+        const credential: Credential = new Credential();
+        credential.setSecret("secret");
+        localAuthorityMock.setCredential(Promise.resolve(credential));
 
         const circle: Circle = new Circle();
 
@@ -52,7 +55,7 @@ class TrafficControllerTest extends AbstractTestController {
 
         circle.setRoles([Role[Role.READ_ALL]]);
 
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
 
         const mockAccidents: CarAccidentDTO[] = [];
@@ -199,8 +202,9 @@ class TrafficControllerTest extends AbstractTestController {
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
 
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
-        localAuthorityMock.setSecret("secret");
-
+        const credential: Credential = new Credential();
+        credential.setSecret("secret");
+        localAuthorityMock.setCredential(Promise.resolve(credential));
         const circle: Circle = new Circle();
 
         const userMock: User = new User();
@@ -208,7 +212,7 @@ class TrafficControllerTest extends AbstractTestController {
 
         circle.setRoles([Role[Role.READ_ALL]]);
 
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
 
         opts = {
@@ -233,7 +237,7 @@ class TrafficControllerTest extends AbstractTestController {
         // Check negative offset
         // Have to be reset after crash
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         opts.qs.offset = -1;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -244,7 +248,7 @@ class TrafficControllerTest extends AbstractTestController {
 
         // Check null limit
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         opts.qs.offset = offset;
         opts.qs.limit = null;
         statusCode = HTTPStatusCodes.OK;
@@ -256,7 +260,7 @@ class TrafficControllerTest extends AbstractTestController {
 
         // Check negative limit
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         opts.qs.limit = -1;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {

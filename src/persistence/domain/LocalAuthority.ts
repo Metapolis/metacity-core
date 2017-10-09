@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany } from "typeorm";
+import { Entity, Column, OneToMany, ManyToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
+import { Credential } from "./Credential";
 
 /**
  * Represents a user
@@ -11,14 +12,8 @@ export class LocalAuthority {
     /**
      * LocalAuthority's identifier
      */
-    @PrimaryColumn()
-    private id: string;
-
-    /**
-     * LocalAuthority's secret
-     */
-    @Column({nullable: false, length: 250})
-    private secret: string;
+    @PrimaryGeneratedColumn({type: "bigint"})
+    private id: number;
 
     /**
      * LocalAuthority's name
@@ -33,6 +28,13 @@ export class LocalAuthority {
     private circles: Promise<Circle[]>;
 
     /**
+     * Circle's localAuthority (owner of circle)
+     */
+    @OneToOne((type) => Credential)
+    @JoinColumn()
+    private credential: Promise<Credential>;
+
+    /**
      * LocalAuthority's data set
      *
      * You have to use getter and setter
@@ -43,9 +45,9 @@ export class LocalAuthority {
     /**
      * Getter identifier
      *
-     * @returns {string}
+     * @returns {number}
      */
-    public getId(): string {
+    public getId(): number {
         return this.id;
     }
 
@@ -54,26 +56,8 @@ export class LocalAuthority {
      *
      * @param id new identifier value
      */
-    public setId(id: string): void {
+    public setId(id: number): void {
         this.id = id;
-    }
-
-    /**
-     * Getter secret
-     *
-     * @returns {string}
-     */
-    public getSecret(): string {
-        return this.secret;
-    }
-
-    /**
-     * Setter secret
-     *
-     * @param secret new secret value
-     */
-    public setSecret(secret: string): void {
-        this.secret = secret;
     }
 
     /**
@@ -110,6 +94,24 @@ export class LocalAuthority {
      */
     public setCircles(circles: Promise<Circle[]>): void {
         this.circles = circles;
+    }
+
+    /**
+     * Getter credential
+     *
+     * @returns {Credential}
+     */
+    public getCredential(): Promise<Credential> {
+        return this.credential;
+    }
+
+    /**
+     * Setter credential
+     *
+     * @param credential new credential value
+     */
+    public setCredential(credential: Promise<Credential>): void {
+        this.credential = credential;
     }
 
     /**

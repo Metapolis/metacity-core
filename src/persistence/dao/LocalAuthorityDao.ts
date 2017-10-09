@@ -10,5 +10,12 @@ export interface LocalAuthorityDao {
      *
      * @param id identifier to find
      */
-    findById(id: string): Promise<LocalAuthority> | undefined;
+    findById(id: number): Promise<LocalAuthority> | undefined;
+
+    /**
+     * Retrieve localAuthority by credential access key
+     *
+     * @param accessKey credential's identifier
+     */
+    findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined;
 }

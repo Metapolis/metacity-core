@@ -8,6 +8,7 @@ import { suite, test, slow, timeout, skip, only } from "mocha-typescript";
 import * as Chai from "chai";
 import * as TypeMoq from "typemoq";
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
+import { Credential } from "../../../src/persistence/domain/Credential";
 
 /**
  * All test for user localAuthority query service
@@ -20,16 +21,20 @@ class LocalAuthorityQueryServiceTest extends AbstractTestService {
         const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
         const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
 
-        const localAuthorityMock: LocalAuthority = new LocalAuthority();
-        localAuthorityMock.setSecret("secret");
-        localAuthorityMock.setName("Domain");
-        localAuthorityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("localhost");
+        localAuthority.setCredential(Promise.resolve(credential));
+        localAuthority.setId(12);
+        localAuthority.setName("nameKebab");
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthority));
 
         let localAuthorityDTO: LocalAuthorityDTO = await localAuthorityQueryService.getLocalAuthority("localhost");
 
-        Chai.assert.equal(localAuthorityDTO.getId(), localAuthorityMock.getId());
-        Chai.assert.equal(localAuthorityDTO.getSecret(), localAuthorityMock.getSecret());
-        Chai.assert.equal(localAuthorityDTO.getName(), localAuthorityMock.getName());
+        Chai.assert.equal(localAuthorityDTO.getId(), localAuthority.getId());
+        Chai.assert.equal(localAuthorityDTO.getSecret(), (await localAuthority.getCredential()).getSecret());
+        Chai.assert.equal(localAuthorityDTO.getName(), localAuthority.getName());
 
         localAuthorityDTO = await localAuthorityQueryService.getLocalAuthority("localhost2");
 

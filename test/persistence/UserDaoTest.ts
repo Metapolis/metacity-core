@@ -9,6 +9,7 @@ import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { AbstractTestDao } from "./inversify/AbstractTestService";
+import { Credential } from "../../src/persistence/domain/Credential";
 
 @suite
 export class UserDaoTest extends AbstractTestDao {
@@ -19,6 +20,7 @@ export class UserDaoTest extends AbstractTestDao {
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
         const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
+        const credentialRepository: TypeORM.Repository<Credential> = ContextApp.container.get("CredentialRepository");
 
         // Create user
         const user: User = new User();
@@ -35,19 +37,24 @@ export class UserDaoTest extends AbstractTestDao {
         // Create localAuthority
         const localAuthority: LocalAuthority = new LocalAuthority();
         localAuthority.setName("Stark corp");
-        localAuthority.setId("localhost");
-        localAuthority.setSecret("secret");
+
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKey");
+        await credentialRepository.save(credential);
+
+        localAuthority.setCredential(Promise.resolve(credential));
 
         // Persist localAuthority
-        await localAuthorityRepository.persist(localAuthority);
+        await localAuthorityRepository.save(localAuthority);
         (await localAuthority.getCircles()).push(circle);
 
         // Persist circle
         circle.setLocalAuthority(Promise.resolve(localAuthority));
-        await circleRepository.persist(circle);
+        await circleRepository.save(circle);
         // Persist user
         (await user.getCircles()).push(circle);
-        await userRepository.persist(user);
+        await userRepository.save(user);
 
         let find: User = await userDao.findByUsername("Toto");
 
@@ -71,6 +78,7 @@ export class UserDaoTest extends AbstractTestDao {
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
         const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
+        const credentialRepository: TypeORM.Repository<Credential> = ContextApp.container.get("CredentialRepository");
 
         // Create user
         const user: User = new User();
@@ -87,20 +95,25 @@ export class UserDaoTest extends AbstractTestDao {
         // Create localAuthority
         const localAuthority: LocalAuthority = new LocalAuthority();
         localAuthority.setName("Stark corp");
-        localAuthority.setId("localhost");
-        localAuthority.setSecret("secret");
+
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKey");
+        await credentialRepository.save(credential);
+
+        localAuthority.setCredential(Promise.resolve(credential));
 
         // Persist localAuthority
-        await localAuthorityRepository.persist(localAuthority);
+        await localAuthorityRepository.save(localAuthority);
         (await localAuthority.getCircles()).push(circle);
         console.log(user.getLastConnection());
 
         // Persist circle
         circle.setLocalAuthority(Promise.resolve(localAuthority));
-        await circleRepository.persist(circle);
+        await circleRepository.save(circle);
         // Persist user
         (await user.getCircles()).push(circle);
-        await userRepository.persist(user);
+        await userRepository.save(user);
         console.log(user.getLastConnection());
         let find: User = await userDao.findById(user.getId());
 

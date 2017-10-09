@@ -29,7 +29,7 @@ export class CircleDaoImpl implements CircleDao {
      */
     public async saveOrUpdate(circle: Circle): Promise<void> | undefined {
         this.logger.info("Persist new circle '%s'", circle.getName());
-        await this.circleRepository.persist(circle);
+        await this.circleRepository.save(circle);
         this.logger.info("Circle saved");
     }
 
@@ -39,7 +39,7 @@ export class CircleDaoImpl implements CircleDao {
     public async exists(id: number): Promise<boolean> {
         this.logger.debug("Check in data base if circle with id '%s' exists", id);
 
-        return (await this.circleRepository.count({id: id})) > 0;
+        return (await this.circleRepository.count({where: {id: id}})) > 0;
     }
 
     /**
@@ -58,9 +58,10 @@ export class CircleDaoImpl implements CircleDao {
         this.logger.debug("Check if circle '%s' is owned by localAuthority '%s' in database", circleId, accessKey);
 
         return (await this.circleRepository.createQueryBuilder("c")
-            .innerJoin("c.localAuthority", "col")
+            .innerJoin("c.localAuthority", "la")
+            .innerJoin("la.credential", "cr")
             .where("c.id = :circleid", {circleid: circleId})
-            .andWhere("col.id = :accesskey", {accesskey: accessKey})
+            .andWhere("cr.access_key = :accesskey", {accesskey: accessKey})
             .getCount()) === 1;
     }
 }
