@@ -23,7 +23,7 @@ export class LocalAuthority {
     private name: string;
 
     /**
-     * Ui config embedded in local authority
+     * UI config embedded in local authority
      */
     @Column((type: object) => UIConfig)
     private uiConfig: UIConfig;
@@ -140,7 +140,7 @@ export class LocalAuthority {
     }
 
     /**
-     * Getter Ui config
+     * Getter UI config
      *
      * @returns {UIConfig}
      */
@@ -149,7 +149,7 @@ export class LocalAuthority {
     }
 
     /**
-     * Setter Ui config
+     * Setter UI config
      *
      * @param {UIConfig} uiConfig
      */
