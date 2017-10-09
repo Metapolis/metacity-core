@@ -8,13 +8,13 @@ export class Location {
     /**
      * Location's latitude
      */
-    @Column({nullable: false, type: "double"})
+    @Column({nullable: false, type: "double precision"})
     private latitude: number;
 
     /**
      * Location's latitude
      */
-    @Column({nullable: false, type: "double"})
+    @Column({nullable: false, type: "double precision"})
     private longitude: number;
 
     /**
