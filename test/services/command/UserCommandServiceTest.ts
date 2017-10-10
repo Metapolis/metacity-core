@@ -15,9 +15,9 @@ import { IllegalArgumentError} from "../../../src/common/error/IllegalArgumentEr
  */
 @suite
 class UserCommandServiceTest extends AbstractTestService {
+
     /**
      * Test function create user
-     *
      */
     @test
     private async testCreateUser(): Promise<void> {
@@ -43,7 +43,6 @@ class UserCommandServiceTest extends AbstractTestService {
             return ret;
         })), TypeMoq.Times.exactly(1));
     }
-
     @test
     private async testCreateUserCommandNull() {
 

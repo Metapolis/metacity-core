@@ -18,14 +18,9 @@ dist/
 .idea/dictionaries
 
 # Ignore generated file
-server/**/*.d.ts
-server/**/*.js
-server/**/*.js.map
-
-
-client/src/app/**/*.d.ts
-client/src/app/**/*.js
-client/src/app/**/*.js.map
+**/*.d.ts
+**/*.js
+**/*.js.map
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
@@ -180,6 +175,6 @@ typings/
 # End of https://www.gitignore.io/api/node,grunt,webstorm,jetbrains
 
 .tscache/
-server/**/*.js
+**/*.js
 
 .sass-cache/*
