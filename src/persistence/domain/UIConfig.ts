@@ -1,33 +1,28 @@
-import { Column} from "typeorm";
 import { Location } from "./Location";
 
 /**
- * Ui config description
+ * UI config description
  */
 export class UIConfig {
 
     /**
-     * Ui primary color
+     * UI primary color
      */
-    @Column({nullable: false, type: "text"})
     private primaryColor: string;
 
     /**
-     * Ui secondary color
+     * UI secondary color
      */
-    @Column({nullable: false, type: "text"})
     private secondaryColor: string;
 
     /**
-     * Ui logo
+     * UI logo
      */
-    @Column({nullable: false, type: "text"})
     private logo: string;
 
     /**
-     * Location embedded in Ui config
+     * Location embedded in UI config
      */
-    @Column((type: object) => Location)
     private location: Location;
 
     /**

@@ -1,4 +1,7 @@
-import { Entity, Column, OneToMany, ManyToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+import {
+    Entity, Column, OneToMany, ManyToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn,
+    BeforeInsert, AfterLoad
+} from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
 import { UIConfig } from "./UIConfig";
@@ -23,9 +26,9 @@ export class LocalAuthority {
     private name: string;
 
     /**
-     * UI config embedded in local authority
+     * Local authority JSON UI config
      */
-    @Column((type: object) => UIConfig)
+    @Column({type: "text", nullable: true})
     private uiConfig: UIConfig;
 
     /**
@@ -49,6 +52,27 @@ export class LocalAuthority {
     @ManyToMany((type) => DataSet, (dataSet) => "localAuthorities")
     private dataSets: Promise<DataSet[]>;
 
+    /**
+     * Transient UI config JSON string
+     */
+    private uiConfigJsonString: string;
+
+    /**
+     * Method called before client entity is loaded
+     */
+    @AfterLoad()
+    private preload(): void {
+        this.initUIJsonString(this.uiConfig);
+    }
+
+    /**
+     * Init UI JSON string with UI object
+     *
+     * @param {UIConfig} uiConfig
+     */
+    private initUIJsonString(uiConfig: UIConfig): void {
+        this.uiConfigJsonString = JSON.stringify(uiConfig);
+    }
     /**
      * Getter identifier
      *
