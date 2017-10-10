@@ -93,7 +93,7 @@ class UserCommandServiceTest extends AbstractTestService {
 
             Chai.assert.instanceOf(err, IllegalArgumentError);
 
-            Chai.assert.equal(err.message, "FirstName cannot be null or empty");
+            Chai.assert.equal(err.message, "First name cannot be null or empty");
 
         });
 
@@ -112,7 +112,7 @@ class UserCommandServiceTest extends AbstractTestService {
 
             Chai.assert.instanceOf(err, IllegalArgumentError);
 
-            Chai.assert.equal(err.message, "FirstName cannot be null or empty");
+            Chai.assert.equal(err.message, "First name cannot be null or empty");
 
         });
 
@@ -133,7 +133,7 @@ class UserCommandServiceTest extends AbstractTestService {
 
             Chai.assert.instanceOf(err, IllegalArgumentError);
 
-            Chai.assert.equal(err.message, "LastName cannot be null or empty");
+            Chai.assert.equal(err.message, "Last name cannot be null or empty");
 
         });
 
@@ -154,7 +154,7 @@ class UserCommandServiceTest extends AbstractTestService {
 
             Chai.assert.instanceOf(err, IllegalArgumentError);
 
-            Chai.assert.equal(err.message, "LastName cannot be null or empty");
+            Chai.assert.equal(err.message, "Last name cannot be null or empty");
 
         });
 

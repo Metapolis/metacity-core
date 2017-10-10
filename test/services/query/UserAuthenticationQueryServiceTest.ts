@@ -35,19 +35,19 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
         credential.setAccessKey("AccessKeyDesFamilles");
         localAuthorityMock.setCredential(Promise.resolve(credential));
         localAuthorityMock.setName("Domain");
-        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("AccessKeyDesFamilles")).returns(() => Promise.resolve(localAuthorityMock));
 
         const token: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
         token.setPassword("password");
         token.setEmail("stark@tony.com");
-        token.setDomain("localhost");
+        token.setDomain("AccessKeyDesFamilles");
 
         const user: User = new User();
-        user.setEmail("stark");
+        user.setPassword("password");
         user.setEmail("stark@tony.com");
         user.setId(1234);
 
-        userDaoMock.setup((instance) => instance.findByEmail("stark")).returns(() => Promise.resolve(user));
+        userDaoMock.setup((instance) => instance.findByEmail("stark@tony.com")).returns(() => Promise.resolve(user));
 
         const userTokenDTO: UserTokenDTO = await userAuthenticationQueryService.authenticate(token);
 
@@ -68,14 +68,14 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testAuthenticateWithTokenUsernameNull() {
+    private async testAuthenticateWithTokenEmailNull() {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
 
         await userAuthenticationQueryService.authenticate(new UserAuthenticationTokenDTO()).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Username cannot be null or empty");
+            Chai.assert.equal(err.message, "Email cannot be null or empty");
         });
     }
 

@@ -39,7 +39,7 @@ export class UserController implements interfaces.Controller {
         this.logger.debug("Begin user creation");
         const saveUserCommandDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
         saveUserCommandDTO.setAvatarURL(user.avatarUrl);
-        saveUserCommandDTO.setFirstName(user.lastName);
+        saveUserCommandDTO.setFirstName(user.firstName);
         saveUserCommandDTO.setLastName(user.lastName);
         saveUserCommandDTO.setPassword(user.password);
         saveUserCommandDTO.setEmail(user.email);

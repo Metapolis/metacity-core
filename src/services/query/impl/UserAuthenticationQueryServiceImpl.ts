@@ -44,7 +44,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
     public async authenticate(userAuthenticationToken: UserAuthenticationTokenDTO): Promise<UserTokenDTO> {
         Utils.checkArgument(userAuthenticationToken != null, "Token cannot be null or empty");
         this.logger.info("Begin authentication for user '%s'", userAuthenticationToken.getEmail());
-        Utils.checkArgument(!Utils.isNullOrEmpty(userAuthenticationToken.getEmail()), "Username cannot be null or empty");
+        Utils.checkArgument(!Utils.isNullOrEmpty(userAuthenticationToken.getEmail()), "Email cannot be null or empty");
         Utils.checkArgument(!Utils.isNullOrEmpty(userAuthenticationToken.getDomain()), "Domain cannot be null or empty");
         const user: User = await this.userDao.findByEmail(userAuthenticationToken.getEmail());
 

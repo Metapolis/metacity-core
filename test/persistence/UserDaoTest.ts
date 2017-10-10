@@ -24,9 +24,10 @@ export class UserDaoTest extends AbstractTestDao {
 
         // Create user
         const user: User = new User();
-        user.setEmail("Toto");
+        user.setFirstName("Toto");
+        user.setLastName("Nom");
         user.setPassword("password");
-        user.setEmail("john@cena");
+        user.setEmail("john@cena.com");
         user.setLastConnection(Date.now());
 
         // Create circle
@@ -57,7 +58,7 @@ export class UserDaoTest extends AbstractTestDao {
         (await user.getCircles()).push(circle);
         await userRepository.save(user);
 
-        let find: User = await userDao.findByEmail("Toto");
+        let find: User = await userDao.findByEmail("john@cena.com");
 
         Chai.assert.isNotNull(find);
         Chai.assert.isFalse(find === undefined, "User not found");
@@ -83,7 +84,8 @@ export class UserDaoTest extends AbstractTestDao {
 
         // Create user
         const user: User = new User();
-        user.setEmail("Toto");
+        user.setFirstName("John");
+        user.setLastName("Cena");
         user.setPassword("password2");
         user.setEmail("john@cena");
         user.setLastConnection(Date.now());
@@ -141,7 +143,8 @@ export class UserDaoTest extends AbstractTestDao {
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
 
         const user: User = new User();
-        user.setEmail("Michel");
+        user.setFirstName("Toto");
+        user.setLastName("Nom");
         user.setPassword("Yolo");
         user.setEmail("michel@bresil");
 
