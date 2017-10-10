@@ -15,7 +15,7 @@ import { Credential } from "../../src/persistence/domain/Credential";
 export class UserDaoTest extends AbstractTestDao {
 
     @test
-    public async testFindByUsername(): Promise<void> {
+    public async testFindByEmail(): Promise<void> {
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
@@ -24,7 +24,7 @@ export class UserDaoTest extends AbstractTestDao {
 
         // Create user
         const user: User = new User();
-        user.setUsername("Toto");
+        user.setEmail("Toto");
         user.setPassword("password");
         user.setEmail("john@cena");
         user.setLastConnection(Date.now());
@@ -57,18 +57,18 @@ export class UserDaoTest extends AbstractTestDao {
         (await user.getCircles()).push(circle);
         await userRepository.save(user);
 
-        let find: User = await userDao.findByUsername("Toto");
+        let find: User = await userDao.findByEmail("Toto");
 
         Chai.assert.isNotNull(find);
         Chai.assert.isFalse(find === undefined, "User not found");
-        Chai.assert.equal(find.getUsername(), user.getUsername());
+        Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal(find.getLastConnection(), user.getLastConnection());
         Chai.assert.equal(find.getPassword(), user.getPassword());
         Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
         Chai.assert.equal(find.getId(), 1);
 
-        find = await userDao.findByUsername("TotoFAKE");
+        find = await userDao.findByEmail("TotoFAKE");
 
         Chai.assert.isTrue(find === undefined, "User should not be found");
     }
@@ -83,7 +83,7 @@ export class UserDaoTest extends AbstractTestDao {
 
         // Create user
         const user: User = new User();
-        user.setUsername("Toto");
+        user.setEmail("Toto");
         user.setPassword("password2");
         user.setEmail("john@cena");
         user.setLastConnection(Date.now());
@@ -121,7 +121,7 @@ export class UserDaoTest extends AbstractTestDao {
 
         Chai.assert.isNotNull(find);
         Chai.assert.isFalse(find === undefined, "User not found");
-        Chai.assert.equal(find.getUsername(), user.getUsername());
+        Chai.assert.equal(find.getEmail(), user.getEmail());
         Chai.assert.equal(find.getLastConnection(), user.getLastConnection());
         Chai.assert.equal(find.getPassword(), user.getPassword());
         Chai.assert.equal(find.getEmail(), user.getEmail());
@@ -141,7 +141,7 @@ export class UserDaoTest extends AbstractTestDao {
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
 
         const user: User = new User();
-        user.setUsername("Michel");
+        user.setEmail("Michel");
         user.setPassword("Yolo");
         user.setEmail("michel@bresil");
 
@@ -153,7 +153,7 @@ export class UserDaoTest extends AbstractTestDao {
         Chai.assert.isTrue((await userRepository.find()).length === 1);
         Chai.assert.equal(actual.getId(), user.getId());
         Chai.assert.equal(actual.getPassword(), user.getPassword());
-        Chai.assert.equal(actual.getUsername(), user.getUsername());
+        Chai.assert.equal(actual.getEmail(), user.getEmail());
         Chai.assert.equal(actual.getEmail(), user.getEmail());
 
     }

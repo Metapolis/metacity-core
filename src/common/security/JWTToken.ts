@@ -14,9 +14,9 @@ export class JWTPayload {
     public lastConnection: number;
 
     /**
-     * User's username
+     * User's email
      */
-    public username: string;
+    public email: string;
 
     /**
      * User's roles

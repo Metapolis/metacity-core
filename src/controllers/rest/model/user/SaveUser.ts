@@ -4,9 +4,14 @@
 export class SaveUser {
 
     /**
-     * User username
+     * User lastName
      */
-    public username: string;
+    public firstName: string;
+
+    /**
+     * User lastName
+     */
+    public lastName: string;
 
     /**
      * User password
@@ -19,12 +24,7 @@ export class SaveUser {
     public email: string;
 
     /**
-     * User address
+     * User avatarUrl
      */
-    public address: string;
-
-    /**
-     * User avatarURL
-     */
-    public avatarURL: string;
+    public avatarUrl: string;
 }

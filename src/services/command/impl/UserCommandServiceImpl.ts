@@ -31,18 +31,19 @@ export class UserCommandServiceImpl implements UserCommandService {
      */
     public async createUser(command: SaveUserCommandDTO): Promise<number> {
         Utils.checkArgument(!isNullOrUndefined(command), "Command cannot be undefined or null");
-        Utils.checkArgument(!Utils.isNullOrEmpty(command.getUsername()), "Username cannot be null or empty");
+        Utils.checkArgument(!Utils.isNullOrEmpty(command.getFirstName()), "First name cannot be null or empty");
+        Utils.checkArgument(!Utils.isNullOrEmpty(command.getLastName()), "Last name cannot be null or empty");
         Utils.checkArgument(!Utils.isNullOrEmpty(command.getPassword()), "Password cannot be null or empty");
         Utils.checkArgument(!Utils.isNullOrEmpty(command.getEmail()), "Email cannot be null or empty");
 
-        this.logger.debug("Begin user creation for '%s'", command.getUsername());
+        this.logger.debug("Begin user creation for '%s'", command.getEmail());
 
         const user: User = new User();
         user.setPassword(command.getPassword());
-        user.setUsername(command.getUsername());
+        user.setFirstName(command.getFirstName());
+        user.setLastName(command.getLastName());
         user.setEmail(command.getEmail());
         user.setAvatarURL(command.getAvatarURL());
-        user.setAddress(command.getAddress());
 
         this.logger.debug("Create new user");
         await this.userDao.saveOrUpdate(user);

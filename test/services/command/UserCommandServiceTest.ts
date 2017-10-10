@@ -27,19 +27,19 @@ class UserCommandServiceTest extends AbstractTestService {
 
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
         userDTO.setEmail("john@cena");
+        userDTO.setLastName("john");
+        userDTO.setFirstName("cena");
         userDTO.setPassword("password");
-        userDTO.setUsername("michel");
         userDTO.setAvatarURL("avatar");
-        userDTO.setAddress("address");
 
         await userCommandService.createUser(userDTO);
 
         userDao.verify((instance: UserDao) => instance.saveOrUpdate(TypeMoq.It.is((user: User) => {
-            let ret = user.getUsername() === userDTO.getUsername();
-            ret = ret && user.getEmail() === userDTO.getEmail();
+            let ret = user.getEmail() === userDTO.getEmail();
             ret = ret && user.getPassword() === userDTO.getPassword();
             ret = ret && user.getAvatarURL() === userDTO.getAvatarURL();
-            ret = ret && user.getAddress() === userDTO.getAddress();
+            ret = ret && user.getFirstName() === userDTO.getFirstName();
+            ret = ret && user.getLastName() === userDTO.getLastName();
             return ret;
         })), TypeMoq.Times.exactly(1));
     }
@@ -79,12 +79,12 @@ class UserCommandServiceTest extends AbstractTestService {
         });
 
     }
-    @test
-    private async testCreateUserCommandUsernameNull() {
 
+    @test
+    private async testCreateUserCommandFirstNameNull() {
         const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        userDTO.setUsername(null);
+        userDTO.setFirstName(null);
         await userCommandService.createUser(userDTO).then((result) => {
 
             throw Error("Illegal argument error expected");
@@ -93,17 +93,17 @@ class UserCommandServiceTest extends AbstractTestService {
 
             Chai.assert.instanceOf(err, IllegalArgumentError);
 
-            Chai.assert.equal(err.message, "Username cannot be null or empty");
+            Chai.assert.equal(err.message, "FirstName cannot be null or empty");
 
         });
 
     }
-    @test
-    private async testCreateUserCommandUsernameUndefined() {
 
+    @test
+    private async testCreateUserCommandFirstNameUndefined() {
         const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        userDTO.setUsername(undefined);
+        userDTO.setFirstName(undefined);
         await userCommandService.createUser(userDTO).then((result) => {
 
             throw Error("Illegal argument error expected");
@@ -112,17 +112,61 @@ class UserCommandServiceTest extends AbstractTestService {
 
             Chai.assert.instanceOf(err, IllegalArgumentError);
 
-            Chai.assert.equal(err.message, "Username cannot be null or empty");
+            Chai.assert.equal(err.message, "FirstName cannot be null or empty");
 
         });
 
     }
+
+    @test
+    private async testCreateUserCommandLastNameNull() {
+
+        const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
+        const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
+        userDTO.setFirstName("michel");
+        userDTO.setLastName(null);
+        await userCommandService.createUser(userDTO).then((result) => {
+
+            throw Error("Illegal argument error expected");
+
+        }, (err) => {
+
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+
+            Chai.assert.equal(err.message, "LastName cannot be null or empty");
+
+        });
+
+    }
+
+    @test
+    private async testCreateUserCommandLastNameUndefined() {
+
+        const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
+        const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
+        userDTO.setFirstName("michel");
+        userDTO.setLastName(undefined);
+        await userCommandService.createUser(userDTO).then((result) => {
+
+            throw Error("Illegal argument error expected");
+
+        }, (err) => {
+
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+
+            Chai.assert.equal(err.message, "LastName cannot be null or empty");
+
+        });
+
+    }
+
     @test
     private async testCreateUserCommandPasswordNull() {
 
         const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        userDTO.setUsername("michel");
+        userDTO.setFirstName("michel");
+        userDTO.setLastName("vitriole");
         userDTO.setPassword(null);
         await userCommandService.createUser(userDTO).then((result) => {
 
@@ -137,12 +181,14 @@ class UserCommandServiceTest extends AbstractTestService {
         });
 
     }
+
     @test
     private async testCreateUserCommandPasswordUndefined() {
 
         const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        userDTO.setUsername("michel");
+        userDTO.setFirstName("michel");
+        userDTO.setLastName("vitriole");
         userDTO.setPassword(undefined);
         await userCommandService.createUser(userDTO).then((result) => {
 
@@ -157,12 +203,14 @@ class UserCommandServiceTest extends AbstractTestService {
         });
 
     }
+    
     @test
     private async testCreateUserCommandEmailNull() {
 
         const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        userDTO.setUsername("michel");
+        userDTO.setFirstName("michel");
+        userDTO.setLastName("vitriole");
         userDTO.setPassword("bresil");
         userDTO.setEmail(null);
         await userCommandService.createUser(userDTO).then((result) => {
@@ -183,7 +231,8 @@ class UserCommandServiceTest extends AbstractTestService {
 
         const userCommandService: UserCommandService = (ContextApp.container.get("UserCommandService") as UserCommandService);
         const userDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        userDTO.setUsername("michel");
+        userDTO.setFirstName("michel");
+        userDTO.setLastName("vitriole");
         userDTO.setPassword("bresil");
         userDTO.setEmail(undefined);
         await userCommandService.createUser(userDTO).then((result) => {

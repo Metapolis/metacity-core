@@ -4,9 +4,9 @@
 export class UserToken {
 
     /**
-     * User's username
+     * User's email
      */
-    public username: string;
+    public email: string;
 
     /**
      * User's identifier

@@ -38,11 +38,11 @@ export class UserController implements interfaces.Controller {
     public async createCommandUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
         this.logger.debug("Begin user creation");
         const saveUserCommandDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        saveUserCommandDTO.setAvatarURL(user.avatarURL);
-        saveUserCommandDTO.setUsername(user.username);
+        saveUserCommandDTO.setAvatarURL(user.avatarUrl);
+        saveUserCommandDTO.setFirstName(user.lastName);
+        saveUserCommandDTO.setLastName(user.lastName);
         saveUserCommandDTO.setPassword(user.password);
         saveUserCommandDTO.setEmail(user.email);
-        saveUserCommandDTO.setAddress(user.address);
 
         const userIdentifier: number = await this.userCommandService.createUser(saveUserCommandDTO);
 

@@ -32,19 +32,18 @@ export class UserControllerTest extends AbstractTestController {
         const userIdentifier = 42;
 
         const user: SaveUser = new SaveUser();
-        user.username = "michel";
-        user.address = "Maison";
+        user.lastName = "michel";
+        user.firstName = "Maison";
         user.email = "john@cena";
-        user.avatarURL = "Pour vendre des velux";
+        user.avatarUrl = "Pour vendre des velux";
         user.password = "Monique";
 
         userCommandService.setup((instance: UserCommandService) => instance.createUser(TypeMoq.It.is((userDTO: SaveUserCommandDTO) => {
-            let ret = userDTO.getUsername() === user.username;
-            console.log(ret);
+            let ret = userDTO.getLastName() === user.lastName;
+            ret = ret && userDTO.getFirstName() === user.firstName;
             ret = ret && userDTO.getEmail() === user.email;
-            ret = ret && userDTO.getAvatarURL() === user.avatarURL;
+            ret = ret && userDTO.getAvatarURL() === user.avatarUrl;
             ret = ret && userDTO.getPassword() === user.password;
-            ret = ret && userDTO.getAddress() === user.address;
             return ret;
         }))).returns(() => Promise.resolve(userIdentifier));
 
@@ -74,7 +73,7 @@ export class UserControllerTest extends AbstractTestController {
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
 
         const user: SaveUser = new SaveUser();
-        user.username = "michel";
+        user.lastName = "michel";
         user.password = "Champion";
         user.email = "john@cena";
 

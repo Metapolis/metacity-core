@@ -4,9 +4,14 @@
 export class SaveUserCommandDTO {
 
     /**
-     * User username
+     * User first name
      */
-    private username: string;
+    private firstName: string;
+
+    /**
+     * User last name
+     */
+    private lastName: string;
 
     /**
      * User password
@@ -14,36 +19,49 @@ export class SaveUserCommandDTO {
     private password: string;
 
     /**
-     * User email address
+     * User email
      */
     private email: string;
 
     /**
-     * User address
+     * User avatarUrl
      */
-    private address: string;
+    private avatarUrl: string;
 
     /**
-     * User avatarURL
-     */
-    private avatarURL: string;
-
-    /**
-     * Getter username
+     * Getter lastName
      *
      * @returns {string}
      */
-    public getUsername(): string {
-        return this.username;
+    public getFirstName(): string {
+        return this.firstName;
     }
 
     /**
-     * Setter username
+     * Setter lastName
      *
-     * @param {string} username
+     * @param {string} firstName
      */
-    public setUsername(username: string): void {
-        this.username = username;
+    public setFirstName(firstName: string): void {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Getter lastName
+     *
+     * @returns {string}
+     */
+    public getLastName(): string {
+        return this.lastName;
+    }
+
+    /**
+     * Setter lastName
+     *
+     * @param {string} lastName
+     */
+    public setLastName(lastName: string): void {
+        this.lastName = lastName;
     }
 
     /**
@@ -83,39 +101,21 @@ export class SaveUserCommandDTO {
     }
 
     /**
-     * Getter address
-     *
-     * @returns {string}
-     */
-    public getAddress(): string {
-        return this.address;
-    }
-
-    /**
-     * Setter address
-     *
-     * @param {string} address
-     */
-    public setAddress(address: string): void {
-        this.address = address;
-    }
-
-    /**
-     * Getter avatarURL
+     * Getter avatarUrl
      *
      * @returns {string}
      */
     public getAvatarURL(): string {
-        return this.avatarURL;
+        return this.avatarUrl;
     }
 
     /**
-     * Setter avatarURL
+     * Setter avatarUrl
      *
      * @param {string} avatarURL
      */
     public setAvatarURL(avatarURL: string): void {
-        this.avatarURL = avatarURL;
+        this.avatarUrl = avatarURL;
     }
 
 }

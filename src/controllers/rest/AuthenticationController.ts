@@ -57,14 +57,14 @@ export class AuthenticationController implements interfaces.Controller {
         // Build DTO
         const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
         const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
-        userAuthenticationTokenDTO.setUsername(userAuthenticationToken.username);
+        userAuthenticationTokenDTO.setEmail(userAuthenticationToken.email);
         userAuthenticationTokenDTO.setPassword(userAuthenticationToken.password);
         userAuthenticationTokenDTO.setDomain(domain);
 
         const user: UserTokenDTO = await this.userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO);
         const userToken: UserToken = new UserToken();
         userToken.id = user.getId();
-        userToken.username = user.getUsername();
+        userToken.email = user.getEmail();
         userToken.token = user.getToken();
 
         return userToken;
