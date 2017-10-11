@@ -183,7 +183,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/{accesskey}/circle/{circleid}";
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
-        const accessKey: string = "starkindustries";
+        const localAuthorityId: number = 23;
 
         const mockUsers: UserDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -203,10 +203,10 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         const opts = {
             method: "GET",
-            uri: AbstractTestController.getBackend() + path.replace("{accesskey}", accessKey).replace("{circleid}", String(circleIdentifier)),
+            uri: AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             json: true
         };
-        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, accessKey)).returns(() => Promise.resolve(true));
+        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
         circleQueryService.setup((instance) => instance.getCircle(circleIdentifier)).returns(() => Promise.resolve(circleDTOMock));
 
         const actual: CircleDetails = new CircleDetails();
@@ -231,7 +231,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/{accesskey}/circle/{circleid}";
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
-        const accessKey: string = "starkindustries";
+        const localAuthorityId: number = 23;
 
         const opts = {
             method: "GET",
@@ -246,10 +246,10 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
-        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, accessKey)).returns(() => Promise.resolve(true));
+        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
         circleQueryService.setup((instance) => instance.getCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
 
-        opts.uri = AbstractTestController.getBackend() + path.replace("{accesskey}", accessKey).replace("{circleid}", String(circleIdentifier)),
+        opts.uri = AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;

@@ -111,19 +111,20 @@ export class LocalAuthorityController implements interfaces.Controller {
     /**
      * Get information details of specific circle
      *
-     * @param {string} accessKey LocalAuthority access key
+     * @param {number} localAuthorityId LocalAuthority identifier
      * @param {number} circleId Circle identifier
      *
      * @returns {Promise<Circle>} information of specific circle
      */
-    @Get("/:accessKey/circle/:circleid")
-    public async getLocalAuthorityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
+    @Get("/:localauthorityid/circle/:circleid")
+    public async getLocalAuthorityCircleDetails(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
         this.logger.debug("Begin get circle");
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
 
         // Check if circle and localAuthority exist and is circle is owned by localAuthority
-        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, accessKey))) {
+        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
             throw new NotFoundError("Circle is not owned by localAuthority");
         }
 
