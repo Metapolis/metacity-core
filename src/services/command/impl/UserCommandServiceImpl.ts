@@ -43,7 +43,7 @@ export class UserCommandServiceImpl implements UserCommandService {
         user.setFirstName(command.getFirstName());
         user.setLastName(command.getLastName());
         user.setEmail(command.getEmail());
-        user.setAvatarURL(command.getAvatarURL());
+        user.setAvatarURL(command.getAvatarUrl());
 
         this.logger.debug("Create new user");
         await this.userDao.saveOrUpdate(user);

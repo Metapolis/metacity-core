@@ -42,7 +42,7 @@ export class UserControllerTest extends AbstractTestController {
             let ret = userDTO.getLastName() === user.lastName;
             ret = ret && userDTO.getFirstName() === user.firstName;
             ret = ret && userDTO.getEmail() === user.email;
-            ret = ret && userDTO.getAvatarURL() === user.avatarUrl;
+            ret = ret && userDTO.getAvatarUrl() === user.avatarUrl;
             ret = ret && userDTO.getPassword() === user.password;
             return ret;
         }))).returns(() => Promise.resolve(userIdentifier));
