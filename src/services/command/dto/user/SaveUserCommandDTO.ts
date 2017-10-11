@@ -105,17 +105,16 @@ export class SaveUserCommandDTO {
      *
      * @returns {string}
      */
-    public getAvatarURL(): string {
+    public getAvatarUrl(): string {
         return this.avatarUrl;
     }
 
     /**
      * Setter avatarUrl
      *
-     * @param {string} avatarURL
+     * @param {string} avatarUrl
      */
-    public setAvatarURL(avatarURL: string): void {
-        this.avatarUrl = avatarURL;
+    public setAvatarUrl(avatarUrl: string): void {
+        this.avatarUrl = avatarUrl;
     }
-
 }

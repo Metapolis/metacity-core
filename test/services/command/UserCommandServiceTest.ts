@@ -30,14 +30,14 @@ class UserCommandServiceTest extends AbstractTestService {
         userDTO.setLastName("john");
         userDTO.setFirstName("cena");
         userDTO.setPassword("password");
-        userDTO.setAvatarURL("avatar");
+        userDTO.setAvatarUrl("avatar");
 
         await userCommandService.createUser(userDTO);
 
         userDao.verify((instance: UserDao) => instance.saveOrUpdate(TypeMoq.It.is((user: User) => {
             let ret = user.getEmail() === userDTO.getEmail();
             ret = ret && user.getPassword() === userDTO.getPassword();
-            ret = ret && user.getAvatarURL() === userDTO.getAvatarURL();
+            ret = ret && user.getAvatarURL() === userDTO.getAvatarUrl();
             ret = ret && user.getFirstName() === userDTO.getFirstName();
             ret = ret && user.getLastName() === userDTO.getLastName();
             return ret;
