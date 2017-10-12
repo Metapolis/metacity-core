@@ -29,7 +29,7 @@ export class SaveCircleCommandDTO {
     /**
      * Circle's members
      */
-    private members: SaveUserCommandDTO[] = [];
+    private members: number[] = [];
 
     /**
      * Getter accessKey

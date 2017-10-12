@@ -8,11 +8,11 @@ import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import { SaveUserCommandDTO } from "../../services/command/dto/user/SaveUserCommandDTO";
 
 /**
- * API resources to manage user
+ * API resources to manage users
  * /api/user
  * @class UserController
  */
-@Controller("/api/user")
+@Controller("/api/users")
 @injectable()
 export class UserController implements interfaces.Controller {
 

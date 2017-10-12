@@ -55,7 +55,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {string} accessKey :  localAuthority identifier
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
-    @Post("/:accessKey/circle")
+    @Post("/:accessKey/circles")
     public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
 
         // We don't verify if localAuthority exists
