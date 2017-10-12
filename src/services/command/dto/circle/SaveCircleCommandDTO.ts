@@ -101,18 +101,18 @@ export class SaveCircleCommandDTO {
     /**
      * Get members for all fields
      *
-     * @returns {SaveUserCommandDTO[]} members array of members
+     * @returns {number[]} members array of members
      */
-    public getMembers(): SaveUserCommandDTO[] {
+    public getMembers(): number[] {
         return this.members;
     }
 
     /**
      * Set members for all fields
      *
-     * @param {SaveUserCommandDTO} members array of members
+     * @param {number[]} members array of members
      */
-    public setMembers(members: SaveUserCommandDTO[]): void {
+    public setMembers(members: number[]): void {
         this.members = members;
     }
 }
