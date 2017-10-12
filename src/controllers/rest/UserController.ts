@@ -8,8 +8,8 @@ import { NumberIdentifier } from "./model/common/NumberIdentifier";
 import { SaveUserCommandDTO } from "../../services/command/dto/user/SaveUserCommandDTO";
 
 /**
- * API resources to manage users
- * /api/user
+ * API resources to manage user
+ * /api/users
  * @class UserController
  */
 @Controller("/api/users")

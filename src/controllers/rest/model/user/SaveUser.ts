@@ -4,12 +4,12 @@
 export class SaveUser {
 
     /**
-     * User firstName
+     * User first name
      */
     public firstName: string;
 
     /**
-     * User lastName
+     * User last name
      */
     public lastName: string;
 

@@ -32,7 +32,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     @test
     public async testCreateLocalAuthorityCircle(): Promise<void> {
 
-        const path: string = "/api/local-authorities/{accesskey}/circle";
+        const path: string = "/api/local-authorities/{accesskey}/circles";
         const accessKey: string = "starkindustries";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         // Hello im a rigid linter
@@ -75,7 +75,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testCreateLocalAuthorityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
-        const path: string = "/api/local-authorities/{accesskey}/circle";
+        const path: string = "/api/local-authorities/{accesskey}/circles";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
 
         const circle: SaveCircle = new SaveCircle();
@@ -101,7 +101,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
     @test
     public async testUpdateLocalAuthorityCircle(): Promise<void> {
-        const path: string = "/api/local-authorities/{accesskey}/circle/{circleid}";
+        const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
         const accessKey: string = "starkindustries";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
@@ -141,7 +141,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testUpdateLocalAuthorityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/local-authorities/{accesskey}/circle/{circleid}";
+        const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
         const circleCommandService: TypeMoq.IMock<CircleCommandService> = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
@@ -180,7 +180,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     @test
     public async testGetLocalAuthorityCircleDetails(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/local-authorities/{accesskey}/circle/{circleid}";
+        const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const accessKey: string = "starkindustries";
@@ -228,7 +228,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     @test
     public async testGetLocalAuthorityCircleDetailsError(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/local-authorities/{accesskey}/circle/{circleid}";
+        const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
         const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const accessKey: string = "starkindustries";
