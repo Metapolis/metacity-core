@@ -26,7 +26,7 @@ export class UserControllerTest extends AbstractTestController {
     @test
     public async testCreateUser(): Promise<void> {
 
-        const path: string = "/api/user";
+        const path: string = "/api/users";
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
         // Hello im a rigid linter
         const userIdentifier = 42;
@@ -69,7 +69,7 @@ export class UserControllerTest extends AbstractTestController {
     public async testCreateUserError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
-        const path: string = "/api/user";
+        const path: string = "/api/users";
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
 
         const user: SaveUser = new SaveUser();

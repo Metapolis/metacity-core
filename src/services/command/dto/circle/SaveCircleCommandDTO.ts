@@ -7,7 +7,7 @@ import { SaveUserCommandDTO } from "../user/SaveUserCommandDTO";
 export class SaveCircleCommandDTO {
 
     /**
-     * LocalAuthority's identifier
+     * LocalAuthority's credential access key
      */
     private accessKey: string;
 

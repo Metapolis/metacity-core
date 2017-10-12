@@ -21,7 +21,7 @@ import { User } from "./model/circle/User";
 /**
  * API resources to local authorities services
  *
- * /api/localauthorities route
+ * /api/local-authorities route
  *
  * @class LocalAuthorityController
  */
@@ -55,7 +55,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {string} accessKey :  localAuthority identifier
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
-    @Post("/:accessKey/circle")
+    @Post("/:accessKey/circles")
     public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
 
         // We don't verify if localAuthority exists
@@ -81,7 +81,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {number} circleId circle identifier
      * @param {Express.Response} res Response to set 204
      */
-    @Put("/:accessKey/circle/:circleid")
+    @Put("/:accessKey/circles/:circleid")
     public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
@@ -116,7 +116,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<Circle>} information of specific circle
      */
-    @Get("/:accessKey/circle/:circleid")
+    @Get("/:accessKey/circles/:circleid")
     public async getLocalAuthorityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
         this.logger.debug("Begin get circle");
         // I have to do this, because express can only parse string

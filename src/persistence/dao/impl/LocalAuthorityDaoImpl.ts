@@ -40,7 +40,7 @@ export class LocalAuthorityDaoImpl implements LocalAuthorityDao {
         this.logger.debug("Retrieve local authority with credential access key '%s'", accessKey);
 
         return await this.localAuthorityRepository.createQueryBuilder("la")
-            .innerJoin("la.credential", "c")
+            .innerJoin("la.credential", "cr")
             .andWhere("cr.access_key = :accesskey", {accesskey: accessKey})
             .getOne();
     }

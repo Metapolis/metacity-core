@@ -9,10 +9,10 @@ import { SaveUserCommandDTO } from "../../services/command/dto/user/SaveUserComm
 
 /**
  * API resources to manage user
- * /api/user
+ * /api/users
  * @class UserController
  */
-@Controller("/api/user")
+@Controller("/api/users")
 @injectable()
 export class UserController implements interfaces.Controller {
 
