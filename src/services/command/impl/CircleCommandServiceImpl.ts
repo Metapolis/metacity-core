@@ -8,8 +8,10 @@ import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
 import { Circle } from "../../../persistence/domain/Circle";
 import { CircleDao } from "../../../persistence/dao/CircleDao";
+import { User} from "../../../persistence/domain/User";
 import { isNullOrUndefined } from "util";
 import { UpdateCircleCommandDTO } from "../dto/circle/UpdateCircleCommandDTO";
+import { UserDao } from "../../../persistence/dao/UserDao";
 
 /**
  * Implementation of {@link CircleCommandService}
@@ -29,6 +31,12 @@ export class CircleCommandServiceImpl implements CircleCommandService {
      */
     @inject("CircleDao")
     private circleDao: CircleDao;
+
+    /**
+     * User data access object
+     */
+    @inject("UserDao")
+    private userDao: UserDao;
 
     /**
      * LocalAuthority data access object
@@ -53,11 +61,18 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         // Check if localAuthority is found in database
         Utils.checkArgument(localAuthority !== undefined, "LocalAuthority for access key : '" + command.getAccessKey() + "' cannot be found");
 
+        const users: User[] = [];
+
         const circle: Circle = new Circle();
         circle.setLocalAuthority(Promise.resolve(localAuthority));
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
         circle.setDefaultCircle(command.isDefaultCircle());
+        for (let i = 0; i < command.getMembers().length; i++) {
+            users[i] = await this.userDao.findById(command.getMembers()[i]);
+        }
+        console.log(users);
+        circle.setUsers(Promise.resolve(users));
 
         this.logger.debug("Create new circle");
         await this.circleDao.saveOrUpdate(circle);
@@ -87,6 +102,8 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         // Retrieve circle with identifier
         const circle: Circle = await this.circleDao.findById(command.getId());
 
+        const users: User[] = [];
+
         // Check if localAuthority is found in database
         Utils.checkArgument(circle !== undefined, "Circle with id '" + command.getId() + "' cannot be found");
         Utils.checkArgument((await circle.getLocalAuthority()).getId() === localAuthority.getId(), "Circle '" + circle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
@@ -95,6 +112,11 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setDefaultCircle(command.isDefaultCircle());
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
+        for (let i = 0; i < command.getMembers().length; i++) {
+            users[i] = await this.userDao.findById(command.getMembers()[i]);
+        }
+        console.log(users);
+        circle.setUsers(Promise.resolve(users));
 
         // Save circle
         await this.circleDao.saveOrUpdate(circle);

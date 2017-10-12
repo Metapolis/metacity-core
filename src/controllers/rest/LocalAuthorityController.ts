@@ -66,6 +66,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         saveCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         saveCircleCommandDTO.setName(circle.name);
         saveCircleCommandDTO.setRoles(circle.roles);
+        saveCircleCommandDTO.setMembers(circle.members);
         saveCircleCommandDTO.setAccessKey(accessKey);
 
         const circleIdentifier: number = await this.circleCommandService.createCircle(saveCircleCommandDTO);
@@ -98,6 +99,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         updateCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         updateCircleCommandDTO.setName(circle.name);
         updateCircleCommandDTO.setRoles(circle.roles);
+        updateCircleCommandDTO.setMembers(circle.members);
         updateCircleCommandDTO.setAccessKey(accessKey);
         updateCircleCommandDTO.setId(circleIdNumber);
 

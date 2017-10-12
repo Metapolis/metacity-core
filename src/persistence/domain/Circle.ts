@@ -115,7 +115,7 @@ export class Circle {
     }
 
     /**
-     * Setter lolilol
+     * Setter defaultCircle
      *
      * @param {boolean} defaultCircle
      */

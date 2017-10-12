@@ -43,6 +43,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         saveCircleDTO.setAccessKey(accessKey);
         saveCircleDTO.setRoles(["Role"]);
         saveCircleDTO.setName("michel");
+        saveCircleDTO.setMembers([1]);
         saveCircleDTO.setDefaultCircle(true);
 
         localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
@@ -50,7 +51,13 @@ class CircleCommandServiceTest extends AbstractTestService {
         await circleCommandService.createCircle(saveCircleDTO);
 
         circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((circle: Circle) => {
-            let ret = circle.getName() === saveCircleDTO.getName();
+            let ret: boolean = circle.getName() === saveCircleDTO.getName();
+            circle.getUsers().then((value) => {
+                ret = ret && value.length === saveCircleDTO.getMembers().length;
+                for (let i = 0; i < saveCircleDTO.getMembers().length; i++) {
+                    ret = ret && value[i].getId() === saveCircleDTO.getMembers()[i];
+                }
+            });
             ret = ret && circle.getRoles().length === saveCircleDTO.getRoles().length;
             for (let i = 0; i < saveCircleDTO.getRoles().length; i++) {
                 ret = ret && circle.getRoles()[i] === saveCircleDTO.getRoles()[i];
@@ -225,6 +232,7 @@ class CircleCommandServiceTest extends AbstractTestService {
         updateCircleDTO.setRoles(["Role"]);
         updateCircleDTO.setName("michel");
         updateCircleDTO.setDefaultCircle(true);
+        updateCircleDTO.setMembers([1]);
         updateCircleDTO.setId(circle.getId());
 
         localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
@@ -233,7 +241,13 @@ class CircleCommandServiceTest extends AbstractTestService {
         await circleCommandService.updateCircle(updateCircleDTO);
 
         circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((circleToSave: Circle) => {
-            let ret = circleToSave.getName() === updateCircleDTO.getName();
+            let ret: boolean = circleToSave.getName() === updateCircleDTO.getName();
+            circle.getUsers().then((value) => {
+                ret = ret && value.length === updateCircleDTO.getMembers().length;
+                for (let i = 0; i < updateCircleDTO.getMembers().length; i++) {
+                    ret = ret && value[i].getId() === updateCircleDTO.getMembers()[i];
+                }
+            });
             ret = ret && circleToSave.getRoles().length === updateCircleDTO.getRoles().length;
             for (let i = 0; i < updateCircleDTO.getRoles().length; i++) {
                 ret = ret && circleToSave.getRoles()[i] === updateCircleDTO.getRoles()[i];
