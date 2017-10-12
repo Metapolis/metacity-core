@@ -1,6 +1,6 @@
 {
   "elasticsearch": {
-    "host":      "localhost:9200",
+    "host":      "elasticsearch:9200",
     "log_level": "info"
   },
   "index_name_traffic": "traffic",
@@ -10,7 +10,7 @@
   "index_name_social_network": "social-network",
   "document_name_tweet": "tweet",
   "app": {
-    "host" : "localhost",
+    "host" : "0.0.0.0",
     "port" : 3000,
     "log_level": "debug"
   },
@@ -18,7 +18,7 @@
     "name": "metacity",
     "user": "metacity",
     "password": "metacity",
-    "host": "localhost",
+    "host": "postgres",
     "port": 5432,
     "drop_schema": false,
     "auto_schema_sync": false
