@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOn
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { LocalAuthority } from "./LocalAuthority";
+import { DataType } from "../../common/enum/DataType";
 
 /**
  * Represents a data set
@@ -38,7 +39,7 @@ export class DataSet {
      * DataSet type of data
      */
     @Column({type: "text", nullable: false})
-    private dataType: string;
+    private dataType: DataType;
 
     /**
      * DataSet is restricted when true
@@ -148,9 +149,9 @@ export class DataSet {
     /**
      * Getter DataType
      *
-     * @returns {string}
+     * @returns {DataType}
      */
-    public getDataType(): string {
+    public getDataType(): DataType {
         return this.dataType;
     }
 
@@ -159,7 +160,7 @@ export class DataSet {
      *
      * @param dataType new dataType value
      */
-    public setDataType(dataType: string): void {
+    public setDataType(dataType: DataType): void {
         this.dataType = dataType;
     }
 

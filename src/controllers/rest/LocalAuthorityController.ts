@@ -21,7 +21,7 @@ import { User } from "./model/circle/User";
 /**
  * API resources to local authorities services
  *
- * /api/localauthorities route
+ * /api/local-authorities route
  *
  * @class LocalAuthorityController
  */
