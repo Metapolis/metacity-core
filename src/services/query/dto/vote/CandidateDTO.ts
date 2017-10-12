@@ -9,7 +9,7 @@ export class CandidateDTO {
     private name: string;
 
     /**
-     * Candidate votes
+     * Candidate vote
      */
     private votes: number;
 
@@ -46,7 +46,7 @@ export class CandidateDTO {
     }
 
     /**
-     * Getter votes
+     * Getter vote
      *
      * @returns {number}
      */
@@ -55,9 +55,9 @@ export class CandidateDTO {
     }
 
     /**
-     * Setter votes
+     * Setter vote
      *
-     * @param votes new votes value
+     * @param votes new vote value
      */
     public setVotes(votes: number): void {
         this.votes = votes;

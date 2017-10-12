@@ -1,10 +1,12 @@
+import { SaveUserCommandDTO } from "../user/SaveUserCommandDTO";
+
 /**
  * Represents a command to update a circle
  */
 export class UpdateCircleCommandDTO {
 
     /**
-     * Collectivity's identifier
+     * LocalAuthority's credential access key
      */
     private accessKey: string;
 
@@ -24,14 +26,14 @@ export class UpdateCircleCommandDTO {
     private roles: string[];
 
     /**
-     * Circle's description
+     * Circle by default if true
      */
-    private description: string;
+    private defaultCircle: boolean;
 
     /**
-     * Circle's avatarURL
+     * Circle's members
      */
-    private avatarURL: string;
+    private members: number[] = [];
 
     /**
      * Getter accessKey
@@ -82,35 +84,21 @@ export class UpdateCircleCommandDTO {
     }
 
     /**
-     * Getter description
-     * @returns {string}
+     * Setter default circle
+     *
+     * @param {boolean} defaultCircle
      */
-    public getDescription(): string {
-        return this.description;
+    public setDefaultCircle(defaultCircle: boolean): void {
+        this.defaultCircle = defaultCircle;
     }
 
     /**
-     * Setter description
-     * @param {string} description
+     * Getter default circle
+     *
+     * @returns {boolean}
      */
-    public setDescription(description: string): void {
-        this.description = description;
-    }
-
-    /**
-     * Getter avatarURL
-     * @returns {string}
-     */
-    public getAvatarURL(): string {
-        return this.avatarURL;
-    }
-
-    /**
-     * Setter avatarURL
-     * @param {string} avatarURL
-     */
-    public setAvatarURL(avatarURL: string): void {
-        this.avatarURL = avatarURL;
+    public isDefaultCircle(): boolean {
+        return this.defaultCircle;
     }
 
     /**
@@ -127,5 +115,23 @@ export class UpdateCircleCommandDTO {
      */
     public setRoles(roles: string[]): void {
         this.roles = roles;
+    }
+
+    /**
+     * Get members for all fields
+     *
+     * @returns {number[]} members array of members
+     */
+    public getMembers(): number[] {
+        return this.members;
+    }
+
+    /**
+     * Set members for all fields
+     *
+     * @param {number[]} members array of members
+     */
+    public setMembers(members: number[]): void {
+        this.members = members;
     }
 }

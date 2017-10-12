@@ -2,9 +2,9 @@ import { RequestAccessor } from "../RequestAccessor";
 import { AccessDeniedError } from "./error/AccessDeniedError";
 import { Utils } from "./Utils";
 import * as JWT from "jsonwebtoken";
-import { Collectivity } from "../persistence/domain/Collectivity";
+import { LocalAuthority } from "../persistence/domain/LocalAuthority";
 import { ContextApp } from "../ContextApp";
-import { CollectivityDao } from "../persistence/dao/CollectivityDao";
+import { LocalAuthorityDao } from "../persistence/dao/LocalAuthorityDao";
 import { User } from "../persistence/domain/User";
 import { UserDao } from "../persistence/dao/UserDao";
 import { JWTPayload } from "./security/JWTToken";
@@ -46,7 +46,7 @@ function Secured(roles: string[]) {
             const jwtEncoded = authorizationArray[1];
             Utils.checkArgument(!Utils.isNullOrEmpty(jwtEncoded), "Malformed token");
 
-            // Retrieve the sub domain who is the identifier of collectivity
+            // Retrieve the sub domain who is the identifier of localAuthority
             const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
 
             // Retrieve the payload value

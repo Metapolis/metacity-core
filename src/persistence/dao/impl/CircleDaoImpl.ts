@@ -1,5 +1,5 @@
 import {CircleDao} from "../CircleDao";
-import {ActivityCircle} from "../../domain/ActivityCircle";
+import { Circle } from "../../domain/Circle";
 import {Utils} from "../../../common/Utils";
 import {LoggerInstance} from "winston";
 import * as TypeORM from "typeorm";
@@ -21,15 +21,15 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Circle data access
      */
-    @inject("ActivityCircleRepository")
-    private activityCircleRepository: TypeORM.Repository<ActivityCircle>;
+    @inject("CircleRepository")
+    private circleRepository: TypeORM.Repository<Circle>;
 
     /**
      * Override
      */
-    public async saveOrUpdate(circle: ActivityCircle): Promise<void> | undefined {
+    public async saveOrUpdate(circle: Circle): Promise<void> | undefined {
         this.logger.info("Persist new circle '%s'", circle.getName());
-        await this.activityCircleRepository.persist(circle);
+        await this.circleRepository.save(circle);
         this.logger.info("Circle saved");
     }
 
@@ -39,28 +39,29 @@ export class CircleDaoImpl implements CircleDao {
     public async exists(id: number): Promise<boolean> {
         this.logger.debug("Check in data base if circle with id '%s' exists", id);
 
-        return (await this.activityCircleRepository.count({id: id})) > 0;
+        return (await this.circleRepository.count({where: {id: id}})) > 0;
     }
 
     /**
      * Override
      */
-    public async findById(id: number): Promise<ActivityCircle> | undefined {
+    public async findById(id: number): Promise<Circle> | undefined {
         this.logger.info("Retrieve circle with identifier '%s'", id);
 
-        return await this.activityCircleRepository.findOneById(id);
+        return await this.circleRepository.findOneById(id);
     }
 
     /**
      * Override
      */
-    public async isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean> {
-        this.logger.debug("Check if circle '%s' is owned by collectivity '%s' in database", circleId, accessKey);
+    public async isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean> {
+        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s' in database", circleId, accessKey);
 
-        return (await this.activityCircleRepository.createQueryBuilder("c")
-            .innerJoin("c.collectivity", "col")
+        return (await this.circleRepository.createQueryBuilder("c")
+            .innerJoin("c.localAuthority", "la")
+            .innerJoin("la.credential", "cr")
             .where("c.id = :circleid", {circleid: circleId})
-            .andWhere("col.id = :accesskey", {accesskey: accessKey})
+            .andWhere("cr.access_key = :accesskey", {accesskey: accessKey})
             .getCount()) === 1;
     }
 }

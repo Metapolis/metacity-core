@@ -14,12 +14,7 @@ export class SaveCircle {
     public roles: string[];
 
     /**
-     * Circle's description
+     * When default circle is true, the circle is the circle by default
      */
-    public description: string;
-
-    /**
-     * Circle's avatarURL
-     */
-    public avatarURL: string;
+    public defaultCircle: boolean;
 }

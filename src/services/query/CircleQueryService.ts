@@ -15,14 +15,14 @@ export interface CircleQueryService {
     exists(id: number): Promise<boolean>;
 
     /**
-     * Check if circle is owned by collectivity
+     * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
-     * @param {string} accessKey collectivity identifier
+     * @param {string} accessKey localAuthority identifier
      *
-     * @returns {boolean} true means collectivity own circle
+     * @returns {boolean} true means localAuthority own circle
      */
-    isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean>;
+    isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean>;
 
     /**
      * Get specific circle

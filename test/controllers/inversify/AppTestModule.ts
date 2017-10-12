@@ -10,8 +10,8 @@ import { TweetQueryService } from "../../../src/services/query/TweetQueryService
 import { TweetQueryServiceImpl } from "../../../src/services/query/impl/TweetQueryServiceImpl";
 import { UserAuthenticationQueryService } from "../../../src/services/query/UserAuthenticationQueryService";
 import { UserAuthenticationQueryServiceImpl } from "../../../src/services/query/impl/UserAuthenticationQueryServiceImpl";
-import { CollectivityDao } from "../../../src/persistence/dao/CollectivityDao";
-import { CollectivityDaoImpl } from "../../../src/persistence/dao/impl/CollectivityDaoImpl";
+import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
+import { LocalAuthorityDaoImpl } from "../../../src/persistence/dao/impl/LocalAuthorityDaoImpl";
 import { UserCommandService } from "../../../src/services/command/UserCommandService";
 import { UserCommandServiceImpl} from "../../../src/services/command/impl/UserCommandServiceImpl";
 import { UserDaoImpl } from "../../../src/persistence/dao/impl/UserDaoImpl";
@@ -65,8 +65,8 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("UserCommandServiceMock")) {
             ContextApp.container.bind("UserCommandServiceMock").toConstantValue(TypeMoq.Mock.ofType<UserCommandService>(UserCommandServiceImpl));
         }
-        if (!ContextApp.container.isBound("CollectivityDaoMock")) {
-            ContextApp.container.bind("CollectivityDaoMock").toConstantValue(TypeMoq.Mock.ofType<CollectivityDao>(CollectivityDaoImpl));
+        if (!ContextApp.container.isBound("LocalAuthorityDaoMock")) {
+            ContextApp.container.bind("LocalAuthorityDaoMock").toConstantValue(TypeMoq.Mock.ofType<LocalAuthorityDao>(LocalAuthorityDaoImpl));
         }
         if (!ContextApp.container.isBound("UserDaoMock")) {
             ContextApp.container.bind("UserDaoMock").toConstantValue(TypeMoq.Mock.ofType<UserDao>(UserDaoImpl));
@@ -77,7 +77,7 @@ export class AppTestModule {
 
         // Rebind all services
         ContextApp.container.rebind("UserDao").toConstantValue((ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDaoImpl>).object);
-        ContextApp.container.rebind("CollectivityDao").toConstantValue((ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDaoImpl>).object);
+        ContextApp.container.rebind("LocalAuthorityDao").toConstantValue((ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDaoImpl>).object);
         ContextApp.container.rebind("CircleDao").toConstantValue((ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDaoImpl>).object);
         ContextApp.container.rebind("UserAuthenticationQueryService").toConstantValue((ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>).object);
         ContextApp.container.rebind("CircleCommandService").toConstantValue((ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).object);
@@ -91,7 +91,7 @@ export class AppTestModule {
 
     public rebind(): void {
         ContextApp.container.rebind("UserDao").to(UserDaoImpl);
-        ContextApp.container.rebind("CollectivityDao").to(CollectivityDaoImpl);
+        ContextApp.container.rebind("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         ContextApp.container.rebind("CircleDao").to(CircleDaoImpl);
         ContextApp.container.rebind("TrafficQueryService").to(TrafficQueryServiceImpl);
         ContextApp.container.rebind("TweetQueryService").to(TweetQueryServiceImpl);

@@ -25,18 +25,18 @@ import { TweetController } from "./controllers/rest/TweetController";
 import { TweetQueryService } from "./services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
 import { RequestAccessor } from "./RequestAccessor";
-import { Collectivity } from "./persistence/domain/Collectivity";
-import { CollectivityDaoImpl } from "./persistence/dao/impl/CollectivityDaoImpl";
-import { CollectivityDao } from "./persistence/dao/CollectivityDao";
+import { LocalAuthority } from "./persistence/domain/LocalAuthority";
+import { LocalAuthorityDaoImpl } from "./persistence/dao/impl/LocalAuthorityDaoImpl";
+import { LocalAuthorityDao } from "./persistence/dao/LocalAuthorityDao";
 import { ContextApp } from "./ContextApp";
-import { CollectivityQueryService } from "./services/query/CollectivityQueryService";
-import { CollectivityQueryServiceImpl } from "./services/query/impl/CollectivityQueryServiceImpl";
+import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQueryService";
+import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
 import { SecurityManager } from "./common/security/SecurityManager";
 import methodOverride = require("method-override");
-import { ActivityCircle } from "./persistence/domain/ActivityCircle";
+import { Circle } from "./persistence/domain/Circle";
 import {CircleCommandService} from "./services/command/CircleCommandService";
 import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandServiceImpl";
-import {CollectivityController} from "./controllers/rest/CollectivityController";
+import { LocalAuthorityController } from "./controllers/rest/LocalAuthorityController";
 import {CircleDao} from "./persistence/dao/CircleDao";
 import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
 import {UserCommandService} from "./services/command/UserCommandService";
@@ -45,6 +45,10 @@ import {UserController} from "./controllers/rest/UserController";
 import { NotFoundError } from "./common/error/NotFoundError";
 import { CircleQueryService } from "./services/query/CircleQueryService";
 import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryServiceImpl";
+import { Credential } from "./persistence/domain/Credential";
+import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStrategy";
+import { getRepository } from "typeorm";
+import { DataSet } from "./persistence/domain/DataSet";
 
 /**
  * The App.
@@ -147,7 +151,7 @@ export class App {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
         this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
-        this.container.bind<CollectivityQueryService>("CollectivityQueryService").to(CollectivityQueryServiceImpl);
+        this.container.bind<LocalAuthorityQueryService>("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
         this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
     }
@@ -160,7 +164,7 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(CollectivityController).whenTargetNamed("CollectivityController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(LocalAuthorityController).whenTargetNamed("LocalAuthorityController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed("UserController");
     }
 
@@ -187,16 +191,15 @@ export class App {
     public async connectDB(): Promise<void> {
         this.logger.debug("Connect to database");
         await TypeORM.createConnection({
-            dropSchemaOnConnection: Config.isDatabaseDropSchema(),
-            autoSchemaSync: Config.isDatabaseAutoSchemaSync(),
-            driver: {
-                database: Config.getDatabaseName(),
-                host: Config.getDatabaseHost(),
-                password: Config.getDatabasePassword(),
-                port: Config.getDatabasePort(),
-                type: "postgres",
-                username: Config.getDatabaseUser()
-            },
+            dropSchema: Config.isDatabaseDropSchema(),
+            synchronize: Config.isDatabaseAutoSchemaSync(),
+            namingStrategy: new PostgresNamingStrategy(),
+            type: "postgres",
+            database: Config.getDatabaseName(),
+            host: Config.getDatabaseHost(),
+            password: Config.getDatabasePassword(),
+            port: Config.getDatabasePort(),
+            username: Config.getDatabaseUser(),
             entities: [
                 __dirname + "/persistence/domain/*.js"
             ],
@@ -284,7 +287,7 @@ export class App {
     private bindDao(): void {
         this.logger.debug("Binding DAO");
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
-        this.container.bind<CollectivityDao>("CollectivityDao").to(CollectivityDaoImpl);
+        this.container.bind<LocalAuthorityDao>("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
     }
 
@@ -293,9 +296,11 @@ export class App {
      */
     private bindRepository(): void {
         this.logger.debug("Binding repositories");
-        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(this.dbConnection.entityManager.getRepository(User));
-        this.container.bind<TypeORM.Repository<ActivityCircle>>("ActivityCircleRepository").toConstantValue(this.dbConnection.entityManager.getRepository(ActivityCircle));
-        this.container.bind<TypeORM.Repository<Collectivity>>("CollectivityRepository").toConstantValue(this.dbConnection.entityManager.getRepository(Collectivity));
+        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(getRepository(User));
+        this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(getRepository(Circle));
+        this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(getRepository(LocalAuthority));
+        this.container.bind<TypeORM.Repository<Credential>>("CredentialRepository").toConstantValue(getRepository(Credential));
+        this.container.bind<TypeORM.Repository<DataSet>>("DataSetRepository").toConstantValue(getRepository(DataSet));
     }
 
     /**

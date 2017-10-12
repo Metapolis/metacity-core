@@ -13,8 +13,9 @@ import { User } from "../../../src/persistence/domain/User";
 import { Labeled } from "../../../src/common/Labeled";
 import { AccessDeniedError } from "../../../src/common/error/AccessDeniedError";
 import { UserTokenDTO } from "../../../src/services/query/dto/user/UserTokenDTO";
-import { CollectivityDao } from "../../../src/persistence/dao/CollectivityDao";
-import { Collectivity } from "../../../src/persistence/domain/Collectivity";
+import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
+import { LocalAuthority } from "../../../src/persistence/domain/LocalAuthority";
+import { Credential } from "../../../src/persistence/domain/Credential";
 
 /**
  * All test for user authentication query service
@@ -26,29 +27,32 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
     private async testAuthenticate(): Promise<void> {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
         const userDaoMock: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
-        const collectivityDaoMock: TypeMoq.IMock<CollectivityDao> = (ContextApp.container.get("CollectivityDaoMock") as TypeMoq.IMock<CollectivityDao>);
+        const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
 
-        const collectivityMock: Collectivity = new Collectivity();
-        collectivityMock.setSecret("secret");
-        collectivityMock.setName("Domain");
-        collectivityDaoMock.setup((instance) => instance.findById("localhost")).returns(() => Promise.resolve(collectivityMock));
+        const localAuthorityMock: LocalAuthority = new LocalAuthority();
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKeyDesFamilles");
+        localAuthorityMock.setCredential(Promise.resolve(credential));
+        localAuthorityMock.setName("Domain");
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("AccessKeyDesFamilles")).returns(() => Promise.resolve(localAuthorityMock));
 
         const token: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
         token.setPassword("password");
-        token.setUsername("stark");
-        token.setDomain("localhost");
+        token.setEmail("stark@tony.com");
+        token.setDomain("AccessKeyDesFamilles");
 
         const user: User = new User();
-        user.setUsername("stark");
         user.setPassword("password");
+        user.setEmail("stark@tony.com");
         user.setId(1234);
 
-        userDaoMock.setup((instance) => instance.findByUsername("stark")).returns(() => Promise.resolve(user));
+        userDaoMock.setup((instance) => instance.findByEmail("stark@tony.com")).returns(() => Promise.resolve(user));
 
         const userTokenDTO: UserTokenDTO = await userAuthenticationQueryService.authenticate(token);
 
         Chai.assert.equal(userTokenDTO.getId(), user.getId());
-        Chai.assert.equal(userTokenDTO.getUsername(), user.getUsername());
+        Chai.assert.equal(userTokenDTO.getEmail(), user.getEmail());
     }
 
     @test
@@ -64,29 +68,29 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testAuthenticateWithTokenUsernameNull() {
+    private async testAuthenticateWithTokenEmailNull() {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
 
         await userAuthenticationQueryService.authenticate(new UserAuthenticationTokenDTO()).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Username cannot be null or empty");
+            Chai.assert.equal(err.message, "Email cannot be null or empty");
         });
     }
 
     @test
-    private async testAuthenticateWithTokenUsernameEmpty() {
+    private async testAuthenticateWithTokenEmailEmpty() {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
 
         const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
-        userAuthenticationTokenDTO.setUsername("");
+        userAuthenticationTokenDTO.setEmail("");
 
         await userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Username cannot be null or empty");
+            Chai.assert.equal(err.message, "Email cannot be null or empty");
         });
     }
 
@@ -95,7 +99,7 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
         const userAuthenticationQueryService: UserAuthenticationQueryService = (ContextApp.container.get("UserAuthenticationQueryService") as UserAuthenticationQueryService);
 
         const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
-        userAuthenticationTokenDTO.setUsername("toto");
+        userAuthenticationTokenDTO.setEmail("toto");
         userAuthenticationTokenDTO.setDomain("localhost");
 
 
@@ -113,14 +117,14 @@ class UserAuthenticationQueryServiceTest extends AbstractTestService {
         const userDaoMock: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
 
         const user: User = new User();
-        user.setUsername("stark");
+        user.setEmail("stark@tony.com");
         user.setPassword("password");
         user.setId(1234);
 
-        userDaoMock.setup((instance) => instance.findByUsername("toto")).returns(() => Promise.resolve(user));
+        userDaoMock.setup((instance) => instance.findByEmail("toto")).returns(() => Promise.resolve(user));
 
         const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
-        userAuthenticationTokenDTO.setUsername("toto");
+        userAuthenticationTokenDTO.setEmail("toto");
         userAuthenticationTokenDTO.setDomain("localhost");
 
         await userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO).then((result) => {

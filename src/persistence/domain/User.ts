@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
-import { ActivityCircle } from "./ActivityCircle";
+import { Circle } from "./Circle";
 
 /**
  * Represents a user
@@ -14,10 +14,16 @@ export class User {
     private id: number;
 
     /**
-     * User's username
+     * User's first name
      */
     @Column({nullable: false})
-    private username: string;
+    private firstName: string;
+
+    /**
+     * User's last name
+     */
+    @Column({nullable: false})
+    private lastName: string;
 
     /**
      * User's password
@@ -35,27 +41,21 @@ export class User {
      * User's avatar URL
      */
     @Column({nullable: true})
-    private avatarURL: string;
+    private avatarUrl: string;
 
     /**
-     * User's email address
+     * User's email
      */
-    @Column({nullable: false})
+    @Column({nullable: false, unique: true})
     private email: string;
-
-    /**
-     * User's address
-     */
-    @Column({nullable: true})
-    private address: string;
 
     /**
      * User's circles
      *
      * You have to use getter and setter
      */
-    @ManyToMany((type) => ActivityCircle, (activityCircle) => "users")
-    private circles: Promise<ActivityCircle[]>;
+    @ManyToMany((type) => Circle, (circle) => "users")
+    private circles: Promise<Circle[]>;
 
     /**
      * Getter identifier
@@ -94,21 +94,21 @@ export class User {
     }
 
     /**
-     * Getter username
+     * Getter lastName
      *
      * @returns {string}
      */
-    public getUsername(): string {
-        return this.username;
+    public getFirstName(): string {
+        return this.firstName;
     }
 
     /**
-     * Setter username
+     * Setter lastName
      *
-     * @param username new username value
+     * @param firstName new lastName value
      */
-    public setUsername(username: string): void {
-        this.username = username;
+    public setFirstName(firstName: string): void {
+        this.firstName = firstName;
     }
 
     /**
@@ -148,55 +148,55 @@ export class User {
     }
 
     /**
-     * Getter address
+     * Getter lastName
      *
      * @returns {string}
      */
-    public getAddress(): string {
-        return this.address;
+    public getLastName(): string {
+        return this.lastName;
     }
 
     /**
-     * Setter address
-     * @param {string} address
+     * Setter lastName
+     * @param {string} lastName
      */
-    public setAddress(address: string): void {
-        this.address = address;
+    public setLastName(lastName: string): void {
+        this.lastName = lastName;
     }
 
     /**
-     * Getter avatarURL
+     * Getter avatarUrl
      *
      * @returns {string}
      */
     public getAvatarURL(): string {
-        return this.avatarURL;
+        return this.avatarUrl;
     }
 
     /**
-     * Setter avatarURL
+     * Setter avatarUrl
      *
      * @param {string} avatarURL
      */
     public setAvatarURL(avatarURL: string): void {
-        this.avatarURL = avatarURL;
+        this.avatarUrl = avatarURL;
     }
 
     /**
      * Getter circles
      *
-     * @returns {ActivityCircle[]}
+     * @returns {Circle[]}
      */
-    public getCircles(): Promise<ActivityCircle[]> {
+    public getCircles(): Promise<Circle[]> {
         return this.circles;
     }
 
     /**
-     * Setter circles
+     * Setter circle
      *
-     * @param circles new circles value
+     * @param circles new circle value
      */
-    public setCircles(circles: Promise<ActivityCircle[]>): void {
+    public setCircles(circles: Promise<Circle[]>): void {
         this.circles = circles;
     }
 

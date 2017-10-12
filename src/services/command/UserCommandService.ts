@@ -1,4 +1,4 @@
-import { SaveUserCommandDTO} from "./dto/users/SaveUserCommandDTO";
+import { SaveUserCommandDTO } from "./dto/user/SaveUserCommandDTO";
 
 /**
  * Contains methods to perform user commands

@@ -1,5 +1,5 @@
-import { SaveCircleCommandDTO } from "./dto/circles/SaveCircleCommandDTO";
-import { UpdateCircleCommandDTO } from "./dto/circles/UpdateCircleCommandDTO";
+import { SaveCircleCommandDTO } from "./dto/circle/SaveCircleCommandDTO";
+import { UpdateCircleCommandDTO } from "./dto/circle/UpdateCircleCommandDTO";
 
 /**
  * Contains methods to perform circle commands

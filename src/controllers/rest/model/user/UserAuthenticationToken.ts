@@ -4,9 +4,9 @@
 export class UserAuthenticationToken {
 
     /**
-     * User's username
+     * User's email
      */
-    public username: string;
+    public email: string;
 
     /**
      * User's password (encrypt)

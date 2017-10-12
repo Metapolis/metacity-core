@@ -6,11 +6,11 @@ import { User } from "../domain/User";
 export interface UserDao {
 
     /**
-     * Retrieve user by username
+     * Retrieve user by email
      *
-     * @param username username to find
+     * @param email email to find
      */
-    findByUsername(username: string): Promise<User> | undefined;
+    findByEmail(email: string): Promise<User> | undefined;
 
     /**
      * Retrieve user by id

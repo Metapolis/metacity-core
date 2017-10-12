@@ -2,44 +2,38 @@ import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOn
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { User } from "./User";
-import { Collectivity } from "./Collectivity";
+import { LocalAuthority } from "./LocalAuthority";
 
 /**
- * Represents a activity circle
+ * Represents a circle
  */
 @Entity()
-export class ActivityCircle {
+export class Circle {
 
     /**
-     * ActivityCircle logger
+     * DataSet logger
      *
      * @type {winston.LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(ActivityCircle.name);
+    private logger: LoggerInstance = Utils.createLogger(Circle.name);
 
     /**
-     * Activity Circle's identifier
+     * Circle's identifier
      */
     @PrimaryGeneratedColumn({type: "bigint"})
     private id: number;
 
     /**
-     * Activity Circle's name
+     * Circle's name
      */
     @Column({nullable: false, length: 250})
     private name: string;
 
     /**
-     * Activity Circle's description
+     * When default circle is true, the circle is the circle by default
      */
-    @Column({nullable: true})
-    private description: string;
-
-    /**
-     * Activity Circle's avatar url
-     */
-    @Column({nullable: true})
-    private avatarUrl: string;
+    @Column({nullable: false})
+    private defaultCircle: boolean;
 
     /**
      * Circle's comma separated roles
@@ -48,7 +42,7 @@ export class ActivityCircle {
     private roles: string;
 
     /**
-     * Circle's users
+     * Circle's user
      *
      * You have to use getter and setter
      */
@@ -57,10 +51,10 @@ export class ActivityCircle {
     private users: Promise<User[]>;
 
     /**
-     * Circle's collectivity (owner of circle)
+     * Circle's localAuthority (owner of circle)
      */
-    @ManyToOne((type) => Collectivity, (collectivity) => "circles")
-    private collectivity: Promise<Collectivity>;
+    @ManyToOne((type) => LocalAuthority, (localAuthority) => "circles")
+    private localAuthority: Promise<LocalAuthority>;
 
     /**
      * Transient role array
@@ -112,39 +106,21 @@ export class ActivityCircle {
     }
 
     /**
-     * Getter avatarUrl
+     * Getter defaultCircle
      *
-     * @returns {string}
+     * @returns {boolean}
      */
-    public getAvatarUrl(): string {
-        return this.avatarUrl;
+    public isDefaultCircle() {
+        return this.defaultCircle;
     }
 
     /**
-     * Setter avatarUrl
+     * Setter lolilol
      *
-     * @param avatarUrl new avatarUrl value
+     * @param {boolean} defaultCircle
      */
-    public setAvatarUrl(avatarUrl: string): void {
-        this.avatarUrl = avatarUrl;
-    }
-
-    /**
-     * Getter description
-     *
-     * @returns {string}
-     */
-    public getDescription(): string {
-        return this.description;
-    }
-
-    /**
-     * Setter description
-     *
-     * @param description new description value
-     */
-    public setDescription(description: string): void {
-        this.description = description;
+    public setDefaultCircle(defaultCircle: boolean) {
+        this.defaultCircle = defaultCircle;
     }
 
     /**
@@ -176,7 +152,7 @@ export class ActivityCircle {
     }
 
     /**
-     * Getter users
+     * Getter user
      *
      * @returns {User[]}
      */
@@ -185,29 +161,29 @@ export class ActivityCircle {
     }
 
     /**
-     * Setter users
+     * Setter user
      *
-     * @param users new users value
+     * @param users new user value
      */
     public setUsers(users: Promise<User[]>): void {
         this.users = users;
     }
 
     /**
-     * Getter collectivity
+     * Getter localAuthority
      *
-     * @returns {Collectivity}
+     * @returns {LocalAuthority}
      */
-    public getCollectivity(): Promise<Collectivity> {
-        return this.collectivity;
+    public getLocalAuthority(): Promise<LocalAuthority> {
+        return this.localAuthority;
     }
 
     /**
-     * Setter collectivity
+     * Setter localAuthority
      *
-     * @param collectivity new collectivity value
+     * @param localAuthority new localAuthority value
      */
-    public setCollectivity(collectivity: Promise<Collectivity>): void {
-        this.collectivity = collectivity;
+    public setLocalAuthority(localAuthority: Promise<LocalAuthority>): void {
+        this.localAuthority = localAuthority;
     }
 }

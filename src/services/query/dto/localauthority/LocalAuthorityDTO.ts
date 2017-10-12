@@ -1,29 +1,29 @@
 /**
- * Represents a collectivity
+ * Represents a localAuthority
  */
-export class CollectivityDTO {
+export class LocalAuthorityDTO {
 
     /**
-     * Collectivity's identifier
+     * LocalAuthority's identifier
      */
-    private id: string;
+    private id: number;
 
     /**
-     * Collectivity's name
+     * LocalAuthority's name
      */
     private name: string;
 
     /**
-     * Collectivity's secret
+     * LocalAuthority's secret
      */
     private secret: string;
 
     /**
      * Getter identifier
      *
-     * @returns {string}
+     * @returns {number}
      */
-    public getId(): string {
+    public getId(): number {
         return this.id;
     }
 
@@ -32,7 +32,7 @@ export class CollectivityDTO {
      *
      * @param id new identifier value
      */
-    public setId(id: string): void {
+    public setId(id: number): void {
         this.id = id;
     }
 

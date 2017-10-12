@@ -30,16 +30,16 @@ class AuthenticationControllerTest extends AbstractTestController {
         const userAuthenticationQueryService: TypeMoq.IMock<UserAuthenticationQueryService> = ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>;
 
         const userToken: UserAuthenticationToken = new UserAuthenticationToken();
-        userToken.username = "stark";
+        userToken.email = "stark";
         userToken.password = "password";
 
         const userTokenDTOMock: UserTokenDTO = new UserTokenDTO();
         userTokenDTOMock.setToken("POST.MODERN.JUKEBOX");
-        userTokenDTOMock.setUsername(userToken.username);
+        userTokenDTOMock.setEmail(userToken.email);
         userTokenDTOMock.setId(1);
 
         userAuthenticationQueryService.setup((instance) => instance.authenticate(TypeMoq.It.is((token: UserAuthenticationTokenDTO) => {
-            let ret = token.getUsername() === userToken.username;
+            let ret = token.getEmail() === userToken.email;
             ret = ret && token.getPassword() === userToken.password;
             ret = ret && token.getDomain() === "localhost";
 
@@ -59,7 +59,7 @@ class AuthenticationControllerTest extends AbstractTestController {
             Object.assign(actual, data);
         });
         console.log(actual);
-        Chai.assert.equal(actual.username, userToken.username, "Expected same username");
+        Chai.assert.equal(actual.email, userToken.email, "Expected same lastName");
         Chai.assert.equal(actual.id, 1, "Expected same id");
         Chai.assert.equal(actual.token, "POST.MODERN.JUKEBOX", "Expected same token");
     }
@@ -71,7 +71,7 @@ class AuthenticationControllerTest extends AbstractTestController {
 
         // Check throw exception (access denied)
         const userToken: UserAuthenticationToken = new UserAuthenticationToken();
-        userToken.username = "stark";
+        userToken.email = "stark";
         userToken.password = "password";
 
         const opts = {
@@ -82,7 +82,7 @@ class AuthenticationControllerTest extends AbstractTestController {
         };
 
         userAuthenticationQueryService.setup((instance) => instance.authenticate(TypeMoq.It.is((token: UserAuthenticationTokenDTO) => {
-            let ret = token.getUsername() === userToken.username;
+            let ret = token.getEmail() === userToken.email;
             ret = ret && token.getPassword() === userToken.password;
 
             return ret;
@@ -97,7 +97,7 @@ class AuthenticationControllerTest extends AbstractTestController {
 
         // Check throw exception (Illegal argument)
         userAuthenticationQueryService.setup((instance) => instance.authenticate(TypeMoq.It.is((token: UserAuthenticationTokenDTO) => {
-            let ret = token.getUsername() === userToken.username;
+            let ret = token.getEmail() === userToken.email;
             ret = ret && token.getPassword() === userToken.password;
 
             return ret;

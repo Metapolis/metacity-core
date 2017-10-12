@@ -24,12 +24,12 @@ export class BureauDTO {
     private voters: number;
 
     /**
-     * Number of votes null
+     * Number of vote null
      */
     private votesNull: number;
 
     /**
-     * Number of votes cast
+     * Number of vote cast
      */
     private votesCast: number;
 

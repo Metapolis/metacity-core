@@ -37,7 +37,7 @@ export class UserDTO {
     }
 
     /**
-     * Getter firstName
+     * Getter lastName
      *
      * @returns {string}
      */
@@ -46,7 +46,7 @@ export class UserDTO {
     }
 
     /**
-     * Setter firstName
+     * Setter lastName
      *
      * @param firstName new first name value
      */

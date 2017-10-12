@@ -5,7 +5,7 @@ import { Utils } from "../../common/Utils";
 import { SaveUser } from "./model/user/SaveUser";
 import { UserCommandService } from "../../services/command/UserCommandService";
 import { NumberIdentifier } from "./model/common/NumberIdentifier";
-import { SaveUserCommandDTO } from "../../services/command/dto/users/SaveUserCommandDTO";
+import { SaveUserCommandDTO } from "../../services/command/dto/user/SaveUserCommandDTO";
 
 /**
  * API resources to manage user
@@ -38,11 +38,11 @@ export class UserController implements interfaces.Controller {
     public async createCommandUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
         this.logger.debug("Begin user creation");
         const saveUserCommandDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
-        saveUserCommandDTO.setAvatarURL(user.avatarURL);
-        saveUserCommandDTO.setUsername(user.username);
+        saveUserCommandDTO.setAvatarUrl(user.avatarUrl);
+        saveUserCommandDTO.setFirstName(user.firstName);
+        saveUserCommandDTO.setLastName(user.lastName);
         saveUserCommandDTO.setPassword(user.password);
         saveUserCommandDTO.setEmail(user.email);
-        saveUserCommandDTO.setAddress(user.address);
 
         const userIdentifier: number = await this.userCommandService.createUser(saveUserCommandDTO);
 

@@ -1,4 +1,4 @@
-import { ActivityCircle } from "../domain/ActivityCircle";
+import { Circle } from "../domain/Circle";
 
 /**
  * Data Access Object of {@link CircleDao}
@@ -8,10 +8,10 @@ export interface CircleDao {
     /**
      * Save or update a circle
      *
-     * @param {ActivityCircle} circle to save
+     * @param {Circle} circle to save
      *
      */
-    saveOrUpdate(circle: ActivityCircle): Promise<void> | undefined;
+    saveOrUpdate(circle: Circle): Promise<void> | undefined;
 
     /**
      * Check if this specific circle exists
@@ -27,17 +27,17 @@ export interface CircleDao {
      *
      * @param {number} id circle identifier
      *
-     * @returns {Promise<ActivityCircle>} circle found
+     * @returns {Promise<Circle>} circle found
      */
-    findById(id: number): Promise<ActivityCircle> | undefined;
+    findById(id: number): Promise<Circle> | undefined;
 
     /**
-     * Check if circle is owned by collectivity
+     * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
-     * @param {string} accessKey collectivity identifier
+     * @param {string} accessKey localAuthority identifier
      *
-     * @returns {boolean} true means collectivity own circle
+     * @returns {boolean} true means localAuthority own circle
      */
-    isOwnedByCollectivity(circleId: number, accessKey: string): Promise<boolean>;
+    isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean>;
 }

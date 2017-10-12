@@ -4,9 +4,9 @@
 export class UserAuthenticationTokenDTO {
 
     /**
-     * User's username
+     * User's email
      */
-    private username: string;
+    private email: string;
 
     /**
      * User's password (encrypt)
@@ -19,21 +19,21 @@ export class UserAuthenticationTokenDTO {
     private domain: string;
 
     /**
-     * Getter username
+     * Getter lastName
      *
      * @returns {number}
      */
-    public getUsername(): string {
-        return this.username;
+    public getEmail(): string {
+        return this.email;
     }
 
     /**
-     * Setter username
+     * Setter lastName
      *
-     * @param username new username value
+     * @param email new lastName value
      */
-    public setUsername(username: string): void {
-        this.username = username;
+    public setEmail(email: string): void {
+        this.email = email;
     }
 
     /**

@@ -9,10 +9,10 @@ import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAu
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
 import { UserToken } from "./model/user/UserToken";
 import { RequestAccessor } from "../../RequestAccessor";
-import { CollectivityDTO } from "../../services/query/dto/collectivity/CollectivityDTO";
-import { CollectivityQueryService } from "../../services/query/CollectivityQueryService";
+import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 import * as JWT from "jsonwebtoken";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
+import { LocalAuthorityDTO } from "../../services/query/dto/localauthority/LocalAuthorityDTO";
 
 /**
  * API resources to delivery service to authentication
@@ -39,10 +39,10 @@ export class AuthenticationController implements interfaces.Controller {
     private userAuthenticationQueryService: UserAuthenticationQueryService;
 
     /**
-     * Collectivity query service
+     * LocalAuthority query service
      */
-    @inject("CollectivityQueryService")
-    private collectivityQueryService: CollectivityQueryService;
+    @inject("LocalAuthorityQueryService")
+    private localAuthorityQueryService: LocalAuthorityQueryService;
 
     /**
      * Authentication resources
@@ -57,14 +57,14 @@ export class AuthenticationController implements interfaces.Controller {
         // Build DTO
         const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
         const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
-        userAuthenticationTokenDTO.setUsername(userAuthenticationToken.username);
+        userAuthenticationTokenDTO.setEmail(userAuthenticationToken.email);
         userAuthenticationTokenDTO.setPassword(userAuthenticationToken.password);
         userAuthenticationTokenDTO.setDomain(domain);
 
         const user: UserTokenDTO = await this.userAuthenticationQueryService.authenticate(userAuthenticationTokenDTO);
         const userToken: UserToken = new UserToken();
         userToken.id = user.getId();
-        userToken.username = user.getUsername();
+        userToken.email = user.getEmail();
         userToken.token = user.getToken();
 
         return userToken;
