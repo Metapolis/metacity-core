@@ -62,6 +62,8 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         Utils.checkArgument(localAuthority !== undefined, "LocalAuthority for access key : '" + command.getAccessKey() + "' cannot be found");
 
         const users: User[] = [];
+        const userDestroyer: User = new User();
+        user.setId(12);
 
         const circle: Circle = new Circle();
         circle.setLocalAuthority(Promise.resolve(localAuthority));
@@ -72,7 +74,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
             users[i] = await this.userDao.findById(command.getMembers()[i]);
         }
         console.log(users);
-        circle.setUsers(Promise.resolve(users));
+        circle.setUsers(Promise.resolve(users)).push(userDestroyer);
 
         this.logger.debug("Create new circle");
         await this.circleDao.saveOrUpdate(circle);
