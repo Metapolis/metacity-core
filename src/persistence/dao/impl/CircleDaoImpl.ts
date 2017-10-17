@@ -54,6 +54,15 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
+    public async findAll(): Promise<Circle[]> | undefined {
+        this.logger.info("Retrieving all circles");
+
+        return await this.circleRepository.find();
+    }
+
+    /**
+     * Override
+     */
     public async isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean> {
         this.logger.debug("Check if circle '%s' is owned by localAuthority '%s' in database", circleId, accessKey);
 

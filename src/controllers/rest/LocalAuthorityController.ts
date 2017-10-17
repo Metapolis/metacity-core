@@ -17,6 +17,7 @@ import * as HTTPStatusCodes from "http-status-codes";
 import { CircleDetails } from "./model/circle/CircleDetails";
 import { CircleDTO } from "../../services/query/dto/circle/CircleDTO";
 import { User } from "./model/circle/User";
+import { CircleSummary } from "./model/circle/CircleSummary";
 
 /**
  * API resources to local authorities services
@@ -47,6 +48,16 @@ export class LocalAuthorityController implements interfaces.Controller {
      */
     @inject("CircleQueryService")
     private circleQueryService: CircleQueryService;
+
+    /**
+     * List circles
+     */
+    @Get("/:accessKey/circles")
+    public async listLocalAuthorityCirclesl(@RequestParam("accessKey") accessKey: string): Promise<CircleSummary> {
+      this.logger.debug("Begin get circles");
+      const circlesDTO: CircleDTO[] = await this.circleQueryService.getCircles();
+      return new CircleSummary();
+    }
 
     /**
      * Create a circle
@@ -122,7 +133,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
 
-        // Check if circle and localAuthority exist and is circle is owned by localAuthority
+        // Check if circle and localAuthority exist and if circle is owned by localAuthority
         if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, accessKey))) {
             throw new NotFoundError("Circle is not owned by localAuthority");
         }

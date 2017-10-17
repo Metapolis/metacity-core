@@ -54,6 +54,46 @@ export class CircleQueryServiceTest extends AbstractTestService {
     }
 
     @test
+    private async testGetCircles(): Promise<void> {
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+        const circleDaoMockOne: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const circleDaoMockTwo: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+
+        /** Our current user */
+        const userJhon = new User();
+        userJhon.setId(13);
+
+        /** First Circle */
+        const circleMockOne: Circle = new Circle();
+        circleMockOne.setId(4);
+        circleMockOne.setName("Roller coaster tycoon");
+        circleMockOne.setDefaultCircle(true);
+        circleMockOne.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
+        // add user to the circle
+        const usersOfCircleMockOne: User[] = await circleMockOne.getUsers();
+        usersOfCircleMockOne.push(userJhon);
+        // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
+        circleDaoMockOne.setup((instance) => instance.findById(4)).returns(() => Promise.resolve(circleMockOne));
+
+        /** Another circle */
+        const circleMockTwo: Circle = new Circle();
+        circleMockTwo.setId(13);
+        circleMockTwo.setName("memetic content, high energy, super male vitality");
+        circleMockTwo.setDefaultCircle(false);
+        circleMockTwo.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
+        // add user to the circle
+        const usersOfCircleMockTwo: User[] = await circleMockOne.getUsers();
+        usersOfCircleMockOne.push(userJhon);
+        // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
+        circleDaoMockTwo.setup((instance) => instance.findById(13)).returns(() => Promise.resolve(circleMockTwo));
+
+        const circlesDTO: CircleDTO[] = await circleQueryService.getCircles();
+        Chai.assert.equal(circlesDTO[0].getId(), circleMockOne.getId());
+        Chai.assert.equal(circlesDTO[0].isDefaultCircle(), circleMockOne.isDefaultCircle());
+        Chai.assert.equal(circlesDTO[0].getName(), circleMockOne.getName());
+    }
+
+    @test
     private async testIsOwnedByLocalAuthority(): Promise<void> {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);

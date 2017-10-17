@@ -78,4 +78,9 @@ export class CircleQueryServiceImpl implements CircleQueryService {
         }
         return circleDTO;
     }
+
+    /** Override */
+    public getCircles(): Promise<CircleDTO[]> | null {
+        return undefined;
+    }
 }

@@ -203,7 +203,7 @@ class UserCommandServiceTest extends AbstractTestService {
         });
 
     }
-    
+
     @test
     private async testCreateUserCommandEmailNull() {
 

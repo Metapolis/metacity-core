@@ -32,6 +32,13 @@ export interface CircleDao {
     findById(id: number): Promise<Circle> | undefined;
 
     /**
+     * Retrieves all circles
+     *
+     * @returns circles
+     */
+    findAll(): Promise<Circle[]> | undefined;
+
+    /**
      * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
