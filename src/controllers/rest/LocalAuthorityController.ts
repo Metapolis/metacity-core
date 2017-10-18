@@ -1,4 +1,7 @@
-import { Controller, Get, interfaces, Post, Put, RequestBody, RequestParam, Response } from "inversify-express-utils";
+import {
+    Controller, Delete, Get, interfaces, Post, Put, RequestBody, RequestParam,
+    Response
+} from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
@@ -147,5 +150,38 @@ export class LocalAuthorityController implements interfaces.Controller {
         this.logger.debug("Circle '%s' is retrieved", circleIdNumber);
 
         return circleDetails;
+    }
+
+    /**
+     * Delete specific circle
+     *
+     * @param {number} localAuthorityId LocalAuthority identifier
+     * @param {number} circleId Circle identifier
+     * @param {Express.Response} res Response to set 204
+     *
+     * @returns {Promise<Circle>} information of specific circle
+     */
+    @Delete("/:localauthorityid/circles/:circleid")
+    public async deleteLocalAuthorityCircle(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
+        this.logger.debug("Begin delete circle '%s'", circleId);
+        // I have to do this, because express can only parse string
+        const circleIdNumber: number = Number(circleId);
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Check if circle and localAuthority exist and is circle is owned by localAuthority
+        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
+            throw new NotFoundError("Circle is not owned by localAuthority");
+        }
+
+        // We don't verify if localAuthority exists
+        // It will be done with @secured
+        // Coming soon
+        // Don't check if circle exists because the previous check all
+        await this.circleCommandService.deleteCircle(circleIdNumber);
+
+        this.logger.debug("Circle '%s' is deleted", circleIdNumber);
+
+        // empty response temporary just because JS sucks
+        res.sendStatus(HTTPStatusCodes.NO_CONTENT);
     }
 }
