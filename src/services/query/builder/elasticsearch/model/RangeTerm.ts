@@ -1,4 +1,5 @@
 import { RangeQueryParam } from "./RangeQueryParam";
+
 /**
  * Represents { "gte": 10, "lte": 20 } for e.g.
  */

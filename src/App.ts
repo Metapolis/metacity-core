@@ -13,6 +13,7 @@ import * as Path from "path";
 import { Config } from "./Config";
 import * as BodyParser from "body-parser";
 import * as TypeORM from "typeorm";
+import { getRepository } from "typeorm";
 import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
 import { UserDao } from "./persistence/dao/UserDao";
@@ -32,23 +33,24 @@ import { ContextApp } from "./ContextApp";
 import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQueryService";
 import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
 import { SecurityManager } from "./common/security/SecurityManager";
-import methodOverride = require("method-override");
 import { Circle } from "./persistence/domain/Circle";
-import {CircleCommandService} from "./services/command/CircleCommandService";
-import {CircleCommandServiceImpl} from "./services/command/impl/CircleCommandServiceImpl";
+import { CircleCommandService } from "./services/command/CircleCommandService";
+import { CircleCommandServiceImpl } from "./services/command/impl/CircleCommandServiceImpl";
 import { LocalAuthorityController } from "./controllers/rest/LocalAuthorityController";
-import {CircleDao} from "./persistence/dao/CircleDao";
-import {CircleDaoImpl} from "./persistence/dao/impl/CircleDaoImpl";
-import {UserCommandService} from "./services/command/UserCommandService";
-import {UserCommandServiceImpl} from "./services/command/impl/UserCommandServiceImpl";
-import {UserController} from "./controllers/rest/UserController";
+import { CircleDao } from "./persistence/dao/CircleDao";
+import { CircleDaoImpl } from "./persistence/dao/impl/CircleDaoImpl";
+import { UserCommandService } from "./services/command/UserCommandService";
+import { UserCommandServiceImpl } from "./services/command/impl/UserCommandServiceImpl";
+import { UserController } from "./controllers/rest/UserController";
 import { NotFoundError } from "./common/error/NotFoundError";
 import { CircleQueryService } from "./services/query/CircleQueryService";
 import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryServiceImpl";
 import { Credential } from "./persistence/domain/Credential";
 import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStrategy";
-import { getRepository } from "typeorm";
 import { DataSet } from "./persistence/domain/DataSet";
+import { UserQueryService } from "./services/query/UserQueryService";
+import { UserQueryServiceImpl } from "./services/query/impl/UserQueryServiceImpl";
+import methodOverride = require("method-override");
 
 /**
  * The App.
@@ -154,6 +156,7 @@ export class App {
         this.container.bind<LocalAuthorityQueryService>("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
         this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
+        this.container.bind<UserQueryService>("UserQueryService").to(UserQueryServiceImpl);
     }
 
     /**

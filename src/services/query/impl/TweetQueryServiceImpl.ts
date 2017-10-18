@@ -24,7 +24,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
     private logger: LoggerInstance = Utils.createLogger(TweetQueryServiceImpl.name);
 
     /**
-     * Traffic querying service
+     * Tweet querying service
      */
     @inject("ESClient")
     private esClient: Client;

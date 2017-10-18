@@ -1,7 +1,4 @@
-import {
-    Controller, interfaces, Next, Response, Post, RequestBody, RequestParam, Put,
-    Get
-} from "inversify-express-utils";
+import { Controller, Get, interfaces, Post, Put, RequestBody, RequestParam, Response } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";

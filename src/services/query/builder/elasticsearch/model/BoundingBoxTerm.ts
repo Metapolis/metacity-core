@@ -1,4 +1,5 @@
 import { LocationPoint } from "../../../../../common/LocationPoint";
+
 /**
  * Represents {
  *              "top_left": [46.1859966659, -1.0898875706],

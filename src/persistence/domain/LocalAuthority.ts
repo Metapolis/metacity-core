@@ -1,6 +1,12 @@
 import {
-    Entity, Column, OneToMany, ManyToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn,
-    BeforeInsert, AfterLoad
+    AfterLoad,
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToMany,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn
 } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
@@ -73,6 +79,7 @@ export class LocalAuthority {
     private initUIJsonString(uiConfig: UIConfig): void {
         this.uiConfigJsonString = JSON.stringify(uiConfig);
     }
+
     /**
      * Getter identifier
      *

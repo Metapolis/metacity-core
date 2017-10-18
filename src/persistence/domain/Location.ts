@@ -24,7 +24,7 @@ export class Location {
      * @returns {number}
      */
     public getLatitude(): number {
-       return this.latitude;
+        return this.latitude;
     }
 
     /**

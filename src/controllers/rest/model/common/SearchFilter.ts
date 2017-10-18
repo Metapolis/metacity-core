@@ -1,4 +1,3 @@
-
 import { Utils } from "../../../../common/Utils";
 
 /**
@@ -47,15 +46,16 @@ export class SearchFilter {
         const splittedElements: string[] = query.split(SearchFilter.MAIN_SPLITTER_CHAR);
         Utils.checkArgument(splittedElements.length <= SearchFilter.MAXIMUM_MAIN_PART, "SearchQuery has too much main elements");
 
-        this.mustValues = this.mustValues.concat(splittedElements[0].split(SearchFilter.EXPRESSION_SPLITTER_CHAR));
+        // .filter(Boolean) is used to erase empty string in array
+        this.mustValues = this.mustValues.concat(splittedElements[0].split(SearchFilter.EXPRESSION_SPLITTER_CHAR).filter(Boolean));
         if (splittedElements.length === SearchFilter.MAXIMUM_MAIN_PART) {
-            this.shouldValues = this.shouldValues.concat(splittedElements[1].split(SearchFilter.EXPRESSION_SPLITTER_CHAR));
+            this.shouldValues = this.shouldValues.concat(splittedElements[1].split(SearchFilter.EXPRESSION_SPLITTER_CHAR).filter(Boolean));
         }
     }
 
     /**
      * Must values getter
-     * 
+     *
      * @returns {string[]}
      */
     public getMustValues(): string[] {

@@ -84,11 +84,11 @@ export class Utils {
      */
     public static parseGeoShape(geoShapeStr: string): GeoShape {
         Utils.checkArgument(/^\[\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]\|\[[-+]?[0-9]*\.?[0-9]+\|[-+]?[0-9]*\.?[0-9]+]]/.test(geoShapeStr), "Geo shape query format incorrect");
-        const splittedPoints: string[] =  geoShapeStr.split(Utils.POINT_SPLITTER_CHAR);
+        const splittedPoints: string[] = geoShapeStr.split(Utils.POINT_SPLITTER_CHAR);
         const arrayLatLongLeftUpPoint: string[] = splittedPoints[0].replace(/\[/gi, "").split(Utils.ELEMENT_SPLITTER_CHAR);
         const arrayLatLongRightDownPoint: string[] = splittedPoints[1].replace(/]/gi, "").split(Utils.ELEMENT_SPLITTER_CHAR);
 
         return new GeoShape(new LocationPoint(Number(arrayLatLongLeftUpPoint[0]), Number(arrayLatLongLeftUpPoint[1])),
-                            new LocationPoint(Number(arrayLatLongRightDownPoint[0]), Number(arrayLatLongRightDownPoint[1])));
+            new LocationPoint(Number(arrayLatLongRightDownPoint[0]), Number(arrayLatLongRightDownPoint[1])));
     }
 }

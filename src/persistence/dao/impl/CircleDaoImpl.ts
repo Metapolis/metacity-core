@@ -1,9 +1,9 @@
-import {CircleDao} from "../CircleDao";
+import { CircleDao } from "../CircleDao";
 import { Circle } from "../../domain/Circle";
-import {Utils} from "../../../common/Utils";
-import {LoggerInstance} from "winston";
+import { Utils } from "../../../common/Utils";
+import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
-import {inject, injectable} from "inversify";
+import { inject, injectable } from "inversify";
 
 /**
  * Implementation of {@link CircleDao}

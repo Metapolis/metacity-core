@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, interfaces, Post, QueryParam } from "inversify-express-utils";
+import { Controller, Get, interfaces, QueryParam } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
@@ -13,7 +13,6 @@ import { Tweet } from "./model/tweet/Tweet";
 import { TweetType } from "../../common/enum/tweet/TweetType";
 import { TweetQueryService } from "../../services/query/TweetQueryService";
 import { TweetCategory } from "../../common/enum/tweet/TweetCategory";
-import * as JWT from "express-jwt";
 import { Secured } from "../../common/Decorators";
 import { Role } from "../../common/enum/Role";
 
@@ -87,12 +86,12 @@ export class TweetController implements interfaces.Controller {
             const shouldParams: Array<Range<number>> = [];
 
             // Parse must params
-            for (const must of dateSearchFilter.getMustValues()){
+            for (const must of dateSearchFilter.getMustValues()) {
                 mustParam.push(RangeUtil.createDateRange(must));
             }
 
             // Parse should params
-            for (const should of dateSearchFilter.getShouldValues()){
+            for (const should of dateSearchFilter.getShouldValues()) {
                 shouldParams.push(RangeUtil.createDateRange(should));
             }
 
@@ -107,12 +106,12 @@ export class TweetController implements interfaces.Controller {
             const shouldParams: string[] = [];
 
             // Parse must params
-            for (const must of hashtagSearchFilter.getMustValues()){
+            for (const must of hashtagSearchFilter.getMustValues()) {
                 mustParam.push(must);
             }
 
             // Parse should params
-            for (const should of hashtagSearchFilter.getShouldValues()){
+            for (const should of hashtagSearchFilter.getShouldValues()) {
                 shouldParams.push(should);
             }
 
@@ -127,12 +126,12 @@ export class TweetController implements interfaces.Controller {
             const shouldParams: string[] = [];
 
             // Parse must params
-            for (const must of mentionSearchFilter.getMustValues()){
+            for (const must of mentionSearchFilter.getMustValues()) {
                 mustParam.push(must);
             }
 
             // Parse should params
-            for (const should of mentionSearchFilter.getShouldValues()){
+            for (const should of mentionSearchFilter.getShouldValues()) {
                 shouldParams.push(should);
             }
 
