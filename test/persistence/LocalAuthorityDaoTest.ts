@@ -5,7 +5,7 @@ import { ContextApp } from "../ContextApp";
 import * as TypeORM from "typeorm";
 import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
-import { AbstractTestDao } from "./inversify/AbstractTestService";
+import { AbstractTestDao } from "./inversify/AbstractTestDao";
 import { Credential } from "../../src/persistence/domain/Credential";
 
 @suite
