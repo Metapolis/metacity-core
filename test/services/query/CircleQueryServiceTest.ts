@@ -73,7 +73,8 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const usersOfCircleMockOne: User[] = await circleMockOne.getUsers();
         usersOfCircleMockOne.push(userJhon);
         // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
-        circleDaoMockOne.setup((instance) => instance.findById(4)).returns(() => Promise.resolve(circleMockOne));
+        circleDaoMockOne.setup((instance) => instance.findById(4))
+            .returns(() => Promise.resolve(circleMockOne));
 
         /** Another circle */
         const circleMockTwo: Circle = new Circle();
@@ -85,8 +86,10 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const usersOfCircleMockTwo: User[] = await circleMockOne.getUsers();
         usersOfCircleMockOne.push(userJhon);
         // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
-        circleDaoMockTwo.setup((instance) => instance.findById(13)).returns(() => Promise.resolve(circleMockTwo));
+        circleDaoMockTwo.setup((instance) => instance.findById(13))
+            .returns(() => Promise.resolve(circleMockTwo));
 
+        /** O==||==assert=time==> */
         const circlesDTO: CircleDTO[] = await circleQueryService.getCircles();
         Chai.assert.equal(circlesDTO[0].getId(), circleMockOne.getId());
         Chai.assert.equal(circlesDTO[0].isDefaultCircle(), circleMockOne.isDefaultCircle());

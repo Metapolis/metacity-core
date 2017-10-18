@@ -80,7 +80,25 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     }
 
     /** Override */
-    public getCircles(): Promise<CircleDTO[]> | null {
-        return undefined;
+    public async getCircles(): Promise<CircleDTO[]> | null {
+        this.logger.debug("Retriving circles");
+        const circles: Circle[] = await this.circleDao.findAll();
+        const circlesDTO: CircleDTO[] = [];
+        if (circles === undefined) {
+            this.logger.debug("Could not retrieve any circle");
+            return null;
+        }
+        this.logger.debug("HHAHAAAAaaaaaHAHHAHAaaaAAAHHHHAaaHahaHAHhahaHAAAAAhHHHAahAAAAhaHHAhAHHAhAAaaAAAaaAAAAAA");
+
+        for (const circle of circles) {
+            const circleDTO: CircleDTO = new CircleDTO();
+            circleDTO.setId(circle.getId());
+            circleDTO.setName(circle.getName());
+            circleDTO.setDefaultCircle(circle.isDefaultCircle());
+            /** please report to your local authorities */
+            circlesDTO.push(circleDTO);
+        }
+
+        return circlesDTO;
     }
 }
