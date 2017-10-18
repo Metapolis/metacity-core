@@ -18,11 +18,11 @@ export interface CircleQueryService {
      * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
-     * @param {string} accessKey localAuthority identifier
+     * @param {number} localAuthorityId localAuthority identifier
      *
      * @returns {boolean} true means localAuthority own circle
      */
-    isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean>;
+    isOwnedByLocalAuthority(circleId: number, localAuthorityId: number): Promise<boolean>;
 
     /**
      * Get specific circle

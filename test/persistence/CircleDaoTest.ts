@@ -105,19 +105,19 @@ export class CircleDaoTest {
 
         await circleRepository.save(circle);
 
-        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(circle.getId(), (await localAuthority.getCredential()).getAccessKey());
+        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(circle.getId(), localAuthority.getId());
 
         Chai.assert.isTrue(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, "toto");
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, 1235);
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId(), "toto");
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId(), 1235);
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, (await localAuthority.getCredential()).getAccessKey());
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, localAuthority.getId());
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
     }
