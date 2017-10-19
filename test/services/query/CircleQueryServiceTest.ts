@@ -56,8 +56,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
     @test
     private async testGetCircles(): Promise<void> {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
-        const circleDaoMockOne: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
-        const circleDaoMockTwo: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
         const circlesMock: Circle[] = [];
 
         /** Our current user */
@@ -81,7 +80,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
         (await circlesMock[1].getUsers()).push(userJhon);
 
         // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
-        circleDaoMockOne.setup((instance) => instance.findAll())
+        circleDaoMock.setup((instance) => instance.findAll())
             .returns(() => Promise.resolve(circlesMock));
 
         /** O==||==assert=time==> */

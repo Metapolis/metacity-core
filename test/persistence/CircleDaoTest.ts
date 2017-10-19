@@ -7,9 +7,10 @@ import { CircleDao} from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { Credential } from "../../src/persistence/domain/Credential";
+import { AbstractTestDao } from "./inversify/AbstractTestService";
 
 @suite
-export class CircleDaoTest {
+export class CircleDaoTest extends AbstractTestDao {
 
     @test
     public async testSaveOrUpdate(): Promise<void> {
@@ -52,6 +53,33 @@ export class CircleDaoTest {
         isExists = await circleDao.exists(circle.getId() + 2);
 
         Chai.assert.isFalse(isExists);
+    }
+
+    @test
+    public async testFindAll(): Promise<void> {
+        const circleDao: CircleDao = ContextApp.container.get("CircleDao");
+        const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
+
+        const circles: Circle[] = [];
+        circles.push(new Circle());
+        circles[0].setName("o");
+        circles[0].setRoles(["Muse of nachos"]);
+        circles[0].setDefaultCircle(false);
+        circles.push(new Circle());
+        circles[1].setName("Ness is Sans");
+        circles[1].setRoles(["Spooky skeleton"]);
+        circles[1].setDefaultCircle(true);
+
+        await circleRepository.save(circles);
+
+        const actualCircles: Circle[] = await circleDao.findAll();
+
+        for ( let i: number = 0; i < 2; i++ ) {
+            Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());
+            Chai.assert.equal(actualCircles[i].getName(), circles[i].getName());
+            Chai.assert.deepEqual(actualCircles[i].getRoles(), circles[i].getRoles());
+            Chai.assert.equal(actualCircles[i].isDefaultCircle(), circles[i].isDefaultCircle());
+        }
     }
 
     @test
