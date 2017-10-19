@@ -65,13 +65,13 @@ export class UserController implements interfaces.Controller {
     }
 
     /**
-     * Get tweets information
+     * Get users information
      *
      * @param offset result offset
      * @param limit size of return result
-     * @param q text search filter
+     * @param q free text search filter
      *
-     * @returns {Promise<ResultList<Tweet>>}
+     * @returns {Promise<ResultList<User>>}
      */
     @Get("/")
     public async findUsers(@QueryParam("offset") offset: number,
@@ -123,6 +123,8 @@ export class UserController implements interfaces.Controller {
 
             returnedUsers.push(user);
         }
+
+        this.logger.info("'%s' users found", resultListUsers.total);
 
         return new ResultList<User>(resultListUsers.total, returnedUsers);
     }
