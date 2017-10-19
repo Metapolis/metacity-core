@@ -61,6 +61,7 @@ export class LocalAuthorityController implements interfaces.Controller {
             const circleSummary: CircleSummary = new CircleSummary();
             circleSummary.id = circleDTO.getId();
             circleSummary.name = circleDTO.getName();
+            circleSummary.defaultCircle = circleDTO.isDefaultCircle();
             /** please report to your local authorities */
             circlesSummary.push(circleSummary);
         }

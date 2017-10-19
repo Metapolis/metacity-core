@@ -17,6 +17,11 @@ export class CircleSummary {
     public name: string;
 
     /**
+     * When default circle is true, the circle is the circle by default
+     */
+    public defaultCircle: boolean;
+
+    /**
      * Default constructor
      */
     constructor() {

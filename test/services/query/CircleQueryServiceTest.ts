@@ -58,42 +58,39 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMockOne: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
         const circleDaoMockTwo: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const circlesMock: Circle[] = [];
 
         /** Our current user */
         const userJhon = new User();
         userJhon.setId(13);
 
         /** First Circle */
-        const circleMockOne: Circle = new Circle();
-        circleMockOne.setId(4);
-        circleMockOne.setName("Roller coaster tycoon");
-        circleMockOne.setDefaultCircle(true);
-        circleMockOne.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
-        // add user to the circle
-        const usersOfCircleMockOne: User[] = await circleMockOne.getUsers();
-        usersOfCircleMockOne.push(userJhon);
-        // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
-        circleDaoMockOne.setup((instance) => instance.findById(4))
-            .returns(() => Promise.resolve(circleMockOne));
+        circlesMock.push(new Circle());
+        circlesMock[0].setId(4);
+        circlesMock[0].setName("Roller coaster tycoon");
+        circlesMock[0].setDefaultCircle(true);
+        // add users to the circle
+        (await circlesMock[0].getUsers()).push(userJhon);
 
         /** Another circle */
-        const circleMockTwo: Circle = new Circle();
-        circleMockTwo.setId(13);
-        circleMockTwo.setName("memetic content, high energy, super male vitality");
-        circleMockTwo.setDefaultCircle(false);
-        circleMockTwo.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
-        // add user to the circle
-        const usersOfCircleMockTwo: User[] = await circleMockOne.getUsers();
-        usersOfCircleMockOne.push(userJhon);
+        circlesMock.push(new Circle());
+        circlesMock[1].setId(13);
+        circlesMock[1].setName("memetic content, high energy, super male vitality");
+        circlesMock[1].setDefaultCircle(false);
+        // add users to the circle
+        (await circlesMock[1].getUsers()).push(userJhon);
+
         // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
-        circleDaoMockTwo.setup((instance) => instance.findById(13))
-            .returns(() => Promise.resolve(circleMockTwo));
+        circleDaoMockOne.setup((instance) => instance.findAll())
+            .returns(() => Promise.resolve(circlesMock));
 
         /** O==||==assert=time==> */
         const circlesDTO: CircleDTO[] = await circleQueryService.getCircles();
-        Chai.assert.equal(circlesDTO[0].getId(), circleMockOne.getId());
-        Chai.assert.equal(circlesDTO[0].isDefaultCircle(), circleMockOne.isDefaultCircle());
-        Chai.assert.equal(circlesDTO[0].getName(), circleMockOne.getName());
+        for ( let i: number = 0; i<2; i++ ) {
+            Chai.assert.equal(circlesDTO[i].getId(), circlesMock[i].getId());
+            Chai.assert.equal(circlesDTO[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());
+            Chai.assert.equal(circlesDTO[i].getName(), circlesMock[i].getName());
+        }
     }
 
     @test
