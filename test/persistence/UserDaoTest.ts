@@ -383,11 +383,11 @@ export class UserDaoTest extends AbstractTestDao {
         Chai.assert.equal(actual.getEmail(), user.getEmail());
     }
 
-    private assertUser(actuel: User, expect: User) {
-        Chai.assert.equal(actuel.getEmail(), expect.getEmail());
-        Chai.assert.equal(actuel.getLastConnection(), expect.getLastConnection());
-        Chai.assert.equal(actuel.getPassword(), expect.getPassword());
-        Chai.assert.equal(actuel.getEmail(), expect.getEmail());
-        Chai.assert.equal(actuel.getId(), expect.getId());
+    private assertUser(actual: User, expected: User) {
+        Chai.assert.equal(actual.getEmail(), expected.getEmail());
+        Chai.assert.equal(actual.getLastConnection(), expected.getLastConnection());
+        Chai.assert.equal(actual.getPassword(), expected.getPassword());
+        Chai.assert.equal(actual.getEmail(), expected.getEmail());
+        Chai.assert.equal(actual.getId(), expected.getId());
     }
 }
