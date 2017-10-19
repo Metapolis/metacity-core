@@ -1,7 +1,7 @@
 import { LogicalQueryCriteria } from "./LogicalQueryCriteria";
 
 /**
- * Contains user accident search query
+ * Contains user search query
  */
 export class FindUserQuery {
 
@@ -19,7 +19,7 @@ export class FindUserQuery {
     private offset: number = 0;
 
     /**
-     * Q filter (text filter)
+     * Q filter (Free text filter)
      */
     private qFilter: LogicalQueryCriteria<string>;
 
@@ -33,42 +33,42 @@ export class FindUserQuery {
     }
 
     /**
-     * tweet's mention filter getter
+     * Free text filter getter
      */
     public getQFilter(): LogicalQueryCriteria<string> {
         return this.qFilter;
     }
 
     /**
-     * tweet's mention filter setter
+     * Free text filter setter
      */
     public setQFilter(qFilter: LogicalQueryCriteria<string>) {
         this.qFilter = qFilter;
     }
 
     /**
-     * tweet's limit getter
+     * user's limit getter
      */
     public getLimit(): number {
         return this.limit;
     }
 
     /**
-     * tweet's limit setter
+     * user's limit setter
      */
     public setLimit(limit: number) {
         this.limit = limit;
     }
 
     /**
-     * tweet's offset getter
+     * user's offset getter
      */
     public getOffset(): number {
         return this.offset;
     }
 
     /**
-     * tweet's offset setter
+     * user's offset setter
      */
     public setOffset(offset: number) {
         this.offset = offset;
