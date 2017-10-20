@@ -48,7 +48,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     /**
      * Override
      */
-    public async getCircle(circleId: number): Promise<CircleDTO> | null {
+    public async getCircle(circleId: number): Promise<CircleDTO | undefined> {
         this.logger.debug("Retrieve circle '%s'", circleId);
         const circle: Circle = await this.circleDao.findById(circleId);
 

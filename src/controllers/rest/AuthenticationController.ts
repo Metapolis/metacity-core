@@ -7,7 +7,6 @@ import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAu
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
 import { UserToken } from "./model/user/UserToken";
 import { RequestAccessor } from "../../RequestAccessor";
-import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
 
 /**
@@ -33,12 +32,6 @@ export class AuthenticationController implements interfaces.Controller {
      */
     @inject("UserAuthenticationQueryService")
     private userAuthenticationQueryService: UserAuthenticationQueryService;
-
-    /**
-     * LocalAuthority query service
-     */
-    @inject("LocalAuthorityQueryService")
-    private localAuthorityQueryService: LocalAuthorityQueryService;
 
     /**
      * Authentication resources

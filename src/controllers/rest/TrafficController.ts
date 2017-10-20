@@ -62,16 +62,14 @@ export class TrafficController implements interfaces.Controller {
         Utils.checkArgument(limit > 0, "Limit must be superior to zero");
 
         this.logger.info("Find all traffic information");
-        let areaSearchFilter: SearchFilter;
-        if (!Utils.isNullOrEmpty(areas)) {
-            areaSearchFilter = new SearchFilter(areas);
-        }
+
         const query: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
         query.setOffset(Number(offset));
         query.setLimit(Number(limit));
 
         // Prepare the area filter
-        if (areaSearchFilter != null) {
+        if (!Utils.isNullOrEmpty(areas)) {
+            const areaSearchFilter: SearchFilter = new SearchFilter(areas);
             const mustParam: GeoShape[] = [];
             const shouldParams: GeoShape[] = [];
 

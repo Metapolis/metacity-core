@@ -30,5 +30,5 @@ export interface CircleQueryService {
      * @param {number} circleId circle identifier
      * @returns {CircleDTO} return the DTO of specific circle
      */
-    getCircle(circleId: number): Promise<CircleDTO> | null;
+    getCircle(circleId: number): Promise<CircleDTO | undefined>;
 }

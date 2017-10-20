@@ -15,6 +15,7 @@ import { TweetQueryService } from "../../services/query/TweetQueryService";
 import { TweetCategory } from "../../common/enum/tweet/TweetCategory";
 import { Secured } from "../../common/Decorators";
 import { Role } from "../../common/enum/Role";
+import has = Reflect.has;
 
 /**
  * API resources to delivery service to access to traffic element
@@ -64,24 +65,14 @@ export class TweetController implements interfaces.Controller {
         Utils.checkArgument(limit > 0, "Size must be superior to zero");
 
         this.logger.info("Find tweets information");
-        let dateSearchFilter: SearchFilter;
-        let hashtagSearchFilter: SearchFilter;
-        let mentionSearchFilter: SearchFilter;
-        if (!Utils.isNullOrEmpty(dates)) {
-            dateSearchFilter = new SearchFilter(dates);
-        }
-        if (!Utils.isNullOrEmpty(hashtags)) {
-            hashtagSearchFilter = new SearchFilter(hashtags);
-        }
-        if (!Utils.isNullOrEmpty(mentions)) {
-            mentionSearchFilter = new SearchFilter(mentions);
-        }
+
         const query: FindTweetQuery = new FindTweetQuery();
         query.setOffset(Number(offset));
         query.setLimit(Number(limit));
 
         // Prepare the date filter
-        if (dateSearchFilter != null) {
+        if (!Utils.isNullOrEmpty(dates)) {
+            const dateSearchFilter: SearchFilter = new SearchFilter(dates);
             const mustParam: Array<Range<number>> = [];
             const shouldParams: Array<Range<number>> = [];
 
@@ -101,7 +92,8 @@ export class TweetController implements interfaces.Controller {
         }
 
         // Prepare the hash tag filter
-        if (hashtagSearchFilter != null) {
+        if (!Utils.isNullOrEmpty(hashtags)) {
+            const hashtagSearchFilter: SearchFilter = new SearchFilter(hashtags);
             const mustParam: string[] = [];
             const shouldParams: string[] = [];
 
@@ -121,7 +113,8 @@ export class TweetController implements interfaces.Controller {
         }
 
         // Prepare the mention filter
-        if (mentionSearchFilter != null) {
+        if (!Utils.isNullOrEmpty(mentions)) {
+            const mentionSearchFilter: SearchFilter = new SearchFilter(mentions);
             const mustParam: string[] = [];
             const shouldParams: string[] = [];
 

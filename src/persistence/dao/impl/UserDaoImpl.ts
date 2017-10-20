@@ -29,7 +29,7 @@ export class UserDaoImpl implements UserDao {
     /**
      * Override
      */
-    public async findByEmail(email: string): Promise<User> | undefined {
+    public async findByEmail(email: string): Promise<User | undefined> {
         this.logger.info("Retrieve user with email '%s'", email);
         return await this.userRepository.findOne({where: {email: email}});
     }
@@ -37,7 +37,7 @@ export class UserDaoImpl implements UserDao {
     /**
      * Override
      */
-    public async findById(id: number): Promise<User> | undefined {
+    public async findById(id: number): Promise<User | undefined> {
         this.logger.info("Retrieve user with identifier '%s'", id);
         return await this.userRepository.findOneById(id);
     }

@@ -83,16 +83,13 @@ export class UserController implements interfaces.Controller {
         Utils.checkArgument(limit > 0, "Size must be superior to zero");
 
         this.logger.info("Find users information");
-        let qSearchFilter: SearchFilter;
-        if (!Utils.isNullOrEmpty(q)) {
-            qSearchFilter = new SearchFilter(q);
-        }
 
         const query: FindUserQuery = new FindUserQuery();
         query.setLimit(Number(limit));
         query.setOffset(Number(offset));
         // Prepare the hash tag filter
-        if (qSearchFilter != null) {
+        if (!Utils.isNullOrEmpty(q)) {
+            const qSearchFilter: SearchFilter = new SearchFilter(q);
             const mustParam: string[] = [];
             const shouldParams: string[] = [];
 

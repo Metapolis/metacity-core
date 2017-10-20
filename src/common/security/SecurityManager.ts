@@ -34,7 +34,7 @@ export class SecurityManager {
      */
     public async authenticate(domain: string, jwt: string): Promise<JWTPayload> {
         // Retrieve localAuthority to get the secret
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(domain);
+        const localAuthority: LocalAuthority | undefined = await this.localAuthorityDao.findByCredentialAccessKey(domain);
         if (localAuthority === undefined) {
             this.logger.error("LocalAuthority not found");
             throw new AccessDeniedError("Access denied");

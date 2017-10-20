@@ -49,7 +49,7 @@ function Secured(roles: string[]) {
             // Retrieve the payload value
             const authorizationElement: JWTPayload = await (ContextApp.getContainer().get("SecurityManager") as SecurityManager).authenticate(domain, jwtEncoded);
 
-            const user: User = await userDao.findById(authorizationElement.id);
+            const user: User | undefined = await userDao.findById(authorizationElement.id);
 
             if (user === undefined) {
                 this.logger.error("No user found");

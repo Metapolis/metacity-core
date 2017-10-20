@@ -11,14 +11,14 @@ export interface UserDao {
      *
      * @param email email to find
      */
-    findByEmail(email: string): Promise<User> | undefined;
+    findByEmail(email: string): Promise<User | undefined>;
 
     /**
      * Retrieve user by id
      *
      * @param id identifier to find
      */
-    findById(id: number): Promise<User> | undefined;
+    findById(id: number): Promise<User | undefined>;
 
     /**
      * Find users

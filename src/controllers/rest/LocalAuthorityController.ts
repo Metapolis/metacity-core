@@ -132,7 +132,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         // It will be done with @secured
         // Coming soon
         // Don't check if circle exists because the previous check all
-        const circleDTO: CircleDTO = await this.circleQueryService.getCircle(circleIdNumber);
+        const circleDTO: CircleDTO = (await this.circleQueryService.getCircle(circleIdNumber))!;
         const circleDetails: CircleDetails = new CircleDetails();
         circleDetails.id = circleDTO.getId();
         circleDetails.name = circleDTO.getName();
