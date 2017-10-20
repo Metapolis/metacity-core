@@ -158,8 +158,6 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {number} localAuthorityId LocalAuthority identifier
      * @param {number} circleId Circle identifier
      * @param {Express.Response} res Response to set 204
-     *
-     * @returns {Promise<Circle>} information of specific circle
      */
     @Delete("/:localauthorityid/circles/:circleid")
     public async deleteLocalAuthorityCircle(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
