@@ -114,6 +114,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         for (const id of command.getMembers()) {
             members.push(await this.userDao.findById(id));
         }
+        // TODO : Correct when TypeORM asnwer issue #1034
 
         circle.setUsers(Promise.resolve(members));
 
