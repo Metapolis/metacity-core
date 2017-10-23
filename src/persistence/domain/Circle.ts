@@ -47,7 +47,7 @@ export class Circle {
      * You have to use getter and setter
      */
     @ManyToMany((type) => User, (user) => "circles")
-    @JoinTable()
+    @JoinTable({name: "circle_users_user" })
     private users: Promise<User[]>;
 
     /**
@@ -106,7 +106,7 @@ export class Circle {
     }
 
     /**
-     * Getter defaultCircle
+     * Getter default circle
      *
      * @returns {boolean}
      */
@@ -115,7 +115,7 @@ export class Circle {
     }
 
     /**
-     * Setter defaultCircle
+     * Setter default circle
      *
      * @param {boolean} defaultCircle
      */
@@ -152,21 +152,21 @@ export class Circle {
     }
 
     /**
+     * Setter user
+     *
+     * @param {Promise<User[]>} users
+     */
+    public setUsers(users: Promise<User[]>): void {
+        this.users = users;
+    }
+
+    /**
      * Getter user
      *
      * @returns {User[]}
      */
     public getUsers(): Promise<User[]> {
         return this.users;
-    }
-
-    /**
-     * Setter user
-     *
-     * @param users new user value
-     */
-    public setUsers(users: Promise<User[]>): void {
-        this.users = users;
     }
 
     /**

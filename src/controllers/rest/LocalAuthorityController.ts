@@ -53,6 +53,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @param {SaveCircle} circle to create
      * @param {string} accessKey :  localAuthority identifier
+     *
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
     @Post("/:accessKey/circles")

@@ -137,8 +137,6 @@ export class UserDaoTest extends AbstractTestDao {
 
     @test
     public async testSaveOrUpdate(): Promise<void> {
-        // Test is not passing because the same repository is used for all tests
-        // DB destruction before and after test to be implemented
         const userDao: UserDao = ContextApp.container.get("UserDao");
         const userRepository: TypeORM.Repository<User> = ContextApp.container.get("UserRepository");
 

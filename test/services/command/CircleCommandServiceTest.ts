@@ -13,6 +13,7 @@ import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDa
 import { User } from "../../../src/persistence/domain/User";
 import { UpdateCircleCommandDTO } from "../../../src/services/command/dto/circle/UpdateCircleCommandDTO";
 import { Credential } from "../../../src/persistence/domain/Credential";
+import { UserDao } from "../../../src/persistence/dao/UserDao";
 
 /**
  * All test for circle command service
@@ -209,6 +210,7 @@ class CircleCommandServiceTest extends AbstractTestService {
     private async testUpdateCircle(): Promise<void> {
         const accessKey: string = "starkindustries";
         const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
         const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
 
@@ -219,12 +221,19 @@ class CircleCommandServiceTest extends AbstractTestService {
         credential.setAccessKey("AccessKeyDesFamilles");
         localAuthority.setCredential(Promise.resolve(credential));
 
+        const user: User = new User();
+        user.setId(42);
+        user.setFirstName("romain");
+        user.setLastName("rambal");
+        user.setEmail("aa@aa.com");
+
         const circle: Circle = new Circle();
+        const users: User[] = [];
         circle.setId(1);
         circle.setRoles(["READ_ALL"]);
         circle.setName("Jean de la tourette");
         circle.setDefaultCircle(true);
-        circle.setUsers(Promise.resolve([new User()]));
+        circle.setUsers(Promise.resolve(users));
         circle.setLocalAuthority(Promise.resolve(localAuthority));
 
         const updateCircleDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
@@ -232,30 +241,43 @@ class CircleCommandServiceTest extends AbstractTestService {
         updateCircleDTO.setRoles(["Role"]);
         updateCircleDTO.setName("michel");
         updateCircleDTO.setDefaultCircle(true);
-        updateCircleDTO.setMembers([1]);
+        updateCircleDTO.setMembers([42]);
         updateCircleDTO.setId(circle.getId());
 
         localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
-        circleDao.setup((instance) => instance.findById(updateCircleDTO.getId())).returns(() => Promise.resolve(circle));
+        circleDao.setup(async (instance) => await instance.findById(updateCircleDTO.getId())).returns(() => Promise.resolve(circle));
+        userDao.setup(async (instance) => await instance.findById(user.getId())).returns(() => Promise.resolve(user));
 
         await circleCommandService.updateCircle(updateCircleDTO);
 
+        let circleFromDao: Circle = null;
         circleDao.verify((instance: CircleDao) => instance.saveOrUpdate(TypeMoq.It.is((circleToSave: Circle) => {
+            circleFromDao = circleToSave;
             let ret: boolean = circleToSave.getName() === updateCircleDTO.getName();
-            circle.getUsers().then((value) => {
-                ret = ret && value.length === updateCircleDTO.getMembers().length;
-                for (let i = 0; i < updateCircleDTO.getMembers().length; i++) {
-                    ret = ret && value[i].getId() === updateCircleDTO.getMembers()[i];
-                }
-            });
             ret = ret && circleToSave.getRoles().length === updateCircleDTO.getRoles().length;
             for (let i = 0; i < updateCircleDTO.getRoles().length; i++) {
                 ret = ret && circleToSave.getRoles()[i] === updateCircleDTO.getRoles()[i];
             }
             ret = ret && circleToSave.isDefaultCircle() === updateCircleDTO.isDefaultCircle();
             ret = ret && circleToSave.getId() === circle.getId();
+            circleToSave.getUsers().then((value) => {
+                ret = ret && value.length === updateCircleDTO.getMembers().length;
+                for (let i = 0; i < updateCircleDTO.getMembers().length; i++) {
+                    ret = ret && value[i].getId() === updateCircleDTO.getMembers()[i];
+                }
+            });
             return ret;
         })), TypeMoq.Times.exactly(1));
+
+        const members = await circleFromDao.getUsers();
+        console.log(members);
+        console.log("----------------------")
+        Chai.assert.equal(members.length, updateCircleDTO.getMembers().length);
+        for (let i = 0; i < updateCircleDTO.getMembers().length; i++) {
+            console.log("////////\\\\\\");
+            console.log(members[i]);
+            Chai.assert.equal(members[i].getId(), updateCircleDTO.getMembers()[i]);
+        }
     }
 
     @test

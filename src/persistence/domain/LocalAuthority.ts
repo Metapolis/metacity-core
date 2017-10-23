@@ -1,6 +1,6 @@
 import {
     Entity, Column, OneToMany, ManyToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn,
-    BeforeInsert, AfterLoad
+    AfterLoad
 } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
