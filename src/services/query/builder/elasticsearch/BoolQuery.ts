@@ -17,7 +17,7 @@ export class BoolQuery implements Query {
         if (!this.bool.has("must")) {
             this.bool.set("must", []);
         }
-        this.bool.get("must").push(query);
+        this.bool.get("must")!.push(query);
     }
 
     /**
@@ -27,7 +27,7 @@ export class BoolQuery implements Query {
         if (!this.bool.has("should")) {
             this.bool.set("should", []);
         }
-        this.bool.get("should").push(query);
+        this.bool.get("should")!.push(query);
     }
 
     /**
@@ -43,9 +43,9 @@ export class BoolQuery implements Query {
              Temporary hack cause I have a headache! :P
              */
             let index: number = 0;
-            for (const boolTerm of this.bool.get(key)) {
+            for (const boolTerm of this.bool.get(key)!) {
                 strQuery += boolTerm.render();
-                if (index !== (this.bool.get(key).length - 1)) {
+                if (index !== (this.bool.get(key)!.length - 1)) {
                     index++;
                     strQuery += ",";
                 }

@@ -27,7 +27,7 @@ export class LocalAuthorityDaoImpl implements LocalAuthorityDao {
     /**
      * Override
      */
-    public async findById(id: number): Promise<LocalAuthority> | undefined {
+    public async findById(id: number): Promise<LocalAuthority | undefined> {
         this.logger.info("Retrieve localAuthority with identifier '%s'", id);
 
         return await this.localAuthorityRepository.findOneById(id);
@@ -36,7 +36,7 @@ export class LocalAuthorityDaoImpl implements LocalAuthorityDao {
     /**
      * Override
      */
-    public async findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined {
+    public async findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority | undefined> {
         this.logger.debug("Retrieve local authority with credential access key '%s'", accessKey);
 
         return await this.localAuthorityRepository.createQueryBuilder("la")

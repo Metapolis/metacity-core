@@ -28,7 +28,7 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async saveOrUpdate(circle: Circle): Promise<void> | undefined {
+    public async saveOrUpdate(circle: Circle): Promise<void | undefined> {
         this.logger.info("Persist new circle '%s'", circle.getName());
         await this.circleRepository.save(circle);
         this.logger.info("Circle saved");
@@ -46,7 +46,7 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async findById(id: number): Promise<Circle> | undefined {
+    public async findById(id: number): Promise<Circle | undefined> {
         this.logger.info("Retrieve circle with identifier '%s'", id);
 
         return await this.circleRepository.findOneById(id);

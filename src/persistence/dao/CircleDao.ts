@@ -11,7 +11,7 @@ export interface CircleDao {
      * @param {Circle} circle to save
      *
      */
-    saveOrUpdate(circle: Circle): Promise<void> | undefined;
+    saveOrUpdate(circle: Circle): Promise<void | undefined>;
 
     /**
      * Check if this specific circle exists
@@ -29,7 +29,7 @@ export interface CircleDao {
      *
      * @returns {Promise<Circle>} circle found
      */
-    findById(id: number): Promise<Circle> | undefined;
+    findById(id: number): Promise<Circle | undefined>;
 
     /**
      * Check if circle is owned by localAuthority
