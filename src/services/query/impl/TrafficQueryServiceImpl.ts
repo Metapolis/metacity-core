@@ -52,6 +52,8 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
                 }
             }
             this.logger.info("Query elastic : '%s'", queryBuilder.build());
+        } else {
+            queryBuilder.matchAllQuery();
         }
 
         // Call elastic search

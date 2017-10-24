@@ -100,4 +100,21 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         await this.circleDao.saveOrUpdate(circle);
         this.logger.debug("Circle '%s' updated", circle.getId());
     }
+
+    /**
+     * Override
+     */
+    public async deleteCircle(circleId: number): Promise<void> {
+        this.logger.debug("Begin deletion of circle '%s'", circleId);
+
+        // Retrieve circle with identifier
+        const circle: Circle = await this.circleDao.findById(circleId);
+
+        // Check if localAuthority is found in database
+        Utils.checkArgument(circle !== undefined, "Circle with id '" + circleId + "' cannot be found");
+
+        await this.circleDao.deleteCircle(circle);
+
+        this.logger.debug("Circle deleted");
+    }
 }

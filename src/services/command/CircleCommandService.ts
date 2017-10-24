@@ -21,4 +21,12 @@ export interface CircleCommandService {
      * @param {UpdateCircleCommandDTO} updateCircleCommandDTO used to update a circle
      */
     updateCircle(updateCircleCommandDTO: UpdateCircleCommandDTO): Promise<void>;
+
+    /**
+     * Delete specific circle
+     *
+     * @param {number} circleId circle identifier
+     * @returns {Promise<void>}
+     */
+    deleteCircle(circleId: number): Promise<void>;
 }

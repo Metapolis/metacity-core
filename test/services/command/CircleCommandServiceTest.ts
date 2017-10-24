@@ -447,4 +447,48 @@ class CircleCommandServiceTest extends AbstractTestService {
             Chai.assert.equal(err.message, "Circle '" + circle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
         });
     }
+
+    @test
+    private async testDeleteCircle(): Promise<void> {
+        const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
+
+        const circle: Circle = new Circle();
+        circle.setId(1);
+        circle.setRoles(["READ_ALL"]);
+        circle.setName("Jean de la tourette");
+        circle.setDefaultCircle(true);
+        circle.setUsers(Promise.resolve([new User()]));
+
+        //  /!\ IMPORTANT
+        // / ! \ If you want to compare the same object (retrieve in DB and resend to DB for delete or update) you have to clone it
+        ///__!__\ with Object.create({yourObject})
+        circleDao.setup((instance) => instance.findById(circle.getId())).returns(() => Promise.resolve(Object.create(circle)));
+
+        await circleCommandService.deleteCircle(circle.getId());
+
+        circleDao.verify((instance: CircleDao) => instance.deleteCircle(TypeMoq.It.is((circleToDelete: Circle) => {
+            let ret = circleToDelete.getName() === circle.getName();
+            ret = ret && circleToDelete.getRoles().length === circle.getRoles().length;
+            for (let i = 0; i < circleToDelete.getRoles().length; i++) {
+                ret = ret && circleToDelete.getRoles()[i] === circle.getRoles()[i];
+            }
+            ret = ret && circleToDelete.isDefaultCircle() === circle.isDefaultCircle();
+            ret = ret && circleToDelete.getId() === circle.getId();
+            return ret;
+        })), TypeMoq.Times.exactly(1));
+    }
+
+    @test
+    private async testDeleteCircleCircleNotFound() {
+        const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
+        const circleId: number = 1;
+
+        await circleCommandService.deleteCircle(circleId).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Circle with id '" + circleId + "' cannot be found");
+        });
+    }
 }

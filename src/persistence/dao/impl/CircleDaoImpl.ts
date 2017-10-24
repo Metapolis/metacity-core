@@ -4,6 +4,7 @@ import { Utils } from "../../../common/Utils";
 import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
 import { inject, injectable } from "inversify";
+import { Transaction } from "typeorm/decorator/transaction/Transaction";
 
 /**
  * Implementation of {@link CircleDao}
@@ -62,5 +63,14 @@ export class CircleDaoImpl implements CircleDao {
             .where("c.id = :circleid", {circleid: circleId})
             .andWhere("la.id = :localauthorityid", {localauthorityid: localAuthorityId})
             .getCount()) === 1;
+    }
+
+    /**
+     * Override
+     */
+    public async deleteCircle(circle: Circle): Promise<void> {
+        this.logger.info("Delete circle '%s'", circle.getName());
+        await this.circleRepository.remove(circle);
+        this.logger.info("Circle deleted");
     }
 }

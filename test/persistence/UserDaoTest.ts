@@ -8,7 +8,7 @@ import { User } from "../../src/persistence/domain/User";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
-import { AbstractTestDao } from "./inversify/AbstractTestService";
+import { AbstractTestDao } from "./inversify/AbstractTestDao";
 import { Credential } from "../../src/persistence/domain/Credential";
 import { FindUserQuery } from "../../src/common/query/FindUserQuery";
 import { LogicalQueryCriteria } from "../../src/common/query/LogicalQueryCriteria";
