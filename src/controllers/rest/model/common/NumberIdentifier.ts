@@ -1,4 +1,3 @@
-
 /**
  * Contains object's identifier
  */

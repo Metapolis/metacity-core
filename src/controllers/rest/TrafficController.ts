@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, interfaces, Post, QueryParam } from "inversify-express-utils";
+import { Controller, Get, interfaces, QueryParam } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
@@ -76,12 +76,12 @@ export class TrafficController implements interfaces.Controller {
             const shouldParams: GeoShape[] = [];
 
             // Parse must params
-            for (const must of areaSearchFilter.getMustValues()){
+            for (const must of areaSearchFilter.getMustValues()) {
                 mustParam.push(Utils.parseGeoShape(must));
             }
 
             // Parse should params
-            for (const should of areaSearchFilter.getShouldValues()){
+            for (const should of areaSearchFilter.getShouldValues()) {
                 shouldParams.push(Utils.parseGeoShape(should));
             }
 

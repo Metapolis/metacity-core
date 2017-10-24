@@ -1,12 +1,12 @@
-import {UserCommandService} from "../UserCommandService";
-import {inject, injectable} from "inversify";
-import {Client} from "elasticsearch";
-import {Utils} from "../../../common/Utils";
-import {LoggerInstance} from "winston";
-import {UserDao} from "../../../persistence/dao/UserDao";
+import { UserCommandService } from "../UserCommandService";
+import { inject, injectable } from "inversify";
+import { Client } from "elasticsearch";
+import { Utils } from "../../../common/Utils";
+import { LoggerInstance } from "winston";
+import { UserDao } from "../../../persistence/dao/UserDao";
 import { SaveUserCommandDTO } from "../dto/user/SaveUserCommandDTO";
-import {User} from "../../../persistence/domain/User";
-import {isNullOrUndefined} from "util";
+import { User } from "../../../persistence/domain/User";
+import { isNullOrUndefined } from "util";
 
 /**
  * Implementation of {@link UserCommandService}

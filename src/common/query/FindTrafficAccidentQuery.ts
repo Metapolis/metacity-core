@@ -1,4 +1,3 @@
-
 import { LogicalQueryCriteria } from "./LogicalQueryCriteria";
 import { GeoShape } from "../GeoShape";
 import { Config } from "../../Config";
@@ -17,7 +16,7 @@ export class FindTrafficAccidentQuery {
 
     /**
      * Document type
-     * 
+     *
      * @type {string}
      */
     private type: string = Config.getDocumentNameAccident();

@@ -1,4 +1,3 @@
-
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../Utils";

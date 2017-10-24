@@ -1,4 +1,5 @@
 import { Query } from "./Query";
+
 /**
  * Contains bool query fields
  */

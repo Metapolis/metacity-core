@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOne, JoinTable } from "typeorm";
+import { AfterLoad, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { LocalAuthority } from "./LocalAuthority";

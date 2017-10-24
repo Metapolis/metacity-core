@@ -1,5 +1,4 @@
 import { Location } from "./Location";
-import { CollisionType } from "../../../../common/enum/accident/CollisionType";
 import { Climatology } from "./Climatology";
 
 /**
