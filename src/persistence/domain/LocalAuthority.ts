@@ -1,6 +1,5 @@
 import {
-    Entity, Column, OneToMany, ManyToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn,
-    AfterLoad
+    AfterLoad, Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn
 } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
@@ -8,7 +7,7 @@ import { UIConfig } from "./UIConfig";
 import { Credential } from "./Credential";
 
 /**
- * Represents a user
+ * Represents a Local Authority
  */
 @Entity()
 export class LocalAuthority {
