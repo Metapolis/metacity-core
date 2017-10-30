@@ -67,6 +67,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setRoles(command.getRoles());
         circle.setDefaultCircle(command.isDefaultCircle());
 
+        // get reference of circle members list to add member
         const members: User[] = await circle.getUsers();
         for (const id of command.getMembers()) {
             members.push(await this.userDao.findById(id));
@@ -100,8 +101,6 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         // Retrieve circle with identifier
         const circle: Circle = await this.circleDao.findById(command.getId());
 
-        let members: User[] = [];
-
         // Check if localAuthority is found in database
         Utils.checkArgument(circle !== undefined, "Circle with id '" + command.getId() + "' cannot be found");
         Utils.checkArgument((await circle.getLocalAuthority()).getId() === localAuthority.getId(), "Circle '" + circle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
@@ -110,7 +109,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setDefaultCircle(command.isDefaultCircle());
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
-        members = await circle.getUsers();
+        const members = await circle.getUsers();
         for (const id of command.getMembers()) {
             members.push(await this.userDao.findById(id));
         }
