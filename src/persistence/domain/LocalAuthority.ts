@@ -1,5 +1,12 @@
 import {
-    AfterLoad, Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn
+    AfterLoad,
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToMany,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn
 } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
@@ -7,7 +14,7 @@ import { UIConfig } from "./UIConfig";
 import { Credential } from "./Credential";
 
 /**
- * Represents a Local Authority
+ * Represents a user
  */
 @Entity()
 export class LocalAuthority {
@@ -72,6 +79,7 @@ export class LocalAuthority {
     private initUIJsonString(uiConfig: UIConfig): void {
         this.uiConfigJsonString = JSON.stringify(uiConfig);
     }
+
     /**
      * Getter identifier
      *
