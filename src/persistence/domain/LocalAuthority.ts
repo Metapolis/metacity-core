@@ -14,7 +14,7 @@ import { UIConfig } from "./UIConfig";
 import { Credential } from "./Credential";
 
 /**
- * Represents a user
+ * Represents a Local Authority
  */
 @Entity()
 export class LocalAuthority {
