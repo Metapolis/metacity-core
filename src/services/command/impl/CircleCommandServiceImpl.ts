@@ -8,8 +8,10 @@ import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
 import { Circle } from "../../../persistence/domain/Circle";
 import { CircleDao } from "../../../persistence/dao/CircleDao";
+import { User } from "../../../persistence/domain/User";
 import { isNullOrUndefined } from "util";
 import { UpdateCircleCommandDTO } from "../dto/circle/UpdateCircleCommandDTO";
+import { UserDao } from "../../../persistence/dao/UserDao";
 
 /**
  * Implementation of {@link CircleCommandService}
@@ -29,6 +31,12 @@ export class CircleCommandServiceImpl implements CircleCommandService {
      */
     @inject("CircleDao")
     private circleDao: CircleDao;
+
+    /**
+     * User data access object
+     */
+    @inject("UserDao")
+    private userDao: UserDao;
 
     /**
      * LocalAuthority data access object
@@ -58,6 +66,12 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
         circle.setDefaultCircle(command.isDefaultCircle());
+
+        // get reference of circle members list to add member
+        const members: User[] = await circle.getUsers();
+        for (const id of command.getMembers()) {
+            members.push(await this.userDao.findById(id));
+        }
 
         this.logger.debug("Create new circle");
         await this.circleDao.saveOrUpdate(circle);
@@ -95,6 +109,13 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setDefaultCircle(command.isDefaultCircle());
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
+        const members = await circle.getUsers();
+        for (const id of command.getMembers()) {
+            members.push(await this.userDao.findById(id));
+        }
+        // TODO : Correct when TypeORM asnwer issue #1034
+
+        circle.setUsers(Promise.resolve(members));
 
         // Save circle
         await this.circleDao.saveOrUpdate(circle);

@@ -17,4 +17,9 @@ export class User {
      * User's last name
      */
     public lastName: string;
+
+    /**
+     * User's email
+     */
+    public email: string;
 }
