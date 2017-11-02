@@ -14,7 +14,7 @@ import { IllegalArgumentError } from "./error/IllegalArgumentError";
  * @returns {(target:any, propertyKey:string, descriptor:PropertyDescriptor) => descriptor}
  * @constructor
  */
-function Secured(roles: string[]) {
+function UserControl(roles: string[]) {
     return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value;
 
@@ -73,4 +73,25 @@ function Secured(roles: string[]) {
     };
 }
 
-export { Secured };
+/**
+ * Check if client can access to resource
+ * @param roles
+ * @returns {(target:any, propertyKey:string, descriptor:PropertyDescriptor) => descriptor}
+ * @constructor
+ */
+function ClientControl(roles: string[]) {
+    return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+        const originalMethod = descriptor.value;
+
+        // Add code before execute method
+        descriptor.value = async function(...args: any[]) {
+            // TODO check client control (signature)
+            return originalMethod.apply(this, args);
+        };
+
+        return descriptor;
+
+    };
+}
+
+export { UserControl, ClientControl };
