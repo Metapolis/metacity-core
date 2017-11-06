@@ -1,10 +1,9 @@
-
 import { LogicalQueryCriteria } from "./LogicalQueryCriteria";
 import { Config } from "../../Config";
 import { Range } from "../Range";
 
 /**
- * Contains traffic accident search query
+ * Contains tweet accident search query
  */
 export class FindTweetQuery {
 
@@ -17,7 +16,7 @@ export class FindTweetQuery {
 
     /**
      * Document type
-     * 
+     *
      * @type {string}
      */
     private type: string = Config.getDocumentNameTweet();

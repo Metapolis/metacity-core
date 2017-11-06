@@ -1,10 +1,7 @@
 import { RequestAccessor } from "../RequestAccessor";
 import { AccessDeniedError } from "./error/AccessDeniedError";
 import { Utils } from "./Utils";
-import * as JWT from "jsonwebtoken";
-import { LocalAuthority } from "../persistence/domain/LocalAuthority";
 import { ContextApp } from "../ContextApp";
-import { LocalAuthorityDao } from "../persistence/dao/LocalAuthorityDao";
 import { User } from "../persistence/domain/User";
 import { UserDao } from "../persistence/dao/UserDao";
 import { JWTPayload } from "./security/JWTToken";

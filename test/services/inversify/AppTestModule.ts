@@ -48,6 +48,7 @@ export class AppTestModule {
     public rebind(): void {
         ContextApp.container.rebind("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         ContextApp.container.rebind("CircleDao").to(CircleDaoImpl);
+        ContextApp.container.rebind("UserDao").to(UserDaoImpl);
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");
         }

@@ -41,9 +41,9 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     /**
      * Override
      */
-    public async isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean> {
-        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s'", circleId, accessKey);
-        return await this.circleDao.isOwnedByLocalAuthority(circleId, accessKey);
+    public async isOwnedByLocalAuthority(circleId: number, localAuthorityId: number): Promise<boolean> {
+        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s'", circleId, localAuthorityId);
+        return await this.circleDao.isOwnedByLocalAuthority(circleId, localAuthorityId);
     }
 
     /**
@@ -73,8 +73,9 @@ export class CircleQueryServiceImpl implements CircleQueryService {
 
         for (const user of (await circle.getUsers())) {
             const userDTO: UserDTO = new UserDTO();
-            // TODO add first name and last name
             userDTO.setId(user.getId());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setFirstName(user.getFirstName());
             circleDTO.getMembers().push(userDTO);
         }
         return circleDTO;

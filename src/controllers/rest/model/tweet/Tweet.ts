@@ -1,4 +1,3 @@
-
 /**
  * Data transfer object with all details about a tweet
  */

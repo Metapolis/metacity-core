@@ -1,4 +1,3 @@
-
 import { LocationPoint } from "./LocationPoint";
 
 /**

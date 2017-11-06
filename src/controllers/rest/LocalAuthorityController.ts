@@ -1,6 +1,6 @@
 import {
-    Controller, interfaces, Next, Response, Post, RequestBody, RequestParam, Put,
-    Get
+    Controller, Delete, Get, interfaces, Post, Put, RequestBody, RequestParam,
+    Response
 } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
@@ -76,6 +76,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @param {SaveCircle} circle to create
      * @param {string} accessKey :  localAuthority identifier
+     *
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
     @Post("/:accessKey/circles")
@@ -89,6 +90,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         saveCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         saveCircleCommandDTO.setName(circle.name);
         saveCircleCommandDTO.setRoles(circle.roles);
+        saveCircleCommandDTO.setMembers(circle.members);
         saveCircleCommandDTO.setAccessKey(accessKey);
 
         const circleIdentifier: number = await this.circleCommandService.createCircle(saveCircleCommandDTO);
@@ -121,6 +123,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         updateCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         updateCircleCommandDTO.setName(circle.name);
         updateCircleCommandDTO.setRoles(circle.roles);
+        updateCircleCommandDTO.setMembers(circle.members);
         updateCircleCommandDTO.setAccessKey(accessKey);
         updateCircleCommandDTO.setId(circleIdNumber);
 
@@ -134,19 +137,20 @@ export class LocalAuthorityController implements interfaces.Controller {
     /**
      * Get information details of specific circle
      *
-     * @param {string} accessKey LocalAuthority access key
+     * @param {number} localAuthorityId LocalAuthority identifier
      * @param {number} circleId Circle identifier
      *
      * @returns {Promise<Circle>} information of specific circle
      */
-    @Get("/:accessKey/circles/:circleid")
-    public async getLocalAuthorityCircleDetails(@RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
+    @Get("/:localauthorityid/circles/:circleid")
+    public async getLocalAuthorityCircleDetails(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
         this.logger.debug("Begin get circle");
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
 
-        // Check if circle and localAuthority exist and if circle is owned by localAuthority
-        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, accessKey))) {
+        // Check if circle and localAuthority exist and is circle is owned by localAuthority
+        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
             throw new NotFoundError("Circle is not owned by localAuthority");
         }
 
@@ -172,5 +176,36 @@ export class LocalAuthorityController implements interfaces.Controller {
         this.logger.debug("Circle '%s' is retrieved", circleIdNumber);
 
         return circleDetails;
+    }
+
+    /**
+     * Delete specific circle
+     *
+     * @param {number} localAuthorityId LocalAuthority identifier
+     * @param {number} circleId Circle identifier
+     * @param {Express.Response} res Response to set 204
+     */
+    @Delete("/:localauthorityid/circles/:circleid")
+    public async deleteLocalAuthorityCircle(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
+        this.logger.debug("Begin delete circle '%s'", circleId);
+        // I have to do this, because express can only parse string
+        const circleIdNumber: number = Number(circleId);
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Check if circle and localAuthority exist and is circle is owned by localAuthority
+        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
+            throw new NotFoundError("Circle is not owned by localAuthority");
+        }
+
+        // We don't verify if localAuthority exists
+        // It will be done with @secured
+        // Coming soon
+        // Don't check if circle exists because the previous check all
+        await this.circleCommandService.deleteCircle(circleIdNumber);
+
+        this.logger.debug("Circle '%s' is deleted", circleIdNumber);
+
+        // empty response temporary just because JS sucks
+        res.sendStatus(HTTPStatusCodes.NO_CONTENT);
     }
 }

@@ -42,9 +42,16 @@ export interface CircleDao {
      * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
-     * @param {string} accessKey localAuthority identifier
+     * @param {number} accessKey localAuthority identifier
      *
      * @returns {boolean} true means localAuthority own circle
      */
-    isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean>;
+    isOwnedByLocalAuthority(circleId: number, accessKey: number): Promise<boolean>;
+
+    /**
+     * Delete specific circle
+     *
+     * @param {Circle} circle specific circle to delete
+     */
+    deleteCircle(circle: Circle): Promise<void>;
 }

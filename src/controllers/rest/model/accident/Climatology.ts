@@ -1,6 +1,3 @@
-import { Luminosity } from "../../../../common/enum/accident/Luminosity";
-import { AtmosphericCondition } from "../../../../common/enum/accident/AtmosphericCondition";
-
 /**
  * Data transfer object with all details about a climatology
  */

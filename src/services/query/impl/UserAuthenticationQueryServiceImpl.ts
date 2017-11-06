@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify";
-import { TrafficQueryService } from "../TrafficQueryService";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { UserAuthenticationQueryService } from "../UserAuthenticationQueryService";
@@ -37,7 +36,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
      */
     @inject("LocalAuthorityDao")
     private localAuthorityDao: LocalAuthorityDao;
-    
+
     /**
      * Override
      */

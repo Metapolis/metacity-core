@@ -11,8 +11,8 @@ export class Config {
      * @type {Properties}
      */
     private static properties: Properties = process.env.NODE_ENV === "prod" ? Properties.initialize("config/properties_prod.json")
-                                            : process.env.NODE_ENV === "debug" ? Properties.initialize("config/properties_debug.json")
-                                            : Properties.initialize("config/properties_test.json");
+        : process.env.NODE_ENV === "debug" ? Properties.initialize("config/properties_debug.json")
+            : Properties.initialize("config/properties_test.json");
 
     /**
      * Get ElasticSearch host

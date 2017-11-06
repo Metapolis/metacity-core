@@ -55,7 +55,7 @@ class TweetQueryServiceTest extends AbstractTestService {
             ret = ret && searchParams.type === findTweetsQuery.getType();
             ret = ret && searchParams.size === findTweetsQuery.getLimit();
             ret = ret && searchParams.from === findTweetsQuery.getOffset();
-            ret = ret && searchParams.body === undefined;
+            ret = ret && searchParams.body === "{ \"query\":{\"match_all\":{}}}";
 
             return ret;
         })), TypeMoq.Times.once());

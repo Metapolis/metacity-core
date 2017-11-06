@@ -1,9 +1,10 @@
-import {CircleDao} from "../CircleDao";
+import { CircleDao } from "../CircleDao";
 import { Circle } from "../../domain/Circle";
-import {Utils} from "../../../common/Utils";
-import {LoggerInstance} from "winston";
+import { Utils } from "../../../common/Utils";
+import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
-import {inject, injectable} from "inversify";
+import { inject, injectable } from "inversify";
+import { Transaction } from "typeorm/decorator/transaction/Transaction";
 
 /**
  * Implementation of {@link CircleDao}
@@ -63,14 +64,22 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async isOwnedByLocalAuthority(circleId: number, accessKey: string): Promise<boolean> {
-        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s' in database", circleId, accessKey);
+    public async isOwnedByLocalAuthority(circleId: number, localAuthorityId: number): Promise<boolean> {
+        this.logger.debug("Check if circle '%s' is owned by localAuthority '%s' in database", circleId, localAuthorityId);
 
         return (await this.circleRepository.createQueryBuilder("c")
             .innerJoin("c.localAuthority", "la")
-            .innerJoin("la.credential", "cr")
             .where("c.id = :circleid", {circleid: circleId})
-            .andWhere("cr.access_key = :accesskey", {accesskey: accessKey})
+            .andWhere("la.id = :localauthorityid", {localauthorityid: localAuthorityId})
             .getCount()) === 1;
+    }
+
+    /**
+     * Override
+     */
+    public async deleteCircle(circle: Circle): Promise<void> {
+        this.logger.info("Delete circle '%s'", circle.getName());
+        await this.circleRepository.remove(circle);
+        this.logger.info("Circle deleted");
     }
 }

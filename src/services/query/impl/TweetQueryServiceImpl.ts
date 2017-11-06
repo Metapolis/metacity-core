@@ -9,6 +9,7 @@ import { Utils } from "../../../common/Utils";
 import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
 import { RangeQueryParam } from "../builder/elasticsearch/model/RangeQueryParam";
 import { TermQueryParam } from "../builder/elasticsearch/model/TermQueryParam";
+import e = require("cookie-parser");
 
 /**
  * Implementation of {@link TweetQueryService}
@@ -24,7 +25,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
     private logger: LoggerInstance = Utils.createLogger(TweetQueryServiceImpl.name);
 
     /**
-     * Traffic querying service
+     * Tweet querying service
      */
     @inject("ESClient")
     private esClient: Client;
@@ -81,6 +82,8 @@ export class TweetQueryServiceImpl implements TweetQueryService {
                 }
             }
             this.logger.info("Query elastic : '%s'", queryBuilder.build());
+        } else {
+            queryBuilder.matchAllQuery();
         }
 
         // Call elastic with query

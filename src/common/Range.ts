@@ -1,4 +1,3 @@
-
 /**
  * Contains start and end value
  *

@@ -57,7 +57,7 @@ class TrafficQueryServiceTest extends AbstractTestService {
             ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
             ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
             ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
-            ret = ret && searchParams.body === undefined;
+            ret = ret && searchParams.body === "{ \"query\":{\"match_all\":{}}}";
 
             return ret;
         })), TypeMoq.Times.once());

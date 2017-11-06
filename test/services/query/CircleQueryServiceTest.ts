@@ -18,15 +18,25 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
 
-        const user: User = new User();
-        user.setId(14);
+        const usersMock: User[] = [];
+        const user1: User = new User();
+        user1.setId(14);
+        user1.setFirstName("Tony");
+        user1.setLastName("Stark");
+        usersMock.push(user1);
+
+        const user2: User = new User();
+        user2.setId(15);
+        user2.setFirstName("Tony");
+        user2.setLastName("Stark");
+        usersMock.push(user2);
 
         const circleMock: Circle = new Circle();
         circleMock.setId(12);
         circleMock.setName("Stark Company");
         circleMock.setDefaultCircle(true);
         circleMock.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
-        (await circleMock.getUsers()).push(user);
+        circleMock.setUsers(Promise.resolve(usersMock));
         circleDaoMock.setup((instance) => instance.findById(12)).returns(() => Promise.resolve(circleMock));
 
         let circleDTO: CircleDTO = await circleQueryService.getCircle(12);
@@ -39,14 +49,12 @@ export class CircleQueryServiceTest extends AbstractTestService {
             Chai.assert.equal(circleDTO.getRoles()[i], circleMock.getRoles()[i + 1]);
         }
 
-        const users: User[] = await circleMock.getUsers();
-        Chai.assert.equal(circleDTO.getMembers().length, users.length);
+        Chai.assert.equal(circleDTO.getMembers().length, usersMock.length);
         // FAKE ROLE is not role so we don't want to retrieve it in DTO
         for (let i = 0; i < circleDTO.getMembers().length; i = i + 1) {
-            Chai.assert.equal(circleDTO.getMembers()[i].getId(), users[i].getId());
-            // TODO Wait add first and last name
-            // Chai.assert.equal(circleDTO.getMembers()[i].getFirstName(), user[i].getFirstName());
-            // Chai.assert.equal(circleDTO.getMembers()[i].getLastName(), user[i].getLastName());
+            Chai.assert.equal(circleDTO.getMembers()[i].getId(), usersMock[i].getId());
+            Chai.assert.equal(circleDTO.getMembers()[i].getFirstName(), usersMock[i].getFirstName());
+            Chai.assert.equal(circleDTO.getMembers()[i].getLastName(), usersMock[i].getLastName());
         }
 
         circleDTO = await circleQueryService.getCircle(13);
@@ -97,14 +105,14 @@ export class CircleQueryServiceTest extends AbstractTestService {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
 
-        circleDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(12, "accesskey")).returns(() => Promise.resolve(true));
-        circleDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(10, "accesskey12")).returns(() => Promise.resolve(false));
+        circleDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(12, 123)).returns(() => Promise.resolve(true));
+        circleDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(10, 124)).returns(() => Promise.resolve(false));
 
-        let isOwnedByLocalAuthority: boolean = await circleQueryService.isOwnedByLocalAuthority(12, "accesskey");
+        let isOwnedByLocalAuthority: boolean = await circleQueryService.isOwnedByLocalAuthority(12, 123);
 
         Chai.assert.isTrue(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleQueryService.isOwnedByLocalAuthority(10, "accesskey12");
+        isOwnedByLocalAuthority = await circleQueryService.isOwnedByLocalAuthority(10, 124);
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
     }

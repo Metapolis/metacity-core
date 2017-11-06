@@ -1,18 +1,14 @@
-import { Controller, Delete, Get, interfaces, Next, Post, RequestBody, RequestParam } from "inversify-express-utils";
+import { Controller, interfaces, Post, RequestBody } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
-import * as Express from "express";
 import { UserAuthenticationQueryService } from "../../services/query/UserAuthenticationQueryService";
-import { Labeled } from "../../common/Labeled";
 import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAuthenticationTokenDTO";
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
 import { UserToken } from "./model/user/UserToken";
 import { RequestAccessor } from "../../RequestAccessor";
 import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
-import * as JWT from "jsonwebtoken";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
-import { LocalAuthorityDTO } from "../../services/query/dto/localauthority/LocalAuthorityDTO";
 
 /**
  * API resources to delivery service to authentication

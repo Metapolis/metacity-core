@@ -133,20 +133,70 @@ export class CircleDaoTest extends AbstractTestDao {
 
         await circleRepository.save(circle);
 
-        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(circle.getId(), (await localAuthority.getCredential()).getAccessKey());
+        let isOwnedByLocalAuthority: boolean = await circleDao.isOwnedByLocalAuthority(circle.getId(), localAuthority.getId());
 
         Chai.assert.isTrue(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, "toto");
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, 1235);
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId(), "toto");
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId(), 1235);
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
 
-        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, (await localAuthority.getCredential()).getAccessKey());
+        isOwnedByLocalAuthority = await circleDao.isOwnedByLocalAuthority(circle.getId() + 2, localAuthority.getId());
 
         Chai.assert.isFalse(isOwnedByLocalAuthority);
+    }
+
+    @test
+    public async testDeleteCircle(): Promise<void> {
+        const circleDao: CircleDao = ContextApp.container.get("CircleDao");
+        const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
+
+        const circleToKeep: Circle = new Circle();
+        circleToKeep.setName("MichelKeep");
+        circleToKeep.setRoles(["ChampionKeep"]);
+        circleToKeep.setDefaultCircle(false);
+
+        const circleToDelete: Circle = new Circle();
+        circleToDelete.setName("Michel");
+        circleToDelete.setRoles(["Champion"]);
+        circleToDelete.setDefaultCircle(true);
+
+        await circleRepository.save(circleToDelete);
+        await circleRepository.save(circleToKeep);
+        const circleIdToDelete: number = circleToDelete.getId();
+        const circleIdToKeep: number = circleToKeep.getId();
+
+        let actual: Circle = await circleRepository.findOneById(circleIdToDelete);
+
+        Chai.assert.isTrue(actual !== undefined);
+        Chai.assert.equal(actual.getId(), circleToDelete.getId());
+        Chai.assert.deepEqual(actual.getRoles(), circleToDelete.getRoles());
+        Chai.assert.equal(actual.getName(), circleToDelete.getName());
+        Chai.assert.equal(actual.isDefaultCircle(), circleToDelete.isDefaultCircle());
+
+        actual = await circleRepository.findOneById(circleIdToKeep);
+
+        Chai.assert.isTrue(actual !== undefined);
+        Chai.assert.equal(actual.getId(), circleToKeep.getId());
+        Chai.assert.deepEqual(actual.getRoles(), circleToKeep.getRoles());
+        Chai.assert.equal(actual.getName(), circleToKeep.getName());
+        Chai.assert.equal(actual.isDefaultCircle(), circleToKeep.isDefaultCircle());
+
+        await circleDao.deleteCircle(circleToDelete);
+
+        actual = await circleRepository.findOneById(circleIdToDelete);
+        Chai.assert.isTrue(actual === undefined);
+
+        actual = await circleRepository.findOneById(circleIdToKeep);
+
+        Chai.assert.isTrue(actual !== undefined);
+        Chai.assert.equal(actual.getId(), circleToKeep.getId());
+        Chai.assert.deepEqual(actual.getRoles(), circleToKeep.getRoles());
+        Chai.assert.equal(actual.getName(), circleToKeep.getName());
+        Chai.assert.equal(actual.isDefaultCircle(), circleToKeep.isDefaultCircle());
     }
 }

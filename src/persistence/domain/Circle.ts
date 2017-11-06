@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, AfterLoad, ManyToMany, ManyToOne, JoinTable } from "typeorm";
+import { AfterLoad, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { User } from "./User";
@@ -106,7 +106,7 @@ export class Circle {
     }
 
     /**
-     * Getter defaultCircle
+     * Getter default circle
      *
      * @returns {boolean}
      */
@@ -115,7 +115,7 @@ export class Circle {
     }
 
     /**
-     * Setter lolilol
+     * Setter default circle
      *
      * @param {boolean} defaultCircle
      */
@@ -152,21 +152,21 @@ export class Circle {
     }
 
     /**
+     * Setter user
+     *
+     * @param {Promise<User[]>} users
+     */
+    public setUsers(users: Promise<User[]>): void {
+        this.users = users;
+    }
+
+    /**
      * Getter user
      *
      * @returns {User[]}
      */
     public getUsers(): Promise<User[]> {
         return this.users;
-    }
-
-    /**
-     * Setter user
-     *
-     * @param users new user value
-     */
-    public setUsers(users: Promise<User[]>): void {
-        this.users = users;
     }
 
     /**
