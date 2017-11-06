@@ -1,4 +1,5 @@
 import { CircleDTO } from "./dto/circle/CircleDTO";
+import { ResultList } from "../../common/ResultList";
 
 /**
  * Contains method to perform circle query
@@ -37,5 +38,5 @@ export interface CircleQueryService {
      *
      * @returns DTOs of circles
      */
-    getCircles(): Promise<CircleDTO[]> | null;
+    getCircles(): Promise<ResultList<CircleDTO>> | null;
 }

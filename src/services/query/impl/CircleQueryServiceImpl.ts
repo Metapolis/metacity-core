@@ -8,6 +8,7 @@ import { Circle } from "../../../persistence/domain/Circle";
 import { CircleDTO } from "../dto/circle/CircleDTO";
 import { Role } from "../../../common/enum/Role";
 import { UserDTO } from "../dto/circle/UserDTO";
+import { ResultList } from "../../../common/ResultList";
 
 /**
  * Implementation of {@link CircleQueryService}
@@ -80,7 +81,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     }
 
     /** Override */
-    public async getCircles(): Promise<CircleDTO[]> | null {
+    public async getCircles(): Promise<ResultList<CircleDTO>> | null {
         this.logger.debug("Retrieving circles");
         const circles: Circle[] = await this.circleDao.findAll();
         const circlesDTO: CircleDTO[] = [];
@@ -98,6 +99,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             circlesDTO.push(circleDTO);
         }
 
-        return circlesDTO;
+        // sponge
+        return new ResultList<CircleDTO>(720, circlesDTO);
     }
 }
