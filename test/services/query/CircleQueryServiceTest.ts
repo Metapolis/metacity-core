@@ -9,6 +9,7 @@ import { Circle } from "../../../src/persistence/domain/Circle";
 import { Role } from "../../../src/common/enum/Role";
 import * as Chai from "chai";
 import { User } from "../../../src/persistence/domain/User";
+import { ResultList } from "../../../src/common/ResultList";
 
 @suite
 export class CircleQueryServiceTest extends AbstractTestService {
@@ -92,11 +93,11 @@ export class CircleQueryServiceTest extends AbstractTestService {
             .returns(() => Promise.resolve(circlesMock));
 
         /** O==||==assert=time==> */
-        const circlesDTO: CircleDTO[] = await circleQueryService.getCircles();
-        for ( let i: number = 0; i<2; i++ ) {
-            Chai.assert.equal(circlesDTO[i].getId(), circlesMock[i].getId());
-            Chai.assert.equal(circlesDTO[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());
-            Chai.assert.equal(circlesDTO[i].getName(), circlesMock[i].getName());
+        const circlesDTO: ResultList<CircleDTO> = await circleQueryService.getCircles();
+        for ( let i: number = 0; i < 2; i++ ) {
+            Chai.assert.equal(circlesDTO.results[i].getId(), circlesMock[i].getId());
+            Chai.assert.equal(circlesDTO.results[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());
+            Chai.assert.equal(circlesDTO.results[i].getName(), circlesMock[i].getName());
         }
     }
 

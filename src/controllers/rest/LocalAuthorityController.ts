@@ -54,7 +54,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * List circles
      */
     @Get("/:accessKey/circles")
-    public async listLocalAuthorityCirclesl(@RequestParam("accessKey") accessKey: string): Promise<CircleSummary[]> {
+    public async listLocalAuthorityCircles(@RequestParam("accessKey") accessKey: string): Promise<CircleSummary[]> {
         this.logger.debug("Begin get circles");
         const circlesDtoResultList: ResultList<CircleDTO> = await this.circleQueryService.getCircles();
         const circlesDTO: CircleDTO[] = circlesDtoResultList.results;

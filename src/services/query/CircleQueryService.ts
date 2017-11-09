@@ -38,5 +38,5 @@ export interface CircleQueryService {
      *
      * @returns DTOs of circles
      */
-    getCircles(): Promise<ResultList<CircleDTO>> | null;
+    getCircles(limit?: number): Promise<ResultList<CircleDTO>> | null;
 }

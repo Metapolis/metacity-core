@@ -82,7 +82,7 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     }
 
     /** Override */
-    public async getCircles(): Promise<ResultList<CircleDTO>> | null {
+    public async getCircles(limit: number = 720): Promise<ResultList<CircleDTO>> | null {
         this.logger.debug("Retrieving circles");
         const circles: Circle[] = await this.circleDao.findAll();
         const circlesDTO: CircleDTO[] = [];
@@ -100,7 +100,6 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             circlesDTO.push(circleDTO);
         }
 
-        // sponge
-        return new ResultList<CircleDTO>(720, circlesDTO);
+        return new ResultList<CircleDTO>(circlesDTO.length, circlesDTO);
     }
 }
