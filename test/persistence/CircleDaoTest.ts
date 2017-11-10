@@ -7,7 +7,7 @@ import { CircleDao} from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { Credential } from "../../src/persistence/domain/Credential";
-import { AbstractTestDao } from "./inversify/AbstractTestService";
+import { AbstractTestDao } from "./inversify/AbstractTestDao";
 
 @suite
 export class CircleDaoTest extends AbstractTestDao {
