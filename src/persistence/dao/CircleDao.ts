@@ -46,7 +46,7 @@ export interface CircleDao {
      *
      * @returns {boolean} true means localAuthority own circle
      */
-    isOwnedByLocalAuthority(circleId: number, accessKey: number): Promise<boolean>;
+    isOwnedByLocalAuthority(circleId: number, localAuthorityId: number): Promise<boolean>;
 
     /**
      * Delete specific circle
