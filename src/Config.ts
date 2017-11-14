@@ -51,6 +51,15 @@ export class Config {
     }
 
     /**
+     * Get application base path
+     *
+     * @returns {string}
+     */
+    public static getAppBasePath(): string {
+        return Config.properties.get("app.base_path");
+    }
+
+    /**
      * Get application log level
      *
      * @returns {string}

@@ -1,47 +1,35 @@
-import { LocalAuthorityDao } from "../LocalAuthorityDao";
-import { LocalAuthority } from "../../domain/LocalAuthority";
+import { CredentialDao } from "../CredentialDao";
+import { Credential } from "../../domain/Credential";
 import { Utils } from "../../../common/Utils";
 import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
 import { inject, injectable } from "inversify";
 
 /**
- * Implementation of {@link LocalAuthorityDao}
+ * Implementation of {@link CredentialDao}
  */
 @injectable()
-export class LocalAuthorityDaoImpl implements LocalAuthorityDao {
+export class CredentialDaoImpl implements CredentialDao {
 
     /**
-     * LocalAuthorityDaoImpl logger
+     * CredentialDaoImpl logger
      *
      * @type {winston.LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(LocalAuthorityDaoImpl.name);
+    private logger: LoggerInstance = Utils.createLogger(CredentialDaoImpl.name);
 
     /**
-     * LocalAuthority data access
+     * Credential data access
      */
-    @inject("LocalAuthorityRepository")
-    private localAuthorityRepository: TypeORM.Repository<LocalAuthority>;
-
-    /**
-     * Override
-     */
-    public async findById(id: number): Promise<LocalAuthority> | undefined {
-        this.logger.info("Retrieve localAuthority with identifier '%s'", id);
-
-        return await this.localAuthorityRepository.findOneById(id);
-    }
+    @inject("CredentialRepository")
+    private credentialRepository: TypeORM.Repository<Credential>;
 
     /**
      * Override
      */
-    public async findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined {
-        this.logger.debug("Retrieve local authority with credential access key '%s'", accessKey);
+    public async findByAccessKey(accessKey: string): Promise<Credential | undefined> {
+        this.logger.debug("Retrieve credential with access key '%s'", accessKey);
 
-        return await this.localAuthorityRepository.createQueryBuilder("la")
-            .innerJoin("la.credential", "cr")
-            .andWhere("cr.access_key = :accesskey", {accesskey: accessKey})
-            .getOne();
+        return await this.credentialRepository.findOneById(accessKey);
     }
 }

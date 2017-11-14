@@ -32,7 +32,6 @@ import { LocalAuthorityDao } from "./persistence/dao/LocalAuthorityDao";
 import { ContextApp } from "./ContextApp";
 import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQueryService";
 import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
-import { SecurityManager } from "./common/security/SecurityManager";
 import { Circle } from "./persistence/domain/Circle";
 import { CircleCommandService } from "./services/command/CircleCommandService";
 import { CircleCommandServiceImpl } from "./services/command/impl/CircleCommandServiceImpl";
@@ -51,6 +50,10 @@ import { DataSet } from "./persistence/domain/DataSet";
 import { UserQueryService } from "./services/query/UserQueryService";
 import { UserQueryServiceImpl } from "./services/query/impl/UserQueryServiceImpl";
 import methodOverride = require("method-override");
+import { UserControlManager } from "./common/security/impl/UserControlManager";
+import { ClientControlManager } from "./common/security/impl/ClientControlManager";
+import { CredentialDaoImpl } from "./persistence/dao/impl/CredentialDaoImpl";
+import { CredentialDao } from "./persistence/dao/CredentialDao";
 
 /**
  * The App.
@@ -178,7 +181,8 @@ export class App {
         this.logger.debug("Connect to database");
         await this.connectDB();
         // Bind security manager
-        this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
+        this.container.bind<UserControlManager>("UserControlManager").to(UserControlManager);
+        this.container.bind<ClientControlManager>("ClientControlManager").to(ClientControlManager);
 
         this.bindDao();
         this.bindCommands();
@@ -292,6 +296,7 @@ export class App {
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
         this.container.bind<LocalAuthorityDao>("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
+        this.container.bind<CredentialDao>("CredentialDao").to(CredentialDaoImpl);
     }
 
     /**

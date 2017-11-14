@@ -12,7 +12,8 @@
   "app": {
     "host" : "127.0.0.1",
     "port" : 3000,
-    "log_level": "debug"
+    "log_level": "debug",
+    "base_path": "/api"
   },
   "database": {
     "name": "metacity",

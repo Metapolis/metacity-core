@@ -5,8 +5,11 @@ import { ContextApp } from "../ContextApp";
 import { User } from "../persistence/domain/User";
 import { UserDao } from "../persistence/dao/UserDao";
 import { JWTPayload } from "./security/JWTToken";
-import { SecurityManager } from "./security/SecurityManager";
 import { IllegalArgumentError } from "./error/IllegalArgumentError";
+import { Config } from "../Config";
+import { ClientControlManager } from "./security/impl/ClientControlManager";
+import { UserControlManager } from "./security/impl/UserControlManager";
+import { timestamp } from "rxjs/operator/timestamp";
 
 /**
  * Check if user can access to resource
@@ -23,7 +26,7 @@ function UserControl(roles: string[]) {
             this.logger.info("Begin authentication");
             const userDao: UserDao = ContextApp.getContainer().get("UserDao") as UserDao;
 
-            // retrive the authorization in header
+            // retrieve the authorization in header
             const authorizationRaw: string = RequestAccessor.getRequest().headers.authorization;
             if (authorizationRaw === undefined) {
                 this.logger.error("Token not found");
@@ -47,7 +50,7 @@ function UserControl(roles: string[]) {
             const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
 
             // Retrieve the payload value
-            const authorizationElement: JWTPayload = await (ContextApp.getContainer().get("SecurityManager") as SecurityManager).authenticate(domain, jwtEncoded);
+            const authorizationElement: JWTPayload = await (ContextApp.getContainer().get("UserControlManager") as UserControlManager).authenticate(domain, jwtEncoded);
 
             const user: User = await userDao.findById(authorizationElement.id);
 
@@ -86,6 +89,9 @@ function ClientControl(roles: string[]) {
         // Add code before execute method
         descriptor.value = async function(...args: any[]) {
             // TODO check client control (signature)
+            const path = RequestAccessor.getRequest().path.substring(Config.getAppBasePath().length);
+            const timestamps = RequestAccessor.getRequest().get("x-timestamp");
+            await (ContextApp.getContainer().get("ClientControlManager") as ClientControlManager).authenticateClient(path, new Map(Object.entries(RequestAccessor.getRequest().query)), Number(timestamps));
             return originalMethod.apply(this, args);
         };
 
