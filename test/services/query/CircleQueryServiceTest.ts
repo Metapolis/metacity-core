@@ -64,6 +64,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
 
     @test
     private async testGetCircles(): Promise<void> {
+        const numberOfCircles: number = 2;
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
         const circlesMock: Circle[] = [];
@@ -94,7 +95,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
 
         /** O==||==assert=time==> */
         const circlesDTO: ResultList<CircleDTO> = await circleQueryService.getCircles();
-        for ( let i: number = 0; i < 2; i++ ) {
+        for ( let i: number = 0; i < numberOfCircles; i++ ) {
             Chai.assert.equal(circlesDTO.results[i].getId(), circlesMock[i].getId());
             Chai.assert.equal(circlesDTO.results[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());
             Chai.assert.equal(circlesDTO.results[i].getName(), circlesMock[i].getName());

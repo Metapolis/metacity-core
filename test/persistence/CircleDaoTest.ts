@@ -1,4 +1,3 @@
-
 import { suite, test } from "mocha-typescript";
 import * as Chai from "chai";
 import { ContextApp } from "../ContextApp";
@@ -57,6 +56,7 @@ export class CircleDaoTest extends AbstractTestDao {
 
     @test
     public async testFindAll(): Promise<void> {
+        const numberOfCircles: number = 2;
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
 
@@ -74,7 +74,7 @@ export class CircleDaoTest extends AbstractTestDao {
 
         const actualCircles: Circle[] = await circleDao.findAll();
 
-        for ( let i: number = 0; i < 2; i++ ) {
+        for ( let i: number = 0; i < numberOfCircles; i++ ) {
             Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());
             Chai.assert.equal(actualCircles[i].getName(), circles[i].getName());
             Chai.assert.deepEqual(actualCircles[i].getRoles(), circles[i].getRoles());

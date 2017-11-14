@@ -1,7 +1,7 @@
 {
   "elasticsearch": {
     "host":      "localhost:9200",
-    "log_level": "info"
+    "log_level": "trace"
   },
   "index_name_traffic": "traffic",
   "document_name_accident": "accident",
@@ -12,7 +12,7 @@
   "app": {
     "host" : "localhost",
     "port" : 3000,
-    "log_level": "debug"
+    "log_level": "trace"
   },
   "database": {
     "name": "metacity_test",
@@ -21,6 +21,7 @@
     "host": "127.0.0.1",
     "port": 5432,
     "drop_schema": true,
-    "auto_schema_sync": true
+    "auto_schema_sync": true,
+    "log_level": "trace"
   }
 }
