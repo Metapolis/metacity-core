@@ -50,6 +50,14 @@ import { CircleSummary } from "../../src/controllers/rest/model/circle/CircleSum
  */
 @suite
 export class LocalAuthorityControllerTest extends AbstractTestController {
+    private static circleCommandService: TypeMoq.IMock<CircleCommandService>;
+    private static circleQueryService: TypeMoq.IMock<CircleQueryService>;
+
+    public static async before(): Promise<void> {
+        AbstractTestController.before();
+        LocalAuthorityControllerTest.circleCommandService = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
+        LocalAuthorityControllerTest.circleQueryService = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
+    }
 
     /**
      * Test function create localAuthority circle
@@ -67,7 +75,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         circle.roles = ["Champion"];
         circle.defaultCircle = true;
 
-        (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).setup((instance: CircleCommandService) => instance.createCircle(TypeMoq.It.is((localAuthorityCircle: SaveCircleCommandDTO) => {
+        LocalAuthorityControllerTest.circleCommandService.setup((instance: CircleCommandService) => instance.createCircle(TypeMoq.It.is((localAuthorityCircle: SaveCircleCommandDTO) => {
             let ret = localAuthorityCircle.getRoles().length === circle.roles.length;
             for (let i = 0; i < circle.roles.length; i++) {
                 ret = ret && localAuthorityCircle.getRoles()[i] === circle.roles[i];
@@ -89,7 +97,6 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         await Request(opts).then((data: Labeled) => {
             console.log(data);
             Object.assign(actual, data);
-
         });
 
         Chai.assert.equal(actual.identifier, circleIdentifier, "Expected same identifier");
@@ -112,7 +119,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             json: true
         };
 
-        (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).setup(
+        LocalAuthorityControllerTest.circleCommandService.setup(
             (instance) => instance.createCircle(TypeMoq.It.isAny())
         ).throws(new IllegalArgumentError("ERROR"));
 
@@ -135,7 +142,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         circle.roles = ["Champion"];
         circle.defaultCircle = true;
 
-        (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
 
         const opts = {
             method: "PUT",
@@ -146,7 +153,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         await Request(opts);
 
-        (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).verify((instance: CircleCommandService) => instance.updateCircle(TypeMoq.It.is((localAuthorityCircle: UpdateCircleCommandDTO) => {
+        LocalAuthorityControllerTest.circleCommandService.verify((instance: CircleCommandService) => instance.updateCircle(TypeMoq.It.is((localAuthorityCircle: UpdateCircleCommandDTO) => {
             let ret = localAuthorityCircle.getRoles().length === circle.roles.length;
             for (let i = 0; i < circle.roles.length; i++) {
                 ret = ret && localAuthorityCircle.getRoles()[i] === circle.roles[i];
@@ -179,7 +186,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             json: true
         };
 
-        (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(false));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(false));
 
         let statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -188,8 +195,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
-        (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).setup((instance) => instance.updateCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
-        (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleCommandService.setup((instance) => instance.updateCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
 
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -203,7 +210,6 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testGetLocalAuthorityCircleDetails(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
-      // const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
 
@@ -228,8 +234,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             uri: AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             json: true
         };
-        (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
-        (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).setup((instance) => instance.getCircle(circleIdentifier)).returns(() => Promise.resolve(circleDTOMock));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.getCircle(circleIdentifier)).returns(() => Promise.resolve(circleDTOMock));
 
         const actual: CircleDetails = new CircleDetails();
         await Request(opts).then((data: Labeled) => {
@@ -252,7 +258,6 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testGetLocalAuthorityCircleDetailsError(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
-        const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
 
@@ -269,8 +274,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
-        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
-        circleQueryService.setup((instance) => instance.getCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.getCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
 
         opts.uri = AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             statusCode = HTTPStatusCodes.OK;
@@ -304,7 +309,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             uri: AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)),
             json: true
         };
-        (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).setup((instance) => instance.getCircles()).returns(() => Promise.resolve(circlesResultListMock));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.getCircles()).returns(() => Promise.resolve(circlesResultListMock));
 
         const actual: CircleSummary[] = [];
         await Request(opts).then((data: Labeled) => {
@@ -321,7 +326,6 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     @test
     public async testDeleteLocalAuthorityCircle(): Promise<void> {
         const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
-        const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
 
@@ -346,7 +350,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             uri: AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             json: true
         };
-        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
 
         const actual: CircleDetails = new CircleDetails();
         await Request(opts).then((data: Labeled) => {
@@ -354,17 +358,16 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             Object.assign(actual, data);
         });
 
-        (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).verify((instance) => instance.deleteCircle(circleIdentifier), TypeMoq.Times.exactly(1));
+        LocalAuthorityControllerTest.circleCommandService.verify((instance) => instance.deleteCircle(circleIdentifier), TypeMoq.Times.exactly(1));
     }
 
     @test
     public async testDeleteLocalAuthorityCircleError(): Promise<void> {
         const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
-        const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
 
-        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
 
         const opts = {
             method: "DELETE",
@@ -378,8 +381,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         });
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
-        circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
-        (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).setup((instance) => instance.deleteCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleCommandService.setup((instance) => instance.deleteCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
 
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
