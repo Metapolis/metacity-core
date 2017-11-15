@@ -77,8 +77,8 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async findAll(): Promise<Circle[]> | undefined {
-        this.logger.info("Retrieving all circles");
+    public async findAllBy(localAuthorityId: number): Promise<Circle[]> {
+        this.logger.info("Retrieving all circles owned by the local authority #%d", localAuthorityId);
 
         return await this.circleRepository.find();
     }

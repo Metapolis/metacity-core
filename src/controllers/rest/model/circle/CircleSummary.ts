@@ -2,7 +2,7 @@ import { Role } from "../../../../common/enum/Role";
 import { User } from "./User";
 
 /**
- * Contains basic circle information
+ * Contains summary of circle
  */
 export class CircleSummary {
 
@@ -20,10 +20,4 @@ export class CircleSummary {
      * When default circle is true, the circle is the circle by default
      */
     public defaultCircle: boolean;
-
-    /**
-     * Default constructor
-     */
-    constructor() {
-    }
 }

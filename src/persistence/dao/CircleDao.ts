@@ -55,17 +55,19 @@ export interface CircleDao {
     findById(id: number): Promise<Circle> | undefined;
 
     /**
-     * Retrieves all circles
+     * Retrieves all circles matching the filter
+     *
+     * @param {number} localAuthorityId localAuthority identifier
      *
      * @returns circles
      */
-    findAll(): Promise<Circle[]> | undefined;
+    findAllBy(localAuthorityId: number): Promise<Circle[]>;
 
     /**
      * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
-     * @param {number} accessKey localAuthority identifier
+     * @param {number} localAuthorityId localAuthority identifier
      *
      * @returns {boolean} true means localAuthority own circle
      */
