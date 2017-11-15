@@ -44,7 +44,7 @@ import { CircleSummary } from "./model/circle/CircleSummary";
 import { ResultList } from "../../common/ResultList";
 
 /**
- * API resources to local authorities services
+ * API resources to Local authorities services
  *
  * /api/local-authorities route
  *
@@ -77,20 +77,18 @@ export class LocalAuthorityController implements interfaces.Controller {
      * List circles
      */
     @Get("/:accessKey/circles")
-    public async listLocalAuthorityCircles(@RequestParam("accessKey") accessKey: string): Promise<CircleSummary[]> {
+    public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string): Promise<CircleSummary[]> {
         this.logger.debug("Begin get circles");
         const circlesDtoResultList: ResultList<CircleDTO> = await this.circleQueryService.getCircles();
-        const circlesDTO: CircleDTO[] = circlesDtoResultList.results;
         const circlesSummary: CircleSummary[] = [];
-        for (const circleDTO of circlesDTO) {
+        for (const circleDTO of circlesDtoResultList.results) {
             const circleSummary: CircleSummary = new CircleSummary();
             circleSummary.id = circleDTO.getId();
             circleSummary.name = circleDTO.getName();
             circleSummary.defaultCircle = circleDTO.isDefaultCircle();
-            /** please report to your local authorities */
             circlesSummary.push(circleSummary);
         }
-        this.logger.debug("Circles retrieved");
+        this.logger.debug("%i Circles retrieved", circlesDtoResultList.total);
         return circlesSummary;
     }
 
