@@ -74,22 +74,26 @@ export class LocalAuthorityController implements interfaces.Controller {
     private circleQueryService: CircleQueryService;
 
     /**
-     * List circles
+     * Find circles, filter result
+     *
+     * @param {string} localAuthorityId: localAuthority identifier
+     *
+     * @returns {Promise<CircleSummary[]>} list of circles with summary
      */
     @Get("/:accessKey/circles")
     public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string): Promise<CircleSummary[]> {
         this.logger.debug("Begin get circles");
-        const circlesDtoResultList: ResultList<CircleDTO> = await this.circleQueryService.getCircles();
-        const circlesSummary: CircleSummary[] = [];
-        for (const circleDTO of circlesDtoResultList.results) {
+        const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.getCircles();
+        const circleSummaries: CircleSummary[] = [];
+        for (const circleDTO of circlesResultList.results) {
             const circleSummary: CircleSummary = new CircleSummary();
             circleSummary.id = circleDTO.getId();
             circleSummary.name = circleDTO.getName();
             circleSummary.defaultCircle = circleDTO.isDefaultCircle();
-            circlesSummary.push(circleSummary);
+            circleSummaries.push(circleSummary);
         }
-        this.logger.debug("%i Circles retrieved", circlesDtoResultList.total);
-        return circlesSummary;
+        this.logger.debug("%i Circles retrieved", circlesResultList.total);
+        return circleSummaries;
     }
 
     /**
