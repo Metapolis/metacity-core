@@ -19,6 +19,8 @@ import { Role } from "../../src/common/enum/Role";
 import { CircleDTO } from "../../src/services/query/dto/circle/CircleDTO";
 import { UserDTO } from "../../src/services/query/dto/circle/UserDTO";
 import { TestUtils } from "../common/TestUtils";
+import { ResultList } from "../../src/common/ResultList";
+import { CircleSummary } from "../../src/controllers/rest/model/circle/CircleSummary";
 
 /**
  * All test for circle creation
@@ -190,7 +192,6 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{accesskey}/circles/{circleid}";
       // const circleQueryService: TypeMoq.IMock<CircleQueryService> = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
-        LocalAuthorityControllerTest.circleQueryService = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
 
@@ -266,6 +267,42 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
 
+    }
+
+    @test
+    public async testGetLocalAuthorityCirclesSummaries(): Promise<void> {
+        // 403 not enough rights => role is not high enough to update a circle
+        const path: string = "/api/local-authorities/{accesskey}/circles";
+        const resultTotal: number = 72;
+        const localAuthorityId: number = 5417;
+
+        const circlesDTOMock: CircleDTO[] = [];
+        for (let i = 0; i < resultTotal; i++) {
+            const circleDTOMock: CircleDTO = new CircleDTO();
+            circleDTOMock.setId(i);
+            circleDTOMock.setName(TestUtils.randomString(8));
+            circleDTOMock.setDefaultCircle(TestUtils.randomInt(2) === 1);
+            circlesDTOMock.push(circleDTOMock);
+        }
+        const circlesResultListMock: ResultList<CircleDTO> = new ResultList<CircleDTO>(resultTotal, circlesDTOMock);
+
+        const opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path.replace("{accesskey}", String(localAuthorityId)),
+            json: true
+        };
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.getCircles()).returns(() => Promise.resolve(circlesResultListMock));
+
+        const actual: CircleSummary[] = [];
+        await Request(opts).then((data: Labeled) => {
+            console.log(data);
+            Object.assign(actual, data);
+        });
+        for (let i = 0; i < resultTotal; i++) {
+            Chai.assert.equal(actual[i].id, circlesDTOMock[i].getId(), "Expected same id");
+            Chai.assert.equal(actual[i].name, circlesDTOMock[i].getName(), "Expected same name");
+            Chai.assert.equal(actual[i].defaultCircle, circlesDTOMock[i].isDefaultCircle(), "Expected same circle default");
+        }
     }
 
     @test
