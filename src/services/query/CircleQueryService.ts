@@ -23,6 +23,7 @@
 
 import { CircleDTO } from "./dto/circle/CircleDTO";
 import { ResultList } from "../../common/ResultList";
+import { FindCircleQuery } from "../../common/query/FindCircleQuery";
 
 /**
  * Contains method to perform circle query
@@ -62,5 +63,5 @@ export interface CircleQueryService {
      * @param {number} localAuthorityId id of the local authority that owns those circles
      * @returns {Promise<ResultList<CircleDTO>>} DTOs of circles
      */
-    findCircles(localAuthorityId: number): Promise<ResultList<CircleDTO>>;
+    findCircles(query: FindCircleQuery): Promise<ResultList<CircleDTO>>;
 }

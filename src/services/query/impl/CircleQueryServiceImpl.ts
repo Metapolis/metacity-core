@@ -32,6 +32,7 @@ import { CircleDTO } from "../dto/circle/CircleDTO";
 import { Role } from "../../../common/enum/Role";
 import { UserDTO } from "../dto/circle/UserDTO";
 import { ResultList } from "../../../common/ResultList";
+import { FindCircleQuery } from "../../../common/query/FindCircleQuery";
 
 /**
  * Implementation of {@link CircleQueryService}
@@ -105,9 +106,13 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     }
 
     /** Override */
-    public async findCircles(localAuthorityId: number): Promise<ResultList<CircleDTO>> {
+    public async findCircles(query: FindCircleQuery): Promise<ResultList<CircleDTO>> {
         this.logger.debug("Retrieving circles");
-        const circles: Circle[] = await this.circleDao.findAllBy(localAuthorityId);
+        Utils.checkArgument(query != null, "Query cannot be null");
+        Utils.checkArgument(query.getLocalAuthorityId() != null, "LocalAuthorityId must be set");
+        Utils.checkArgument(query.getLocalAuthorityId() >= 0, "LocalAuthorityId cannot be negative");
+
+        const circles: Circle[] = await this.circleDao.findAllBy(query.getLocalAuthorityId());
         const circlesDTO: CircleDTO[] = [];
         if (circles.length === 0) {
             this.logger.debug("Could not retrieve any circle");
