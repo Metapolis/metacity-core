@@ -42,6 +42,7 @@ import { CircleDTO } from "../../services/query/dto/circle/CircleDTO";
 import { User } from "./model/circle/User";
 import { CircleSummary } from "./model/circle/CircleSummary";
 import { ResultList } from "../../common/ResultList";
+import { FindCircleQuery } from "../../common/query/FindCircleQuery";
 
 /**
  * API resources to Local authorities services
@@ -83,7 +84,12 @@ export class LocalAuthorityController implements interfaces.Controller {
     @Get("/:localauthorityid/circles")
     public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string): Promise<ResultList<CircleSummary>> {
         this.logger.debug("Begin get circles");
-        const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(Number(localAuthorityId));
+        const query: FindCircleQuery = new FindCircleQuery();
+        query.setLocalAuthorityId(Number(localAuthorityId));
+        query.setLimit(100);
+        query.setOffset(0);
+
+        const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
         const circleSummaries: CircleSummary[] = [];
         for (const circleDTO of circlesResultList.results) {
             const circleSummary: CircleSummary = new CircleSummary();

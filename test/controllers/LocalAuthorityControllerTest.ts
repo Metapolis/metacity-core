@@ -44,6 +44,7 @@ import { UserDTO } from "../../src/services/query/dto/circle/UserDTO";
 import { TestUtils } from "../common/TestUtils";
 import { ResultList } from "../../src/common/ResultList";
 import { CircleSummary } from "../../src/controllers/rest/model/circle/CircleSummary";
+import { FindCircleQuery } from "../../src/common/query/FindCircleQuery";
 
 /**
  * All test for circle creation
@@ -293,6 +294,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/{localauthorityid}/circles";
         const resultTotal: number = 72;
         const localAuthorityId: number = 5417;
+        const limit: number = 10;
+        const offset: number = 0;
 
         const circlesDTOMock: CircleDTO[] = [];
         for (let i = 0; i < resultTotal; i++) {
@@ -309,7 +312,15 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
             json: true
         };
-        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.findCircles(localAuthorityId)).returns(() => Promise.resolve(circlesResultListMock));
+
+        const mockQuery: FindCircleQuery = new FindCircleQuery();
+        mockQuery.setLocalAuthorityId(localAuthorityId);
+        mockQuery.setLimit(limit);
+        mockQuery.setOffset(offset);
+
+        LocalAuthorityControllerTest.circleQueryService.
+            setup((instance) => instance.findCircles(mockQuery)).
+            returns(() => Promise.resolve(circlesResultListMock));
 
         const actual: CircleSummary[] = [];
         await Request(opts).then((data: Labeled) => {
