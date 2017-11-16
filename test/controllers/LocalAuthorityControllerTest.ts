@@ -309,7 +309,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
             json: true
         };
-        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.getCircles()).returns(() => Promise.resolve(circlesResultListMock));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.findCircles(localAuthorityId)).returns(() => Promise.resolve(circlesResultListMock));
 
         const actual: CircleSummary[] = [];
         await Request(opts).then((data: Labeled) => {

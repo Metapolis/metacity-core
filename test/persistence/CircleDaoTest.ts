@@ -78,10 +78,11 @@ export class CircleDaoTest extends AbstractTestDao {
     }
 
     @test
-    public async testFindAll(): Promise<void> {
+    public async testFindAllBy(): Promise<void> {
         const numberOfCircles: number = 2;
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
+        const localAuthorityId: number = 1;
 
         const circles: Circle[] = [];
         circles.push(new Circle());
@@ -95,7 +96,7 @@ export class CircleDaoTest extends AbstractTestDao {
 
         await circleRepository.save(circles);
 
-        const actualCircles: Circle[] = await circleDao.findAll();
+        const actualCircles: Circle[] = await circleDao.findAllBy(localAuthorityId);
 
         for ( let i: number = 0; i < numberOfCircles; i++ ) {
             Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());

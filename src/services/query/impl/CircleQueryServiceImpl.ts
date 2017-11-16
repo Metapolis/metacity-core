@@ -105,13 +105,13 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     }
 
     /** Override */
-    public async getCircles(limit: number = 720): Promise<ResultList<CircleDTO>> | null {
+    public async findCircles(localAuthorityId: number): Promise<ResultList<CircleDTO>> {
         this.logger.debug("Retrieving circles");
-        const circles: Circle[] = await this.circleDao.findAll();
+        const circles: Circle[] = await this.circleDao.findAllBy(localAuthorityId);
         const circlesDTO: CircleDTO[] = [];
-        if (circles === undefined) {
+        if (circles.length === 0) {
             this.logger.debug("Could not retrieve any circle");
-            return null;
+            return new ResultList<CircleDTO>(0, []);
         }
 
         for (const circle of circles) {
@@ -119,7 +119,6 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             circleDTO.setId(circle.getId());
             circleDTO.setName(circle.getName());
             circleDTO.setDefaultCircle(circle.isDefaultCircle());
-            /** please report to your local authorities */
             circlesDTO.push(circleDTO);
         }
 

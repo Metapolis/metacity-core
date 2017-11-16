@@ -83,7 +83,7 @@ export class LocalAuthorityController implements interfaces.Controller {
     @Get("/:localauthorityid/circles")
     public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string): Promise<ResultList<CircleSummary>> {
         this.logger.debug("Begin get circles");
-        const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.getCircles();
+        const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(Number(localAuthorityId));
         const circleSummaries: CircleSummary[] = [];
         for (const circleDTO of circlesResultList.results) {
             const circleSummary: CircleSummary = new CircleSummary();
