@@ -111,8 +111,12 @@ export class CircleQueryServiceImpl implements CircleQueryService {
         Utils.checkArgument(query != null, "Query cannot be null");
         Utils.checkArgument(query.getLocalAuthorityId() != null, "LocalAuthorityId must be set");
         Utils.checkArgument(query.getLocalAuthorityId() >= 0, "LocalAuthorityId cannot be negative");
+        Utils.checkArgument(query.getOffset() != null, "Offset must be set");
+        Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
+        Utils.checkArgument(query.getLimit() != null, "Limit must be set");
+        Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
 
-        const circles: Circle[] = await this.circleDao.findAllBy(query.getLocalAuthorityId());
+        const circles: Circle[] = await this.circleDao.findBy(query);
         const circlesDTO: CircleDTO[] = [];
         if (circles.length === 0) {
             this.logger.debug("Could not retrieve any circle");

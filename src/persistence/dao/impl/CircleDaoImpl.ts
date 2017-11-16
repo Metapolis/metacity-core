@@ -27,6 +27,7 @@ import { Utils } from "../../../common/Utils";
 import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
 import { inject, injectable } from "inversify";
+import { FindCircleQuery } from "../../../common/query/FindCircleQuery";
 
 /**
  * Implementation of {@link CircleDao}
@@ -77,10 +78,18 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async findAllBy(localAuthorityId: number): Promise<Circle[]> {
-        this.logger.info("Retrieving all circles owned by the local authority #%d", localAuthorityId);
-
-        return await this.circleRepository.find();
+    public async findBy(query: FindCircleQuery): Promise<Circle[]> {
+        this.logger.info("Retrieving all circles owned by the local authority #%d", query.getLocalAuthorityId());
+        let circles: Promise<Circle[]>;
+        circles = this.circleRepository.createQueryBuilder("circle")
+            .innerJoinAndSelect("circle.localAuthority", "localAuthority")
+            .where("(circle.localAuthority.id = :localAuthority)")
+            .orderBy("circle.id", "DESC")
+            .skip(query.getOffset())
+            .take(query.getLimit())
+            .setParameters({ localAuthority: query.getLocalAuthorityId() })
+            .getMany();
+        return circles;
     }
 
     /**

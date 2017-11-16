@@ -22,6 +22,7 @@
  */
 
 import { Circle } from "../domain/Circle";
+import { FindCircleQuery } from "../../common/query/FindCircleQuery";
 
 /**
  * Data Access Object of {@link CircleDao}
@@ -61,7 +62,7 @@ export interface CircleDao {
      *
      * @returns circles
      */
-    findAllBy(localAuthorityId: number): Promise<Circle[]>;
+    findBy(query: FindCircleQuery): Promise<Circle[]>;
 
     /**
      * Check if circle is owned by localAuthority
