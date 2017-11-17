@@ -61,7 +61,7 @@ export class Utils {
                         const logProperties: string[] = [];
                         logProperties.push(options.timestamp(),
                             options.level.toUpperCase(),
-                            classReference, options.timestamp(),
+                            classReference,
                             (options.message ? options.message : ""),
                             (options.meta && Object.keys(options.meta).length ? "\n\t" + JSON.stringify(options.meta) : "" ));
                         return logProperties.join(" ");

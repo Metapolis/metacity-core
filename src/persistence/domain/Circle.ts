@@ -85,7 +85,7 @@ export class Circle {
     private roleArray: string[];
 
     /**
-     * Method called when client entity is loaded (Because only one method annotated by @PostLoad is authorized)
+     * Method called when client entity is loaded (Because only one method annotated by @AfterLoad is authorized)
      */
     @AfterLoad()
     private postLoad(): void {

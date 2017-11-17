@@ -20,6 +20,7 @@
  * @link       https://bitbucket.org/metapolis/metacity-core
  * @since      0.2.0
  */
+
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../Utils";
@@ -66,13 +67,14 @@ export class ClientControlManager {
     /**
      * Authenticate client
      *
-     * @param path path of query
-     * @param parameterMap params of query
-     * @param timestamp timestamp query
+     * @param {string} path path of query
+     * @param {Map<string, string | string[]>} parameterMap params of query
+     * @param {number} timestamp timestamp query
+     * @param {string} method method query
+     * @returns {Promise<string>}
      */
-    public async authenticateClient(path: string, parameterMap: Map<string, string | string[]>, timestamp: number): Promise<string> {
-        this.logger.error(String(parameterMap));
-        Utils.isNullOrEmpty(path);
+    public async authenticateClient(path: string, parameterMap: Map<string, string | string[]>, timestamp: number, method: string): Promise<string[]> {
+        Utils.checkArgument(!Utils.isNullOrEmpty(path));
         Utils.checkArgument(!isNullOrUndefined(parameterMap));
         Utils.checkArgument(parameterMap.has(ClientControlManager.CLIENT_ACCESS_KEY), "Access key param not found");
         Utils.checkArgument(parameterMap.has(ClientControlManager.CLIENT_SIGNATURE), "signature param not found");
@@ -89,14 +91,14 @@ export class ClientControlManager {
         }
 
         const signature: string = parameterMap.get(ClientControlManager.CLIENT_SIGNATURE) as string;
-        const expectedSignature = this.getExpectedSignature(credential.getAccessKey(), credential.getSecret(), path, timestamp, parameterMap);
+        const expectedSignature = this.getExpectedSignature(credential.getAccessKey(), credential.getSecret(), path, timestamp, method, parameterMap);
         if (expectedSignature !== signature) {
             throw new AccessDeniedError("Invalid signature. Found '" + signature + "' instead of '" + expectedSignature + "'");
         }
 
         this.logger.debug("Authentication successful for client '%s'", credential.getAccessKey());
 
-        return "";
+        return credential.getRoles();
     }
 
     /**
@@ -106,9 +108,10 @@ export class ClientControlManager {
      * @param {string} secret credential's secret
      * @param {string} path path of query
      * @param {number} timestamp call of query
+     * @param {string} method method query
      * @param {Map<string, string | string[]>} parameterMap parameters of query
      */
-    private getExpectedSignature(accessKey: string, secret: string, path: string, timestamp: number, parameterMap: Map<string, string | string[]>): string {
+    private getExpectedSignature(accessKey: string, secret: string, path: string, timestamp: number, method: string, parameterMap: Map<string, string | string[]>): string {
         let signature: string = "";
         signature = CryptoJS.SHA512(signature.concat(path, ":", accessKey, ":", secret)).toString();
 
@@ -142,6 +145,6 @@ export class ClientControlManager {
             }
         }
 
-        return CryptoJS.SHA512(signature).toString();
+        return CryptoJS.SHA512(method + ":" + String(timestamp) + ":" + signature).toString();
     }
 }

@@ -21,7 +21,7 @@
  * @since      0.2.0
  */
 
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { AfterLoad, Column, Entity, PrimaryColumn } from "typeorm";
 
 /**
  * Credential use to authenticate element on api
@@ -40,6 +40,25 @@ export class Credential {
      */
     @Column({nullable: false, length: 250})
     private secret: string;
+
+    /**
+     * Circle's comma separated roles
+     */
+    @Column({type: "text", nullable: false})
+    private roles: string;
+
+    /**
+     * Transient role array
+     */
+    private roleArray: string[];
+
+    /**
+     * Method called when client entity is loaded (Because only one method annotated by @AfterLoad is authorized)
+     */
+    @AfterLoad()
+    private postLoad(): void {
+        this.initRoleArray(this.roles);
+    }
 
     /**
      * Getter secret
@@ -75,5 +94,33 @@ export class Credential {
      */
     public setAccessKey(accessKey: string): void {
         this.accessKey = accessKey;
+    }
+
+    /**
+     * Set roles for all fields
+     *
+     * @param roles array of roles
+     */
+    public setRoles(roles: string[]): void {
+        this.roles = roles.join(",");
+        this.roleArray = roles;
+    }
+
+    /**
+     * Get roles for all fields
+     *
+     * @return {string[]}
+     */
+    public getRoles(): string[] {
+        return this.roleArray;
+    }
+
+    /**
+     * Init role array with roles in string
+     *
+     * @param roles roles separate by comma
+     */
+    private initRoleArray(roles: string): void {
+        this.roleArray = roles.split(",");
     }
 }

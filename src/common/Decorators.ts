@@ -111,10 +111,18 @@ function ClientControl(roles: string[]) {
 
         // Add code before execute method
         descriptor.value = async function(...args: any[]) {
-            // TODO check client control (signature)
-            const path = RequestAccessor.getRequest().path.substring(Config.getAppBasePath().length);
-            const timestamps = RequestAccessor.getRequest().get("x-timestamp");
-            await (ContextApp.getContainer().get("ClientControlManager") as ClientControlManager).authenticateClient(path, new Map(Object.entries(RequestAccessor.getRequest().query)), Number(timestamps));
+            const path: string = RequestAccessor.getRequest().path.substring(Config.getAppBasePath().length);
+            const timestamps: number = Number(RequestAccessor.getRequest().get("x-timestamp"));
+            const method: string = RequestAccessor.getRequest().method;
+
+            const clientRoles: string[] = await (ContextApp.getContainer().get("ClientControlManager") as ClientControlManager).authenticateClient(path, new Map(Object.entries(RequestAccessor.getRequest().query)), Number(timestamps), method);
+            for (const role of roles) {
+                if (clientRoles.indexOf(role) === -1) {
+                    this.logger.error("Client cannot access to this resource");
+                    throw new AccessDeniedError("Access denied");
+                }
+            }
+
             return originalMethod.apply(this, args);
         };
 
