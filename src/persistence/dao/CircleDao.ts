@@ -58,9 +58,9 @@ export interface CircleDao {
     /**
      * Retrieves all circles matching the filter
      *
-     * @param {number} localAuthorityId localAuthority identifier
+     * @param {FindCircleQuery} query contains circle search query
      *
-     * @returns circles
+     * @returns {Promise<Circle[]>} circles
      */
     findBy(query: FindCircleQuery): Promise<Circle[]>;
 

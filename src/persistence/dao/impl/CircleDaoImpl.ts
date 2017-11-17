@@ -79,16 +79,18 @@ export class CircleDaoImpl implements CircleDao {
      * Override
      */
     public async findBy(query: FindCircleQuery): Promise<Circle[]> {
-        this.logger.info("Retrieving all circles owned by the local authority #%d", query.getLocalAuthorityId());
         let circles: Promise<Circle[]>;
-        circles = this.circleRepository.createQueryBuilder("circle")
-            .innerJoinAndSelect("circle.localAuthority", "localAuthority")
-            .where("(circle.localAuthority.id = :localAuthority)")
-            .orderBy("circle.id", "DESC")
-            .skip(query.getOffset())
-            .take(query.getLimit())
-            .setParameters({ localAuthority: query.getLocalAuthorityId() })
-            .getMany();
+        if (query.getLocalAuthorityId() !== null && query.getLocalAuthorityId() >= 0) {
+            this.logger.info("Retrieving all circles owned by the local authority #%d", query.getLocalAuthorityId());
+            circles = this.circleRepository.createQueryBuilder("circle")
+                .innerJoinAndSelect("circle.localAuthority", "localAuthority")
+                .where("(circle.localAuthority.id = :localAuthority)")
+                .orderBy("circle.id", "DESC")
+                .skip(query.getOffset())
+                .take(query.getLimit())
+                .setParameters({ localAuthority: query.getLocalAuthorityId() })
+                .getMany();
+        }
         return circles;
     }
 

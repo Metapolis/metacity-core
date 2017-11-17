@@ -83,6 +83,7 @@ export class CircleDaoTest extends AbstractTestDao {
         const numberOfCircles: number = 2;
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
         const localAuthorityId: number = 1;
 
         const circles: Circle[] = [];
@@ -95,7 +96,13 @@ export class CircleDaoTest extends AbstractTestDao {
         circles[1].setRoles(["Spooky skeleton"]);
         circles[1].setDefaultCircle(true);
 
-        await circleRepository.save(circles);
+        const localAuthorities: LocalAuthority[] = [];
+        localAuthorities.push(new LocalAuthority());
+        localAuthorities[0].setId(localAuthorityId);
+        localAuthorities[0].setName("police");
+        localAuthorities[0].setCircles(circleRepository.save(circles));
+
+        await localAuthorityRepository.save(localAuthorities);
 
         const query: FindCircleQuery = new FindCircleQuery();
         query.setLocalAuthorityId(localAuthorityId);
