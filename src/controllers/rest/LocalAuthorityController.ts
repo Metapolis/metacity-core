@@ -109,12 +109,12 @@ export class LocalAuthorityController implements interfaces.Controller {
      * Create a circle
      *
      * @param {SaveCircle} circle to create
-     * @param {string} accessKey :  localAuthority identifier
+     * @param {string} localAuthorityId :  localAuthority identifier
      *
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
-    @Post("/:accessKey/circles")
-    public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
+    @Post("/:localauthorityid/circles")
+    public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: string): Promise<NumberIdentifier> {
 
         // We don't verify if localAuthority exists
         // It will be done with @secured
@@ -125,7 +125,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         saveCircleCommandDTO.setName(circle.name);
         saveCircleCommandDTO.setRoles(circle.roles);
         saveCircleCommandDTO.setMembers(circle.members);
-        saveCircleCommandDTO.setAccessKey(accessKey);
+        saveCircleCommandDTO.setAccessKey(localAuthorityId);
 
         const circleIdentifier: number = await this.circleCommandService.createCircle(saveCircleCommandDTO);
 
@@ -136,12 +136,12 @@ export class LocalAuthorityController implements interfaces.Controller {
      * Update specific circle
      *
      * @param {SaveCircle} circle new values for circle
-     * @param {string} accessKey localAuthority identifier
+     * @param {string} localAuthorityId localAuthority identifier
      * @param {number} circleId circle identifier
      * @param {Express.Response} res Response to set 204
      */
-    @Put("/:accessKey/circles/:circleid")
-    public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
+    @Put("/:localauthorityid/circles/:circleid")
+    public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
 
@@ -158,7 +158,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         updateCircleCommandDTO.setName(circle.name);
         updateCircleCommandDTO.setRoles(circle.roles);
         updateCircleCommandDTO.setMembers(circle.members);
-        updateCircleCommandDTO.setAccessKey(accessKey);
+        updateCircleCommandDTO.setAccessKey(localAuthorityId);
         updateCircleCommandDTO.setId(circleIdNumber);
 
         await this.circleCommandService.updateCircle(updateCircleCommandDTO);
