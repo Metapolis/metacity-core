@@ -22,8 +22,8 @@
  */
 
 import {
-    Controller, Delete, Get, interfaces, Post, Put, RequestBody, RequestParam,
-    Response
+    Controller, Delete, Get, interfaces, Post, Put, QueryParam, RequestBody,
+    RequestParam, Response
 } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
@@ -82,7 +82,10 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @returns {Promise<ResultList<CircleSummary>>} list of circles with summary
      */
     @Get("/:localauthorityid/circles")
-    public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string, @RequestParam("limit") limit: string, @RequestParam("offset") offset: string): Promise<ResultList<CircleSummary>> {
+    public async findLocalAuthorityCircles(
+        @RequestParam("localauthorityid") localAuthorityId: string,
+        @QueryParam("limit") limit: string,
+        @QueryParam("offset") offset: string): Promise<ResultList<CircleSummary>> {
         this.logger.debug("Begin get circles");
         const query: FindCircleQuery = new FindCircleQuery();
         query.setLocalAuthorityId(Number(localAuthorityId));

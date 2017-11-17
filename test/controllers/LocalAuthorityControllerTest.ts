@@ -318,9 +318,17 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         mockQuery.setLimit(limit);
         mockQuery.setOffset(offset);
 
+        // LocalAuthorityControllerTest.circleQueryService.
+        //     setup((instance) => instance.findCircles(mockQuery)).
+        //     returns(() => Promise.resolve(circlesResultListMock));
         LocalAuthorityControllerTest.circleQueryService.
-            setup((instance) => instance.findCircles(mockQuery)).
-            returns(() => Promise.resolve(circlesResultListMock));
+        setup((instance) => instance.findCircles(TypeMoq.It.is((query: FindCircleQuery) => {
+            let ret = query.getLimit() === mockQuery.getLimit();
+            ret = ret && query.getOffset() === mockQuery.getOffset();
+            ret = ret && query.isSet() === false;
+
+            return ret;
+        }))).returns(() => Promise.resolve(circlesResultListMock));
 
         const actual: CircleSummary[] = [];
         await Request(opts).then((data: Labeled) => {
