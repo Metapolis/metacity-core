@@ -30,6 +30,7 @@ import { Circle } from "../../src/persistence/domain/Circle";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { Credential } from "../../src/persistence/domain/Credential";
 import { AbstractTestDao } from "./inversify/AbstractTestDao";
+import { FindCircleQuery } from "../../src/common/query/FindCircleQuery";
 
 @suite
 export class CircleDaoTest extends AbstractTestDao {
@@ -78,7 +79,7 @@ export class CircleDaoTest extends AbstractTestDao {
     }
 
     @test
-    public async testFindAllBy(): Promise<void> {
+    public async testFindBy(): Promise<void> {
         const numberOfCircles: number = 2;
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
@@ -96,7 +97,11 @@ export class CircleDaoTest extends AbstractTestDao {
 
         await circleRepository.save(circles);
 
-        const actualCircles: Circle[] = await circleDao.findAllBy(localAuthorityId);
+        const query: FindCircleQuery = new FindCircleQuery();
+        query.setLocalAuthorityId(localAuthorityId);
+        query.setLimit(numberOfCircles);
+        query.setOffset(0);
+        const actualCircles: Circle[] = await circleDao.findBy(query);
 
         for ( let i: number = 0; i < numberOfCircles; i++ ) {
             Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());

@@ -33,6 +33,7 @@ import { Role } from "../../../src/common/enum/Role";
 import * as Chai from "chai";
 import { User } from "../../../src/persistence/domain/User";
 import { ResultList } from "../../../src/common/ResultList";
+import { FindCircleQuery } from "../../../src/common/query/FindCircleQuery";
 
 @suite
 export class CircleQueryServiceTest extends AbstractTestService {
@@ -86,7 +87,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testGetCircles(): Promise<void> {
+    private async testFindCircles(): Promise<void> {
         const numberOfCircles: number = 2;
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
@@ -114,11 +115,15 @@ export class CircleQueryServiceTest extends AbstractTestService {
         (await circlesMock[1].getUsers()).push(userJhon);
 
         // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
-        circleDaoMock.setup((instance) => instance.findAllBy(localAuthorityId))
+        const query: FindCircleQuery = new FindCircleQuery();
+        query.setLocalAuthorityId(localAuthorityId);
+        query.setLimit(numberOfCircles);
+        query.setOffset(0);
+        circleDaoMock.setup((instance) => instance.findBy(query))
             .returns(() => Promise.resolve(circlesMock));
 
         /** O==||==assert=time==> */
-        const circlesDTO: ResultList<CircleDTO> = await circleQueryService.findCircles(localAuthorityId);
+        const circlesDTO: ResultList<CircleDTO> = await circleQueryService.findCircles(query);
         for ( let i: number = 0; i < numberOfCircles; i++ ) {
             Chai.assert.equal(circlesDTO.results[i].getId(), circlesMock[i].getId());
             Chai.assert.equal(circlesDTO.results[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());

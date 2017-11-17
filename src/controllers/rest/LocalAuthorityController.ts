@@ -82,12 +82,12 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @returns {Promise<ResultList<CircleSummary>>} list of circles with summary
      */
     @Get("/:localauthorityid/circles")
-    public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string): Promise<ResultList<CircleSummary>> {
+    public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: string, @RequestParam("limit") limit: string, @RequestParam("offset") offset: string): Promise<ResultList<CircleSummary>> {
         this.logger.debug("Begin get circles");
         const query: FindCircleQuery = new FindCircleQuery();
         query.setLocalAuthorityId(Number(localAuthorityId));
-        query.setLimit(100);
-        query.setOffset(0);
+        query.setLimit(Number(offset));
+        query.setOffset(Number(offset));
 
         const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
         const circleSummaries: CircleSummary[] = [];

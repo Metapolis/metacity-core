@@ -291,7 +291,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     @test
     public async testGetLocalAuthorityCirclesSummaries(): Promise<void> {
         // 403 not enough rights => role is not high enough to update a circle
-        const path: string = "/api/local-authorities/{localauthorityid}/circles";
+        const path: string = "/api/local-authorities/{localauthorityid}/circles?limit={limit}&offset={offset}";
         const resultTotal: number = 72;
         const localAuthorityId: number = 5417;
         const limit: number = 10;
@@ -309,7 +309,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         const opts = {
             method: "GET",
-            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{limit}", String(limit)).replace("{offset}", String(offset)),
             json: true
         };
 
