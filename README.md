@@ -45,29 +45,29 @@ We aim to maintain a 100% code coverage on the project, every contribution shoul
 
 ### Installation ###
 
-*Reuirements* :
+**Reuirements** :
 
-    NodeJS : ```8.1.2```
+NodeJS : ```8.1.2```
 
-    npm : ```5.0.3```
+npm : ```5.0.3```
 
-*Installation command* :
+**Installation command** :
 
-    ```shell
-    npm install 
-    ```
+```shell
+npm install 
+```
 
-*Build command* : 
+**Build command** : 
 
-    ```shell
-    npm run build
-    ```
+```shell
+npm run build
+```
 
-*Run command* :
+**Run command** :
 
-    ```shell
-    npm start
-    ```
+```shell
+npm start
+```
 
 #### 
 
