@@ -89,7 +89,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         this.logger.debug("Begin get circles");
         const query: FindCircleQuery = new FindCircleQuery();
         query.setLocalAuthorityId(Number(localAuthorityId));
-        query.setLimit(Number(offset));
+        query.setLimit(Number(limit));
         query.setOffset(Number(offset));
 
         const circlesResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
