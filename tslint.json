@@ -14,10 +14,6 @@
       true,
       300
     ],
-    "max-file-line-count": [
-      true,
-      500
-    ],
     "ordered-imports": false,
     "typedef": true,
     "member-ordering": [

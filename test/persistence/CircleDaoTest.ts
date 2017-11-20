@@ -91,19 +91,19 @@ export class CircleDaoTest extends AbstractTestDao {
         const circles: Circle[] = [];
         circles.push(new Circle());
         circles[0].setId(5);
-        circles[0].setName("o");
+        circles[0].setName("Bowman");
         circles[0].setRoles(["Muse of nanchos"]);
         circles[0].setDefaultCircle(false);
         circles.push(new Circle());
-        circles[1].setId(10);
-        circles[1].setName("o");
-        circles[1].setRoles(["Muse of nachos"]);
-        circles[1].setDefaultCircle(false);
+        circles[1].setId(20);
+        circles[1].setName("C Ness is Sans");
+        circles[1].setRoles(["Spooky skeleton"]);
+        circles[1].setDefaultCircle(true);
         circles.push(new Circle());
-        circles[2].setId(20);
-        circles[2].setName("Ness is Sans");
-        circles[2].setRoles(["Spooky skeleton"]);
-        circles[2].setDefaultCircle(true);
+        circles[2].setId(10);
+        circles[2].setName("o");
+        circles[2].setRoles(["Muse of nachos"]);
+        circles[2].setDefaultCircle(false);
 
         const saveCircles: Promise<Circle[]> = circleRepository.save(circles);
 
@@ -124,14 +124,11 @@ export class CircleDaoTest extends AbstractTestDao {
         const actualLocalAuthority: LocalAuthority = await localAuthorityDao.findById(localAuthorityId);
 
         Chai.assert.equal(actualLocalAuthority.getName(), localAuthorities[0].getName());
-        let descIterator: number = numberOfCircles;
         for ( let i: number = 0; i < numberOfCircles; i++ ) {
-            // circles are in DESC order (LIFO: Last In First Out)
-            descIterator -= 1;
-            Chai.assert.equal(actualCircles[descIterator].getId(), circles[i].getId());
-            Chai.assert.equal(actualCircles[descIterator].getName(), circles[i].getName());
-            Chai.assert.deepEqual(actualCircles[descIterator].getRoles(), circles[i].getRoles());
-            Chai.assert.equal(actualCircles[descIterator].isDefaultCircle(), circles[i].isDefaultCircle());
+            Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());
+            Chai.assert.equal(actualCircles[i].getName(), circles[i].getName());
+            Chai.assert.deepEqual(actualCircles[i].getRoles(), circles[i].getRoles());
+            Chai.assert.equal(actualCircles[i].isDefaultCircle(), circles[i].isDefaultCircle());
         }
     }
 

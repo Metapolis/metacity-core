@@ -85,7 +85,7 @@ export class CircleDaoImpl implements CircleDao {
             circles = this.circleRepository.createQueryBuilder("circle")
                 .innerJoinAndSelect("circle.localAuthority", "localAuthority")
                 .where("(circle.localAuthority.id = :localAuthority)")
-                .orderBy("circle.id", "DESC")
+                .orderBy("circle.name", "ASC")
                 .skip(query.getOffset())
                 .take(query.getLimit())
                 .setParameters({ localAuthority: query.getLocalAuthorityId() })
