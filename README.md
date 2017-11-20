@@ -16,7 +16,7 @@ Next release
 In order to monitor application metrics, Metacity Core provides exhaustive activity logs in the following format :
 ``` {date - ISO8601} {log-level} {class} {message} ```
 
-Logs can be exported thanks to ```Winston``` library in a file or in an http stream.
+Logs can be exported thanks to ```Winston``` library in a file or in a http stream.
 
 ## Architecture ##
 
@@ -172,27 +172,27 @@ from the main (upstream) repository:
 
 * Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
-    ```shell
-    git push origin --delete my-fix-branch
-    ```
+```shell
+git push origin --delete my-fix-branch
+```
 
 * Check out the master branch:
 
-    ```shell
-    git checkout master -f
-    ```
+```shell
+git checkout master -f
+```
 
 * Delete the local branch:
 
-    ```shell
-    git branch -D my-fix-branch
-    ```
+```shell
+git branch -D my-fix-branch
+```
 
 * Update your master with the latest upstream version:
 
-    ```shell
-    git pull --ff upstream master
-    ```
+```shell
+git pull --ff upstream master
+```
 
 ## License ##
 
