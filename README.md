@@ -4,7 +4,7 @@ Metacity core is a RESTful API to get data from stack data powered by Metapolis.
 
 ### Features ###
 
-Metacity Core provides a data access service linked to Metapolisâ€™ Big Data platform. The latter is accesible through a Rest API whose documentation is here.
+Metacity Core provides a data access service linked to Metapolis’ Big Data platform. The latter is accesible through a Rest API whose documentation is here.
 
 
 #### Security ####
@@ -24,14 +24,14 @@ Metacity Core provides a framework to develop object oriented Rest API resources
 
 Metacity Core settled a NodeJS architecture that adheres to the OOP and SOLID principles. The architecture also benefits from previous experiences on other OOP languages.
 
-To enforce this architecture, we used concepts like *dependancy injection* or *layer separation*, warranting projectâ€™s sustainability and modularity.
+To enforce this architecture, we used concepts like *dependancy injection* or *layer separation*, warranting project’s sustainability and modularity.
 
 We used command/query development pattern in our services to trace data retrieval and data alteration in separate flows.
 The application has been build upon 3 frameworks :
 
-*Inversify for dependancy injection
-*Express for Rest resources
-*TypeORM for persistence layer
+* Inversify for dependancy injection
+* Express for Rest resources
+* TypeORM for persistence layer
 
 These frameworks fulfill our development standards regarding OOP principles.
 
@@ -81,29 +81,24 @@ As a contributor, here are the guidelines we would like you to follow:
  - [Feature Requests](#feature)
  - [Submission Guidelines](#submit)
 
-## <a name="question"></a> Got a Question or Problem?
+## Got a Question or Problem?
 
-There are several ways how you can ask your question:
+There are one way how you can ask your question:
 
-* You can create a question on [StackOverflow](lien stackoverflow) where the questions should be tagged with tag `metacitycore`.
 * You can create issue on [github](lien github)
-* You can write your questions in our [communication channel](lien a dÃ©finir)
-* If you have a Skype then try to find me there (`Michel`)
 
-Preferred way if you create your question on StackOverflow, or create a github issue.
-
-## <a name="issue"></a> Found a security vulnerability?
+## Found a security vulnerability?
 
 If you find a security vulnerability or something that should be discussed personally, 
-please contact me within my [email](lien).
+please contact within mathieu.bayou[at]metapolis.fr.
 
-## <a name="issue"></a> Found a Bug?
+## Found a Bug?
 
 If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our 
 [GitHub Repository](lien github). 
 Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
-## <a name="feature"></a> Missing a Feature?
+## Missing a Feature?
 
 You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub
 Repository. If you would like to *implement* a new feature, please submit an issue with
@@ -115,9 +110,9 @@ discussed. This will also allow us to better coordinate our efforts, prevent dup
 and help you to craft the change so that it is successfully accepted into the project.
 * **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
 
-## <a name="submit"></a> Submission Guidelines
+## Submission Guidelines
 
-### <a name="submit-issue"></a> Submitting an Issue
+### Submitting an Issue
 
 Before you submit an issue, please search the issue tracker, 
 maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
@@ -127,7 +122,7 @@ We want to fix all the issues as soon as possible, but before fixing a bug we ne
 
 You can file new issues by filling out our [new issue form](lien github).
 
-### <a name="submit-pr"></a> Submitting a Pull Request (PR)
+### Submitting a Pull Request (PR)
 Before you submit your Pull Request (PR) consider the following guidelines:
 
 * Search [GitHub](lien github) for an open or closed PR
@@ -139,8 +134,8 @@ Before you submit your Pull Request (PR) consider the following guidelines:
      ```
 
 * Create your patch, **including appropriate test cases**. Without tests your PR will not be accepted.
-* Follow our [Coding Rules](#rules).
-* Run the full Metacity Core test suite, as described in the [developer documentation](DEVELOPER.md), and ensure that all tests pass.
+* Follow our coding rules.
+* Run the full Metacity Core test suite, and ensure that all tests pass.
 * Commit your changes using a descriptive commit message
 
      ```shell
