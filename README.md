@@ -4,7 +4,7 @@ Metacity core is a RESTful API to get data from the stack data powered by Metapo
 
 ## Features ##
 
-Metacity Core provides a data access service linked to Metapolis’ Big Data platform. The latter is accesible through a Rest API whose documentation is here.
+Metacity Core provides a data access service linked to Metapolis’ Big Data platform. The latter is accesible through a Rest API whose documentation is [here](https://bitbucket.org/metapolis/metacity-core/wiki/Home).
 
 
 ### Security ###
