@@ -288,12 +288,11 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
     }
 
-    @test
+    @test.only()
     public async testFindLocalAuthorityCirclesSummaries(): Promise<void> {
-        // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{localauthorityid}/circles?limit={limit}&offset={offset}";
         const resultTotal: number = 72;
-        const localAuthorityId: number = 5417;
+        const localAuthorityId: number = 1;
         const limit: number = 10;
         const offset: number = 0;
         const circlesDTOMock: CircleDTO[] = [];
@@ -322,7 +321,6 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             returns(() => Promise.resolve(circlesResultListMock));
 
         const actual: CircleSummary[] = [];
-        // Do something here:w
         await Request(opts).then((data: Labeled) => {
             console.log(data);
             Object.assign(actual, data);
@@ -367,12 +365,15 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             returns(() => Promise.resolve(circlesResultListMock));
 
         let hasErrorNoLocalAuthority: boolean = false;
+        let statusCode = HTTPStatusCodes.OK;
         try {
             await Request(opts);
         } catch (err) {
             hasErrorNoLocalAuthority = true;
+            statusCode = err.statusCode;
         }
         Chai.assert.isTrue(hasErrorNoLocalAuthority);
+        Chai.assert.equal(statusCode, HTTPStatusCodes.INTERNAL_SERVER_ERROR, "Expect a 500 status code");
     }
 
     @test
