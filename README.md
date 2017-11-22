@@ -1,24 +1,24 @@
 # Metacity Core #
 
-Metacity core is a RESTful API to get data from stack data powered by Metapolis. 
+Metacity core is a RESTful API to get data from the stack data powered by Metapolis. 
 
-### Features ###
+## Features ##
 
-Metacity Core provides a data access service linked to Metapolis’ Big Data platform. The latter is accesible through a Rest API whose documentation is here.
+Metacity Core provides a data access service linked to Metapolis’ Big Data platform. The latter is accesible through a Rest API whose documentation is [here](https://bitbucket.org/metapolis/metacity-core/wiki/Home).
 
 
-#### Security ####
+### Security ###
 
 Next release
 
-#### Traceability ####
+### Traceability ###
 
 In order to monitor application metrics, Metacity Core provides exhaustive activity logs in the following format :
 ``` {date - ISO8601} {log-level} {class} {message} ```
 
-Logs can be exported thanks to ```Winston``` library in a file or in an http stream.
+Logs can be exported thanks to ```Winston``` library in a file or in a http stream.
 
-### Architecture ###
+## Architecture ##
 
 Metacity Core provides a framework to develop object oriented Rest API resources with ease, from implementation to tests.
 
@@ -29,13 +29,13 @@ To enforce this architecture, we used concepts like *dependancy injection* or *l
 We used command/query development pattern in our services to trace data retrieval and data alteration in separate flows.
 The application has been build upon 3 frameworks :
 
-* Inversify for dependancy injection
-* Express for Rest resources
-* TypeORM for persistence layer
+* [Inversify](http://inversify.io) for dependancy injection
+* [ExpressJS](http://expressjs.com) for Rest resources
+* [TypeORM](http://typeorm.io/) for persistence layer
 
 These frameworks fulfill our development standards regarding OOP principles.
 
-### Test ###
+## Test ##
 
 Since we wanted to work on a 100% based OOP project, we decided to use Mocha-Typescript library for unit testing.
 
@@ -43,9 +43,9 @@ Each layer of the application is tested separately from each other, enforcing a 
 
 We aim to maintain a 100% code coverage on the project, every contribution should be submitted with the same aim.
 
-### Installation ###
+## Installation ##
 
-**Reuirements** :
+**Requirements** :
 
 NodeJS : ```8.1.2```
 
@@ -69,14 +69,12 @@ npm run build
 npm start
 ```
 
-#### 
-
-### Contribution ###
+## Contribution ##
 
 * Repo owner or admin
 * Other community or team contact
 
-# Contributing to Metacity Core
+### Contributing to Metacity Core ###
 
 We would love for you to contribute to Metacity Core and help make it even better than it is today! 
 As a contributor, here are the guidelines we would like you to follow:
@@ -86,24 +84,24 @@ As a contributor, here are the guidelines we would like you to follow:
  - [Feature Requests](#feature)
  - [Submission Guidelines](#submit)
 
-## Got a Question or Problem?
+### Got a Question or Problem? ###
 
 There are one way how you can ask your question:
 
 * You can create issue on [github](lien github)
 
-## Found a security vulnerability?
+### Found a security vulnerability? ###
 
 If you find a security vulnerability or something that should be discussed personally, 
 please contact within mathieu.bayou[at]metapolis.fr.
 
-## Found a Bug?
+### Found a Bug? ###
 
 If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our 
 [GitHub Repository](lien github). 
 Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
-## Missing a Feature?
+### Missing a Feature? ###
 
 You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub
 Repository. If you would like to *implement* a new feature, please submit an issue with
@@ -115,9 +113,9 @@ discussed. This will also allow us to better coordinate our efforts, prevent dup
 and help you to craft the change so that it is successfully accepted into the project.
 * **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
 
-## Submission Guidelines
+### Submission Guidelines ###
 
-### Submitting an Issue
+#### Submitting an Issue ####
 
 Before you submit an issue, please search the issue tracker, 
 maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
@@ -127,7 +125,8 @@ We want to fix all the issues as soon as possible, but before fixing a bug we ne
 
 You can file new issues by filling out our [new issue form](lien github).
 
-### Submitting a Pull Request (PR)
+#### Submitting a Pull Request (PR) ####
+
 Before you submit your Pull Request (PR) consider the following guidelines:
 
 * Search [GitHub](lien github) for an open or closed PR
@@ -166,31 +165,35 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 
 That's it! Thank you for your contribution!
 
-#### After your pull request is merged
+##### After your pull request is merged #####
 
 After your pull request is merged, you can safely delete your branch and pull the changes
 from the main (upstream) repository:
 
 * Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
-    ```shell
-    git push origin --delete my-fix-branch
-    ```
+```shell
+git push origin --delete my-fix-branch
+```
 
 * Check out the master branch:
 
-    ```shell
-    git checkout master -f
-    ```
+```shell
+git checkout master -f
+```
 
 * Delete the local branch:
 
-    ```shell
-    git branch -D my-fix-branch
-    ```
+```shell
+git branch -D my-fix-branch
+```
 
 * Update your master with the latest upstream version:
 
-    ```shell
-    git pull --ff upstream master
-    ```
+```shell
+git pull --ff upstream master
+```
+
+## License ##
+
+This project is licensed under the AGPL V3 License - see the LICENSE.md file for details
