@@ -67,7 +67,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testCreateLocalAuthorityCircle(): Promise<void> {
 
         const path: string = "/api/local-authorities/{localauthorityid}/circles";
-        const localAuthorityId: string = "starkindustries";
+        const localAuthorityId: number = 5;
         // Hello im a rigid linter
         const circleIdentifier = 42;
 
@@ -83,13 +83,13 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             }
             ret = ret && localAuthorityCircle.getName() === circle.name;
             ret = ret && localAuthorityCircle.isDefaultCircle() === circle.defaultCircle;
-            ret = ret && localAuthorityCircle.getAccessKey() === localAuthorityId;
+            ret = ret && localAuthorityCircle.getLocalAuthorityId() === localAuthorityId;
             return ret;
         }))).returns(() => Promise.resolve(circleIdentifier));
 
         const opts = {
             method: "POST",
-            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", localAuthorityId),
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
             body: circle,
             json: true
         };

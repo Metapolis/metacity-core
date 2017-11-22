@@ -50,7 +50,7 @@ class CircleCommandServiceTest extends AbstractTestService {
      */
     @test
     private async testCreateCircle(): Promise<void> {
-        const accessKey: string = "starkindustries";
+        const accessKey: number = 5;
         const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
         const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const circleCommandService: CircleCommandService = ContextApp.container.get("CircleCommandService");
@@ -63,13 +63,13 @@ class CircleCommandServiceTest extends AbstractTestService {
         localAuthority.setCredential(Promise.resolve(credential));
 
         const saveCircleDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
-        saveCircleDTO.setAccessKey(accessKey);
+        saveCircleDTO.setLocalAuthorityId(accessKey);
         saveCircleDTO.setRoles(["Role"]);
         saveCircleDTO.setName("michel");
         saveCircleDTO.setMembers([1]);
         saveCircleDTO.setDefaultCircle(true);
 
-        localAuthorityDao.setup((instance) => instance.findByCredentialAccessKey(accessKey)).returns(() => Promise.resolve(localAuthority));
+        localAuthorityDao.setup((instance) => instance.findById(accessKey)).returns(() => Promise.resolve(localAuthority));
 
         await circleCommandService.createCircle(saveCircleDTO);
 
@@ -217,14 +217,14 @@ class CircleCommandServiceTest extends AbstractTestService {
         const circleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         circleCommandDTO.setName("michel");
         circleCommandDTO.setRoles([]);
-        circleCommandDTO.setAccessKey("AccessKeyDesFamilles");
+        circleCommandDTO.setLocalAuthorityId(1);
         circleCommandDTO.setDefaultCircle(true);
 
         await circleCommandService.createCircle(circleCommandDTO).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "LocalAuthority for access key : '" + circleCommandDTO.getAccessKey() + "' cannot be found");
+            Chai.assert.equal(err.message, "LocalAuthority for access key : '" + circleCommandDTO.getLocalAuthorityId() + "' cannot be found");
         });
     }
 

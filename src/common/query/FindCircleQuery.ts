@@ -48,31 +48,16 @@ export class FindCircleQuery {
     private localAuthorityId: number;
 
     /**
-     * Q filter (Free text filter)
-     */
-    private qFilter: LogicalQueryCriteria<string>;
-
-    /**
      * True means optional parameters are set
      *
      * @returns {boolean} True if one of optional parameter is set
      */
     public isSet(): boolean {
-        return this.qFilter != null;
-    }
-
-    /**
-     * Free text filter getter
-     */
-    public getQFilter(): LogicalQueryCriteria<string> {
-        return this.qFilter;
-    }
-
-    /**
-     * Free text filter setter
-     */
-    public setQFilter(qFilter: LogicalQueryCriteria<string>) {
-        this.qFilter = qFilter;
+      const ret: boolean = 
+        this.limit != null &&
+        this.localAuthorityId != null &&
+        this.offset != null;
+      return ret;
     }
 
     /**

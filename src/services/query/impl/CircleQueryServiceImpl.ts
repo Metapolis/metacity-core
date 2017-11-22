@@ -110,7 +110,6 @@ export class CircleQueryServiceImpl implements CircleQueryService {
         this.logger.debug("Retrieving circles");
         Utils.checkArgument(query != null, "Query cannot be null");
         Utils.checkArgument(query.getLocalAuthorityId() != null, "LocalAuthorityId must be set");
-        Utils.checkArgument(query.getLocalAuthorityId() >= 0, "LocalAuthorityId cannot be negative");
         Utils.checkArgument(query.getOffset() != null, "Offset must be set");
         Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
         Utils.checkArgument(query.getLimit() != null, "Limit must be set");

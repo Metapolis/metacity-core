@@ -80,7 +80,7 @@ export class CircleDaoImpl implements CircleDao {
      */
     public async findBy(query: FindCircleQuery): Promise<Circle[]> {
         let circles: Promise<Circle[]>;
-        if (query.getLocalAuthorityId() !== null && query.getLocalAuthorityId() >= 0) {
+        if (query.isSet()) {
             this.logger.info("Retrieving all circles owned by the local authority #%d", query.getLocalAuthorityId());
             circles = this.circleRepository.createQueryBuilder("circle")
                 .innerJoinAndSelect("circle.localAuthority", "localAuthority")

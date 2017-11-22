@@ -132,6 +132,27 @@ export class CircleQueryServiceTest extends AbstractTestService {
     }
 
     @test
+    private async testFindCirclesNoResultsLocalAuthorityIdIsNegative(): Promise<void> {
+        const numberOfCircles: number = 2;
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+        const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const circlesMock: Circle[] = [];
+        const localAuthorityId: number = -32;
+
+        // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
+        const query: FindCircleQuery = new FindCircleQuery();
+        query.setLocalAuthorityId(localAuthorityId);
+        query.setLimit(numberOfCircles);
+        query.setOffset(0);
+        circleDaoMock.setup((instance) => instance.findBy(query))
+            .returns(() => Promise.resolve(circlesMock));
+
+        /** O==||==assert=time==> */
+        const circlesDTO: ResultList<CircleDTO> = await circleQueryService.findCircles(query);
+        Chai.assert.equal(circlesDTO.results.length, 0);
+    }
+
+    @test
     private async testIsOwnedByLocalAuthority(): Promise<void> {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
