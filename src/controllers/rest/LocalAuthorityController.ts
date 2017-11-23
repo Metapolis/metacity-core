@@ -88,24 +88,24 @@ export class LocalAuthorityController implements interfaces.Controller {
         @RequestParam("localauthorityid") localAuthorityId: number,
         @QueryParam("limit") limit: number,
         @QueryParam("offset") offset: number): Promise<ResultList<CircleSummary>> {
-        this.logger.debug("Begin find circles");
-        const query: FindCircleQuery = new FindCircleQuery();
-        query.setLocalAuthorityId(localAuthorityId);
-        query.setLimit(limit);
-        query.setOffset(offset);
+            this.logger.debug("Begin find circles");
+            const query: FindCircleQuery = new FindCircleQuery();
+            query.setLocalAuthorityId(localAuthorityId);
+            query.setLimit(limit);
+            query.setOffset(offset);
 
-        const circleResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
-        const circleSummaries: CircleSummary[] = [];
-        for (const circleDTO of circleResultList.results) {
-            const circleSummary: CircleSummary = new CircleSummary();
-            circleSummary.id = circleDTO.getId();
-            circleSummary.name = circleDTO.getName();
-            circleSummary.defaultCircle = circleDTO.isDefaultCircle();
-            circleSummaries.push(circleSummary);
+            const circleResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
+            const circleSummaries: CircleSummary[] = [];
+            for (const circleDTO of circleResultList.results) {
+                const circleSummary: CircleSummary = new CircleSummary();
+                circleSummary.id = circleDTO.getId();
+                circleSummary.name = circleDTO.getName();
+                circleSummary.defaultCircle = circleDTO.isDefaultCircle();
+                circleSummaries.push(circleSummary);
+            }
+            this.logger.debug("%d Circles retrieved", circleResultList.total);
+            return new ResultList<CircleSummary>(circleResultList.total, circleSummaries);
         }
-        this.logger.debug("%d Circles retrieved", circleResultList.total);
-        return new ResultList<CircleSummary>(circleResultList.total, circleSummaries);
-    }
 
     /**
      * Create a circle
