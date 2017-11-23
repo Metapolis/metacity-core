@@ -45,25 +45,44 @@ We aim to maintain a 100% code coverage on the project, every contribution shoul
 
 ## Installation ##
 
-**Requirements** :
+### Requirements ###
 
 NodeJS : ```8.1.2```
 
 npm : ```5.0.3```
 
-**Installation command** :
+You can find three configuration files, one for test, one for debug and one for production. These files are loaded by the node environment.
+The default configuration is test. You can change the environment by setting `NODE_ENV` to `debug` for debug purposes or to `prod` for production purposes.
+
+Postgresql database : 9.4
+create data base with sql script in repo `db.sql`. Default configuration is :
+```user : metacity
+database : metacity
+password : metacity
+```
+If you want to change it, you can find a configuration file in directory config.
+
+ElasticSearch 5.5.0
+
+You have to have an ElasticSearch reachable when you launch the application. And if you want to contact some resources you have to check your indexes. Currently two indexes is needed : `traffic` and `social-network`.
+
+You can change this name in configuration. 
+
+### Commands ###
+
+**Installation** :
 
 ```shell
 npm install 
 ```
 
-**Build command** : 
+**Build** : 
 
 ```shell
 npm run build
 ```
 
-**Run command** :
+**Run** :
 
 ```shell
 npm start
