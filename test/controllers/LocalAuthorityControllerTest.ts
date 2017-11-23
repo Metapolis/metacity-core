@@ -94,7 +94,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             json: true
         };
 
-        const actual: NumberIdentifier = new NumberIdentifier(circleIdentifier);
+        const actual: NumberIdentifier = new NumberIdentifier(0);
         await Request(opts).then((data: Labeled) => {
             console.log(data);
             Object.assign(actual, data);
