@@ -21,7 +21,6 @@
     "host": "127.0.0.1",
     "port": 5432,
     "drop_schema": true,
-    "auto_schema_sync": true,
-    "log_level": "debug"
+    "auto_schema_sync": true
   }
 }

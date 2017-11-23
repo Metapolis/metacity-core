@@ -60,7 +60,7 @@ export interface CircleQueryService {
     /**
      * Find list of circles for a local authority
      *
-     * @param {number} localAuthorityId id of the local authority that owns those circles
+     * @param {FindCircleQuery} query contains circle search query
      * @returns {Promise<ResultList<CircleDTO>>} DTOs of circles
      */
     findCircles(query: FindCircleQuery): Promise<ResultList<CircleDTO>>;
