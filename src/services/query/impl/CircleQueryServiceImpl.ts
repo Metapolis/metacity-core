@@ -116,20 +116,17 @@ export class CircleQueryServiceImpl implements CircleQueryService {
         Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
 
         const circles: Circle[] = await this.circleDao.findBy(query);
-        const circlesDTO: CircleDTO[] = [];
-        if (circles.length === 0) {
-            this.logger.debug("Could not retrieve any circle");
-            return new ResultList<CircleDTO>(0, []);
-        }
+        const count: number = await this.circleDao.countBy(query);
+        const circleDTOs: CircleDTO[] = [];
 
         for (const circle of circles) {
             const circleDTO: CircleDTO = new CircleDTO();
             circleDTO.setId(circle.getId());
             circleDTO.setName(circle.getName());
             circleDTO.setDefaultCircle(circle.isDefaultCircle());
-            circlesDTO.push(circleDTO);
+            circleDTOs.push(circleDTO);
         }
 
-        return new ResultList<CircleDTO>(circlesDTO.length, circlesDTO);
+        return new ResultList<CircleDTO>(count, circleDTOs);
     }
 }

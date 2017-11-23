@@ -65,6 +65,15 @@ export interface CircleDao {
     findBy(query: FindCircleQuery): Promise<Circle[]>;
 
     /**
+     * Count circle for a specific query
+     *
+     * @param {FindCircleQuery} query query use to count circles
+     *
+     * @returns {number} number of found circle
+     */
+    countBy(query: FindCircleQuery): Promise<number>;
+
+    /**
      * Check if circle is owned by localAuthority
      *
      * @param {number} circleId circle identifier
