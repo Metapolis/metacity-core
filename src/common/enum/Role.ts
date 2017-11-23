@@ -27,7 +27,17 @@
 export enum Role {
 
     /**
-     * Temporary role to see all elements
+     * Manage Circle
      */
-    READ_ALL = "READ_ALL"
+    MANAGE_CIRCLE = "MANAGE_CIRCLE",
+
+    /**
+     * Access accident
+     */
+    ACCESS_ACCIDENT = "ACCESS_ACCIDENT",
+
+    /**
+     * Access tweet
+     */
+    ACCESS_TWEET = "ACCESS_TWEET"
 }

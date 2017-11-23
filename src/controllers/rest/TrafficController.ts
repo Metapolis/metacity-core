@@ -75,7 +75,7 @@ export class TrafficController implements interfaces.Controller {
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    @UserControl([Role.READ_ALL])
+    @UserControl(Role.ACCESS_ACCIDENT)
     public async findAccidents(@QueryParam("areas") areas: string,
                                @QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {

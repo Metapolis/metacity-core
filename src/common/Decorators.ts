@@ -40,7 +40,7 @@ import { timestamp } from "rxjs/operator/timestamp";
  * @returns {(target:any, propertyKey:string, descriptor:PropertyDescriptor) => descriptor}
  * @constructor
  */
-function UserControl(roles: string[]) {
+function UserControl(...roles: string[]) {
     return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value;
 
@@ -105,17 +105,21 @@ function UserControl(roles: string[]) {
  * @returns {(target:any, propertyKey:string, descriptor:PropertyDescriptor) => descriptor}
  * @constructor
  */
-function ClientControl(roles: string[]) {
+function ClientControl(...roles: string[]) {
     return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value;
 
-        // Add code before execute method
         descriptor.value = async function(...args: any[]) {
+            // Retrieve all security needs elements
             const path: string = RequestAccessor.getRequest().path.substring(Config.getAppBasePath().length);
             const timestamps: number = Number(RequestAccessor.getRequest().get("x-timestamp"));
+            const signature: string = RequestAccessor.getRequest().get("signature");
             const method: string = RequestAccessor.getRequest().method;
 
-            const clientRoles: string[] = await (ContextApp.getContainer().get("ClientControlManager") as ClientControlManager).authenticateClient(path, new Map(Object.entries(RequestAccessor.getRequest().query)), Number(timestamps), method);
+            // Try to authenticate client with provide information
+            const clientRoles: string[] = await (ContextApp.getContainer().get("ClientControlManager") as ClientControlManager).authenticateClient(path, signature, new Map(Object.entries(RequestAccessor.getRequest().query)), Number(timestamps), method);
+
+            // Check roles for client
             for (const role of roles) {
                 if (clientRoles.indexOf(role) === -1) {
                     this.logger.error("Client cannot access to this resource");

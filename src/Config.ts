@@ -128,24 +128,6 @@ export class Config {
     }
 
     /**
-     * Get index name politic
-     *
-     * @returns {string}
-     */
-    public static getIndexNamePolitic(): string {
-        return Config.properties.get("index_name_politic");
-    }
-
-    /**
-     * Get document name vote
-     *
-     * @returns {string}
-     */
-    public static getDocumentNameVote(): string {
-        return Config.properties.get("document_name_vote");
-    }
-
-    /**
      * Get database name
      *
      * @returns {string}

@@ -58,7 +58,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
         circleMock.setId(12);
         circleMock.setName("Stark Company");
         circleMock.setDefaultCircle(true);
-        circleMock.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
+        circleMock.setRoles(["FAKE_ROLE", Role.ACCESS_TWEET]);
         circleMock.setUsers(Promise.resolve(usersMock));
         circleDaoMock.setup((instance) => instance.findById(12)).returns(() => Promise.resolve(circleMock));
 

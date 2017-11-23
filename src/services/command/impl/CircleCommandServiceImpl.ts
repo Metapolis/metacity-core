@@ -75,6 +75,7 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         Utils.checkArgument(!Utils.isNullOrEmpty(command.getName()), "Circle's name cannot be null or empty");
         Utils.checkArgument(command.getRoles() != null, "Circle's roles cannot be null");
         Utils.checkArgument(!isNullOrUndefined(command.isDefaultCircle()), "Default circle cannot be undefined or null");
+        Utils.checkArgument(!isNullOrUndefined(command.getMembers()), "Circle members cannot be undefined or null");
 
         this.logger.debug("Begin circle creation for '%s'", command.getName());
 

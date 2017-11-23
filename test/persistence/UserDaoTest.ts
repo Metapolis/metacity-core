@@ -57,7 +57,7 @@ export class UserDaoTest extends AbstractTestDao {
         // Create circle
         const circle: Circle = new Circle();
         circle.setName("Stark assembly");
-        circle.setRoles([Role.READ_ALL]);
+        circle.setRoles([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]);
         circle.setDefaultCircle(true);
 
         // Create localAuthority
@@ -90,7 +90,7 @@ export class UserDaoTest extends AbstractTestDao {
         Chai.assert.equal(find.getLastConnection(), user.getLastConnection());
         Chai.assert.equal(find.getPassword(), user.getPassword());
         Chai.assert.equal(find.getEmail(), user.getEmail());
-        Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
+        Chai.assert.equal((await find.getRoles()).join(","), [Role.ACCESS_TWEET, Role.MANAGE_CIRCLE].join(","));
         Chai.assert.equal(find.getId(), 1);
 
         find = await userDao.findByEmail("TotoFAKE");
@@ -117,7 +117,7 @@ export class UserDaoTest extends AbstractTestDao {
         // Create circle
         const circle: Circle = new Circle();
         circle.setName("Stark industry");
-        circle.setRoles([Role.READ_ALL]);
+        circle.setRoles([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]);
         circle.setDefaultCircle(true);
 
         // Create localAuthority
@@ -151,7 +151,7 @@ export class UserDaoTest extends AbstractTestDao {
         Chai.assert.equal(find.getLastConnection(), user.getLastConnection());
         Chai.assert.equal(find.getPassword(), user.getPassword());
         Chai.assert.equal(find.getEmail(), user.getEmail());
-        Chai.assert.equal((await find.getRoles()).join(","), [Role.READ_ALL].join(","));
+        Chai.assert.equal((await find.getRoles()).join(","), [Role.ACCESS_TWEET, Role.MANAGE_CIRCLE].join(","));
         Chai.assert.equal(find.getId(), user.getId());
 
         find = await userDao.findById(user.getId() + 2);

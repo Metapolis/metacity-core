@@ -5,8 +5,6 @@
   },
   "index_name_traffic": "traffic",
   "document_name_accident": "accident",
-  "index_name_politic": "politic",
-  "document_name_vote": "vote",
   "index_name_social_network": "social-network",
   "document_name_tweet": "tweet",
   "app": {

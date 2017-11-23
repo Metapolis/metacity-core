@@ -220,7 +220,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         const circleDTOMock: CircleDTO = new CircleDTO();
         circleDTOMock.setId(circleIdentifier);
-        circleDTOMock.setRoles([Role.READ_ALL]);
+        circleDTOMock.setRoles([Role.MANAGE_CIRCLE]);
         circleDTOMock.setName("michel");
         circleDTOMock.setDefaultCircle(true);
         circleDTOMock.setMembers(mockUsers);
@@ -303,7 +303,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         const circleDTOMock: CircleDTO = new CircleDTO();
         circleDTOMock.setId(circleIdentifier);
-        circleDTOMock.setRoles([Role.READ_ALL]);
+        circleDTOMock.setRoles([Role.MANAGE_CIRCLE]);
         circleDTOMock.setName("michel");
         circleDTOMock.setDefaultCircle(true);
         circleDTOMock.setMembers(mockUsers);

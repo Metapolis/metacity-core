@@ -29,6 +29,7 @@ import { isNullOrUndefined } from "util";
 import { CredentialDao } from "../../../persistence/dao/CredentialDao";
 import { Credential } from "../../../persistence/domain/Credential";
 import CryptoJS = require("crypto-js");
+import { ResultList } from "../../ResultList";
 
 /**
  * Contain all services to manage security
@@ -55,11 +56,6 @@ export class ClientControlManager {
     private static CLIENT_ACCESS_KEY: string = "accesskey";
 
     /**
-     * Client signature param name
-     */
-    private static CLIENT_SIGNATURE: string = "signature";
-
-    /**
      * Three minutes in timestamp
      */
     private static THREE_MINUTES: number = 180000;
@@ -71,13 +67,15 @@ export class ClientControlManager {
      * @param {Map<string, string | string[]>} parameterMap params of query
      * @param {number} timestamp timestamp query
      * @param {string} method method query
-     * @returns {Promise<string>}
+     *
+     * @returns {Promise<string[]>} array of client role
      */
-    public async authenticateClient(path: string, parameterMap: Map<string, string | string[]>, timestamp: number, method: string): Promise<string[]> {
+    public async authenticateClient(path: string, signature: string, parameterMap: Map<string, string | string[]>, timestamp: number, method: string): Promise<string[]> {
         Utils.checkArgument(!Utils.isNullOrEmpty(path));
+        Utils.checkArgument(!Utils.isNullOrEmpty(method));
+        Utils.checkArgument(!isNullOrUndefined(timestamp));
         Utils.checkArgument(!isNullOrUndefined(parameterMap));
         Utils.checkArgument(parameterMap.has(ClientControlManager.CLIENT_ACCESS_KEY), "Access key param not found");
-        Utils.checkArgument(parameterMap.has(ClientControlManager.CLIENT_SIGNATURE), "signature param not found");
         const currentTimeMillis: number = (new Date()).getTime();
         if (timestamp > currentTimeMillis || currentTimeMillis > timestamp + ClientControlManager.THREE_MINUTES) {
             throw new AccessDeniedError("Call expired for this time '" + timestamp + "'");
@@ -90,7 +88,6 @@ export class ClientControlManager {
             throw new AccessDeniedError("No credential found for accessKey '" + accessKey + "'");
         }
 
-        const signature: string = parameterMap.get(ClientControlManager.CLIENT_SIGNATURE) as string;
         const expectedSignature = this.getExpectedSignature(credential.getAccessKey(), credential.getSecret(), path, timestamp, method, parameterMap);
         if (expectedSignature !== signature) {
             throw new AccessDeniedError("Invalid signature. Found '" + signature + "' instead of '" + expectedSignature + "'");
@@ -110,6 +107,8 @@ export class ClientControlManager {
      * @param {number} timestamp call of query
      * @param {string} method method query
      * @param {Map<string, string | string[]>} parameterMap parameters of query
+     *
+     * @return {string} a computed signature
      */
     private getExpectedSignature(accessKey: string, secret: string, path: string, timestamp: number, method: string, parameterMap: Map<string, string | string[]>): string {
         let signature: string = "";
@@ -119,9 +118,7 @@ export class ClientControlManager {
         const paramNames: string[] = [];
         const names: IterableIterator<string> = parameterMap.keys();
         for (const name of names) {
-            if ("signature" !== name) {
-                paramNames.push(name);
-            }
+            paramNames.push(name);
         }
         paramNames.sort();
 

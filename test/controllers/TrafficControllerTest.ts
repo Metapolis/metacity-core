@@ -74,7 +74,7 @@ class TrafficControllerTest extends AbstractTestController {
         const userMock: User = new User();
         (await userMock.getCircles()).push(circle);
 
-        circle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role.ACCESS_ACCIDENT]);
 
         localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
@@ -231,7 +231,7 @@ class TrafficControllerTest extends AbstractTestController {
         const userMock: User = new User();
         (await userMock.getCircles()).push(circle);
 
-        circle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role.ACCESS_ACCIDENT]);
 
         localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));

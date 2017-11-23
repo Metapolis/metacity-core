@@ -36,6 +36,7 @@ import * as Path from "path";
 import { Config } from "./Config";
 import * as BodyParser from "body-parser";
 import * as TypeORM from "typeorm";
+import * as CORS from "cors";
 import { getRepository } from "typeorm";
 import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
@@ -265,7 +266,7 @@ export class App {
                 colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
                 level: "info"
             }));
-
+            app.use(CORS());
             app.use(BodyParser.urlencoded({
                 extended: true
             }));

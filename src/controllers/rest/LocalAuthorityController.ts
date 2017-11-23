@@ -40,6 +40,8 @@ import * as HTTPStatusCodes from "http-status-codes";
 import { CircleDetails } from "./model/circle/CircleDetails";
 import { CircleDTO } from "../../services/query/dto/circle/CircleDTO";
 import { User } from "./model/circle/User";
+import { ClientControl } from "../../common/Decorators";
+import { Role } from "../../common/enum/Role";
 
 /**
  * API resources to local authorities services
@@ -142,6 +144,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<Circle>} information of specific circle
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Get("/:localauthorityid/circles/:circleid")
     public async getLocalAuthorityCircleDetails(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
         this.logger.debug("Begin get circle");
@@ -160,6 +163,7 @@ export class LocalAuthorityController implements interfaces.Controller {
         // Don't check if circle exists because the previous check all
         const circleDTO: CircleDTO = await this.circleQueryService.getCircle(circleIdNumber);
         const circleDetails: CircleDetails = new CircleDetails();
+
         circleDetails.id = circleDTO.getId();
         circleDetails.name = circleDTO.getName();
         circleDetails.defaultCircle = circleDTO.isDefaultCircle();
