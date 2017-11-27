@@ -30,7 +30,6 @@ import { Utils } from "./common/Utils";
 import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServiceImpl";
 import { TrafficQueryService } from "./services/query/TrafficQueryService";
 import { TrafficController } from "./controllers/rest/TrafficController";
-import { AuthenticationController } from "./controllers/rest/AuthenticationController";
 import * as Express from "express";
 import * as Path from "path";
 import { Config } from "./Config";
@@ -38,44 +37,18 @@ import * as BodyParser from "body-parser";
 import * as TypeORM from "typeorm";
 import * as CORS from "cors";
 import { getRepository } from "typeorm";
-import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
-import { UserDao } from "./persistence/dao/UserDao";
-import { UserDaoImpl } from "./persistence/dao/impl/UserDaoImpl";
-import { UserAuthenticationQueryServiceImpl } from "./services/query/impl/UserAuthenticationQueryServiceImpl";
-import { UserAuthenticationQueryService } from "./services/query/UserAuthenticationQueryService";
 import { IllegalArgumentError } from "./common/error/IllegalArgumentError";
 import { AccessDeniedError } from "./common/error/AccessDeniedError";
 import { TweetController } from "./controllers/rest/TweetController";
 import { TweetQueryService } from "./services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
-import { RequestAccessor } from "./RequestAccessor";
-import { LocalAuthority } from "./persistence/domain/LocalAuthority";
-import { LocalAuthorityDaoImpl } from "./persistence/dao/impl/LocalAuthorityDaoImpl";
-import { LocalAuthorityDao } from "./persistence/dao/LocalAuthorityDao";
 import { ContextApp } from "./ContextApp";
-import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQueryService";
-import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
-import { Circle } from "./persistence/domain/Circle";
-import { CircleCommandService } from "./services/command/CircleCommandService";
-import { CircleCommandServiceImpl } from "./services/command/impl/CircleCommandServiceImpl";
-import { LocalAuthorityController } from "./controllers/rest/LocalAuthorityController";
-import { CircleDao } from "./persistence/dao/CircleDao";
-import { CircleDaoImpl } from "./persistence/dao/impl/CircleDaoImpl";
-import { UserCommandService } from "./services/command/UserCommandService";
-import { UserCommandServiceImpl } from "./services/command/impl/UserCommandServiceImpl";
-import { UserController } from "./controllers/rest/UserController";
 import { NotFoundError } from "./common/error/NotFoundError";
-import { CircleQueryService } from "./services/query/CircleQueryService";
-import { CircleQueryServiceImpl } from "./services/query/impl/CircleQueryServiceImpl";
 import { Credential } from "./persistence/domain/Credential";
 import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStrategy";
-import { DataSet } from "./persistence/domain/DataSet";
-import { UserQueryService } from "./services/query/UserQueryService";
-import { UserQueryServiceImpl } from "./services/query/impl/UserQueryServiceImpl";
 import methodOverride = require("method-override");
-import { UserControlManager } from "./common/security/impl/UserControlManager";
-import { ClientControlManager } from "./common/security/impl/ClientControlManager";
+import { ClientControlManager } from "./common/security/ClientControlManager";
 import { CredentialDaoImpl } from "./persistence/dao/impl/CredentialDaoImpl";
 import { CredentialDao } from "./persistence/dao/CredentialDao";
 
@@ -169,8 +142,7 @@ export class App {
      */
     private bindCommands(): void {
         this.logger.debug("Binding command");
-        this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
-        this.container.bind<UserCommandService>("UserCommandService").to(UserCommandServiceImpl);
+        // No Command currently
     }
 
     /**
@@ -180,10 +152,6 @@ export class App {
         this.logger.debug("Binding query");
         this.container.bind<TrafficQueryService>("TrafficQueryService").to(TrafficQueryServiceImpl);
         this.container.bind<TweetQueryService>("TweetQueryService").to(TweetQueryServiceImpl);
-        this.container.bind<LocalAuthorityQueryService>("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
-        this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
-        this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
-        this.container.bind<UserQueryService>("UserQueryService").to(UserQueryServiceImpl);
     }
 
     /**
@@ -192,10 +160,7 @@ export class App {
     private bindControllers(): void {
         this.logger.debug("Binding controllers");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TrafficController).whenTargetNamed("TrafficController");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(AuthenticationController).whenTargetNamed("AuthenticationController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(LocalAuthorityController).whenTargetNamed("LocalAuthorityController");
-        this.container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed("UserController");
     }
 
     /**
@@ -205,7 +170,6 @@ export class App {
         this.logger.debug("Connect to database");
         await this.connectDB();
         // Bind security manager
-        this.container.bind<UserControlManager>("UserControlManager").to(UserControlManager);
         this.container.bind<ClientControlManager>("ClientControlManager").to(ClientControlManager);
 
         this.bindDao();
@@ -315,9 +279,6 @@ export class App {
      */
     private bindDao(): void {
         this.logger.debug("Binding DAO");
-        this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
-        this.container.bind<LocalAuthorityDao>("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
-        this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
         this.container.bind<CredentialDao>("CredentialDao").to(CredentialDaoImpl);
     }
 
@@ -326,11 +287,7 @@ export class App {
      */
     private bindRepository(): void {
         this.logger.debug("Binding repositories");
-        this.container.bind<TypeORM.Repository<User>>("UserRepository").toConstantValue(getRepository(User));
-        this.container.bind<TypeORM.Repository<Circle>>("CircleRepository").toConstantValue(getRepository(Circle));
-        this.container.bind<TypeORM.Repository<LocalAuthority>>("LocalAuthorityRepository").toConstantValue(getRepository(LocalAuthority));
         this.container.bind<TypeORM.Repository<Credential>>("CredentialRepository").toConstantValue(getRepository(Credential));
-        this.container.bind<TypeORM.Repository<DataSet>>("DataSetRepository").toConstantValue(getRepository(DataSet));
     }
 
     /**

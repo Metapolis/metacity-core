@@ -23,13 +23,13 @@
 
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
-import { Utils } from "../../Utils";
-import { AccessDeniedError } from "../../error/AccessDeniedError";
+import { Utils } from "../Utils";
+import { AccessDeniedError } from "../error/AccessDeniedError";
 import { isNullOrUndefined } from "util";
-import { CredentialDao } from "../../../persistence/dao/CredentialDao";
-import { Credential } from "../../../persistence/domain/Credential";
+import { CredentialDao } from "../../persistence/dao/CredentialDao";
+import { Credential } from "../../persistence/domain/Credential";
 import CryptoJS = require("crypto-js");
-import { ResultList } from "../../ResultList";
+import { ResultList } from "../ResultList";
 
 /**
  * Contain all services to manage security

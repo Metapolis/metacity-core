@@ -36,7 +36,7 @@ import { Tweet } from "./model/tweet/Tweet";
 import { TweetType } from "../../common/enum/tweet/TweetType";
 import { TweetQueryService } from "../../services/query/TweetQueryService";
 import { TweetCategory } from "../../common/enum/tweet/TweetCategory";
-import { ClientControl, UserControl } from "../../common/Decorators";
+import { ClientControl } from "../../common/Decorators";
 import { Role } from "../../common/enum/Role";
 
 /**

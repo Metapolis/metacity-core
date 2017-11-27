@@ -24,9 +24,8 @@
 import "reflect-metadata";
 import { AppTestModule } from "./AppTestModule";
 import { Container } from "inversify";
-import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
-import { UserDao } from "../../../src/persistence/dao/UserDao";
-import { CircleDao } from "../../../src/persistence/dao/CircleDao";
+import { ContextApp } from "../../ContextApp";
+import { CredentialDaoImpl } from "../../../src/persistence/dao/impl/CredentialDaoImpl";
 import * as TypeMoq from "typemoq";
 
 export abstract class AbstractTestService {
@@ -61,8 +60,7 @@ export abstract class AbstractTestService {
      */
     public async after(): Promise<void> {
         // Reset all mock services
-        (AbstractTestService.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>).reset();
-        (AbstractTestService.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>).reset();
-        (AbstractTestService.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>).reset();
+        (ContextApp.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDaoImpl>).reset();
+
     }
 }

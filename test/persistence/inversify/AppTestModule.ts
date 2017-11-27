@@ -50,9 +50,6 @@ export class AppTestModule {
     public async reconnectDB(): Promise<void> {
         AppTestModule.logger.debug("Unbinding repositories");
         // Unbind all repository
-        ContextApp.container.unbind("UserRepository");
-        ContextApp.container.unbind("CircleRepository");
-        ContextApp.container.unbind("LocalAuthorityRepository");
         ContextApp.container.unbind("CredentialRepository");
 
         // Reconnect database
