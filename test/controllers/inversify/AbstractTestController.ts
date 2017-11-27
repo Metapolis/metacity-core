@@ -27,6 +27,7 @@ import { Container } from "inversify";
 import { TrafficQueryService } from "../../../src/services/query/TrafficQueryService";
 import { TweetQueryService } from "../../../src/services/query/TweetQueryService";
 import * as TypeMoq from "typemoq";
+import { ClientControlManager } from "../../../src/common/security/ClientControlManager";
 
 /**
  * Abstract controller
@@ -72,6 +73,7 @@ export abstract class AbstractTestController {
         // Reset all mock services
         (AbstractTestController.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).reset();
         (AbstractTestController.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).reset();
+        (AbstractTestController.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).reset();
     }
 
     /**

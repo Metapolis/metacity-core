@@ -38,8 +38,8 @@ import { CollisionType } from "../../src/common/enum/accident/CollisionType";
 import { Luminosity } from "../../src/common/enum/accident/Luminosity";
 import { AtmosphericCondition } from "../../src/common/enum/accident/AtmosphericCondition";
 import { ClimatologyDTO } from "../../src/services/query/dto/accident/ClimatologyDTO";
+import { ClientControlManager } from "../../src/common/security/ClientControlManager";
 import { Role } from "../../src/common/enum/Role";
-import { Credential } from "../../src/persistence/domain/Credential";
 
 /**
  * All test for traffic controller
@@ -56,6 +56,13 @@ class TrafficControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const trafficQueryService: TypeMoq.IMock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.ACCESS_ACCIDENT]));
 
         const mockAccidents: CarAccidentDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -98,6 +105,10 @@ class TrafficControllerTest extends AbstractTestController {
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
 
@@ -169,6 +180,13 @@ class TrafficControllerTest extends AbstractTestController {
         const path: string = "/api/traffics/accidents";
         const offset: number = 0;
         const limit: number = 20;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.ACCESS_ACCIDENT]));
 
         // Check no authentication
         let opts = {
@@ -177,6 +195,10 @@ class TrafficControllerTest extends AbstractTestController {
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
         opts.qs.offset = null;
@@ -192,6 +214,10 @@ class TrafficControllerTest extends AbstractTestController {
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
         opts.qs.offset = null;

@@ -25,7 +25,6 @@ import { AbstractTestController } from "./inversify/AbstractTestController";
 import { suite, test } from "mocha-typescript";
 import * as Request from "request-promise";
 import * as Chai from "chai";
-import ChaiHttp = require("chai-http");
 import { ContextApp } from "../ContextApp";
 import { ResultList } from "../../src/common/ResultList";
 import * as TypeMoq from "typemoq";
@@ -37,8 +36,8 @@ import { TweetType } from "../../src/common/enum/tweet/TweetType";
 import { TestUtils } from "../common/TestUtils";
 import { FindTweetQuery } from "../../src/common/query/FindTweetQuery";
 import { Tweet } from "../../src/controllers/rest/model/tweet/Tweet";
+import { ClientControlManager } from "../../src/common/security/ClientControlManager";
 import { Role } from "../../src/common/enum/Role";
-import { Credential } from "../../src/persistence/domain/Credential";
 
 /**
  * All test for tweet controller
@@ -55,6 +54,13 @@ class TweetControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const tweetQueryService: TypeMoq.IMock<TweetQueryService> = (ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.ACCESS_ACCIDENT]));
 
         const mockTweets: TweetDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -93,6 +99,10 @@ class TweetControllerTest extends AbstractTestController {
             qs: {
                 offset: offset,
                 limit: limit
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
 
@@ -109,7 +119,7 @@ class TweetControllerTest extends AbstractTestController {
             this.assertTweet(actual.results[j], mockTweets[j]);
         }
 
-        let optsFilter = {
+        const optsFilter = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
             qs: {
@@ -118,8 +128,15 @@ class TweetControllerTest extends AbstractTestController {
                 dates: "1977-04-22T06:00:00Z|1979-04-22T06:00:00Z",
                 mentions: "",
                 hashtags: ""
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
+        optsFilter.qs.hashtags = undefined;
+        optsFilter.qs.dates = undefined;
+        optsFilter.qs.mentions = undefined;
 
         tweetQueryService.setup((instance) => instance.findTweets(TypeMoq.It.is((query: FindTweetQuery) => {
             let ret = query.getLimit() === mockQuery.getLimit();
@@ -201,6 +218,13 @@ class TweetControllerTest extends AbstractTestController {
         const path: string = "/api/tweets";
         const offset: number = 0;
         const limit: number = 20;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.ACCESS_ACCIDENT]));
 
         // Check no authentication
         let opts = {
@@ -212,6 +236,10 @@ class TweetControllerTest extends AbstractTestController {
                 dates: "",
                 mentions: "",
                 hashtags: ""
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
         opts.qs.offset = null;
@@ -232,6 +260,10 @@ class TweetControllerTest extends AbstractTestController {
                 dates: "",
                 mentions: "",
                 hashtags: ""
+            },
+            headers: {
+                "x-timestamp": 1239999,
+                "signature": "tonystarkcorp"
             }
         };
         opts.qs.offset = null;

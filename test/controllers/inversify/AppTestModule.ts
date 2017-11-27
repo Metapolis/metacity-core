@@ -52,8 +52,8 @@ export class AppTestModule {
      * @returns {Container}
      */
     public async bootstrap(): Promise<Container> {
-        await ContextApp.init();
         // Disable elasticsearch client (First execution bind mock)
+        await ContextApp.init();
         ContextApp.container.bind("ESClientMock").toConstantValue(TypeMoq.Mock.ofType(Client));
         ContextApp.container.rebind("ESClient").toConstantValue((ContextApp.container.get("ESClientMock") as TypeMoq.IMock<Client>).object);
 
@@ -72,13 +72,6 @@ export class AppTestModule {
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
         ContextApp.container.rebind("ClientControlManager").toConstantValue((ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).object);
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
-            (instance) => instance.authenticateClient(
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
 
         return ContextApp.container;
     }

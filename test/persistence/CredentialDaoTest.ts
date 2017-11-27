@@ -50,6 +50,10 @@ export class CredentialDaoTest extends AbstractTestDao {
         Chai.assert.isFalse(find === undefined, "Credential not found");
         Chai.assert.equal(find.getSecret(), credential.getSecret());
         Chai.assert.equal(find.getAccessKey(), credential.getAccessKey());
-        Chai.assert.equal(find.getRoles(), credential.getRoles());
+        Chai.assert.equal(find.getRoles().length, credential.getRoles().length);
+        for (let i = 0; i < find.getRoles().length; i++) {
+            Chai.assert.equal(find.getRoles()[i], credential.getRoles()[i]);
+
+        }
     }
 }
