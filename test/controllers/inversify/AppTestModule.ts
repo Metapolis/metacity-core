@@ -36,7 +36,7 @@ import { UserAuthenticationQueryServiceImpl } from "../../../src/services/query/
 import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthorityDaoImpl } from "../../../src/persistence/dao/impl/LocalAuthorityDaoImpl";
 import { UserCommandService } from "../../../src/services/command/UserCommandService";
-import { UserCommandServiceImpl} from "../../../src/services/command/impl/UserCommandServiceImpl";
+import { UserCommandServiceImpl } from "../../../src/services/command/impl/UserCommandServiceImpl";
 import { UserDaoImpl } from "../../../src/persistence/dao/impl/UserDaoImpl";
 import { UserDao } from "../../../src/persistence/dao/UserDao";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
@@ -47,6 +47,8 @@ import { CircleQueryServiceImpl } from "../../../src/services/query/impl/CircleQ
 import { CircleQueryService } from "../../../src/services/query/CircleQueryService";
 import { UserQueryServiceImpl } from "../../../src/services/query/impl/UserQueryServiceImpl";
 import { UserQueryService } from "../../../src/services/query/UserQueryService";
+import { ClientControlManager } from "../../../src/common/security/impl/ClientControlManager";
+import { Role } from "../../../src/common/enum/Role";
 
 /**
  * App test module
@@ -102,6 +104,12 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("CircleDaoMock")) {
             ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType<CircleDao>(CircleDaoImpl));
         }
+        if (!ContextApp.container.isBound("CircleDaoMock")) {
+            ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType<CircleDao>(CircleDaoImpl));
+        }
+        if (!ContextApp.container.isBound("ClientControlManagerMock")) {
+            ContextApp.container.bind("ClientControlManagerMock").toConstantValue(TypeMoq.Mock.ofType<ClientControlManager>(ClientControlManager));
+        }
 
         // Rebind all services
         ContextApp.container.rebind("UserDao").toConstantValue((ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDaoImpl>).object);
@@ -114,6 +122,14 @@ export class AppTestModule {
         ContextApp.container.rebind("UserCommandService").toConstantValue((ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>).object);
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
+        ContextApp.container.rebind("ClientControlManager").toConstantValue((ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).object);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
 
         return ContextApp.container;
     }
@@ -129,6 +145,7 @@ export class AppTestModule {
         ContextApp.container.rebind("CircleCommandService").to(CircleCommandServiceImpl);
         ContextApp.container.rebind("CircleQueryService").to(CircleQueryServiceImpl);
         ContextApp.container.rebind("UserCommandService").to(UserCommandServiceImpl);
+        ContextApp.container.rebind("ClientControlManager").to(ClientControlManager);
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");
         }

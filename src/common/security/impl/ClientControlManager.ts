@@ -64,6 +64,7 @@ export class ClientControlManager {
      * Authenticate client
      *
      * @param {string} path path of query
+     * @param {string} signature signature of query
      * @param {Map<string, string | string[]>} parameterMap params of query
      * @param {number} timestamp timestamp query
      * @param {string} method method query

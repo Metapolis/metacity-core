@@ -67,6 +67,7 @@ export class UserDaoTest extends AbstractTestDao {
         const credential: Credential = new Credential();
         credential.setSecret("danslavieparfoismaispasseulement");
         credential.setAccessKey("AccessKey");
+        credential.setRoles([Role.ACCESS_TWEET]);
         await credentialRepository.save(credential);
 
         localAuthority.setCredential(Promise.resolve(credential));
@@ -127,6 +128,7 @@ export class UserDaoTest extends AbstractTestDao {
         const credential: Credential = new Credential();
         credential.setSecret("danslavieparfoismaispasseulement");
         credential.setAccessKey("AccessKey");
+        credential.setRoles([Role.ACCESS_TWEET]);
         await credentialRepository.save(credential);
 
         localAuthority.setCredential(Promise.resolve(credential));

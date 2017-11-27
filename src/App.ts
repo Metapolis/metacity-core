@@ -277,10 +277,6 @@ export class App {
             app.use("/", Express.static(publicPath));
             app.use(methodOverride());
             app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-                if (!/^\/api/.test(req.path)) {
-                    res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
-                    return;
-                }
                 RequestAccessor.setRequest(req);
                 next();
             });
