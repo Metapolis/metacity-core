@@ -253,6 +253,8 @@ export class App {
         const server = new InversifyExpressServer(this.container);
         server.setConfig((app) => {
             const expressWinston = require("express-winston");
+            const context = require("request-context");
+            app.use(context.middleware("request"));
             app.use(expressWinston.logger({
                 transports: [
                     new Winston.transports.Console({
@@ -277,7 +279,7 @@ export class App {
             app.use("/", Express.static(publicPath));
             app.use(methodOverride());
             app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-                RequestAccessor.setRequest(req);
+                context.set("request:req", req);
                 next();
             });
         });
