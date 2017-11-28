@@ -31,12 +31,11 @@ import { TrafficQueryServiceImpl } from "./services/query/impl/TrafficQueryServi
 import { TrafficQueryService } from "./services/query/TrafficQueryService";
 import { TrafficController } from "./controllers/rest/TrafficController";
 import * as Express from "express";
-import * as Path from "path";
 import { Config } from "./Config";
 import * as BodyParser from "body-parser";
 import * as TypeORM from "typeorm";
-import * as CORS from "cors";
 import { getRepository } from "typeorm";
+import * as CORS from "cors";
 import * as HTTPStatusCodes from "http-status-codes";
 import { IllegalArgumentError } from "./common/error/IllegalArgumentError";
 import { AccessDeniedError } from "./common/error/AccessDeniedError";
@@ -47,10 +46,11 @@ import { ContextApp } from "./ContextApp";
 import { NotFoundError } from "./common/error/NotFoundError";
 import { Credential } from "./persistence/domain/Credential";
 import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStrategy";
-import methodOverride = require("method-override");
 import { ClientControlManager } from "./common/security/ClientControlManager";
 import { CredentialDaoImpl } from "./persistence/dao/impl/CredentialDaoImpl";
 import { CredentialDao } from "./persistence/dao/CredentialDao";
+import methodOverride = require("method-override");
+import * as Moment from "moment";
 
 /**
  * The App.
@@ -221,16 +221,42 @@ export class App {
             app.use(context.middleware("request"));
             app.use(expressWinston.logger({
                 transports: [
-                    new Winston.transports.Console({
-                        json: true,
-                        colorize: true
+                    new (Winston.transports.Console)({
+                        json: false,
+                        colorize: true,
+                        formatter: (options) => {
+                            // Return string will be passed to logger.
+                            const logProperties: string[] = [];
+                            logProperties.push(Moment().toISOString(),
+                                options.level.toUpperCase(),
+                                App.name,
+                                (options.message ? decodeURI(options.message) : ""),
+                                (options.meta && Object.keys(options.meta).length ? "\n\t" + JSON.stringify(options.meta) : "" ));
+                            return logProperties.join(" ");
+                        },
                     })
                 ],
+
                 meta: false, // optional: control whether you want to log the meta data about the request (default to true)
-                msg: "HTTP {{req.method}} {{req.url}} {{res}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
-                expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+                msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+                expressFormat: false, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
                 colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
-                level: "info"
+                level: (req: Express.Request, res: Express.Response) => {
+                    let level = "";
+                    // Check if error is Ok (bigger than 200)
+                    if (res.statusCode >= HTTPStatusCodes.OK) {
+                        level = "info";
+                    }
+                    // Check if error is client error (bigger than 400)
+                    if (res.statusCode >= HTTPStatusCodes.BAD_REQUEST) {
+                        level = "warn";
+                    }
+                    // Check if error is server error (bigger than 500)
+                    if (res.statusCode >= HTTPStatusCodes.INTERNAL_SERVER_ERROR) {
+                        level = "error";
+                    }
+                    return level;
+                }
             }));
             app.use(CORS());
             app.use(BodyParser.urlencoded({
@@ -238,9 +264,6 @@ export class App {
             }));
             app.use(BodyParser.json());
             // Add static file server to serve angular resources
-            const publicPath = Path.join(__dirname, "../../client/src");
-            this.logger.debug("Static file location: '%s'", publicPath);
-            app.use("/", Express.static(publicPath));
             app.use(methodOverride());
             app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
                 context.set("request:req", req);
