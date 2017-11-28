@@ -31,6 +31,8 @@ import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
 import { Credential } from "../../../src/persistence/domain/Credential";
 import { Role } from "../../../src/common/enum/Role";
 import { ClientControlManager } from "../../../src/common/security/ClientControlManager";
+import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
+import { AccessDeniedError } from "../../../src/common/error/AccessDeniedError";
 
 /**
  * All test for traffic query service
@@ -72,5 +74,157 @@ class TrafficQueryServiceTest extends AbstractTestService {
         for (let i = 0; i < roles.length; i++) {
             Chai.assert.equal(roles[i], credentialMock.getRoles()[i]);
         }
+    }
+
+    @test
+    private async testAuthenticateClientPathUndefined() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient(undefined, undefined, undefined, undefined, undefined).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientPathEmpty() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("", undefined, undefined, undefined, undefined).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientMethodUndefined() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", undefined, undefined, undefined, undefined).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientMethodEmpty() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", undefined, undefined, undefined, "").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientTimestampUndefined() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", undefined, undefined, undefined, "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientParamsUndefined() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", undefined, undefined, 123, "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientSignatureUndefined() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", undefined, new Map(), 123, "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientSignatureEmpty() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", "", new Map(), 123, "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientNoAccessKey() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", "signature", new Map(), 123, "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Access key param not found");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientCallExpired() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", "signature", new Map([["accesskey", "tonycorp"]]), 123, "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, AccessDeniedError);
+            Chai.assert.equal(err.message, "Call expired for this time '123'");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientCredentialDoesNotExist() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+
+        await clientControlManager.authenticateClient("/toto", "signature", new Map([["accesskey", "tonycorp"]]), Date.now(), "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, AccessDeniedError);
+            Chai.assert.equal(err.message, "No credential found for accessKey 'tonycorp'");
+        });
+    }
+
+    @test
+    private async testAuthenticateClientSignatureCheckFailed() {
+        const clientControlManager: ClientControlManager = ContextApp.container.get("ClientControlManager") as ClientControlManager;
+        const credentialDaoMock: TypeMoq.IMock<CredentialDao> = ContextApp.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDao>;
+        const checkRegExp = new RegExp(/Invalid signature. Found .*/);
+        const credentialMock: Credential = new Credential();
+        credentialMock.setRoles([Role.ACCESS_ACCIDENT, Role.MANAGE_CIRCLE]);
+        credentialMock.setAccessKey("tonycorp");
+        credentialMock.setSecret("secret");
+
+        credentialDaoMock.setup((instance) => instance.findByAccessKey("tonycorp")).returns(() => Promise.resolve(credentialMock));
+
+        await clientControlManager.authenticateClient("/toto", "signature", new Map([["accesskey", "tonycorp"]]), Date.now(), "GET").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, AccessDeniedError);
+            Chai.assert.isTrue(checkRegExp.test(err.message));
+        });
     }
 }

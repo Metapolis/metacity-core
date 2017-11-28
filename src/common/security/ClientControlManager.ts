@@ -76,6 +76,7 @@ export class ClientControlManager {
         Utils.checkArgument(!Utils.isNullOrEmpty(method));
         Utils.checkArgument(!isNullOrUndefined(timestamp));
         Utils.checkArgument(!isNullOrUndefined(parameterMap));
+        Utils.checkArgument(!Utils.isNullOrEmpty(signature));
         Utils.checkArgument(parameterMap.has(ClientControlManager.CLIENT_ACCESS_KEY), "Access key param not found");
         const currentTimeMillis: number = (new Date()).getTime();
         if (timestamp > currentTimeMillis || currentTimeMillis > timestamp + ClientControlManager.THREE_MINUTES) {
