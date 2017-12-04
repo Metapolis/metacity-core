@@ -47,7 +47,7 @@ import { CircleQueryServiceImpl } from "../../../src/services/query/impl/CircleQ
 import { CircleQueryService } from "../../../src/services/query/CircleQueryService";
 import { UserQueryServiceImpl } from "../../../src/services/query/impl/UserQueryServiceImpl";
 import { UserQueryService } from "../../../src/services/query/UserQueryService";
-import { ClientControlManager } from "../../../src/common/security/impl/ClientControlManager";
+import { ClientControlManager } from "../../../src/security/ClientControlManager";
 import { Role } from "../../../src/common/enum/Role";
 
 /**

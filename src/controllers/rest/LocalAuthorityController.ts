@@ -81,6 +81,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Post("/:accessKey/circles")
     public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string): Promise<NumberIdentifier> {
 
@@ -108,6 +109,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {number} circleId circle identifier
      * @param {Express.Response} res Response to set 204
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Put("/:accessKey/circles/:circleid")
     public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("accessKey") accessKey: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
@@ -189,6 +191,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {number} circleId Circle identifier
      * @param {Express.Response} res Response to set 204
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Delete("/:localauthorityid/circles/:circleid")
     public async deleteLocalAuthorityCircle(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         this.logger.debug("Begin delete circle '%s'", circleId);

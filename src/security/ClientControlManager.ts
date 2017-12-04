@@ -23,13 +23,13 @@
 
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
-import { Utils } from "../../Utils";
-import { AccessDeniedError } from "../../error/AccessDeniedError";
+import { Utils } from "../common/Utils";
+import { AccessDeniedError } from "../common/error/AccessDeniedError";
 import { isNullOrUndefined } from "util";
-import { CredentialDao } from "../../../persistence/dao/CredentialDao";
-import { Credential } from "../../../persistence/domain/Credential";
+import { CredentialDao } from "../persistence/dao/CredentialDao";
+import { Credential } from "../persistence/domain/Credential";
 import CryptoJS = require("crypto-js");
-import { ResultList } from "../../ResultList";
+import { ResultList } from "../common/ResultList";
 
 /**
  * Contain all services to manage security
@@ -135,12 +135,7 @@ export class ClientControlManager {
 
             // Sort values
             values.sort();
-            for (let i = 0; i < values.length; i++) {
-                if (i > 0) {
-                    signature = signature.concat("/");
-                }
-                signature = signature.concat(values[i]);
-            }
+            signature = signature.concat(values.join("/"));
         }
 
         return CryptoJS.SHA512(method + ":" + String(timestamp) + ":" + signature).toString();

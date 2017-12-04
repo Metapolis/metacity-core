@@ -31,7 +31,7 @@ import { UserDao } from "../../../persistence/dao/UserDao";
 import { User } from "../../../persistence/domain/User";
 import { AccessDeniedError } from "../../../common/error/AccessDeniedError";
 import { UserTokenDTO } from "../dto/user/UserTokenDTO";
-import { JWTPayload } from "../../../common/security/JWTToken";
+import { JWTPayload } from "../../../security/JWTToken";
 import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
 import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 

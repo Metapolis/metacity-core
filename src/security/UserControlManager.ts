@@ -24,11 +24,11 @@
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import * as JWT from "jsonwebtoken";
-import { Utils } from "../../Utils";
-import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
-import { JWTPayload } from "../JWTToken";
-import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
-import { AccessDeniedError } from "../../error/AccessDeniedError";
+import { Utils } from "../common/Utils";
+import { LocalAuthorityDao } from "../persistence/dao/LocalAuthorityDao";
+import { JWTPayload } from "./JWTToken";
+import { LocalAuthority } from "../persistence/domain/LocalAuthority";
+import { AccessDeniedError } from "../common/error/AccessDeniedError";
 
 /**
  * Contain all services to manage security

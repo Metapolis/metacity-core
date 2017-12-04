@@ -32,6 +32,8 @@ import { UserToken } from "./model/user/UserToken";
 import { RequestAccessor } from "../../RequestAccessor";
 import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
+import { ClientControl } from "../../common/Decorators";
+import { Role } from "../../common/enum/Role";
 
 /**
  * API resources to delivery service to authentication
@@ -67,8 +69,8 @@ export class AuthenticationController implements interfaces.Controller {
      * Authentication resources
      *
      * @param userAuthenticationToken user credential use to authentication
-     * @param next next express function
      */
+    @ClientControl(Role.MANAGE_USER)
     @Post("/")
     public async authenticate(@RequestBody() userAuthenticationToken: UserAuthenticationToken): Promise<UserToken> {
         this.logger.debug("Begin authentication");

@@ -21,18 +21,16 @@
  * @since      0.2.0
  */
 
-import { RequestAccessor } from "../RequestAccessor";
 import { AccessDeniedError } from "./error/AccessDeniedError";
 import { Utils } from "./Utils";
 import { ContextApp } from "../ContextApp";
 import { User } from "../persistence/domain/User";
 import { UserDao } from "../persistence/dao/UserDao";
-import { JWTPayload } from "./security/JWTToken";
+import { JWTPayload } from "../security/JWTToken";
 import { IllegalArgumentError } from "./error/IllegalArgumentError";
 import { Config } from "../Config";
-import { ClientControlManager } from "./security/impl/ClientControlManager";
-import { UserControlManager } from "./security/impl/UserControlManager";
-import { timestamp } from "rxjs/operator/timestamp";
+import { ClientControlManager } from "../security/ClientControlManager";
+import { UserControlManager } from "../security/UserControlManager";
 import { Request } from "express-serve-static-core";
 
 /**
