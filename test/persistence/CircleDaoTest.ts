@@ -70,11 +70,11 @@ export class CircleDaoTest extends AbstractTestDao {
 
         await circleRepository.save(circle);
 
-        let isExists: boolean = await circleDao.exists(circle.getId());
+        let isExists: boolean = await circleDao.isExists(circle.getId());
 
         Chai.assert.isTrue(isExists);
 
-        isExists = await circleDao.exists(circle.getId() + 2);
+        isExists = await circleDao.isExists(circle.getId() + 2);
 
         Chai.assert.isFalse(isExists);
     }
@@ -83,53 +83,108 @@ export class CircleDaoTest extends AbstractTestDao {
     public async testFindBy(): Promise<void> {
         const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
         const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
-        const numberOfCircles: number = 3;
         const localAuthorityId: number = 101;
         const circleDao: CircleDao = ContextApp.container.get("CircleDao");
-        const localAuthorityDao: LocalAuthorityDao = ContextApp.container.get("LocalAuthorityDao");
 
         const circles: Circle[] = [];
         circles.push(new Circle());
-        circles[0].setId(5);
         circles[0].setName("Bowman");
         circles[0].setRoles(["Muse of nanchos"]);
         circles[0].setDefaultCircle(false);
         circles.push(new Circle());
-        circles[1].setId(20);
         circles[1].setName("C Ness is Sans");
         circles[1].setRoles(["Spooky skeleton"]);
         circles[1].setDefaultCircle(true);
         circles.push(new Circle());
-        circles[2].setId(10);
         circles[2].setName("o");
         circles[2].setRoles(["Muse of nachos"]);
         circles[2].setDefaultCircle(false);
 
-        const saveCircles: Promise<Circle[]> = circleRepository.save(circles);
+        const saveCircles: Circle[] = await circleRepository.save(circles);
 
         const localAuthorities: LocalAuthority[] = [];
         localAuthorities.push(new LocalAuthority());
         localAuthorities[0].setId(localAuthorityId);
         localAuthorities[0].setName("police");
-        localAuthorities[0].setCircles(saveCircles);
+        (await localAuthorities[0].getCircles()).push(saveCircles[0], saveCircles[1]);
 
-        await saveCircles;
         await localAuthorityRepository.save(localAuthorities);
 
         const query: FindCircleQuery = new FindCircleQuery();
         query.setLocalAuthorityId(localAuthorityId);
-        query.setLimit(numberOfCircles);
+        query.setLimit(3);
         query.setOffset(0);
-        const actualCircles: Circle[] = await circleDao.findBy(query);
-        const actualLocalAuthority: LocalAuthority = await localAuthorityDao.findById(localAuthorityId);
+        let actualCircles: Circle[] = await circleDao.findBy(query);
 
-        Chai.assert.equal(actualLocalAuthority.getName(), localAuthorities[0].getName());
-        for ( let i: number = 0; i < numberOfCircles; i++ ) {
+        Chai.assert.equal(actualCircles.length, 2);
+        for (let i: number = 0; i < 2; i++) {
             Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());
             Chai.assert.equal(actualCircles[i].getName(), circles[i].getName());
             Chai.assert.deepEqual(actualCircles[i].getRoles(), circles[i].getRoles());
             Chai.assert.equal(actualCircles[i].isDefaultCircle(), circles[i].isDefaultCircle());
         }
+
+        query.setLocalAuthorityId(undefined);
+        actualCircles = await circleDao.findBy(query);
+
+        Chai.assert.equal(actualCircles.length, 3);
+        for (let i: number = 0; i < 3; i++) {
+            Chai.assert.equal(actualCircles[i].getId(), circles[i].getId());
+            Chai.assert.equal(actualCircles[i].getName(), circles[i].getName());
+            Chai.assert.deepEqual(actualCircles[i].getRoles(), circles[i].getRoles());
+            Chai.assert.equal(actualCircles[i].isDefaultCircle(), circles[i].isDefaultCircle());
+        }
+
+        query.setLocalAuthorityId(4);
+        actualCircles = await circleDao.findBy(query);
+        Chai.assert.equal(actualCircles.length, 0);
+    }
+
+    @test
+    public async testCountBy(): Promise<void> {
+        const circleRepository: TypeORM.Repository<Circle> = ContextApp.container.get("CircleRepository");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
+        const localAuthorityId: number = 101;
+        const circleDao: CircleDao = ContextApp.container.get("CircleDao");
+
+        const circles: Circle[] = [];
+        circles.push(new Circle());
+        circles[0].setName("Bowman");
+        circles[0].setRoles(["Muse of nanchos"]);
+        circles[0].setDefaultCircle(false);
+        circles.push(new Circle());
+        circles[1].setName("C Ness is Sans");
+        circles[1].setRoles(["Spooky skeleton"]);
+        circles[1].setDefaultCircle(true);
+        circles.push(new Circle());
+        circles[2].setName("o");
+        circles[2].setRoles(["Muse of nachos"]);
+        circles[2].setDefaultCircle(false);
+
+        const saveCircles: Circle[] = await circleRepository.save(circles);
+
+        const localAuthorities: LocalAuthority[] = [];
+        localAuthorities.push(new LocalAuthority());
+        localAuthorities[0].setId(localAuthorityId);
+        localAuthorities[0].setName("police");
+        (await localAuthorities[0].getCircles()).push(saveCircles[0], saveCircles[1]);
+
+        await localAuthorityRepository.save(localAuthorities);
+
+        const query: FindCircleQuery = new FindCircleQuery();
+        query.setLocalAuthorityId(localAuthorityId);
+        let count: number = await circleDao.countBy(query);
+
+        Chai.assert.equal(count, 2);
+
+        query.setLocalAuthorityId(undefined);
+        count = await circleDao.countBy(query);
+
+        Chai.assert.equal(count, 3);
+
+        query.setLocalAuthorityId(4);
+        count = await circleDao.countBy(query);
+        Chai.assert.equal(count, 0);
     }
 
     @test

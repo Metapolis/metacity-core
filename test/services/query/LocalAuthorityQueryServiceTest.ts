@@ -32,6 +32,8 @@ import * as TypeMoq from "typemoq";
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 import { Credential } from "../../../src/persistence/domain/Credential";
 import { LocalAuthorityDTO } from "../../../src/services/query/dto/localauthority/LocalAuthorityDTO";
+import { CircleDao } from "../../../src/persistence/dao/CircleDao";
+import { CircleQueryService } from "../../../src/services/query/CircleQueryService";
 
 /**
  * All test for user localAuthority query service
@@ -86,5 +88,22 @@ class LocalAuthorityQueryServiceTest extends AbstractTestService {
             Chai.assert.instanceOf(err, IllegalArgumentError);
             Chai.assert.equal(err.message, "Domain cannot be null or empty");
         });
+    }
+
+    @test
+    private async testIsExists(): Promise<void> {
+        const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
+        const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
+
+        localAuthorityDaoMock.setup((instance) => instance.isExists(12)).returns(() => Promise.resolve(true));
+        localAuthorityDaoMock.setup((instance) => instance.isExists(10)).returns(() => Promise.resolve(false));
+
+        let exists: boolean = await localAuthorityQueryService.isExists(12);
+
+        Chai.assert.isTrue(exists);
+
+        exists = await localAuthorityQueryService.isExists(10);
+
+        Chai.assert.isFalse(exists);
     }
 }

@@ -45,6 +45,7 @@ import { TestUtils } from "../common/TestUtils";
 import { ResultList } from "../../src/common/ResultList";
 import { CircleSummary } from "../../src/controllers/rest/model/circle/CircleSummary";
 import { FindCircleQuery } from "../../src/common/query/FindCircleQuery";
+import { LocalAuthorityQueryService } from "../../src/services/query/LocalAuthorityQueryService";
 
 /**
  * All test for circle creation
@@ -70,6 +71,9 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const localAuthorityId: number = 5;
         // Hello im a rigid linter
         const circleIdentifier = 42;
+        const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+
+        localAuthorityQueryService.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(true));
 
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
@@ -107,7 +111,12 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testCreateLocalAuthorityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
-        const path: string = "/api/local-authorities/{localauthorityid}/circles";
+        const path: string = "/api/local-authorities/1/circles";
+        const path404: string = "/api/local-authorities/2/circles";
+        const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+
+        localAuthorityQueryService.setup((instance) => instance.isExists(1)).returns(() => Promise.resolve(true));
+        localAuthorityQueryService.setup((instance) => instance.isExists(2)).returns(() => Promise.resolve(false));
 
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
@@ -115,16 +124,24 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         const opts = {
             method: "POST",
-            uri: AbstractTestController.getBackend() + path,
+            uri: AbstractTestController.getBackend() + path404,
             body: circle,
             json: true
         };
 
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
+
+        opts.uri = AbstractTestController.getBackend() + path;
         LocalAuthorityControllerTest.circleCommandService.setup(
             (instance) => instance.createCircle(TypeMoq.It.isAny())
         ).throws(new IllegalArgumentError("ERROR"));
 
-        let statusCode = HTTPStatusCodes.OK;
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
@@ -135,7 +152,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     @test
     public async testUpdateLocalAuthorityCircle(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
-        const localAuthorityId: string = "starkindustries";
+        const localAuthorityId: number = 12;
         const circleIdentifier = 42;
 
         const circle: SaveCircle = new SaveCircle();
@@ -143,11 +160,11 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         circle.roles = ["Champion"];
         circle.defaultCircle = true;
 
-        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
 
         const opts = {
             method: "PUT",
-            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", localAuthorityId).replace("{circleid}", String(circleIdentifier)),
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             body: circle,
             json: true
         };
@@ -161,7 +178,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             }
             ret = ret && localAuthorityCircle.getName() === circle.name;
             ret = ret && localAuthorityCircle.isDefaultCircle() === circle.defaultCircle;
-            ret = ret && localAuthorityCircle.getAccessKey() === localAuthorityId;
+            ret = ret && localAuthorityCircle.getLocalAuthorityId() === localAuthorityId;
             ret = ret && localAuthorityCircle.getId() === circleIdentifier;
             return ret;
         })), TypeMoq.Times.exactly(1));
@@ -174,7 +191,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
-        const localAuthorityId: string = "starkindustries";
+        const localAuthorityId: number = 12;
 
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
@@ -182,12 +199,12 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         const opts = {
             method: "PUT",
-            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", localAuthorityId).replace("{circleid}", String(circleIdentifier)),
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             body: circle,
             json: true
         };
 
-        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(false));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
 
         let statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -197,7 +214,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
         LocalAuthorityControllerTest.circleCommandService.setup((instance) => instance.updateCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
-        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.exists(circleIdentifier)).returns(() => Promise.resolve(true));
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
 
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -289,13 +306,15 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     }
 
     @test
-    public async testFindLocalAuthorityCirclesSummaries(): Promise<void> {
+    public async testFindLocalAuthorityCircles(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/circles?limit={limit}&offset={offset}";
         const resultTotal: number = 72;
         const localAuthorityId: number = 1;
         const limit: number = 10;
         const offset: number = 0;
         const circlesDTOMock: CircleDTO[] = [];
+        const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+
         for (let i = 0; i < resultTotal; i++) {
             const circleDTOMock: CircleDTO = new CircleDTO();
             circleDTOMock.setId(i);
@@ -319,6 +338,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         LocalAuthorityControllerTest.circleQueryService.
             setup((instance) => instance.findCircles(mockQuery)).
             returns(() => Promise.resolve(circlesResultListMock));
+        localAuthorityQueryService.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(true));
+        localAuthorityQueryService.setup((instance) => instance.isExists(localAuthorityId + 1)).returns(() => Promise.resolve(false));
 
         const actual: CircleSummary[] = [];
         await Request(opts).then((data: ResultList<CircleSummary>) => {
@@ -329,48 +350,16 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             Chai.assert.equal(actual[i].name, circlesDTOMock[i].getName(), "Expected same name");
             Chai.assert.equal(actual[i].defaultCircle, circlesDTOMock[i].isDefaultCircle(), "Expected same circle default");
         }
-    }
 
-    @test
-    public async testFindLocalAuthorityCirclesNoMatch(): Promise<void> {
-        const path: string = "/api/local-authorities/{localauthorityid}/circles?limit={limit}&offset={offset}";
-        const resultTotal: number = 72;
-        const actualResultTotal: number = 0;
-        const localAuthorityId: number = 0;
-        const limit: number = 10;
-        const offset: number = 0;
-        const circlesDTOMock: CircleDTO[] = [];
-        const circlesResultListMock: ResultList<CircleDTO> = new ResultList<CircleDTO>(actualResultTotal, circlesDTOMock);
-
-        const opts = {
-            method: "GET",
-            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{limit}", String(limit)).replace("{offset}", String(offset)),
-            json: true
-        };
-
-        const mockQuery: FindCircleQuery = new FindCircleQuery();
-        mockQuery.setLocalAuthorityId(localAuthorityId);
-        mockQuery.setLimit(limit);
-        mockQuery.setOffset(offset);
-
-        LocalAuthorityControllerTest.circleQueryService.
-            setup((instance) => instance.findCircles(mockQuery)).
-            returns(() => Promise.resolve(circlesResultListMock));
+        // Check for local authority does not exist
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{limit}", String(limit)).replace("{offset}", String(offset));
 
         let statusCode = HTTPStatusCodes.OK;
-        const actual: CircleSummary[] = [];
-        let actualTotal: number = -1;
-        try {
-            await Request(opts).then((data: ResultList<CircleSummary>) => {
-                Object.assign(actual, data.results);
-                actualTotal = data.total;
-            });
-        } catch (err) {
-            statusCode = err.statusCode;
-        }
-        Chai.assert.equal(statusCode, HTTPStatusCodes.OK, "Expect 200 status code");
-        Chai.assert.equal(actual.length, 0, "Expect array of results to be empty");
-        Chai.assert.equal(actualTotal, 0, "Expect total of result to be 0");
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND);
     }
 
     @test

@@ -61,7 +61,7 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async exists(id: number): Promise<boolean> {
+    public async isExists(id: number): Promise<boolean> {
         this.logger.debug("Check in data base if circle with id '%s' exists", id);
 
         return (await this.circleRepository.count({where: {id: id}})) > 0;
@@ -85,24 +85,29 @@ export class CircleDaoImpl implements CircleDao {
      */
     private computeQuery(query: FindCircleQuery): SelectQueryBuilder<Circle> {
         const queryBuilder: SelectQueryBuilder<Circle> = this.circleRepository.createQueryBuilder("circle");
-        return queryBuilder
-            .innerJoinAndSelect("circle.localAuthority", "localAuthority")
-            .where("(localAuthority.id = :localAuthority)")
-            .orderBy("circle.name", "ASC")
-            .skip(query.getOffset())
-            .take(query.getLimit())
-            .setParameters({ localAuthority: query.getLocalAuthorityId() });
+        if (query.isSet()) {
+            if (query.getLocalAuthorityId() !== undefined) {
+                queryBuilder
+                    .innerJoinAndSelect("circle.localAuthority", "localAuthority")
+                    .where("(localAuthority.id = :localAuthority)")
+                    .setParameters({localAuthority: query.getLocalAuthorityId()});
+            }
+        }
+        queryBuilder.orderBy("circle.name", "ASC");
+
+        this.logger.debug("Computed query is : '%s'", queryBuilder.getSql());
+
+        return queryBuilder;
     }
 
     /**
      * Override
      */
     public async findBy(query: FindCircleQuery): Promise<Circle[]> {
-        let circles: Promise<Circle[]>;
-        if (query.isSet()) {
-            this.logger.info("Retrieving all circles owned by the local authority #%d", query.getLocalAuthorityId());
-            circles = this.computeQuery(query).getMany();
-        }
+        const circles: Circle[] = await this.computeQuery(query).offset(query.getOffset()).limit(query.getLimit()).getMany();
+
+        this.logger.debug("'%s' circles retrieves", circles.length);
+
         return circles;
     }
 

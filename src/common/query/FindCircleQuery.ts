@@ -53,10 +53,7 @@ export class FindCircleQuery {
      * @returns {boolean} True if all parameters are set
      */
     public isSet(): boolean {
-        const ret: boolean = this.limit != null
-            && this.localAuthorityId != null
-            && this.offset != null;
-        return ret;
+        return this.localAuthorityId !== undefined;
     }
 
     /**

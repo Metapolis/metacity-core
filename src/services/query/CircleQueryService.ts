@@ -37,7 +37,7 @@ export interface CircleQueryService {
      *
      * @returns {Promise<boolean>} true means circle with this specific identifier exists
      */
-    exists(id: number): Promise<boolean>;
+    isExists(id: number): Promise<boolean>;
 
     /**
      * Check if circle is owned by localAuthority

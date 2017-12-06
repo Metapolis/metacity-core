@@ -21,10 +21,7 @@
  * @since      0.2.0
  */
 
-import {
-    Controller, Delete, Get, interfaces, Post, Put, QueryParam, RequestBody,
-    RequestParam, Response
-} from "inversify-express-utils";
+import { Controller, Delete, Get, interfaces, Post, Put, QueryParam, RequestBody, RequestParam, Response } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
@@ -43,6 +40,7 @@ import { User } from "./model/circle/User";
 import { CircleSummary } from "./model/circle/CircleSummary";
 import { ResultList } from "../../common/ResultList";
 import { FindCircleQuery } from "../../common/query/FindCircleQuery";
+import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 
 /**
  * API resources to Local authorities services
@@ -75,6 +73,12 @@ export class LocalAuthorityController implements interfaces.Controller {
     private circleQueryService: CircleQueryService;
 
     /**
+     * Local authority query service
+     */
+    @inject("LocalAuthorityQueryService")
+    private localAuthorityQueryService: LocalAuthorityQueryService;
+
+    /**
      * Find circles, filter result
      *
      * @param {number} localAuthorityId: localAuthority identifier
@@ -84,28 +88,34 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @returns {Promise<ResultList<CircleSummary>>} list of circles summaries
      */
     @Get("/:localauthorityid/circles")
-    public async findLocalAuthorityCircles(
-        @RequestParam("localauthorityid") localAuthorityId: number,
-        @QueryParam("limit") limit: number,
-        @QueryParam("offset") offset: number): Promise<ResultList<CircleSummary>> {
-            this.logger.debug("Begin find circles");
-            const query: FindCircleQuery = new FindCircleQuery();
-            query.setLocalAuthorityId(Number(localAuthorityId));
-            query.setLimit(Number(limit));
-            query.setOffset(Number(offset));
-
-            const circleResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
-            const circleSummaries: CircleSummary[] = [];
-            for (const circleDTO of circleResultList.results) {
-                const circleSummary: CircleSummary = new CircleSummary();
-                circleSummary.id = circleDTO.getId();
-                circleSummary.name = circleDTO.getName();
-                circleSummary.defaultCircle = circleDTO.isDefaultCircle();
-                circleSummaries.push(circleSummary);
-            }
-            this.logger.debug("%d Circles retrieved", circleResultList.total);
-            return new ResultList<CircleSummary>(circleResultList.total, circleSummaries);
+    public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: number,
+                                           @QueryParam("limit") limit: number,
+                                           @QueryParam("offset") offset: number): Promise<ResultList<CircleSummary>> {
+        this.logger.debug("Begin find circles");
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+        if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
+            this.logger.debug("Local authority with id '%s' cannot be found", localAuthorityIdNumber);
+            throw new NotFoundError("Local authority not found");
         }
+
+        const query: FindCircleQuery = new FindCircleQuery();
+        query.setLocalAuthorityId(localAuthorityIdNumber);
+        query.setLimit(Number(limit));
+        query.setOffset(Number(offset));
+
+        const circleResultList: ResultList<CircleDTO> = await this.circleQueryService.findCircles(query);
+        const circleSummaries: CircleSummary[] = [];
+        for (const circleDTO of circleResultList.results) {
+            const circleSummary: CircleSummary = new CircleSummary();
+            circleSummary.id = circleDTO.getId();
+            circleSummary.name = circleDTO.getName();
+            circleSummary.defaultCircle = circleDTO.isDefaultCircle();
+            circleSummaries.push(circleSummary);
+        }
+        this.logger.debug("%d Circles retrieved", circleResultList.total);
+
+        return new ResultList<CircleSummary>(circleResultList.total, circleSummaries);
+    }
 
     /**
      * Create a circle
@@ -117,11 +127,13 @@ export class LocalAuthorityController implements interfaces.Controller {
      */
     @Post("/:localauthorityid/circles")
     public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: number): Promise<NumberIdentifier> {
-
-        // We don't verify if localAuthority exists
-        // It will be done with @secured
-        // Coming soon
         this.logger.debug("Begin creation");
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+        if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
+            this.logger.debug("Local authority with id '%s' cannot be found", localAuthorityIdNumber);
+            throw new NotFoundError("Local authority not found");
+        }
+
         const saveCircleCommandDTO: SaveCircleCommandDTO = new SaveCircleCommandDTO();
         saveCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         saveCircleCommandDTO.setName(circle.name);
@@ -143,24 +155,23 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {Express.Response} res Response to set 204
      */
     @Put("/:localauthorityid/circles/:circleid")
-    public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: string, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
+    public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
 
-        if (!(await this.circleQueryService.exists(circleIdNumber))) {
-            this.logger.debug("Circle with id '%s' cannot be found", circleId);
-            throw new NotFoundError("Circle not found");
+        if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
+            this.logger.debug("Circle with id '%s' cannot be found or local authority with '%s' does not exists is circle not owned by local authority", circleId, localAuthorityId);
+            throw new NotFoundError("Circle or local authority not found or not owned");
         }
-        // We don't verify if localAuthority exists
-        // It will be done with @secured
-        // Coming soon
+
         this.logger.debug("Begin update");
         const updateCircleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
         updateCircleCommandDTO.setDefaultCircle(circle.defaultCircle);
         updateCircleCommandDTO.setName(circle.name);
         updateCircleCommandDTO.setRoles(circle.roles);
         updateCircleCommandDTO.setMembers(circle.members);
-        updateCircleCommandDTO.setAccessKey(localAuthorityId);
+        updateCircleCommandDTO.setLocalAuthorityId(localAuthorityIdNumber);
         updateCircleCommandDTO.setId(circleIdNumber);
 
         await this.circleCommandService.updateCircle(updateCircleCommandDTO);
@@ -187,13 +198,10 @@ export class LocalAuthorityController implements interfaces.Controller {
 
         // Check if circle and localAuthority exist and is circle is owned by localAuthority
         if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
-            throw new NotFoundError("Circle is not owned by localAuthority");
+            this.logger.debug("Circle with id '%s' cannot be found or local authority with '%s' does not exists is circle not owned by local authority", circleId, localAuthorityId);
+            throw new NotFoundError("Circle or local authority not found or not owned");
         }
 
-        // We don't verify if localAuthority exists
-        // It will be done with @secured
-        // Coming soon
-        // Don't check if circle exists because the previous check all
         const circleDTO: CircleDTO = await this.circleQueryService.getCircle(circleIdNumber);
         const circleDetails: CircleDetails = new CircleDetails();
         circleDetails.id = circleDTO.getId();
@@ -230,13 +238,14 @@ export class LocalAuthorityController implements interfaces.Controller {
 
         // Check if circle and localAuthority exist and is circle is owned by localAuthority
         if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
-            throw new NotFoundError("Circle is not owned by localAuthority");
+            this.logger.debug("Circle with id '%s' cannot be found or local authority with '%s' does not exists is circle not owned by local authority", circleId, localAuthorityId);
+            throw new NotFoundError("Circle or local authority not found or not owned");
         }
 
-        // We don't verify if localAuthority exists
+        // We don't verify if localAuthority isExists
         // It will be done with @secured
         // Coming soon
-        // Don't check if circle exists because the previous check all
+        // Don't check if circle isExists because the previous check all
         await this.circleCommandService.deleteCircle(circleIdNumber);
 
         this.logger.debug("Circle '%s' is deleted", circleIdNumber);
