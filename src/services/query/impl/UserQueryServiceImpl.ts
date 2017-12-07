@@ -31,6 +31,7 @@ import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { UserDao } from "../../../persistence/dao/UserDao";
 import { User } from "../../../persistence/domain/User";
+import { isNullOrUndefined } from "util";
 
 /**
  * Implementation of {@link UserQueryService}
@@ -58,10 +59,10 @@ export class UserQueryServiceImpl implements UserQueryService {
      */
     public async findUsers(query: FindUserQuery): Promise<ResultList<UserDTO>> {
         this.logger.info("Retrieve users in elastic search");
-        Utils.checkArgument(query != null, "Query cannot be null");
-        Utils.checkArgument(query.getOffset() != null, "Offset must be set");
+        Utils.checkArgument(!isNullOrUndefined(query), "Query cannot be null");
+        Utils.checkArgument(!isNullOrUndefined(query.getOffset()), "Offset must be set");
         Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
-        Utils.checkArgument(query.getLimit() != null, "Limit must be set");
+        Utils.checkArgument(!isNullOrUndefined(query.getLimit()), "Limit must be set");
         Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
 
         const users: User[] = await this.userDao.findBy(query);

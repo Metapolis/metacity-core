@@ -27,6 +27,16 @@ import { LocalAuthorityDTO } from "./dto/localauthority/LocalAuthorityDTO";
  * Contains method to perform localAuthority query
  */
 export interface LocalAuthorityQueryService {
+
+    /**
+     * Check if local authority exists
+     *
+     * @param id local authority's identifier
+     *
+     * @returns {Promise<boolean>} true means local authority with this specific identifier exists
+     */
+    isExists(id: number): Promise<boolean>;
+
     /**
      * Retrieve localAuthority by domain
      *

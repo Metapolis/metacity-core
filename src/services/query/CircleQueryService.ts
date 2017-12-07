@@ -22,6 +22,8 @@
  */
 
 import { CircleDTO } from "./dto/circle/CircleDTO";
+import { ResultList } from "../../common/ResultList";
+import { FindCircleQuery } from "../../common/query/FindCircleQuery";
 
 /**
  * Contains method to perform circle query
@@ -35,7 +37,7 @@ export interface CircleQueryService {
      *
      * @returns {Promise<boolean>} true means circle with this specific identifier exists
      */
-    exists(id: number): Promise<boolean>;
+    isExists(id: number): Promise<boolean>;
 
     /**
      * Check if circle is owned by localAuthority
@@ -54,4 +56,12 @@ export interface CircleQueryService {
      * @returns {CircleDTO} return the DTO of specific circle
      */
     getCircle(circleId: number): Promise<CircleDTO> | null;
+
+    /**
+     * Find list of circles for a local authority
+     *
+     * @param {FindCircleQuery} query contains circle search query
+     * @returns {Promise<ResultList<CircleDTO>>} DTOs of circles
+     */
+    findCircles(query: FindCircleQuery): Promise<ResultList<CircleDTO>>;
 }

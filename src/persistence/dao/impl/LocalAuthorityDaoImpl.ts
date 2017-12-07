@@ -50,6 +50,15 @@ export class LocalAuthorityDaoImpl implements LocalAuthorityDao {
     /**
      * Override
      */
+    public async isExists(id: number): Promise<boolean> {
+        this.logger.debug("Check in data base if local authority with id '%s' exists", id);
+
+        return (await this.localAuthorityRepository.count({where: {id: id}})) > 0;
+    }
+
+    /**
+     * Override
+     */
     public async findById(id: number): Promise<LocalAuthority> | undefined {
         this.logger.info("Retrieve localAuthority with identifier '%s'", id);
 

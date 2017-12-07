@@ -27,9 +27,9 @@
 export class UpdateCircleCommandDTO {
 
     /**
-     * LocalAuthority's credential access key
+     * LocalAuthority's identifier
      */
-    private accessKey: string;
+    private localAuthorityId: number;
 
     /**
      * Circle's identifier
@@ -57,19 +57,19 @@ export class UpdateCircleCommandDTO {
     private members: number[] = [];
 
     /**
-     * Getter accessKey
+     * Getter localAuthorityId
      * @returns {string}
      */
-    public getAccessKey(): string {
-        return this.accessKey;
+    public getLocalAuthorityId(): number {
+        return this.localAuthorityId;
     }
 
     /**
-     * Setter accessKey
-     * @param {string} accessKey
+     * Setter localAuthorityId
+     * @param {string} localAuthorityId
      */
-    public setAccessKey(accessKey: string): void {
-        this.accessKey = accessKey;
+    public setLocalAuthorityId(localAuthorityId: number): void {
+        this.localAuthorityId = localAuthorityId;
     }
 
     /**

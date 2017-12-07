@@ -41,4 +41,13 @@ export interface LocalAuthorityDao {
      * @param accessKey credential's identifier
      */
     findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined;
+
+    /**
+     * Check if this specific local authority exists
+     *
+     * @param {number} id local authority's identifier
+     *
+     * @returns {Promise<boolean>} true means local authority exists in database
+     */
+    isExists(id: number): Promise<boolean>;
 }

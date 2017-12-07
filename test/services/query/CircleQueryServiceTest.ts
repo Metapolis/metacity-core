@@ -32,6 +32,12 @@ import { Circle } from "../../../src/persistence/domain/Circle";
 import { Role } from "../../../src/common/enum/Role";
 import * as Chai from "chai";
 import { User } from "../../../src/persistence/domain/User";
+import { ResultList } from "../../../src/common/ResultList";
+import { FindCircleQuery } from "../../../src/common/query/FindCircleQuery";
+import { FindUserQuery } from "../../../src/common/query/FindUserQuery";
+import { isNullOrUndefined } from "util";
+import { UserQueryService } from "../../../src/services/query/UserQueryService";
+import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 
 @suite
 export class CircleQueryServiceTest extends AbstractTestService {
@@ -85,6 +91,150 @@ export class CircleQueryServiceTest extends AbstractTestService {
     }
 
     @test
+    private async testFindCircles(): Promise<void> {
+        const numberOfCircles: number = 2;
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+        const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const circlesMock: Circle[] = [];
+        const localAuthorityId: number = 1;
+
+        /** Our current user */
+        const userJhon = new User();
+        userJhon.setId(13);
+
+        /** First Circle */
+        circlesMock.push(new Circle());
+        circlesMock[0].setId(4);
+        circlesMock[0].setName("Roller coaster tycoon");
+        circlesMock[0].setDefaultCircle(true);
+        // add users to the circle
+        (await circlesMock[0].getUsers()).push(userJhon);
+
+        /** Another circle */
+        circlesMock.push(new Circle());
+        circlesMock[1].setId(13);
+        circlesMock[1].setName("memetic content, high energy, super male vitality");
+        circlesMock[1].setDefaultCircle(false);
+        // add users to the circle
+        (await circlesMock[1].getUsers()).push(userJhon);
+
+        // update imaginary database ໒( ͡ᵔ ▾ ͡ᵔ )७
+        const queryMock: FindCircleQuery = new FindCircleQuery();
+        queryMock.setLimit(numberOfCircles);
+        queryMock.setOffset(0);
+        circleDaoMock.setup((instance) => instance.findBy(TypeMoq.It.isAny()))
+            .returns(() => Promise.resolve(circlesMock));
+
+        /** O==||==assert=time==> */
+        let circlesDTO: ResultList<CircleDTO> = await circleQueryService.findCircles(queryMock);
+        for (let i: number = 0; i < numberOfCircles; i++) {
+            Chai.assert.equal(circlesDTO.results[i].getId(), circlesMock[i].getId());
+            Chai.assert.equal(circlesDTO.results[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());
+            Chai.assert.equal(circlesDTO.results[i].getName(), circlesMock[i].getName());
+        }
+
+        circleDaoMock.verify((instance) => instance.findBy(TypeMoq.It.is((query: FindCircleQuery) => {
+            let ret: boolean = query.getLimit() === queryMock.getLimit();
+            ret = ret && query.getOffset() === queryMock.getOffset();
+            ret = ret && query.isSet() === false;
+            ret = ret && isNullOrUndefined(query.getLocalAuthorityId());
+
+            return ret;
+        })), TypeMoq.Times.exactly(1));
+
+        queryMock.setLocalAuthorityId(localAuthorityId);
+
+        /** O==||==assert=time==> */
+        circlesDTO = await circleQueryService.findCircles(queryMock);
+        for ( let i: number = 0; i < numberOfCircles; i++ ) {
+            Chai.assert.equal(circlesDTO.results[i].getId(), circlesMock[i].getId());
+            Chai.assert.equal(circlesDTO.results[i].isDefaultCircle(), circlesMock[i].isDefaultCircle());
+            Chai.assert.equal(circlesDTO.results[i].getName(), circlesMock[i].getName());
+        }
+
+        circleDaoMock.verify((instance) => instance.findBy(TypeMoq.It.is((query: FindCircleQuery) => {
+            let ret: boolean = query.getLimit() === queryMock.getLimit();
+            ret = ret && query.getOffset() === queryMock.getOffset();
+            ret = ret && query.isSet() === true;
+            ret = ret && query.getLocalAuthorityId() === localAuthorityId;
+
+            return ret;
+        })), TypeMoq.Times.exactly(1));
+    }
+
+    @test
+    private async testFindCirclesQueryNull() {
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+
+        await circleQueryService.findCircles(null).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Query cannot be null");
+        });
+    }
+
+    @test
+    private async testFindCirclesQueryOffsetNull() {
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+
+        const findCirclesQuery: FindCircleQuery = new FindCircleQuery();
+        findCirclesQuery.setOffset(null);
+
+        await circleQueryService.findCircles(findCirclesQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Offset must be set");
+        });
+    }
+
+    @test
+    private async testFindCirclesQueryOffsetNegative() {
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+
+        const findCirclesQuery: FindCircleQuery = new FindCircleQuery();
+        findCirclesQuery.setOffset(-1);
+
+        await circleQueryService.findCircles(findCirclesQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Offset cannot be negative");
+        });
+    }
+
+    @test
+    private async testFindCirclesQueryLimitNull() {
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+
+        const findCirclesQuery: FindCircleQuery = new FindCircleQuery();
+        findCirclesQuery.setLimit(null);
+
+        await circleQueryService.findCircles(findCirclesQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Limit must be set");
+        });
+    }
+
+    @test
+    private async testFindCirclesQueryLimitZero() {
+        const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
+
+        const findCirclesQuery: FindCircleQuery = new FindCircleQuery();
+        findCirclesQuery.setLimit(0);
+
+        await circleQueryService.findCircles(findCirclesQuery).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Limit must be superior to zero");
+        });
+    }
+
+    @test
     private async testIsOwnedByLocalAuthority(): Promise<void> {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
@@ -102,18 +252,18 @@ export class CircleQueryServiceTest extends AbstractTestService {
     }
 
     @test
-    private async testExists(): Promise<void> {
+    private async testIsExists(): Promise<void> {
         const circleQueryService: CircleQueryService = (ContextApp.container.get("CircleQueryService") as CircleQueryService);
         const circleDaoMock: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
 
-        circleDaoMock.setup((instance) => instance.exists(12)).returns(() => Promise.resolve(true));
-        circleDaoMock.setup((instance) => instance.exists(10)).returns(() => Promise.resolve(false));
+        circleDaoMock.setup((instance) => instance.isExists(12)).returns(() => Promise.resolve(true));
+        circleDaoMock.setup((instance) => instance.isExists(10)).returns(() => Promise.resolve(false));
 
-        let exists: boolean = await circleQueryService.exists(12);
+        let exists: boolean = await circleQueryService.isExists(12);
 
         Chai.assert.isTrue(exists);
 
-        exists = await circleQueryService.exists(10);
+        exists = await circleQueryService.isExists(10);
 
         Chai.assert.isFalse(exists);
     }

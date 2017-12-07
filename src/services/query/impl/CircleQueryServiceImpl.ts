@@ -31,6 +31,9 @@ import { Circle } from "../../../persistence/domain/Circle";
 import { CircleDTO } from "../dto/circle/CircleDTO";
 import { Role } from "../../../common/enum/Role";
 import { UserDTO } from "../dto/circle/UserDTO";
+import { ResultList } from "../../../common/ResultList";
+import { FindCircleQuery } from "../../../common/query/FindCircleQuery";
+import { isNullOrUndefined } from "util";
 
 /**
  * Implementation of {@link CircleQueryService}
@@ -54,10 +57,10 @@ export class CircleQueryServiceImpl implements CircleQueryService {
     /**
      * Override
      */
-    public async exists(id: number): Promise<boolean> {
+    public async isExists(id: number): Promise<boolean> {
         this.logger.debug("Check if circle with id '%s' exists", id);
 
-        return await this.circleDao.exists(id);
+        return await this.circleDao.isExists(id);
     }
 
     /**
@@ -101,5 +104,29 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             circleDTO.getMembers().push(userDTO);
         }
         return circleDTO;
+    }
+
+    /** Override */
+    public async findCircles(query: FindCircleQuery): Promise<ResultList<CircleDTO>> {
+        this.logger.debug("Retrieving circles");
+        Utils.checkArgument(!isNullOrUndefined(query), "Query cannot be null");
+        Utils.checkArgument(!isNullOrUndefined(query.getOffset()), "Offset must be set");
+        Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
+        Utils.checkArgument(!isNullOrUndefined(query.getLimit()), "Limit must be set");
+        Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
+
+        const circles: Circle[] = await this.circleDao.findBy(query);
+        const count: number = await this.circleDao.countBy(query);
+        const circleDTOs: CircleDTO[] = [];
+
+        for (const circle of circles) {
+            const circleDTO: CircleDTO = new CircleDTO();
+            circleDTO.setId(circle.getId());
+            circleDTO.setName(circle.getName());
+            circleDTO.setDefaultCircle(circle.isDefaultCircle());
+            circleDTOs.push(circleDTO);
+        }
+
+        return new ResultList<CircleDTO>(count, circleDTOs);
     }
 }
