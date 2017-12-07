@@ -30,6 +30,8 @@ import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { AbstractTestDao } from "./inversify/AbstractTestDao";
 import { Credential } from "../../src/persistence/domain/Credential";
 import { Role } from "../../src/common/enum/Role";
+import { CircleDao } from "../../src/persistence/dao/CircleDao";
+import { Circle } from "../../src/persistence/domain/Circle";
 
 @suite
 export class LocalAuthorityDaoTest extends AbstractTestDao {
@@ -92,5 +94,24 @@ export class LocalAuthorityDaoTest extends AbstractTestDao {
         Chai.assert.equal((await find.getCredential()).getSecret(), (await localAuthority.getCredential()).getSecret());
         Chai.assert.equal((await find.getCredential()).getAccessKey(), (await localAuthority.getCredential()).getAccessKey());
         Chai.assert.equal(find.getId(), localAuthority.getId());
+    }
+
+    @test
+    public async testIsExists(): Promise<void> {
+        const localAuthorityDao: LocalAuthorityDao = ContextApp.container.get("LocalAuthorityDao");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
+
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Michel");
+
+        await localAuthorityRepository.save(localAuthority);
+
+        let isExists: boolean = await localAuthorityDao.isExists(localAuthority.getId());
+
+        Chai.assert.isTrue(isExists);
+
+        isExists = await localAuthorityDao.isExists(localAuthority.getId() + 2);
+
+        Chai.assert.isFalse(isExists);
     }
 }

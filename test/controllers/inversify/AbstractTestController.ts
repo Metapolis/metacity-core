@@ -67,7 +67,7 @@ export abstract class AbstractTestController {
     }
 
     /**
-     * Method launched before test execution
+     * Method launched after test execution
      */
     public static after(): void {
         AbstractTestController.app.rebind();

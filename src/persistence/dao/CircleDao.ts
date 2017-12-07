@@ -22,6 +22,7 @@
  */
 
 import { Circle } from "../domain/Circle";
+import { FindCircleQuery } from "../../common/query/FindCircleQuery";
 
 /**
  * Data Access Object of {@link CircleDao}
@@ -43,7 +44,7 @@ export interface CircleDao {
      *
      * @returns {Promise<boolean>} true means circle exists in database
      */
-    exists(id: number): Promise<boolean>;
+    isExists(id: number): Promise<boolean>;
 
     /**
      * Retrieves a specific circle
@@ -53,6 +54,24 @@ export interface CircleDao {
      * @returns {Promise<Circle>} circle found
      */
     findById(id: number): Promise<Circle> | undefined;
+
+    /**
+     * Retrieves all circles matching the filter
+     *
+     * @param {FindCircleQuery} query contains circle search query
+     *
+     * @returns {Promise<Circle[]>} circles
+     */
+    findBy(query: FindCircleQuery): Promise<Circle[]>;
+
+    /**
+     * Count circle for a specific query
+     *
+     * @param {FindCircleQuery} query query use to count circles
+     *
+     * @returns {number} number of found circle
+     */
+    countBy(query: FindCircleQuery): Promise<number>;
 
     /**
      * Check if circle is owned by localAuthority

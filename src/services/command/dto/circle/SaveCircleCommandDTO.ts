@@ -27,9 +27,9 @@
 export class SaveCircleCommandDTO {
 
     /**
-     * LocalAuthority's credential access key
+     * LocalAuthority's identifier
      */
-    private accessKey: string;
+    private localAuthorityId: number;
 
     /**
      * Circle's name
@@ -52,20 +52,20 @@ export class SaveCircleCommandDTO {
     private members: number[] = [];
 
     /**
-     * Getter accessKey
-     * @returns {string}
+     * Getter localAuthorityId
+     * @returns {number}
      */
-    public getAccessKey(): string {
-        return this.accessKey;
+    public getLocalAuthorityId(): number {
+        return this.localAuthorityId;
 
     }
 
     /**
-     * Setter accessKey
-     * @param {string} accessKey
+     * Setter localAuthorityId
+     * @param {string} localAuthorityId
      */
-    public setAccessKey(accessKey: string): void {
-        this.accessKey = accessKey;
+    public setLocalAuthorityId(localAuthorityId: number): void {
+        this.localAuthorityId = localAuthorityId;
     }
 
     /**

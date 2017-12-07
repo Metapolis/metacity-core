@@ -70,7 +70,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
         Utils.checkArgument(!Utils.isNullOrEmpty(userAuthenticationToken.getDomain()), "Domain cannot be null or empty");
         const user: User = await this.userDao.findByEmail(userAuthenticationToken.getEmail());
 
-        // Check user exists
+        // Check user isExists
         if (user === undefined) {
             this.logger.info("User '%s' not found", userAuthenticationToken.getEmail());
             throw new AccessDeniedError("User not found");
@@ -83,7 +83,7 @@ export class UserAuthenticationQueryServiceImpl implements UserAuthenticationQue
         }
 
         const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(userAuthenticationToken.getDomain());
-        // Check localAuthority exists
+        // Check localAuthority isExists
         if (localAuthority === undefined) {
             this.logger.info("LocalAuthority '%s' not found", userAuthenticationToken.getDomain());
             throw new AccessDeniedError("LocalAuthority not found");

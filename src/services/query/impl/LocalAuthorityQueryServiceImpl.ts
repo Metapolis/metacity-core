@@ -51,6 +51,15 @@ export class LocalAuthorityQueryServiceImpl implements LocalAuthorityQueryServic
 
     /**
      * Override
+     */
+    public async isExists(id: number): Promise<boolean> {
+        this.logger.debug("Check if local authority with id '%s' exists", id);
+
+        return await this.localAuthorityDao.isExists(id);
+    }
+
+    /**
+     * Override
      * @param domain
      * @returns {undefined}
      */

@@ -27,6 +27,8 @@ import { Utils } from "../../../common/Utils";
 import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
 import { inject, injectable } from "inversify";
+import { FindCircleQuery } from "../../../common/query/FindCircleQuery";
+import { SelectQueryBuilder } from "typeorm/query-builder/SelectQueryBuilder";
 
 /**
  * Implementation of {@link CircleDao}
@@ -59,7 +61,7 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async exists(id: number): Promise<boolean> {
+    public async isExists(id: number): Promise<boolean> {
         this.logger.debug("Check in data base if circle with id '%s' exists", id);
 
         return (await this.circleRepository.count({where: {id: id}})) > 0;
@@ -72,6 +74,48 @@ export class CircleDaoImpl implements CircleDao {
         this.logger.info("Retrieve circle with identifier '%s'", id);
 
         return await this.circleRepository.findOneById(id);
+    }
+
+    /**
+     * Computes query used by {@link #countBy(FindCircleQuery)} and {@link #findBy(FindCircleQuery)}
+     *
+     * @param query query object
+     *
+     * @return TypeORM query
+     */
+    private computeQuery(query: FindCircleQuery): SelectQueryBuilder<Circle> {
+        const queryBuilder: SelectQueryBuilder<Circle> = this.circleRepository.createQueryBuilder("circle");
+        if (query.isSet()) {
+            if (query.getLocalAuthorityId() !== undefined) {
+                queryBuilder
+                    .innerJoinAndSelect("circle.localAuthority", "localAuthority")
+                    .where("(localAuthority.id = :localAuthority)")
+                    .setParameters({localAuthority: query.getLocalAuthorityId()});
+            }
+        }
+        queryBuilder.orderBy("circle.name", "ASC");
+
+        this.logger.debug("Computed query is : '%s'", queryBuilder.getSql());
+
+        return queryBuilder;
+    }
+
+    /**
+     * Override
+     */
+    public async findBy(query: FindCircleQuery): Promise<Circle[]> {
+        const circles: Circle[] = await this.computeQuery(query).offset(query.getOffset()).limit(query.getLimit()).getMany();
+
+        this.logger.debug("'%s' circles retrieves", circles.length);
+
+        return circles;
+    }
+
+    /**
+     * Override
+     */
+    public async countBy(query: FindCircleQuery): Promise<number> {
+        return await this.computeQuery(query).getCount();
     }
 
     /**

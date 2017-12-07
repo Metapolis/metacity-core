@@ -80,7 +80,7 @@ export class UserDaoImpl implements UserDao {
     public async findBy(query: FindUserQuery): Promise<User[]> {
         const users: User[] = await this.computeQuery(query).offset(query.getOffset()).limit(query.getLimit()).getMany();
 
-        this.logger.debug("'%s' users retrives", users.length);
+        this.logger.debug("'%s' users retrieves", users.length);
 
         return users;
     }
