@@ -17,7 +17,7 @@ definitions:
       environment:
         POSTGRES_PASSWORD: metacity
         POSTGRES_USER: metacity
-        POSTGRES_DB: metacity-test
+        POSTGRES_DB: metacity_test
     elasticsearch:
       image: blacktop/elasticsearch:5.5
       environment:
