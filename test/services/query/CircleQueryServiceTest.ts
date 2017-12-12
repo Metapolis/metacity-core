@@ -52,12 +52,16 @@ export class CircleQueryServiceTest extends AbstractTestService {
         user1.setId(14);
         user1.setFirstName("Tony");
         user1.setLastName("Stark");
+        user1.setEmail("Tony@Stark");
+
         usersMock.push(user1);
 
         const user2: User = new User();
         user2.setId(15);
         user2.setFirstName("Tony");
         user2.setLastName("Stark");
+        user2.setEmail("Tony@Stark");
+
         usersMock.push(user2);
 
         const circleMock: Circle = new Circle();
@@ -84,6 +88,8 @@ export class CircleQueryServiceTest extends AbstractTestService {
             Chai.assert.equal(circleDTO.getMembers()[i].getId(), usersMock[i].getId());
             Chai.assert.equal(circleDTO.getMembers()[i].getFirstName(), usersMock[i].getFirstName());
             Chai.assert.equal(circleDTO.getMembers()[i].getLastName(), usersMock[i].getLastName());
+            Chai.assert.equal(circleDTO.getMembers()[i].getEmail(), usersMock[i].getEmail());
+
         }
 
         circleDTO = await circleQueryService.getCircle(13);

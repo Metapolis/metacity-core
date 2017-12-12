@@ -237,6 +237,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             mockUser.setId(i);
             mockUser.setFirstName(TestUtils.randomString(8));
             mockUser.setLastName(TestUtils.randomString(8));
+            mockUser.setEmail(TestUtils.randomString(8));
+
             mockUsers.push(mockUser);
         }
 
@@ -269,6 +271,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             Chai.assert.equal(actual.members[i].id, circleDTOMock.getMembers()[i].getId());
             Chai.assert.equal(actual.members[i].firstName, circleDTOMock.getMembers()[i].getFirstName());
             Chai.assert.equal(actual.members[i].lastName, circleDTOMock.getMembers()[i].getLastName());
+            Chai.assert.equal(actual.members[i].email, circleDTOMock.getMembers()[i].getEmail());
+
         }
     }
 
