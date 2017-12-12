@@ -101,6 +101,8 @@ export class CircleQueryServiceImpl implements CircleQueryService {
             userDTO.setId(user.getId());
             userDTO.setLastName(user.getLastName());
             userDTO.setFirstName(user.getFirstName());
+            userDTO.setEmail(user.getEmail());
+
             circleDTO.getMembers().push(userDTO);
         }
         return circleDTO;
