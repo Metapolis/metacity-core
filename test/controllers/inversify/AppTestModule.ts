@@ -51,6 +51,8 @@ import { LocalAuthorityQueryService } from "../../../src/services/query/LocalAut
 import { LocalAuthorityQueryServiceImpl } from "../../../src/services/query/impl/LocalAuthorityQueryServiceImpl";
 import { ClientControlManager } from "../../../src/security/ClientControlManager";
 import { Role } from "../../../src/common/enum/Role";
+import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
+import { CredentialDaoImpl } from "../../../src/persistence/dao/impl/CredentialDaoImpl";
 
 /**
  * App test module
@@ -109,8 +111,8 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("CircleDaoMock")) {
             ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType<CircleDao>(CircleDaoImpl));
         }
-        if (!ContextApp.container.isBound("CircleDaoMock")) {
-            ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType<CircleDao>(CircleDaoImpl));
+        if (!ContextApp.container.isBound("CredentialDaoMock")) {
+            ContextApp.container.bind("CredentialDaoMock").toConstantValue(TypeMoq.Mock.ofType<CredentialDao>(CredentialDaoImpl));
         }
         if (!ContextApp.container.isBound("ClientControlManagerMock")) {
             ContextApp.container.bind("ClientControlManagerMock").toConstantValue(TypeMoq.Mock.ofType<ClientControlManager>(ClientControlManager));
@@ -129,13 +131,6 @@ export class AppTestModule {
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
         ContextApp.container.rebind("ClientControlManager").toConstantValue((ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).object);
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
-            (instance) => instance.authenticateClient(
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
 
         return ContextApp.container;
     }
@@ -144,6 +139,7 @@ export class AppTestModule {
         ContextApp.container.rebind("UserDao").to(UserDaoImpl);
         ContextApp.container.rebind("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         ContextApp.container.rebind("CircleDao").to(CircleDaoImpl);
+        ContextApp.container.rebind("CredentialDao").to(CredentialDaoImpl);
         ContextApp.container.rebind("TrafficQueryService").to(TrafficQueryServiceImpl);
         ContextApp.container.rebind("TweetQueryService").to(TweetQueryServiceImpl);
         ContextApp.container.rebind("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);

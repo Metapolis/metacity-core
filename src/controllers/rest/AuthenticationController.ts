@@ -29,11 +29,11 @@ import { UserAuthenticationQueryService } from "../../services/query/UserAuthent
 import { UserAuthenticationTokenDTO } from "../../services/query/dto/user/UserAuthenticationTokenDTO";
 import { UserAuthenticationToken } from "./model/user/UserAuthenticationToken";
 import { UserToken } from "./model/user/UserToken";
-import { RequestAccessor } from "../../RequestAccessor";
 import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
 import { UserTokenDTO } from "../../services/query/dto/user/UserTokenDTO";
 import { ClientControl } from "../../common/Decorators";
 import { Role } from "../../common/enum/Role";
+import { Request } from "express-serve-static-core";
 
 /**
  * API resources to delivery service to authentication
@@ -76,7 +76,10 @@ export class AuthenticationController implements interfaces.Controller {
         this.logger.debug("Begin authentication");
         // User token cannot be undefined or null
         // Build DTO
-        const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
+        const context = require("request-context");
+        const request = context.get("request:req") as Request;
+
+        const domain: string = request.hostname.split(".")[0];
         const userAuthenticationTokenDTO: UserAuthenticationTokenDTO = new UserAuthenticationTokenDTO();
         userAuthenticationTokenDTO.setEmail(userAuthenticationToken.email);
         userAuthenticationTokenDTO.setPassword(userAuthenticationToken.password);

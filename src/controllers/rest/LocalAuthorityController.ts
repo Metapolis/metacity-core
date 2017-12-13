@@ -220,6 +220,7 @@ export class LocalAuthorityController implements interfaces.Controller {
             user.id = userDTO.getId();
             user.firstName = userDTO.getFirstName();
             user.lastName = userDTO.getLastName();
+            user.email = userDTO.getEmail();
             circleDetails.members.push(user);
         }
 

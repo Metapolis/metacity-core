@@ -42,6 +42,11 @@ export class UserDTO {
     private lastName: string;
 
     /**
+     * User's email
+     */
+    private email: string;
+
+    /**
      * Getter identifier
      *
      * @returns {number}
@@ -60,7 +65,7 @@ export class UserDTO {
     }
 
     /**
-     * Getter lastName
+     * Getter first name
      *
      * @returns {string}
      */
@@ -69,12 +74,30 @@ export class UserDTO {
     }
 
     /**
-     * Setter lastName
+     * Setter firstName
      *
      * @param firstName new first name value
      */
     public setFirstName(firstName: string): void {
         this.firstName = firstName;
+    }
+
+    /**
+     * Getter email
+     *
+     * @returns {string}
+     */
+    public getEmail(): string {
+        return this.email;
+    }
+
+    /**
+     * Setter email
+     *
+     * @param email new first name value
+     */
+    public setEmail(email: string): void {
+        this.email = email;
     }
 
     /**

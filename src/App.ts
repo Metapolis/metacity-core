@@ -49,7 +49,6 @@ import { AccessDeniedError } from "./common/error/AccessDeniedError";
 import { TweetController } from "./controllers/rest/TweetController";
 import { TweetQueryService } from "./services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
-import { RequestAccessor } from "./RequestAccessor";
 import { LocalAuthority } from "./persistence/domain/LocalAuthority";
 import { LocalAuthorityDaoImpl } from "./persistence/dao/impl/LocalAuthorityDaoImpl";
 import { LocalAuthorityDao } from "./persistence/dao/LocalAuthorityDao";

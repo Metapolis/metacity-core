@@ -36,6 +36,8 @@ import { AccessDeniedError } from "../../src/common/error/AccessDeniedError";
 import { IllegalArgumentError } from "../../src/common/error/IllegalArgumentError";
 import { UserTokenDTO } from "../../src/services/query/dto/user/UserTokenDTO";
 import { UserToken } from "../../src/controllers/rest/model/user/UserToken";
+import { Role } from "../../src/common/enum/Role";
+import { ClientControlManager } from "../../src/security/ClientControlManager";
 
 /**
  * All test for authentication service
@@ -50,6 +52,13 @@ class AuthenticationControllerTest extends AbstractTestController {
     private async testAuthenticate(): Promise<void> {
         const path: string = "/api/authentications";
         const userAuthenticationQueryService: TypeMoq.IMock<UserAuthenticationQueryService> = ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const userToken: UserAuthenticationToken = new UserAuthenticationToken();
         userToken.email = "stark";
@@ -90,6 +99,13 @@ class AuthenticationControllerTest extends AbstractTestController {
     public async testAuthenticateError(): Promise<void> {
         const path: string = "/api/authentications";
         const userAuthenticationQueryService: TypeMoq.IMock<UserAuthenticationQueryService> = ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         // Check throw exception (access denied)
         const userToken: UserAuthenticationToken = new UserAuthenticationToken();

@@ -45,6 +45,7 @@ import { User } from "../../src/persistence/domain/User";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 import { Credential } from "../../src/persistence/domain/Credential";
+import { ClientControlManager } from "../../src/security/ClientControlManager";
 
 /**
  * All test for traffic controller
@@ -63,6 +64,13 @@ class TrafficControllerTest extends AbstractTestController {
         const trafficQueryService: TypeMoq.IMock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>);
         const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_ACCIDENT, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
         const credential: Credential = new Credential();
@@ -197,6 +205,13 @@ class TrafficControllerTest extends AbstractTestController {
         const path: string = "/api/traffics/accidents";
         const offset: number = 0;
         const limit: number = 20;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_ACCIDENT, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         // Check no authentication
         let opts = {

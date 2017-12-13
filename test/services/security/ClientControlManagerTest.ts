@@ -38,7 +38,7 @@ import { AccessDeniedError } from "../../../src/common/error/AccessDeniedError";
  * All test for traffic query service
  */
 @suite
-class TrafficQueryServiceTest extends AbstractTestService {
+class ClientControlManagerTest extends AbstractTestService {
 
     @test
     public async testAuthenticateClient() {

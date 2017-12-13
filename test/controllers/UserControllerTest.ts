@@ -40,6 +40,8 @@ import { UserDTO } from "../../src/services/query/dto/user/UserDTO";
 import { FindUserQuery } from "../../src/common/query/FindUserQuery";
 import { ResultList } from "../../src/common/ResultList";
 import { User } from "../../src/controllers/rest/model/user/User";
+import { Role } from "../../src/common/enum/Role";
+import { ClientControlManager } from "../../src/security/ClientControlManager";
 
 /**
  * All test for user creation
@@ -57,6 +59,13 @@ export class UserControllerTest extends AbstractTestController {
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
         // Hello im a rigid linter
         const userIdentifier = 42;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const user: SaveUser = new SaveUser();
         user.lastName = "michel";
@@ -99,6 +108,13 @@ export class UserControllerTest extends AbstractTestController {
         // 403 not enough rights => role is not high enough to create a circle
         const path: string = "/api/users";
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const user: SaveUser = new SaveUser();
         user.lastName = "michel";
@@ -128,6 +144,13 @@ export class UserControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const userQueryService: TypeMoq.IMock<UserQueryService> = (ContextApp.container.get("UserQueryServiceMock") as TypeMoq.IMock<UserQueryService>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const mockUsers: UserDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -220,6 +243,13 @@ export class UserControllerTest extends AbstractTestController {
         const path: string = "/api/users";
         const offset: number = 0;
         const limit: number = 20;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         let opts = {
             method: "GET",
