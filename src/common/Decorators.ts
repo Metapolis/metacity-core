@@ -42,7 +42,7 @@ import { Request } from "express-serve-static-core";
 function UserControl(...roles: string[]) {
     return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value;
-
+        // TODO reimplement this method, wait new reflexion from expiration of JWT and refresh. And extract to a UserControlManager /!\
         // Add code before execute method
         descriptor.value = async function(...args: any[]) {
             this.logger.info("Begin authentication");

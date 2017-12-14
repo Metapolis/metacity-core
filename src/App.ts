@@ -36,7 +36,6 @@ import * as Path from "path";
 import { Config } from "./Config";
 import * as BodyParser from "body-parser";
 import * as TypeORM from "typeorm";
-import * as CORS from "cors";
 import { getRepository } from "typeorm";
 import { User } from "./persistence/domain/User";
 import * as HTTPStatusCodes from "http-status-codes";
