@@ -117,4 +117,22 @@ export class UserDTO {
     public setLastName(lastName: string): void {
         this.lastName = lastName;
     }
+
+    /**
+     * Getter email
+     *
+     * @returns {string}
+     */
+    public getEmail(): string {
+        return this.email;
+    }
+
+    /**
+     * Setter email
+     *
+     * @param email new first name value
+     */
+    public setEmail(email: string): void {
+        this.email = email;
+    }
 }

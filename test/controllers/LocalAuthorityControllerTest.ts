@@ -273,7 +273,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             mockUser.setId(i);
             mockUser.setFirstName(TestUtils.randomString(8));
             mockUser.setLastName(TestUtils.randomString(8));
-            mockUser.setEmail(TestUtils.randomString(9));
+            mockUser.setEmail(TestUtils.randomString(8));
+
             mockUsers.push(mockUser);
         }
 

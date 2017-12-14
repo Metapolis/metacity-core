@@ -52,7 +52,8 @@ export class CircleQueryServiceTest extends AbstractTestService {
         user1.setId(14);
         user1.setFirstName("Tony");
         user1.setLastName("Stark");
-        user1.setEmail("tony@stark.com");
+        user1.setEmail("Tony@Stark");
+
         usersMock.push(user1);
 
         const user2: User = new User();
@@ -60,6 +61,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
         user2.setFirstName("Tony2");
         user2.setLastName("Stark2");
         user2.setEmail("tony2@stark.com");
+
         usersMock.push(user2);
 
         const circleMock: Circle = new Circle();

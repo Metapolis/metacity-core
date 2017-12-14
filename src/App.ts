@@ -72,6 +72,7 @@ import { PostgresNamingStrategy } from "./persistence/strategy/PostgresNamingStr
 import { DataSet } from "./persistence/domain/DataSet";
 import { UserQueryService } from "./services/query/UserQueryService";
 import { UserQueryServiceImpl } from "./services/query/impl/UserQueryServiceImpl";
+import * as CORS from "cors";
 import methodOverride = require("method-override");
 import { UserControlManager } from "./security/UserControlManager";
 import { ClientControlManager } from "./security/ClientControlManager";
@@ -302,6 +303,7 @@ export class App {
             // Add static file server to serve angular resources
             const publicPath = Path.join(__dirname, "../../client/src");
             this.logger.debug("Static file location: '%s'", publicPath);
+            app.use(CORS());
             app.use("/", Express.static(publicPath));
             app.use(methodOverride());
             app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
