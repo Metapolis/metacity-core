@@ -4,7 +4,7 @@ Metacity core is a RESTful API to get data from the stack data powered by Metapo
 
 ## Features ##
 
-Metacity Core provides a data access service linked to Metapolis Big Data platform. The latter is accesible through a Rest API whose documentation is [here](https://bitbucket.org/metapolis/metacity-core/wiki/Home).
+Metacity Core provides a data access service linked to Metapolis’ Big Data platform. The latter is accesible through a Rest API whose documentation is [here](https://github.com/Metapolis/metacity-core/wiki).
 
 
 ### Security ###
@@ -14,24 +14,22 @@ Next release
 ### Traceability ###
 
 In order to monitor application metrics, Metacity Core provides exhaustive activity logs in the following format :
-```
-{date - ISO8601} {log-level} {class} {message}
-```
+``` {date - ISO8601} {log-level} {class} {message} ```
 
-Logs can be exported thanks to `Winston` library in a file or in a http stream.
+Logs can be exported thanks to ```Winston``` library in a file or in a http stream.
 
 ## Architecture ##
 
 Metacity Core provides a framework to develop object oriented Rest API resources with ease, from implementation to tests.
 
-Metacity Core settled to a NodeJS architecture that adheres to the OOP and SOLID principles. The architecture also benefits from previous experiences on other OOP languages.
+Metacity Core settled a NodeJS architecture that adheres to the OOP and SOLID principles. The architecture also benefits from previous experiences on other OOP languages.
 
-To enforce this architecture, we used concepts like *dependency injection* or *layer separation*, warranting project sustainability and modularity.
+To enforce this architecture, we used concepts like *dependancy injection* or *layer separation*, warranting project’s sustainability and modularity.
 
 We used command/query development pattern in our services to trace data retrieval and data alteration in separate flows.
 The application has been build upon 3 frameworks :
 
-* [Inversify](http://inversify.io) for dependency injection
+* [Inversify](http://inversify.io) for dependancy injection
 * [ExpressJS](http://expressjs.com) for Rest resources
 * [TypeORM](http://typeorm.io/) for persistence layer
 
@@ -77,25 +75,25 @@ You can change this name in configuration.
 
 **Installation** :
 
-```bash
+```shell
 npm install
 ```
 
 **Build** :
 
-```bash
+```shell
 npm run build
 ```
 
 **Run** :
 
-```bash
+```shell
 npm start
 ```
 
 ## Contribution ##
 
-* Repository owner or admin
+* Repo owner or admin
 * Other community or team contact
 
 ### Contributing to Metacity Core ###
@@ -103,31 +101,31 @@ npm start
 We would love for you to contribute to Metacity Core and help make it even better than it is today!
 As a contributor, here are the guidelines we would like you to follow:
 
- - [Question or Problem?](#question)
- - [Issues and Bugs](#issue)
- - [Feature Requests](#feature)
- - [Submission Guidelines](#submit)
+ - Question or Problem?
+ - Issues and Bugs
+ - Feature Requests
+ - Submission Guidelines
 
 ### Got a Question or Problem? ###
 
-Fill in an issue on Github, with the question:
+There are one way how you can ask your question:
 
-* You can create issue on [github](lien github)
+* You can create issue on [github](https://github.com/Metapolis/metacity-core/issues/new)
 
 ### Found a security vulnerability? ###
 
 If you find a security vulnerability or something that should be discussed personally,
-please contact mathieu.bayou[at]metapolis.fr.
+please contact within mathieu.bayou[at]metapolis.fr.
 
 ### Found a Bug? ###
 
-If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our
-[GitHub Repository](lien github).
-Even better, you can [submit a Pull Request](#submit-pr) with a fix.
+If you find a bug in the source code, you can help us by submitting an issue to our
+[GitHub Repository](https://github.com/Metapolis/metacity-core).
+Even better, you can submit a Pull Request with a fix.
 
-### Missing Feature? ###
+### Missing a Feature? ###
 
-You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub
+You can *request* a new feature by submitting an issue to our GitHub
 Repository. If you would like to *implement* a new feature, please submit an issue with
 a proposal for your work first, to be sure that we can use it.
 Please consider what kind of change it is:
@@ -135,29 +133,29 @@ Please consider what kind of change it is:
 * For a **Major Feature**, first open an issue and outline your proposal so that it can be
 discussed. This will also allow us to better coordinate our efforts, prevent duplication of work,
 and help you to craft the change so that it is successfully accepted into the project.
-* **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
+* **Small Features** can be crafted and directly submitted as a Pull Request.
 
 ### Submission Guidelines ###
 
 #### Submitting an Issue ####
 
 Before you submit an issue, please search the issue tracker,
-maybe an issue for your problem already exists and the discussion might inform you of a readily available workaround.
+maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it.
-In order to reproduce bugs we ask you to provide a minimal code snippet that shows a reproduction of the problem.
+ In order to reproduce bugs we ask you to provide a minimal code snippet that shows a reproduction of the problem.
 
-You can file new issues by filling out our [new issue form](lien github).
+You can file new issues by filling out our [new issue form](https://github.com/Metapolis/metacity-core/issues/new).
 
 #### Submitting a Pull Request (PR) ####
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-* Search [GitHub](lien github) for an open or closed PR
+* Search [GitHub](https://github.com/Metapolis/metacity-core/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
 * Make your changes in a new git branch:
 
-     ```bash
+     ```shell
      git checkout -b my-fix-branch master
      ```
 
@@ -166,13 +164,13 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 * Run the full Metacity Core test suite, and ensure that all tests pass.
 * Commit your changes using a descriptive commit message
 
-     ```bash
+     ```shell
      git commit -a
      ```
 
 * Push your branch to GitHub:
 
-    ```bash
+    ```shell
     git push origin my-fix-branch
     ```
 
@@ -182,7 +180,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
   * Re-run the Metacity Core test suites to ensure tests are still passing.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
-    ```bash
+    ```shell
     git rebase master -i
     git push -f
     ```
@@ -194,30 +192,30 @@ That's it! Thank you for your contribution!
 After your pull request is merged, you can safely delete your branch and pull the changes
 from the main (upstream) repository:
 
-* Delete the remote branch on GitHub either through the GitHub web UI or your local bash as follows:
+* Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
-```bash
+```shell
 git push origin --delete my-fix-branch
 ```
 
 * Check out the master branch:
 
-```bash
+```shell
 git checkout master -f
 ```
 
 * Delete the local branch:
 
-```bash
+```shell
 git branch -D my-fix-branch
 ```
 
 * Update your master with the latest upstream version:
 
-```bash
+```shell
 git pull --ff upstream master
 ```
 
 ## License ##
 
-This project is licensed under the AGPL V3 License - see the LICENSE.md file for details
+This project is licensed under the AGPL V3 License - see the LICENSE file for details
