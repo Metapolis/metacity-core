@@ -35,6 +35,7 @@ import { User } from "../../../persistence/domain/User";
 import { isNullOrUndefined } from "util";
 import { UpdateCircleCommandDTO } from "../dto/circle/UpdateCircleCommandDTO";
 import { UserDao } from "../../../persistence/dao/UserDao";
+import {NotFoundError} from "../../../common/error/NotFoundError";
 
 /**
  * Implementation of {@link CircleCommandService}
@@ -132,13 +133,17 @@ export class CircleCommandServiceImpl implements CircleCommandService {
         circle.setDefaultCircle(command.isDefaultCircle());
         circle.setName(command.getName());
         circle.setRoles(command.getRoles());
-        const members = await circle.getUsers();
+        const members: User[] = [];
+
         for (const id of command.getMembers()) {
+            Utils.checkArgument(!isNullOrUndefined(await this.userDao.findById(id)), "User doesn't exist");
             members.push(await this.userDao.findById(id));
         }
-        // TODO : Correct when TypeORM asnwer issue #1034
 
+        // https://github.com/typeorm/typeorm/issues/1034
+        // fix to handle setter with promises
         circle.setUsers(Promise.resolve(members));
+        await Promise.resolve();
 
         // Save circle
         await this.circleDao.saveOrUpdate(circle);
