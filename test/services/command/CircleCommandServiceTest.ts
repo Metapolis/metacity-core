@@ -249,8 +249,22 @@ class CircleCommandServiceTest extends AbstractTestService {
         user.setLastName("rambal");
         user.setEmail("aa@aa.com");
 
+        const user2: User = new User();
+        user2.setId(43);
+        user2.setFirstName("nicolas");
+        user2.setLastName("jellab");
+        user2.setEmail("cc@cc.com");
+
+        const user3: User = new User();
+        user3.setId(44);
+        user3.setFirstName("mathieu");
+        user3.setLastName("bayou");
+        user3.setEmail("bb@bb.com");
+
         const circle: Circle = new Circle();
         const users: User[] = [];
+        users.push(user2);
+        users.push(user3);
 
         circle.setId(1);
         circle.setRoles(["READ_ALL"]);
