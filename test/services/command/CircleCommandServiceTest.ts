@@ -249,8 +249,23 @@ class CircleCommandServiceTest extends AbstractTestService {
         user.setLastName("rambal");
         user.setEmail("aa@aa.com");
 
+        const user2: User = new User();
+        user2.setId(43);
+        user2.setFirstName("nicolas");
+        user2.setLastName("jellab");
+        user2.setEmail("cc@cc.com");
+
+        const user3: User = new User();
+        user3.setId(44);
+        user3.setFirstName("mathieu");
+        user3.setLastName("bayou");
+        user3.setEmail("bb@bb.com");
+
         const circle: Circle = new Circle();
         const users: User[] = [];
+        users.push(user2);
+        users.push(user3);
+
         circle.setId(1);
         circle.setRoles(["READ_ALL"]);
         circle.setName("Jean de la tourette");
@@ -500,6 +515,55 @@ class CircleCommandServiceTest extends AbstractTestService {
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
             Chai.assert.equal(err.message, "Circle '" + circle.getId() + "' and localAuthority '" + localAuthority.getId() + "'have to be linked ");
+        });
+    }
+
+    @test
+    private async testUpdateCircleUserDoesntExist() {
+        const circleCommandService: CircleCommandService = (ContextApp.container.get("CircleCommandService") as CircleCommandService);
+        const localAuthorityDao: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
+        const circleDao: TypeMoq.IMock<CircleDao> = (ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>);
+        const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Rochelle");
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKeyDesFamilles");
+        localAuthority.setCredential(Promise.resolve(credential));
+
+        const users: User[] = [];
+
+        const user: User = new User();
+        user.setId(42);
+        user.setFirstName("romain");
+        user.setLastName("rambal");
+        user.setEmail("aa@aa.com");
+
+        const circle: Circle = new Circle();
+        circle.setId(1);
+        circle.setRoles(["READ_ALL"]);
+        circle.setName("Jean de la tourette");
+        circle.setDefaultCircle(true);
+        circle.setUsers(Promise.resolve(users));
+        circle.setLocalAuthority(Promise.resolve(localAuthority));
+
+        const circleCommandDTO: UpdateCircleCommandDTO = new UpdateCircleCommandDTO();
+        circleCommandDTO.setName("michel");
+        circleCommandDTO.setRoles([]);
+        circleCommandDTO.setDefaultCircle(true);
+        circleCommandDTO.setId(circle.getId());
+        circleCommandDTO.setMembers([0, 60, 1583211458]);
+
+        localAuthorityDao.setup((instance) => instance.findById(circleCommandDTO.getLocalAuthorityId())).returns(() => Promise.resolve(localAuthority));
+        circleDao.setup(async (instance) => await instance.findById(circleCommandDTO.getId())).returns(() => Promise.resolve(circle));
+        userDao.setup(async (instance) => await instance.findById(user.getId())).returns(() => Promise.resolve(user));
+
+        await circleCommandService.updateCircle(circleCommandDTO).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "User doesn't exist");
         });
     }
 
