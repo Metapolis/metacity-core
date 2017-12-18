@@ -99,20 +99,46 @@ class AuthenticationControllerTest extends AbstractTestController {
     public async testAuthenticateError(): Promise<void> {
         const path: string = "/api/authentications";
         const userAuthenticationQueryService: TypeMoq.IMock<UserAuthenticationQueryService> = ContextApp.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>;
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+
+        // Check access refused because not enough roles
+        clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
 
         // Check throw exception (access denied)
         const userToken: UserAuthenticationToken = new UserAuthenticationToken();
         userToken.email = "stark";
         userToken.password = "password";
 
-        const opts = {
+        let opts = {
+            method: "Post",
+            uri: AbstractTestController.getBackend() + path,
+            body: userToken,
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.MANAGE_USER]));
+
+        opts = {
             method: "Post",
             uri: AbstractTestController.getBackend() + path,
             body: userToken,
@@ -126,7 +152,7 @@ class AuthenticationControllerTest extends AbstractTestController {
             return ret;
         }))).throws(new AccessDeniedError("ERROR"));
 
-        let statusCode = HTTPStatusCodes.OK;
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });

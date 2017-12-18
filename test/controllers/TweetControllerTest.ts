@@ -241,15 +241,16 @@ class TweetControllerTest extends AbstractTestController {
         const path: string = "/api/tweets";
         const offset: number = 0;
         const limit: number = 20;
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
-        // Check no authentication
+        // Check no access
         let opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
@@ -271,7 +272,15 @@ class TweetControllerTest extends AbstractTestController {
             statusCode = error.statusCode;
         });
 
-        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
 
         // Check no offset
         const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);

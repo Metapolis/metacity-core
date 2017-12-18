@@ -122,22 +122,20 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/1/circles";
         const path404: string = "/api/local-authorities/2/circles";
         const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
-
-        localAuthorityQueryService.setup((instance) => instance.isExists(1)).returns(() => Promise.resolve(true));
-        localAuthorityQueryService.setup((instance) => instance.isExists(2)).returns(() => Promise.resolve(false));
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
 
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
         circle.roles = ["Champion"];
 
-        const opts = {
+        let opts = {
             method: "POST",
             uri: AbstractTestController.getBackend() + path404,
             body: circle,
@@ -145,6 +143,31 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         };
 
         let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
+
+        localAuthorityQueryService.setup((instance) => instance.isExists(1)).returns(() => Promise.resolve(true));
+        localAuthorityQueryService.setup((instance) => instance.isExists(2)).returns(() => Promise.resolve(false));
+
+        opts = {
+            method: "POST",
+            uri: AbstractTestController.getBackend() + path404,
+            body: circle,
+            json: true
+        };
+
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
@@ -214,19 +237,42 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
         const localAuthorityId: number = 12;
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
 
         const circle: SaveCircle = new SaveCircle();
         circle.name = "michel";
         circle.roles = ["Champion"];
 
-        const opts = {
+        let opts = {
+            method: "PUT",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
+            body: circle,
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
+
+        opts = {
             method: "PUT",
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             body: circle,
@@ -235,7 +281,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
 
-        let statusCode = HTTPStatusCodes.OK;
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
@@ -317,21 +363,43 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
 
-        const opts = {
+        let opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", "toto").replace("{circleid}", String(circleIdentifier)),
             json: true
         };
 
         let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
+
+        opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", "toto").replace("{circleid}", String(circleIdentifier)),
+            json: true
+        };
+
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
@@ -465,23 +533,45 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
         const localAuthorityId: number = 23;
-        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
-                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE, Role.MANAGE_CIRCLE]));
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
 
-        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
-
-        const opts = {
+        let opts = {
             method: "DELETE",
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             json: true
         };
 
         let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
+
+        LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
+
+        opts = {
+            method: "DELETE",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
+            json: true
+        };
+
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
