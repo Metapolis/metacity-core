@@ -484,6 +484,31 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     }
 
     @test
+    public async testFindLocalAuthorityCirclesError(): Promise<void> {
+        const path: string = "/api/local-authorities/12/circles";
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
+
+        const opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path,
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+    }
+
+    @test
     public async testDeleteLocalAuthorityCircle(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
