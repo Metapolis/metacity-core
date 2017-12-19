@@ -89,6 +89,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<ResultList<CircleSummary>>} list of circles summaries
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Get("/:localauthorityid/circles")
     public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: number,
                                            @QueryParam("limit") limit: number,
