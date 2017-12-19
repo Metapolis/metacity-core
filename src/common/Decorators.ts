@@ -46,6 +46,7 @@ function UserControl(...roles: string[]) {
         // Add code before execute method
         descriptor.value = async function(...args: any[]) {
             this.logger.info("Begin authentication");
+
             // Get Request context
             const context = require("request-context");
             const request = context.get("request:req") as Request;
