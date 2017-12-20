@@ -24,12 +24,12 @@ Metacity Core provides a framework to develop object oriented Rest API resources
 
 Metacity Core settled a NodeJS architecture that adheres to the OOP and SOLID principles. The architecture also benefits from previous experiences on other OOP languages.
 
-To enforce this architecture, we used concepts like *dependancy injection* or *layer separation*, warranting project’s sustainability and modularity.
+To enforce this architecture, we used concepts like *dependency injection* or *layer separation*, warranting project’s sustainability and modularity.
 
 We used command/query development pattern in our services to trace data retrieval and data alteration in separate flows.
 The application has been build upon 3 frameworks :
 
-* [Inversify](http://inversify.io) for dependancy injection
+* [Inversify](http://inversify.io) for dependency injection
 * [ExpressJS](http://expressjs.com) for Rest resources
 * [TypeORM](http://typeorm.io/) for persistence layer
 
