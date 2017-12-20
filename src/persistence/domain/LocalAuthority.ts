@@ -33,7 +33,7 @@ import {
 } from "typeorm";
 import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
-import { UIConfig } from "./UIConfig";
+import { UIConfig } from "../../common/model/UIConfig";
 import { Credential } from "./Credential";
 
 /**
@@ -57,7 +57,6 @@ export class LocalAuthority {
     /**
      * Local authority JSON UI config
      */
-    @Column({type: "text", nullable: true})
     private uiConfig: UIConfig;
 
     /**
@@ -84,6 +83,7 @@ export class LocalAuthority {
     /**
      * Transient UI config JSON string
      */
+    @Column({type: "text", nullable: true})
     private uiConfigJsonString: string;
 
     /**
@@ -91,16 +91,17 @@ export class LocalAuthority {
      */
     @AfterLoad()
     private preload(): void {
-        this.initUIJsonString(this.uiConfig);
+        this.initUIConfig(this.uiConfigJsonString);
     }
 
     /**
      * Init UI JSON string with UI object
      *
-     * @param {UIConfig} uiConfig
+     * @param {string} uiConfig json string
      */
-    private initUIJsonString(uiConfig: UIConfig): void {
-        this.uiConfigJsonString = JSON.stringify(uiConfig);
+    private initUIConfig(uiConfig: string): void {
+        this.uiConfig = new UIConfig();
+        Object.assign(uiConfig, this.uiConfig);
     }
 
     /**
@@ -209,5 +210,6 @@ export class LocalAuthority {
      */
     public setUIConfig(uiConfig: UIConfig): void {
         this.uiConfig = uiConfig;
+        this.uiConfigJsonString = JSON.stringify(uiConfig);
     }
 }

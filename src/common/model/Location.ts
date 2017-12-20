@@ -21,42 +21,24 @@
  * @since      0.2.0
  */
 
-import { LocalAuthority } from "../domain/LocalAuthority";
-import { Circle } from "../domain/Circle";
-
 /**
- * Data Access Object of {@link LocalAuthorityDao}
+ * Location description
  */
-export interface LocalAuthorityDao {
+export class Location {
 
     /**
-     * Retrieve localAuthority by id
-     *
-     * @param id identifier to find
+     * Location's latitude
      */
-    findById(id: number): Promise<LocalAuthority> | undefined;
+    public latitude: number;
 
     /**
-     * Retrieve localAuthority by credential access key
-     *
-     * @param accessKey credential's identifier
+     * Location's latitude
      */
-    findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined;
+    public longitude: number;
 
     /**
-     * Check if this specific local authority exists
-     *
-     * @param {number} id local authority's identifier
-     *
-     * @returns {Promise<boolean>} true means local authority exists in database
+     * Location's zoom factor
      */
-    isExists(id: number): Promise<boolean>;
+    public zoomFactor: number;
 
-    /**
-     * Save or update a localAuthority
-     *
-     * @param {LocalAuthority} localAuthority to save
-     *
-     */
-    saveOrUpdate(localAuthority: LocalAuthority): Promise<void>;
 }

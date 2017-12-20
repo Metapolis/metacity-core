@@ -43,6 +43,9 @@ import { CircleSummary } from "./model/circle/CircleSummary";
 import { ResultList } from "../../common/ResultList";
 import { FindCircleQuery } from "../../common/query/FindCircleQuery";
 import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQueryService";
+import { SaveLocalAuthority } from "./model/local-authority/SaveLocalAuthority";
+import { UpdateLocalAuthorityCommandDTO } from "../../services/command/dto/local-authority/UpdateLocalAuthorityCommandDTO";
+import { LocalAuthorityCommandService } from "../../services/command/LocalAuthorityCommandService";
 
 /**
  * API resources to Local authorities services
@@ -79,6 +82,43 @@ export class LocalAuthorityController implements interfaces.Controller {
      */
     @inject("LocalAuthorityQueryService")
     private localAuthorityQueryService: LocalAuthorityQueryService;
+
+    /**
+     * LocalAuthority command service
+     */
+    @inject("LocalAuthorityCommandService")
+    private localAuthorityCommandService: LocalAuthorityCommandService;
+
+    /**
+     * Update specific localAuthority
+     *
+     * @param {SaveLocalAuthority} localAuthority new values for local authority
+     * @param {string} localAuthorityId localAuthority identifier
+     * @param {Express.Response} res Response to set 204
+     */
+    @ClientControl(Role.MANAGE_LOCAL_AUTHORITY)
+    @Put("/:localauthorityid")
+    public async updateLocalAuthority(@RequestBody() localAuthority: SaveLocalAuthority, @RequestParam("localauthorityid") localAuthorityId: number, @Response() res: Express.Response): Promise<void> {
+        // I have to do this, because express can only parse string
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
+            this.logger.debug("Local authority with '%s' does not exists", localAuthorityId);
+            throw new NotFoundError("Local authority not found");
+        }
+
+        this.logger.debug("Begin update local authority");
+        const updateLocalAuthorityCommandDTO: UpdateLocalAuthorityCommandDTO = new UpdateLocalAuthorityCommandDTO();
+        updateLocalAuthorityCommandDTO.setId(localAuthorityId);
+        updateLocalAuthorityCommandDTO.setName(localAuthority.name);
+        updateLocalAuthorityCommandDTO.setUIConfig(localAuthority.uiConfig);
+
+        await this.localAuthorityCommandService.updateLocalAuthority(updateLocalAuthorityCommandDTO);
+
+        this.logger.debug("Local authority '%s' is updated", localAuthorityId);
+        // empty response temporary just because JS sucks
+        res.sendStatus(HTTPStatusCodes.NO_CONTENT);
+    }
 
     /**
      * Find circles, filter result

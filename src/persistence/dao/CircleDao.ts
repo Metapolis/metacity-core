@@ -35,7 +35,7 @@ export interface CircleDao {
      * @param {Circle} circle to save
      *
      */
-    saveOrUpdate(circle: Circle): Promise<void> | undefined;
+    saveOrUpdate(circle: Circle): Promise<void>;
 
     /**
      * Check if this specific circle exists

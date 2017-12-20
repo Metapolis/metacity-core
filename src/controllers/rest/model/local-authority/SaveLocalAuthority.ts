@@ -20,43 +20,20 @@
  * @link       https://bitbucket.org/metapolis/metacity-core
  * @since      0.2.0
  */
-
-import { LocalAuthority } from "../domain/LocalAuthority";
-import { Circle } from "../domain/Circle";
+import { UIConfig } from "../../../../common/model/UIConfig";
 
 /**
- * Data Access Object of {@link LocalAuthorityDao}
+ * Contain all information to create or update local authority
  */
-export interface LocalAuthorityDao {
+export class SaveLocalAuthority {
 
     /**
-     * Retrieve localAuthority by id
-     *
-     * @param id identifier to find
+     * Local authority's name
      */
-    findById(id: number): Promise<LocalAuthority> | undefined;
+    public name: string;
 
     /**
-     * Retrieve localAuthority by credential access key
-     *
-     * @param accessKey credential's identifier
+     * Local authority's ui config
      */
-    findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined;
-
-    /**
-     * Check if this specific local authority exists
-     *
-     * @param {number} id local authority's identifier
-     *
-     * @returns {Promise<boolean>} true means local authority exists in database
-     */
-    isExists(id: number): Promise<boolean>;
-
-    /**
-     * Save or update a localAuthority
-     *
-     * @param {LocalAuthority} localAuthority to save
-     *
-     */
-    saveOrUpdate(localAuthority: LocalAuthority): Promise<void>;
+    public uiConfig: UIConfig;
 }

@@ -21,42 +21,30 @@
  * @since      0.2.0
  */
 
-import { LocalAuthority } from "../domain/LocalAuthority";
-import { Circle } from "../domain/Circle";
+import { Location } from "./Location";
 
 /**
- * Data Access Object of {@link LocalAuthorityDao}
+ * UI config description
  */
-export interface LocalAuthorityDao {
+export class UIConfig {
 
     /**
-     * Retrieve localAuthority by id
-     *
-     * @param id identifier to find
+     * UI primary color
      */
-    findById(id: number): Promise<LocalAuthority> | undefined;
+    public primaryColor: string;
 
     /**
-     * Retrieve localAuthority by credential access key
-     *
-     * @param accessKey credential's identifier
+     * UI secondary color
      */
-    findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined;
+    public secondaryColor: string;
 
     /**
-     * Check if this specific local authority exists
-     *
-     * @param {number} id local authority's identifier
-     *
-     * @returns {Promise<boolean>} true means local authority exists in database
+     * UI logo
      */
-    isExists(id: number): Promise<boolean>;
+    public logo: string;
 
     /**
-     * Save or update a localAuthority
-     *
-     * @param {LocalAuthority} localAuthority to save
-     *
+     * Location embedded in UI config
      */
-    saveOrUpdate(localAuthority: LocalAuthority): Promise<void>;
+    public location: Location;
 }

@@ -52,7 +52,7 @@ export class CircleDaoImpl implements CircleDao {
     /**
      * Override
      */
-    public async saveOrUpdate(circle: Circle): Promise<void> | undefined {
+    public async saveOrUpdate(circle: Circle): Promise<void> {
         this.logger.info("Persist new circle '%s'", circle.getName());
         await this.circleRepository.save(circle);
         this.logger.info("Circle saved");

@@ -27,6 +27,7 @@ import { Utils } from "../../../common/Utils";
 import { LoggerInstance } from "winston";
 import * as TypeORM from "typeorm";
 import { inject, injectable } from "inversify";
+import { Circle } from "../../domain/Circle";
 
 /**
  * Implementation of {@link LocalAuthorityDao}
@@ -47,6 +48,15 @@ export class LocalAuthorityDaoImpl implements LocalAuthorityDao {
     @inject("LocalAuthorityRepository")
     private localAuthorityRepository: TypeORM.Repository<LocalAuthority>;
 
+    /**
+     * Override
+     */
+    public async saveOrUpdate(localAuthority: LocalAuthority): Promise<void> {
+        this.logger.info("Persist new localAuthority '%s'", localAuthority.getName());
+        await this.localAuthorityRepository.save(localAuthority);
+        this.logger.info("LocalAuthority saved");
+    }
+    
     /**
      * Override
      */

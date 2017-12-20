@@ -21,42 +21,17 @@
  * @since      0.2.0
  */
 
-import { LocalAuthority } from "../domain/LocalAuthority";
-import { Circle } from "../domain/Circle";
+import { UpdateLocalAuthorityCommandDTO } from "./dto/local-authority/UpdateLocalAuthorityCommandDTO";
 
 /**
- * Data Access Object of {@link LocalAuthorityDao}
+ * Contains methods to perform localAuthority commands
  */
-export interface LocalAuthorityDao {
+export interface LocalAuthorityCommandService {
 
     /**
-     * Retrieve localAuthority by id
+     * Update specific localAuthority
      *
-     * @param id identifier to find
+     * @param {UpdateLocalAuthorityCommandDTO} updateLocalAuthorityCommandDTO used to update a localAuthority
      */
-    findById(id: number): Promise<LocalAuthority> | undefined;
-
-    /**
-     * Retrieve localAuthority by credential access key
-     *
-     * @param accessKey credential's identifier
-     */
-    findByCredentialAccessKey(accessKey: string): Promise<LocalAuthority> | undefined;
-
-    /**
-     * Check if this specific local authority exists
-     *
-     * @param {number} id local authority's identifier
-     *
-     * @returns {Promise<boolean>} true means local authority exists in database
-     */
-    isExists(id: number): Promise<boolean>;
-
-    /**
-     * Save or update a localAuthority
-     *
-     * @param {LocalAuthority} localAuthority to save
-     *
-     */
-    saveOrUpdate(localAuthority: LocalAuthority): Promise<void>;
+    updateLocalAuthority(updateLocalAuthorityCommandDTO: UpdateLocalAuthorityCommandDTO): Promise<void>;
 }
