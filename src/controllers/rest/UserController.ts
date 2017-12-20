@@ -36,6 +36,8 @@ import { FindUserQuery } from "../../common/query/FindUserQuery";
 import { LogicalQueryCriteria } from "../../common/query/LogicalQueryCriteria";
 import { UserDTO } from "../../services/query/dto/user/UserDTO";
 import { UserQueryService } from "../../services/query/UserQueryService";
+import { ClientControl } from "../../common/Decorators";
+import { Role } from "../../common/enum/Role";
 
 /**
  * API resources to manage user
@@ -70,8 +72,9 @@ export class UserController implements interfaces.Controller {
      * @param {SaveUser} user to create
      * @returns {Promise<NumberIdentifier>} created user identifier
      */
+    @ClientControl(Role.MANAGE_USER)
     @Post("/")
-    public async createCommandUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
+    public async createUser(@RequestBody() user: SaveUser): Promise<NumberIdentifier> {
         this.logger.debug("Begin user creation");
         const saveUserCommandDTO: SaveUserCommandDTO = new SaveUserCommandDTO();
         saveUserCommandDTO.setAvatarUrl(user.avatarUrl);
@@ -96,6 +99,7 @@ export class UserController implements interfaces.Controller {
      *
      * @returns {Promise<ResultList<User>>}
      */
+    @ClientControl(Role.MANAGE_USER)
     @Get("/")
     public async findUsers(@QueryParam("offset") offset: number,
                            @QueryParam("limit") limit: number,

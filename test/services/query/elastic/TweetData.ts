@@ -72,7 +72,7 @@ export class TweetData {
                     _source: {
                         hashtags: ["test"],
                         feeling: 0.92,
-                        type: "RT",
+                        type: "T",
                         tags: ["test"],
                         createdAt: "2017-05-24T10:22:50Z",
                         meta: {

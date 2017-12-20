@@ -5,14 +5,13 @@
   },
   "index_name_traffic": "traffic",
   "document_name_accident": "accident",
-  "index_name_politic": "politic",
-  "document_name_vote": "vote",
   "index_name_social_network": "social-network",
   "document_name_tweet": "tweet",
   "app": {
     "host" : "0.0.0.0",
     "port" : 3000,
-    "log_level": "debug"
+    "log_level": "debug",
+    "base_path": "/api"
   },
   "database": {
     "name": "metacity",

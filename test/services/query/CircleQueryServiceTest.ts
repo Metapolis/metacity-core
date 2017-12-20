@@ -58,9 +58,9 @@ export class CircleQueryServiceTest extends AbstractTestService {
 
         const user2: User = new User();
         user2.setId(15);
-        user2.setFirstName("Tony");
-        user2.setLastName("Stark");
-        user2.setEmail("Tony@Stark");
+        user2.setFirstName("Tony2");
+        user2.setLastName("Stark2");
+        user2.setEmail("tony2@stark.com");
 
         usersMock.push(user2);
 
@@ -68,7 +68,7 @@ export class CircleQueryServiceTest extends AbstractTestService {
         circleMock.setId(12);
         circleMock.setName("Stark Company");
         circleMock.setDefaultCircle(true);
-        circleMock.setRoles(["FAKE_ROLE", Role[Role.READ_ALL]]);
+        circleMock.setRoles(["FAKE_ROLE", Role.ACCESS_TWEET]);
         circleMock.setUsers(Promise.resolve(usersMock));
         circleDaoMock.setup((instance) => instance.findById(12)).returns(() => Promise.resolve(circleMock));
 
@@ -89,7 +89,6 @@ export class CircleQueryServiceTest extends AbstractTestService {
             Chai.assert.equal(circleDTO.getMembers()[i].getFirstName(), usersMock[i].getFirstName());
             Chai.assert.equal(circleDTO.getMembers()[i].getLastName(), usersMock[i].getLastName());
             Chai.assert.equal(circleDTO.getMembers()[i].getEmail(), usersMock[i].getEmail());
-
         }
 
         circleDTO = await circleQueryService.getCircle(13);

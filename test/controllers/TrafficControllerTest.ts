@@ -45,6 +45,7 @@ import { User } from "../../src/persistence/domain/User";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 import { Credential } from "../../src/persistence/domain/Credential";
+import { ClientControlManager } from "../../src/security/ClientControlManager";
 
 /**
  * All test for traffic controller
@@ -63,6 +64,13 @@ class TrafficControllerTest extends AbstractTestController {
         const trafficQueryService: TypeMoq.IMock<TrafficQueryService> = (ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>);
         const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
         const userDao: TypeMoq.IMock<UserDao> = (ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_ACCIDENT, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const localAuthorityMock: LocalAuthority = new LocalAuthority();
         const credential: Credential = new Credential();
@@ -74,7 +82,7 @@ class TrafficControllerTest extends AbstractTestController {
         const userMock: User = new User();
         (await userMock.getCircles()).push(circle);
 
-        circle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role.ACCESS_ACCIDENT]);
 
         localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));
@@ -197,8 +205,16 @@ class TrafficControllerTest extends AbstractTestController {
         const path: string = "/api/traffics/accidents";
         const offset: number = 0;
         const limit: number = 20;
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
-        // Check no authentication
+        // Check na access for ressource
         let opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
@@ -216,7 +232,16 @@ class TrafficControllerTest extends AbstractTestController {
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
-        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_ACCIDENT, Role.MANAGE_CIRCLE]));
 
         // Check no offset
         const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
@@ -231,7 +256,7 @@ class TrafficControllerTest extends AbstractTestController {
         const userMock: User = new User();
         (await userMock.getCircles()).push(circle);
 
-        circle.setRoles([Role[Role.READ_ALL]]);
+        circle.setRoles([Role.ACCESS_ACCIDENT]);
 
         localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthorityMock));
         userDao.setup((instance) => instance.findById(1)).returns(() => Promise.resolve(userMock));

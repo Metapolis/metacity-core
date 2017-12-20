@@ -28,6 +28,7 @@ import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDa
 import { UserDao } from "../../../src/persistence/dao/UserDao";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import * as TypeMoq from "typemoq";
+import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
 
 export abstract class AbstractTestService {
 
@@ -64,5 +65,6 @@ export abstract class AbstractTestService {
         (AbstractTestService.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>).reset();
         (AbstractTestService.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>).reset();
         (AbstractTestService.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>).reset();
+        (AbstractTestService.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDao>).reset();
     }
 }

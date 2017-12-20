@@ -48,14 +48,12 @@ import { AccessDeniedError } from "./common/error/AccessDeniedError";
 import { TweetController } from "./controllers/rest/TweetController";
 import { TweetQueryService } from "./services/query/TweetQueryService";
 import { TweetQueryServiceImpl } from "./services/query/impl/TweetQueryServiceImpl";
-import { RequestAccessor } from "./RequestAccessor";
 import { LocalAuthority } from "./persistence/domain/LocalAuthority";
 import { LocalAuthorityDaoImpl } from "./persistence/dao/impl/LocalAuthorityDaoImpl";
 import { LocalAuthorityDao } from "./persistence/dao/LocalAuthorityDao";
 import { ContextApp } from "./ContextApp";
 import { LocalAuthorityQueryService } from "./services/query/LocalAuthorityQueryService";
 import { LocalAuthorityQueryServiceImpl } from "./services/query/impl/LocalAuthorityQueryServiceImpl";
-import { SecurityManager } from "./common/security/SecurityManager";
 import { Circle } from "./persistence/domain/Circle";
 import { CircleCommandService } from "./services/command/CircleCommandService";
 import { CircleCommandServiceImpl } from "./services/command/impl/CircleCommandServiceImpl";
@@ -75,6 +73,11 @@ import { UserQueryService } from "./services/query/UserQueryService";
 import { UserQueryServiceImpl } from "./services/query/impl/UserQueryServiceImpl";
 import * as CORS from "cors";
 import methodOverride = require("method-override");
+import { UserControlManager } from "./security/UserControlManager";
+import { ClientControlManager } from "./security/ClientControlManager";
+import { CredentialDaoImpl } from "./persistence/dao/impl/CredentialDaoImpl";
+import { CredentialDao } from "./persistence/dao/CredentialDao";
+import * as Moment from "moment";
 
 /**
  * The App.
@@ -202,7 +205,8 @@ export class App {
         this.logger.debug("Connect to database");
         await this.connectDB();
         // Bind security manager
-        this.container.bind<SecurityManager>("SecurityManager").to(SecurityManager);
+        this.container.bind<UserControlManager>("UserControlManager").to(UserControlManager);
+        this.container.bind<ClientControlManager>("ClientControlManager").to(ClientControlManager);
 
         this.bindDao();
         this.bindCommands();
@@ -249,20 +253,48 @@ export class App {
         const server = new InversifyExpressServer(this.container);
         server.setConfig((app) => {
             const expressWinston = require("express-winston");
+            const context = require("request-context");
+            app.use(context.middleware("request"));
             app.use(expressWinston.logger({
                 transports: [
-                    new Winston.transports.Console({
-                        json: true,
-                        colorize: true
+                    new (Winston.transports.Console)({
+                        json: false,
+                        colorize: true,
+                        formatter: (options) => {
+                            // Return string will be passed to logger.
+                            const logProperties: string[] = [];
+                            logProperties.push(Moment().toISOString(),
+                                options.level.toUpperCase(),
+                                App.name,
+                                (options.message ? decodeURI(options.message) : ""),
+                                (options.meta && Object.keys(options.meta).length ? "\n\t" + JSON.stringify(options.meta) : ""));
+                            return logProperties.join(" ");
+                        },
                     })
                 ],
-                meta: false, // optional: control whether you want to log the meta data about the request (default to true)
-                msg: "HTTP {{req.method}} {{req.url}} {{res}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
-                expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
-                colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
-                level: "info"
-            }));
 
+                meta: false, // optional: control whether you want to log the meta data about the request (default to true)
+                msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+                expressFormat: false, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+                colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+                level: (req: Express.Request, res: Express.Response) => {
+                    let level = "";
+                    // Check if error is Ok (bigger than 200)
+                    if (res.statusCode >= HTTPStatusCodes.OK) {
+                        level = "info";
+                    }
+                    // Check if error is client error (bigger than 400)
+                    if (res.statusCode >= HTTPStatusCodes.BAD_REQUEST) {
+                        level = "warn";
+                    }
+                    // Check if error is server error (bigger than 500)
+                    if (res.statusCode >= HTTPStatusCodes.INTERNAL_SERVER_ERROR) {
+                        level = "error";
+                    }
+                    return level;
+                }
+            }));
+            app.use(CORS());
             app.use(BodyParser.urlencoded({
                 extended: true
             }));
@@ -274,11 +306,7 @@ export class App {
             app.use("/", Express.static(publicPath));
             app.use(methodOverride());
             app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-                if (!/^\/api/.test(req.path)) {
-                    res.sendFile(Path.join(__dirname, "../../client/src/index.html"));
-                    return;
-                }
-                RequestAccessor.setRequest(req);
+                context.set("request:req", req);
                 next();
             });
         });
@@ -317,6 +345,7 @@ export class App {
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
         this.container.bind<LocalAuthorityDao>("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
+        this.container.bind<CredentialDao>("CredentialDao").to(CredentialDaoImpl);
     }
 
     /**

@@ -40,6 +40,8 @@ import { UserDTO } from "../../src/services/query/dto/user/UserDTO";
 import { FindUserQuery } from "../../src/common/query/FindUserQuery";
 import { ResultList } from "../../src/common/ResultList";
 import { User } from "../../src/controllers/rest/model/user/User";
+import { Role } from "../../src/common/enum/Role";
+import { ClientControlManager } from "../../src/security/ClientControlManager";
 
 /**
  * All test for user creation
@@ -57,6 +59,13 @@ export class UserControllerTest extends AbstractTestController {
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
         // Hello im a rigid linter
         const userIdentifier = 42;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const user: SaveUser = new SaveUser();
         user.lastName = "michel";
@@ -99,13 +108,43 @@ export class UserControllerTest extends AbstractTestController {
         // 403 not enough rights => role is not high enough to create a circle
         const path: string = "/api/users";
         const userCommandService: TypeMoq.IMock<UserCommandService> = (ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>);
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
 
         const user: SaveUser = new SaveUser();
         user.lastName = "michel";
         user.password = "Champion";
         user.email = "john@cena";
 
-        const opts = {
+        let opts = {
+            method: "POST",
+            uri: AbstractTestController.getBackend() + path,
+            body: user,
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
+
+        opts = {
             method: "POST",
             uri: AbstractTestController.getBackend() + path,
             body: user,
@@ -114,7 +153,7 @@ export class UserControllerTest extends AbstractTestController {
 
         userCommandService.setup((instance) => instance.createUser(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
 
-        let statusCode = HTTPStatusCodes.OK;
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });
@@ -128,6 +167,13 @@ export class UserControllerTest extends AbstractTestController {
         const offset: number = 0;
         const limit: number = 20;
         const userQueryService: TypeMoq.IMock<UserQueryService> = (ContextApp.container.get("UserQueryServiceMock") as TypeMoq.IMock<UserQueryService>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER, Role.MANAGE_CIRCLE]));
 
         const mockUsers: UserDTO[] = [];
         for (let i = 0; i < 10; i++) {
@@ -220,8 +266,16 @@ export class UserControllerTest extends AbstractTestController {
         const path: string = "/api/users";
         const offset: number = 0;
         const limit: number = 20;
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
 
-        let opts = {
+        const opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
             qs: {
@@ -230,9 +284,24 @@ export class UserControllerTest extends AbstractTestController {
             }
         };
 
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_USER]));
+
         // Check no offset
         opts.qs.offset = null;
-        let statusCode = HTTPStatusCodes.OK;
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });

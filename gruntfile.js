@@ -11,19 +11,7 @@ module.exports = function (grunt) {
                     src: ["src/**/*.ts", "test/**/*.ts", "!server/.baseDir.ts", "!server/**/*.d.ts"],
                     dest: "./dist"
                 }],
-                options: {
-                    module: "commonjs",
-                    removeComments: true,
-                    target: "es6",
-                    lib: ["es6"],
-                    types: ["reflect-metadata"],
-                    moduleResolution: "node",
-                    experimentalDecorators: true,
-                    emitDecoratorMetadata: true,
-                    preserveConstEnums: true,
-                    outFile: "../../built/local/tsc.js",
-                    sourceMap: false
-                }
+                tsconfig: "tsconfig.json"
             }
         }
     });

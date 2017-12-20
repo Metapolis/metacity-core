@@ -39,7 +39,7 @@ import { Luminosity } from "../../common/enum/accident/Luminosity";
 import { AtmosphericCondition } from "../../common/enum/accident/AtmosphericCondition";
 import { CollisionType } from "../../common/enum/accident/CollisionType";
 import { Role } from "../../common/enum/Role";
-import { Secured } from "../../common/Decorators";
+import { ClientControl, UserControl } from "../../common/Decorators";
 
 /**
  * API resources to delivery service to access to traffic element
@@ -75,7 +75,7 @@ export class TrafficController implements interfaces.Controller {
      * @returns {Promise<void>}
      */
     @Get("/accidents")
-    @Secured([Role.READ_ALL])
+    @ClientControl(Role.ACCESS_ACCIDENT)
     public async findAccidents(@QueryParam("areas") areas: string,
                                @QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {

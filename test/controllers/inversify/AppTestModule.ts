@@ -36,7 +36,7 @@ import { UserAuthenticationQueryServiceImpl } from "../../../src/services/query/
 import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthorityDaoImpl } from "../../../src/persistence/dao/impl/LocalAuthorityDaoImpl";
 import { UserCommandService } from "../../../src/services/command/UserCommandService";
-import { UserCommandServiceImpl} from "../../../src/services/command/impl/UserCommandServiceImpl";
+import { UserCommandServiceImpl } from "../../../src/services/command/impl/UserCommandServiceImpl";
 import { UserDaoImpl } from "../../../src/persistence/dao/impl/UserDaoImpl";
 import { UserDao } from "../../../src/persistence/dao/UserDao";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
@@ -49,6 +49,10 @@ import { UserQueryServiceImpl } from "../../../src/services/query/impl/UserQuery
 import { UserQueryService } from "../../../src/services/query/UserQueryService";
 import { LocalAuthorityQueryService } from "../../../src/services/query/LocalAuthorityQueryService";
 import { LocalAuthorityQueryServiceImpl } from "../../../src/services/query/impl/LocalAuthorityQueryServiceImpl";
+import { ClientControlManager } from "../../../src/security/ClientControlManager";
+import { Role } from "../../../src/common/enum/Role";
+import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
+import { CredentialDaoImpl } from "../../../src/persistence/dao/impl/CredentialDaoImpl";
 
 /**
  * App test module
@@ -107,6 +111,12 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("CircleDaoMock")) {
             ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType<CircleDao>(CircleDaoImpl));
         }
+        if (!ContextApp.container.isBound("CredentialDaoMock")) {
+            ContextApp.container.bind("CredentialDaoMock").toConstantValue(TypeMoq.Mock.ofType<CredentialDao>(CredentialDaoImpl));
+        }
+        if (!ContextApp.container.isBound("ClientControlManagerMock")) {
+            ContextApp.container.bind("ClientControlManagerMock").toConstantValue(TypeMoq.Mock.ofType<ClientControlManager>(ClientControlManager));
+        }
 
         // Rebind all services
         ContextApp.container.rebind("UserDao").toConstantValue((ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDaoImpl>).object);
@@ -120,6 +130,7 @@ export class AppTestModule {
         ContextApp.container.rebind("UserCommandService").toConstantValue((ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>).object);
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
+        ContextApp.container.rebind("ClientControlManager").toConstantValue((ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).object);
 
         return ContextApp.container;
     }
@@ -128,6 +139,7 @@ export class AppTestModule {
         ContextApp.container.rebind("UserDao").to(UserDaoImpl);
         ContextApp.container.rebind("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         ContextApp.container.rebind("CircleDao").to(CircleDaoImpl);
+        ContextApp.container.rebind("CredentialDao").to(CredentialDaoImpl);
         ContextApp.container.rebind("TrafficQueryService").to(TrafficQueryServiceImpl);
         ContextApp.container.rebind("TweetQueryService").to(TweetQueryServiceImpl);
         ContextApp.container.rebind("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
@@ -136,6 +148,7 @@ export class AppTestModule {
         ContextApp.container.rebind("CircleQueryService").to(CircleQueryServiceImpl);
         ContextApp.container.rebind("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         ContextApp.container.rebind("UserCommandService").to(UserCommandServiceImpl);
+        ContextApp.container.rebind("ClientControlManager").to(ClientControlManager);
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");
         }

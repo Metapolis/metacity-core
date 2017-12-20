@@ -74,6 +74,15 @@ export class Config {
     }
 
     /**
+     * Get application base path
+     *
+     * @returns {string}
+     */
+    public static getAppBasePath(): string {
+        return Config.properties.get("app.base_path");
+    }
+
+    /**
      * Get application log level
      *
      * @returns {string}
@@ -116,24 +125,6 @@ export class Config {
      */
     public static getDocumentNameTweet(): string {
         return Config.properties.get("document_name_tweet");
-    }
-
-    /**
-     * Get index name politic
-     *
-     * @returns {string}
-     */
-    public static getIndexNamePolitic(): string {
-        return Config.properties.get("index_name_politic");
-    }
-
-    /**
-     * Get document name vote
-     *
-     * @returns {string}
-     */
-    public static getDocumentNameVote(): string {
-        return Config.properties.get("document_name_vote");
     }
 
     /**

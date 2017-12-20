@@ -35,6 +35,8 @@ import { LocalAuthorityDao } from "../../../src/persistence/dao/LocalAuthorityDa
 import { UserDao } from "../../../src/persistence/dao/UserDao";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import * as TypeMoq from "typemoq";
+import { ClientControlManager } from "../../../src/security/ClientControlManager";
+import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
 
 /**
  * Abstract controller
@@ -88,6 +90,8 @@ export abstract class AbstractTestController {
         (AbstractTestController.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>).reset();
         (AbstractTestController.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>).reset();
         (AbstractTestController.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>).reset();
+        (AbstractTestController.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDao>).reset();
+        (AbstractTestController.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).reset();
     }
 
     /**

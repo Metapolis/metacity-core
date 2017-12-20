@@ -37,6 +37,8 @@ import * as HTTPStatusCodes from "http-status-codes";
 import { CircleDetails } from "./model/circle/CircleDetails";
 import { CircleDTO } from "../../services/query/dto/circle/CircleDTO";
 import { User } from "./model/circle/User";
+import { ClientControl } from "../../common/Decorators";
+import { Role } from "../../common/enum/Role";
 import { CircleSummary } from "./model/circle/CircleSummary";
 import { ResultList } from "../../common/ResultList";
 import { FindCircleQuery } from "../../common/query/FindCircleQuery";
@@ -87,6 +89,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<ResultList<CircleSummary>>} list of circles summaries
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Get("/:localauthorityid/circles")
     public async findLocalAuthorityCircles(@RequestParam("localauthorityid") localAuthorityId: number,
                                            @QueryParam("limit") limit: number,
@@ -125,6 +128,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<NumberIdentifier>} created circle identifier
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Post("/:localauthorityid/circles")
     public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: number): Promise<NumberIdentifier> {
         this.logger.debug("Begin creation");
@@ -154,6 +158,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {number} circleId circle identifier
      * @param {Express.Response} res Response to set 204
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Put("/:localauthorityid/circles/:circleid")
     public async updateLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
@@ -189,6 +194,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<Circle>} information of specific circle
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Get("/:localauthorityid/circles/:circleid")
     public async getLocalAuthorityCircleDetails(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number): Promise<CircleDetails> {
         this.logger.debug("Begin get circle");
@@ -204,6 +210,7 @@ export class LocalAuthorityController implements interfaces.Controller {
 
         const circleDTO: CircleDTO = await this.circleQueryService.getCircle(circleIdNumber);
         const circleDetails: CircleDetails = new CircleDetails();
+
         circleDetails.id = circleDTO.getId();
         circleDetails.name = circleDTO.getName();
         circleDetails.defaultCircle = circleDTO.isDefaultCircle();
@@ -230,6 +237,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      * @param {number} circleId Circle identifier
      * @param {Express.Response} res Response to set 204
      */
+    @ClientControl(Role.MANAGE_CIRCLE)
     @Delete("/:localauthorityid/circles/:circleid")
     public async deleteLocalAuthorityCircle(@RequestParam("localauthorityid") localAuthorityId: number, @RequestParam("circleid") circleId: number, @Response() res: Express.Response): Promise<void> {
         this.logger.debug("Begin delete circle '%s'", circleId);

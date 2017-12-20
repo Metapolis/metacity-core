@@ -29,6 +29,7 @@ import { CircleDao} from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { Credential } from "../../src/persistence/domain/Credential";
+import { Role } from "../../src/common/enum/Role";
 import { AbstractTestDao } from "./inversify/AbstractTestDao";
 import { FindCircleQuery } from "../../src/common/query/FindCircleQuery";
 import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
@@ -224,6 +225,7 @@ export class CircleDaoTest extends AbstractTestDao {
         const credential: Credential = new Credential();
         credential.setSecret("danslavieparfoismaispasseulement");
         credential.setAccessKey("AccessKey");
+        credential.setRoles([Role.ACCESS_TWEET]);
         await credentialRepository.save(credential);
 
         localAuthority.setCredential(Promise.resolve(credential));

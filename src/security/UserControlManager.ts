@@ -23,25 +23,25 @@
 
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
-import { Utils } from "../Utils";
-import { LocalAuthorityDao } from "../../persistence/dao/LocalAuthorityDao";
-import { JWTPayload } from "./JWTToken";
-import { LocalAuthority } from "../../persistence/domain/LocalAuthority";
-import { AccessDeniedError } from "../error/AccessDeniedError";
 import * as JWT from "jsonwebtoken";
+import { Utils } from "../common/Utils";
+import { LocalAuthorityDao } from "../persistence/dao/LocalAuthorityDao";
+import { JWTPayload } from "./JWTToken";
+import { LocalAuthority } from "../persistence/domain/LocalAuthority";
+import { AccessDeniedError } from "../common/error/AccessDeniedError";
 
 /**
  * Contain all services to manage security
  */
 @injectable()
-export class SecurityManager {
+export class UserControlManager {
 
     /**
-     * Security manager's logger
+     * User control manager's logger
      *
      * @type {winston.LoggerInstance}
      */
-    private logger: LoggerInstance = Utils.createLogger(SecurityManager.name);
+    private logger: LoggerInstance = Utils.createLogger(UserControlManager.name);
 
     /**
      * LocalAuthority data access object

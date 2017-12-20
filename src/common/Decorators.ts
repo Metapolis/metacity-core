@@ -21,15 +21,17 @@
  * @since      0.2.0
  */
 
-import { RequestAccessor } from "../RequestAccessor";
 import { AccessDeniedError } from "./error/AccessDeniedError";
 import { Utils } from "./Utils";
 import { ContextApp } from "../ContextApp";
 import { User } from "../persistence/domain/User";
 import { UserDao } from "../persistence/dao/UserDao";
-import { JWTPayload } from "./security/JWTToken";
-import { SecurityManager } from "./security/SecurityManager";
+import { JWTPayload } from "../security/JWTToken";
 import { IllegalArgumentError } from "./error/IllegalArgumentError";
+import { Config } from "../Config";
+import { ClientControlManager } from "../security/ClientControlManager";
+import { UserControlManager } from "../security/UserControlManager";
+import { Request } from "express-serve-static-core";
 
 /**
  * Check if user can access to resource
@@ -37,17 +39,21 @@ import { IllegalArgumentError } from "./error/IllegalArgumentError";
  * @returns {(target:any, propertyKey:string, descriptor:PropertyDescriptor) => descriptor}
  * @constructor
  */
-function Secured(roles: string[]) {
+function UserControl(...roles: string[]) {
     return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value;
-
+        // TODO reimplement this method, wait new reflexion from expiration of JWT and refresh. And extract to a UserControlManager /!\
         // Add code before execute method
         descriptor.value = async function(...args: any[]) {
             this.logger.info("Begin authentication");
+
+            // Get Request context
+            const context = require("request-context");
+            const request = context.get("request:req") as Request;
             const userDao: UserDao = ContextApp.getContainer().get("UserDao") as UserDao;
 
-            // retrive the authorization in header
-            const authorizationRaw: string = RequestAccessor.getRequest().headers.authorization;
+            // retrieve the authorization in header
+            const authorizationRaw: string = request.headers.authorization;
             if (authorizationRaw === undefined) {
                 this.logger.error("Token not found");
                 throw new IllegalArgumentError("No token found");
@@ -67,10 +73,10 @@ function Secured(roles: string[]) {
             Utils.checkArgument(!Utils.isNullOrEmpty(jwtEncoded), "Malformed token");
 
             // Retrieve the sub domain who is the identifier of localAuthority
-            const domain: string = RequestAccessor.getRequest().hostname.split(".")[0];
+            const domain: string = request.hostname.split(".")[0];
 
             // Retrieve the payload value
-            const authorizationElement: JWTPayload = await (ContextApp.getContainer().get("SecurityManager") as SecurityManager).authenticate(domain, jwtEncoded);
+            const authorizationElement: JWTPayload = await (ContextApp.getContainer().get("UserControlManager") as UserControlManager).authenticate(domain, jwtEncoded);
 
             const user: User = await userDao.findById(authorizationElement.id);
 
@@ -96,4 +102,44 @@ function Secured(roles: string[]) {
     };
 }
 
-export { Secured };
+/**
+ * Check if client can access to resource
+ * @param roles
+ * @returns {(target:any, propertyKey:string, descriptor:PropertyDescriptor) => descriptor}
+ * @constructor
+ */
+function ClientControl(...roles: string[]) {
+    return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+        const originalMethod = descriptor.value;
+
+        descriptor.value = async function(...args: any[]) {
+            // Get Request context
+            const context = require("request-context");
+            const request = context.get("request:req") as Request;
+            
+            // Retrieve all security needs elements
+            const path: string = request.path.substring(Config.getAppBasePath().length);
+            const timestamps: number = Number(request.get("x-timestamp"));
+            const signature: string = request.get("signature");
+            const method: string = request.method;
+
+            // Try to authenticate client with provide information
+            const clientRoles: string[] = await (ContextApp.getContainer().get("ClientControlManager") as ClientControlManager).authenticateClient(path, signature, new Map(Object.entries(request.query)), Number(timestamps), method);
+
+            // Check roles for client
+            for (const role of roles) {
+                if (clientRoles.indexOf(role) === -1) {
+                    this.logger.error("Client cannot access to this resource");
+                    throw new AccessDeniedError("Access denied");
+                }
+            }
+
+            return originalMethod.apply(this, args);
+        };
+
+        return descriptor;
+
+    };
+}
+
+export { UserControl, ClientControl };

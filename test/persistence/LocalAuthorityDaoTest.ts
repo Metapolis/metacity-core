@@ -29,6 +29,7 @@ import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
 import { AbstractTestDao } from "./inversify/AbstractTestDao";
 import { Credential } from "../../src/persistence/domain/Credential";
+import { Role } from "../../src/common/enum/Role";
 import { CircleDao } from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
 
@@ -47,6 +48,7 @@ export class LocalAuthorityDaoTest extends AbstractTestDao {
         const credential: Credential = new Credential();
         credential.setSecret("danslavieparfoismaispasseulement");
         credential.setAccessKey("AccessKey");
+        credential.setRoles([Role.ACCESS_TWEET]);
         await credentialRepository.save(credential);
 
         localAuthority.setCredential(Promise.resolve(credential));
@@ -76,6 +78,7 @@ export class LocalAuthorityDaoTest extends AbstractTestDao {
         const credential: Credential = new Credential();
         credential.setSecret("danslavieparfoismaispasseulement");
         credential.setAccessKey("AccessKey");
+        credential.setRoles([Role.ACCESS_TWEET]);
         await credentialRepository.save(credential);
 
         localAuthority.setCredential(Promise.resolve(credential));
