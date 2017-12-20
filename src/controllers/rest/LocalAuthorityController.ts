@@ -109,7 +109,7 @@ export class LocalAuthorityController implements interfaces.Controller {
 
         this.logger.debug("Begin update local authority");
         const updateLocalAuthorityCommandDTO: UpdateLocalAuthorityCommandDTO = new UpdateLocalAuthorityCommandDTO();
-        updateLocalAuthorityCommandDTO.setId(localAuthorityId);
+        updateLocalAuthorityCommandDTO.setId(localAuthorityIdNumber);
         updateLocalAuthorityCommandDTO.setName(localAuthority.name);
         updateLocalAuthorityCommandDTO.setUIConfig(localAuthority.uiConfig);
 
