@@ -21,7 +21,6 @@
  * @since      0.2.0
  */
 
-
 /**
  * Represent a dataSet
  */
