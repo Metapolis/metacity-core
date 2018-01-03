@@ -52,7 +52,7 @@ import { UIConfig } from "../../src/common/model/UIConfig";
 import { Location } from "../../src/common/model/Location";
 import { LocalAuthorityCommandService } from "../../src/services/command/LocalAuthorityCommandService";
 import { UpdateLocalAuthorityCommandDTO } from "../../src/services/command/dto/local-authority/UpdateLocalAuthorityCommandDTO";
-import { LocalAuthorityDTO } from "../../src/services/query/dto/localauthority/LocalAuthorityDTO";
+import { LocalAuthorityDTO } from "../../src/services/query/dto/local-authority/LocalAuthorityDTO";
 import { LocalAuthorityDetails } from "../../src/controllers/rest/model/local-authority/LocalAuthorityDetails";
 
 /**

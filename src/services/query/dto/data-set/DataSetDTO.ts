@@ -21,33 +21,32 @@
  * @since      0.2.0
  */
 
-import { UIConfig } from "../../../../common/model/UIConfig";
 
 /**
- * Represents a localAuthority
+ * Represent a dataSet
  */
-export class LocalAuthorityDTO {
+export class DataSetDTO {
 
     /**
-     * LocalAuthority's identifier
+     * DataSet's identifier
      */
     private id: number;
 
     /**
-     * LocalAuthority's name
+     * DataSet's name
      */
     private name: string;
 
     /**
-     * LocalAuthority's secret
+     * DataSet's description
      */
-    private secret: string;
+    private description: string;
 
     /**
-     * LocalAuthority's ui config
+     * DataSet by default if true
      */
-    private uiConfig: UIConfig;
-    
+    private restricted: boolean;
+
     /**
      * Getter identifier
      *
@@ -67,42 +66,6 @@ export class LocalAuthorityDTO {
     }
 
     /**
-     * Getter secret
-     *
-     * @returns {string}
-     */
-    public getSecret(): string {
-        return this.secret;
-    }
-
-    /**
-     * Setter secret
-     *
-     * @param secret new secret value
-     */
-    public setSecret(secret: string): void {
-        this.secret = secret;
-    }
-
-    /**
-     * Getter uiConfig
-     *
-     * @returns {string}
-     */
-    public getUIConfig(): UIConfig {
-        return this.uiConfig;
-    }
-
-    /**
-     * Setter uiConfig
-     *
-     * @param uiConfig new uIConfig value
-     */
-    public setUIConfig(uiConfig: UIConfig): void {
-        this.uiConfig = uiConfig;
-    }
-
-    /**
      * Getter name
      *
      * @returns {string}
@@ -118,5 +81,41 @@ export class LocalAuthorityDTO {
      */
     public setName(name: string): void {
         this.name = name;
+    }
+
+    /**
+     * Getter description
+     *
+     * @returns {string}
+     */
+    public getDescription(): string {
+        return this.description;
+    }
+
+    /**
+     * Setter description
+     *
+     * @param description new description value
+     */
+    public setDescription(description: string): void {
+        this.description = description;
+    }
+
+    /**
+     * Setter restricted
+     *
+     * @param {boolean} restricted
+     */
+    public setRestricted(restricted: boolean): void {
+        this.restricted = restricted;
+    }
+
+    /**
+     * Getter restricted
+     *
+     * @returns {boolean}
+     */
+    public isRestricted(): boolean {
+        return this.restricted;
     }
 }

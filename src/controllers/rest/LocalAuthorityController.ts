@@ -47,7 +47,11 @@ import { SaveLocalAuthority } from "./model/local-authority/SaveLocalAuthority";
 import { UpdateLocalAuthorityCommandDTO } from "../../services/command/dto/local-authority/UpdateLocalAuthorityCommandDTO";
 import { LocalAuthorityCommandService } from "../../services/command/LocalAuthorityCommandService";
 import { LocalAuthorityDetails } from "./model/local-authority/LocalAuthorityDetails";
-import { LocalAuthorityDTO } from "../../services/query/dto/localauthority/LocalAuthorityDTO";
+import { LocalAuthorityDTO } from "../../services/query/dto/local-authority/LocalAuthorityDTO";
+import { DataSetSummary } from "./model/data-set/DataSetSummary";
+import { FindDataSetQuery } from "../../common/query/FindDataSetQuery";
+import { DataSetDTO } from "../../services/query/dto/data-set/DataSetDTO";
+import { DataSetQueryService } from "../../services/query/DataSetQueryService";
 
 /**
  * API resources to Local authorities services
@@ -78,6 +82,12 @@ export class LocalAuthorityController implements interfaces.Controller {
      */
     @inject("CircleQueryService")
     private circleQueryService: CircleQueryService;
+
+    /**
+     * DataSet query service
+     */
+    @inject("DataSetQueryService")
+    private dataSetQueryService: DataSetQueryService;
 
     /**
      * Local authority query service
@@ -150,6 +160,47 @@ export class LocalAuthorityController implements interfaces.Controller {
         this.logger.debug("Local authority '%s' is retrieved", localAuthorityId);
 
         return localAuthority;
+    }
+
+    /**
+     * Find data sets, filter result
+     *
+     * @param {number} localAuthorityId: localAuthority identifier
+     * @param {number} limit: number of results to request
+     * @param {number} offset: number of hit to skip
+     *
+     * @returns {Promise<ResultList<DataSetSummary>>} list of data sets summaries
+     */
+    @ClientControl(Role.MANAGE_CIRCLE)
+    @Get("/:localauthorityid/data-sets")
+    public async findLocalAuthorityDataSets(@RequestParam("localauthorityid") localAuthorityId: number,
+                                            @QueryParam("limit") limit: number,
+                                            @QueryParam("offset") offset: number): Promise<ResultList<DataSetSummary>> {
+        this.logger.debug("Begin find data sets");
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+        if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
+            this.logger.debug("Local authority with id '%s' cannot be found", localAuthorityIdNumber);
+            throw new NotFoundError("Local authority not found");
+        }
+
+        const query: FindDataSetQuery = new FindDataSetQuery();
+        query.setLocalAuthorityId(localAuthorityIdNumber);
+        query.setLimit(Number(limit));
+        query.setOffset(Number(offset));
+
+        const dataSetResultList: ResultList<DataSetDTO> = await this.dataSetQueryService.findDataSets(query);
+        const dataSetSummaries: DataSetSummary[] = [];
+        for (const dataSetDTO of dataSetResultList.results) {
+            const dataSetSummary: DataSetSummary = new DataSetSummary();
+            dataSetSummary.id = dataSetDTO.getId();
+            dataSetSummary.name = dataSetDTO.getName();
+            dataSetSummary.description = dataSetDTO.getDescription();
+            dataSetSummary.restricted = dataSetDTO.isRestricted();
+            dataSetSummaries.push(dataSetSummary);
+        }
+        this.logger.debug("%d Data sets retrieved", dataSetResultList.total);
+
+        return new ResultList<DataSetSummary>(dataSetResultList.total, dataSetSummaries);
     }
 
     /**

@@ -80,6 +80,10 @@ import { CredentialDao } from "./persistence/dao/CredentialDao";
 import * as Moment from "moment";
 import { LocalAuthorityCommandService } from "./services/command/LocalAuthorityCommandService";
 import { LocalAuthorityCommandServiceImpl } from "./services/command/impl/LocalAuthorityCommandServiceImpl";
+import { DataSetQueryServiceImpl } from "./services/query/impl/DataSetQueryServiceImpl";
+import { DataSetQueryService } from "./services/query/DataSetQueryService";
+import { DataSetDaoImpl } from "./persistence/dao/impl/DataSetDaoImpl";
+import { DataSetDao } from "./persistence/dao/DataSetDao";
 
 /**
  * The App.
@@ -186,6 +190,7 @@ export class App {
         this.container.bind<LocalAuthorityQueryService>("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         this.container.bind<UserAuthenticationQueryService>("UserAuthenticationQueryService").to(UserAuthenticationQueryServiceImpl);
         this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
+        this.container.bind<DataSetQueryService>("DataSetQueryService").to(DataSetQueryServiceImpl);
         this.container.bind<UserQueryService>("UserQueryService").to(UserQueryServiceImpl);
     }
 
@@ -348,6 +353,7 @@ export class App {
         this.container.bind<UserDao>("UserDao").to(UserDaoImpl);
         this.container.bind<LocalAuthorityDao>("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         this.container.bind<CircleDao>("CircleDao").to(CircleDaoImpl);
+        this.container.bind<DataSetDao>("DataSetDao").to(DataSetDaoImpl);
         this.container.bind<CredentialDao>("CredentialDao").to(CredentialDaoImpl);
     }
 
