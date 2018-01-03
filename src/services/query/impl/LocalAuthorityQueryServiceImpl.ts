@@ -29,6 +29,7 @@ import { Utils } from "../../../common/Utils";
 import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
 import { LocalAuthorityDTO } from "../dto/localauthority/LocalAuthorityDTO";
+import { isNullOrUndefined } from "util";
 
 /**
  * Implementation of {@link LocalAuthorityQueryService}
@@ -60,21 +61,41 @@ export class LocalAuthorityQueryServiceImpl implements LocalAuthorityQueryServic
 
     /**
      * Override
-     * @param domain
-     * @returns {undefined}
      */
-    public async getLocalAuthority(domain: string): Promise<LocalAuthorityDTO> | null {
-        Utils.checkArgument(!Utils.isNullOrEmpty(domain), "Domain cannot be null or empty");
+    public async getLocalAuthorityByAccessKey(accessKey: string): Promise<LocalAuthorityDTO | undefined> {
+        Utils.checkArgument(!Utils.isNullOrEmpty(accessKey), "Access key cannot be null or empty");
 
-        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(domain);
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findByCredentialAccessKey(accessKey);
         if (localAuthority === undefined) {
-            this.logger.debug("LocalAuthority '%s' not found", domain);
-            return null;
+            this.logger.debug("LocalAuthority '%s' not found", accessKey);
+            return undefined;
         }
 
         const localAuthorityDto: LocalAuthorityDTO = new LocalAuthorityDTO();
         localAuthorityDto.setId(localAuthority.getId());
         localAuthorityDto.setName(localAuthority.getName());
+        localAuthorityDto.setUIConfig(localAuthority.getUIConfig());
+        localAuthorityDto.setSecret((await localAuthority.getCredential()).getSecret());
+
+        return localAuthorityDto;
+    }
+
+    /**
+     * Override
+     */
+    public async getLocalAuthority(id: number): Promise<LocalAuthorityDTO | undefined> {
+        Utils.checkArgument(!isNullOrUndefined(id), "Identifier cannot be null or undefined");
+
+        const localAuthority: LocalAuthority = await this.localAuthorityDao.findById(id);
+        if (localAuthority === undefined) {
+            this.logger.debug("LocalAuthority '%s' not found", id);
+            return undefined;
+        }
+
+        const localAuthorityDto: LocalAuthorityDTO = new LocalAuthorityDTO();
+        localAuthorityDto.setId(localAuthority.getId());
+        localAuthorityDto.setName(localAuthority.getName());
+        localAuthorityDto.setUIConfig(localAuthority.getUIConfig());
         localAuthorityDto.setSecret((await localAuthority.getCredential()).getSecret());
 
         return localAuthorityDto;

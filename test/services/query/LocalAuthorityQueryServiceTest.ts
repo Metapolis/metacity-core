@@ -34,12 +34,78 @@ import { Credential } from "../../../src/persistence/domain/Credential";
 import { LocalAuthorityDTO } from "../../../src/services/query/dto/localauthority/LocalAuthorityDTO";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import { CircleQueryService } from "../../../src/services/query/CircleQueryService";
+import { UIConfig } from "../../../src/common/model/UIConfig";
+import { Location } from "../../../src/common/model/Location";
+import { isNullOrUndefined } from "util";
 
 /**
  * All test for user localAuthority query service
  */
 @suite
 class LocalAuthorityQueryServiceTest extends AbstractTestService {
+
+    @test
+    private async testGetLocalAuthorityByAccessKey(): Promise<void> {
+        const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
+        const localAuthorityDaoMock: TypeMoq.IMock<LocalAuthorityDao> = (ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>);
+
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("localhost");
+        localAuthority.setCredential(Promise.resolve(credential));
+        localAuthority.setId(12);
+        localAuthority.setName("nameKebab");
+        // UIconfig to set
+        const uiConfig: UIConfig = new UIConfig();
+        uiConfig.location = new Location();
+        uiConfig.primaryColor = "#AACCDD";
+        uiConfig.secondaryColor = "#BBAACD";
+        uiConfig.logo = "www.logo.gouv";
+        uiConfig.location.latitude = 44.000944;
+        uiConfig.location.longitude = -1.000944;
+        uiConfig.location.zoomFactor = -0.4;
+        localAuthority.setUIConfig(uiConfig);
+
+        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthority));
+
+        let localAuthorityDTO: LocalAuthorityDTO = await localAuthorityQueryService.getLocalAuthorityByAccessKey("localhost");
+
+        Chai.assert.equal(localAuthorityDTO.getId(), localAuthority.getId());
+        Chai.assert.equal(localAuthorityDTO.getSecret(), (await localAuthority.getCredential()).getSecret());
+        Chai.assert.equal(localAuthorityDTO.getName(), localAuthority.getName());
+        Chai.assert.isTrue(!isNullOrUndefined(localAuthorityDTO.getUIConfig()));
+        Chai.assert.isTrue(!isNullOrUndefined(localAuthorityDTO.getUIConfig().location));
+        Chai.assert.deepEqual(localAuthorityDTO.getUIConfig(), localAuthority.getUIConfig());
+
+        localAuthorityDTO = await localAuthorityQueryService.getLocalAuthorityByAccessKey("localhost2");
+
+        Chai.assert.isUndefined(localAuthorityDTO);
+    }
+
+    @test
+    private async testFindLocalAuthorityByAccessKeyWithAccessKeyNull() {
+        const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
+
+        await localAuthorityQueryService.getLocalAuthorityByAccessKey(null).then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Access key cannot be null or empty");
+        });
+    }
+
+    @test
+    private async testFindLocalAuthorityByAccessKeyWithAccessKeyEmpty() {
+        const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
+
+        await localAuthorityQueryService.getLocalAuthorityByAccessKey("").then((result) => {
+            throw Error("Illegal argument error expected");
+        }, (err) => {
+            Chai.assert.instanceOf(err, IllegalArgumentError);
+            Chai.assert.equal(err.message, "Access key cannot be null or empty");
+        });
+    }
 
     @test
     private async testGetLocalAuthority(): Promise<void> {
@@ -53,40 +119,53 @@ class LocalAuthorityQueryServiceTest extends AbstractTestService {
         localAuthority.setCredential(Promise.resolve(credential));
         localAuthority.setId(12);
         localAuthority.setName("nameKebab");
-        localAuthorityDaoMock.setup((instance) => instance.findByCredentialAccessKey("localhost")).returns(() => Promise.resolve(localAuthority));
+        const uiConfig: UIConfig = new UIConfig();
+        uiConfig.location = new Location();
+        uiConfig.primaryColor = "#AACCDD";
+        uiConfig.secondaryColor = "#BBAACD";
+        uiConfig.logo = "www.logo.gouv";
+        uiConfig.location.latitude = 44.000944;
+        uiConfig.location.longitude = -1.000944;
+        uiConfig.location.zoomFactor = -0.4;
+        localAuthority.setUIConfig(uiConfig);
 
-        let localAuthorityDTO: LocalAuthorityDTO = await localAuthorityQueryService.getLocalAuthority("localhost");
+        localAuthorityDaoMock.setup((instance) => instance.findById(12)).returns(() => Promise.resolve(localAuthority));
+
+        let localAuthorityDTO: LocalAuthorityDTO = await localAuthorityQueryService.getLocalAuthority(12);
 
         Chai.assert.equal(localAuthorityDTO.getId(), localAuthority.getId());
         Chai.assert.equal(localAuthorityDTO.getSecret(), (await localAuthority.getCredential()).getSecret());
         Chai.assert.equal(localAuthorityDTO.getName(), localAuthority.getName());
+        Chai.assert.isTrue(!isNullOrUndefined(localAuthorityDTO.getUIConfig()));
+        Chai.assert.isTrue(!isNullOrUndefined(localAuthorityDTO.getUIConfig().location));
+        Chai.assert.deepEqual(localAuthorityDTO.getUIConfig(), localAuthority.getUIConfig());
 
-        localAuthorityDTO = await localAuthorityQueryService.getLocalAuthority("localhost2");
+        localAuthorityDTO = await localAuthorityQueryService.getLocalAuthority(13);
 
-        Chai.assert.isNull(localAuthorityDTO);
+        Chai.assert.isUndefined(localAuthorityDTO);
     }
 
     @test
-    private async testFindLocalAuthorityWithNullDomain() {
+    private async testFindLocalAuthorityWithIdentifierNull() {
         const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
 
-        await localAuthorityQueryService.getLocalAuthority(null).then((result) => {
+        await localAuthorityQueryService.getLocalAuthorityByAccessKey(null).then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Domain cannot be null or empty");
+            Chai.assert.equal(err.message, "Access key cannot be null or empty");
         });
     }
 
     @test
-    private async testFindLocalAuthorityWithEmptyDomain() {
+    private async testFindLocalAuthorityWithIdentifierEmpty() {
         const localAuthorityQueryService: LocalAuthorityQueryService = (ContextApp.container.get("LocalAuthorityQueryService") as LocalAuthorityQueryService);
 
-        await localAuthorityQueryService.getLocalAuthority("").then((result) => {
+        await localAuthorityQueryService.getLocalAuthorityByAccessKey("").then((result) => {
             throw Error("Illegal argument error expected");
         }, (err) => {
             Chai.assert.instanceOf(err, IllegalArgumentError);
-            Chai.assert.equal(err.message, "Domain cannot be null or empty");
+            Chai.assert.equal(err.message, "Access key cannot be null or empty");
         });
     }
 
