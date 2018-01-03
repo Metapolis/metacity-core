@@ -35,6 +35,7 @@ import { Circle } from "./Circle";
 import { DataSet } from "./DataSet";
 import { UIConfig } from "../../common/model/UIConfig";
 import { Credential } from "./Credential";
+import { isNullOrUndefined } from "util";
 
 /**
  * Represents a Local Authority
@@ -101,7 +102,9 @@ export class LocalAuthority {
      */
     private initUIConfig(uiConfig: string): void {
         this.uiConfig = new UIConfig();
-        Object.assign(uiConfig, this.uiConfig);
+        if (!isNullOrUndefined(uiConfig)) {
+            Object.assign(uiConfig, this.uiConfig);
+        }
     }
 
     /**
