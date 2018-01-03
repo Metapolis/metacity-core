@@ -35,6 +35,8 @@ import { CircleDaoImpl} from "../../../src/persistence/dao/impl/CircleDaoImpl";
 import { CircleDao} from "../../../src/persistence/dao/CircleDao";
 import { CredentialDaoImpl } from "../../../src/persistence/dao/impl/CredentialDaoImpl";
 import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
+import { DataSetDaoImpl } from "../../../src/persistence/dao/impl/DataSetDaoImpl";
+import { DataSetDao } from "../../../src/persistence/dao/DataSetDao";
 
 export class AppTestModule {
 
@@ -60,6 +62,9 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("CircleDaoMock")) {
             ContextApp.container.bind("CircleDaoMock").toConstantValue(TypeMoq.Mock.ofType(CircleDaoImpl));
         }
+        if (!ContextApp.container.isBound("DataSetDaoMock")) {
+            ContextApp.container.bind("DataSetDaoMock").toConstantValue(TypeMoq.Mock.ofType(DataSetDaoImpl));
+        }
         if (!ContextApp.container.isBound("CredentialDaoMock")) {
             ContextApp.container.bind("CredentialDaoMock").toConstantValue(TypeMoq.Mock.ofType(CredentialDaoImpl));
         }
@@ -69,6 +74,7 @@ export class AppTestModule {
         ContextApp.container.rebind("LocalAuthorityDao").toConstantValue((ContextApp.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDaoImpl>).object);
         ContextApp.container.rebind("UserDao").toConstantValue((ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>).object);
         ContextApp.container.rebind("CircleDao").toConstantValue((ContextApp.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>).object);
+        ContextApp.container.rebind("DataSetDao").toConstantValue((ContextApp.container.get("DataSetDaoMock") as TypeMoq.IMock<DataSetDao>).object);
         ContextApp.container.rebind("CredentialDao").toConstantValue((ContextApp.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDao>).object);
 
         return ContextApp.container;
@@ -77,6 +83,7 @@ export class AppTestModule {
     public rebind(): void {
         ContextApp.container.rebind("LocalAuthorityDao").to(LocalAuthorityDaoImpl);
         ContextApp.container.rebind("CircleDao").to(CircleDaoImpl);
+        ContextApp.container.rebind("DataSetDao").to(DataSetDaoImpl);
         ContextApp.container.rebind("CredentialDao").to(CredentialDaoImpl);
         ContextApp.container.rebind("UserDao").to(UserDaoImpl);
         if (ContextApp.container.isBound("ESClientMock")) {

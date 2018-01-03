@@ -61,7 +61,7 @@ export class DataSetDaoImpl implements DataSetDao {
         if (query.isSet()) {
             if (query.getLocalAuthorityId() !== undefined) {
                 queryBuilder
-                    .innerJoinAndSelect("dataSet.localAuthority", "localAuthority")
+                    .innerJoinAndSelect("dataSet.localAuthorities", "localAuthority")
                     .where("(localAuthority.id = :localAuthority)")
                     .setParameters({localAuthority: query.getLocalAuthorityId()});
             }
