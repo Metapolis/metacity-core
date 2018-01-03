@@ -46,6 +46,8 @@ import { LocalAuthorityQueryService } from "../../services/query/LocalAuthorityQ
 import { SaveLocalAuthority } from "./model/local-authority/SaveLocalAuthority";
 import { UpdateLocalAuthorityCommandDTO } from "../../services/command/dto/local-authority/UpdateLocalAuthorityCommandDTO";
 import { LocalAuthorityCommandService } from "../../services/command/LocalAuthorityCommandService";
+import { LocalAuthorityDetails } from "./model/local-authority/LocalAuthorityDetails";
+import { LocalAuthorityDTO } from "../../services/query/dto/localauthority/LocalAuthorityDTO";
 
 /**
  * API resources to Local authorities services
@@ -118,6 +120,36 @@ export class LocalAuthorityController implements interfaces.Controller {
         this.logger.debug("Local authority '%s' is updated", localAuthorityId);
         // empty response temporary just because JS sucks
         res.sendStatus(HTTPStatusCodes.NO_CONTENT);
+    }
+
+    /**
+     * get specific localAuthority
+     *
+     * @param {string} localAuthorityId localAuthority identifier
+     *
+     * @return {LocalAuthorityDetails} The expected local authority
+     */
+    @ClientControl(Role.MANAGE_LOCAL_AUTHORITY)
+    @Get("/:localauthorityid")
+    public async getLocalAuthorityDetail(@RequestParam("localauthorityid") localAuthorityId: number): Promise<LocalAuthorityDetails> {
+        // I have to do this, because express can only parse string
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
+            this.logger.debug("Local authority with '%s' does not exists", localAuthorityId);
+            throw new NotFoundError("Local authority not found");
+        }
+
+        this.logger.debug("Begin update local authority");
+        const localAuthorityDTO: LocalAuthorityDTO = await this.localAuthorityQueryService.getLocalAuthority(localAuthorityIdNumber);
+        const localAuthority: LocalAuthorityDetails = new LocalAuthorityDetails();
+        localAuthority.id = localAuthorityDTO.getId();
+        localAuthority.name = localAuthorityDTO.getName();
+        localAuthority.uiConfig = localAuthorityDTO.getUIConfig();
+
+        this.logger.debug("Local authority '%s' is retrieved", localAuthorityId);
+
+        return localAuthority;
     }
 
     /**

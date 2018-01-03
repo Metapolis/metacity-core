@@ -21,6 +21,8 @@
  * @since      0.2.0
  */
 
+import { UIConfig } from "../../../../common/model/UIConfig";
+
 /**
  * Represents a localAuthority
  */
@@ -41,6 +43,11 @@ export class LocalAuthorityDTO {
      */
     private secret: string;
 
+    /**
+     * LocalAuthority's ui config
+     */
+    private uiConfig: UIConfig;
+    
     /**
      * Getter identifier
      *
@@ -75,6 +82,24 @@ export class LocalAuthorityDTO {
      */
     public setSecret(secret: string): void {
         this.secret = secret;
+    }
+
+    /**
+     * Getter uiConfig
+     *
+     * @returns {string}
+     */
+    public getUIConfig(): UIConfig {
+        return this.uiConfig;
+    }
+
+    /**
+     * Setter uiConfig
+     *
+     * @param uiConfig new uIConfig value
+     */
+    public setUIConfig(uiConfig: UIConfig): void {
+        this.uiConfig = uiConfig;
     }
 
     /**

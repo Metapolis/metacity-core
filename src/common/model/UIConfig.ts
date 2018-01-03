@@ -46,5 +46,5 @@ export class UIConfig {
     /**
      * Location embedded in UI config
      */
-    public location: Location;
+    public location: Location = new Location();
 }

@@ -52,6 +52,8 @@ import { UIConfig } from "../../src/common/model/UIConfig";
 import { Location } from "../../src/common/model/Location";
 import { LocalAuthorityCommandService } from "../../src/services/command/LocalAuthorityCommandService";
 import { UpdateLocalAuthorityCommandDTO } from "../../src/services/command/dto/local-authority/UpdateLocalAuthorityCommandDTO";
+import { LocalAuthorityDTO } from "../../src/services/query/dto/localauthority/LocalAuthorityDTO";
+import { LocalAuthorityDetails } from "../../src/controllers/rest/model/local-authority/LocalAuthorityDetails";
 
 /**
  * All test for circle creation
@@ -309,6 +311,131 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
 
         localAuthorityCommandServiceMock.setup((instance) => instance.updateLocalAuthority(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
+        localAuthorityQueryServiceMock.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(true));
+
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+    }
+
+    @test
+    public async testGetLocalAuthority(): Promise<void> {
+        const path: string = "/api/local-authorities/{localauthorityid}";
+        const localAuthorityId: number = 12;
+        const localAuthorityQueryServiceMock: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+
+        const localAuthorityDTO: LocalAuthorityDTO = new LocalAuthorityDTO();
+        localAuthorityDTO.setName("michel");
+        localAuthorityDTO.setId(12);
+        const uiConfig: UIConfig = new UIConfig();
+        uiConfig.logo = "Logo de ouf !";
+        uiConfig.primaryColor = "#AAAAAA";
+        uiConfig.secondaryColor = "#BBBBBB";
+        uiConfig.location = new Location();
+        uiConfig.location.latitude = 2.45879632;
+        uiConfig.location.longitude = 1.000012587;
+        uiConfig.location.zoomFactor = 2;
+        localAuthorityDTO.setUIConfig(uiConfig);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_LOCAL_AUTHORITY]));
+
+        localAuthorityQueryServiceMock.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(true));
+        localAuthorityQueryServiceMock.setup((instance) => instance.getLocalAuthority(localAuthorityId)).returns(() => Promise.resolve(localAuthorityDTO));
+
+        const opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
+            json: true
+        };
+
+        const actual: LocalAuthorityDetails = new LocalAuthorityDetails();
+        await Request(opts).then((data: Labeled) => {
+            console.log(data);
+            Object.assign(actual, data);
+        });
+
+        Chai.assert.isTrue(localAuthorityDTO.getUIConfig().secondaryColor === actual.uiConfig.secondaryColor);
+        Chai.assert.isTrue(localAuthorityDTO.getUIConfig().primaryColor === actual.uiConfig.primaryColor);
+        Chai.assert.isTrue(localAuthorityDTO.getUIConfig().logo === actual.uiConfig.logo);
+        Chai.assert.isTrue(localAuthorityDTO.getUIConfig().location.zoomFactor === actual.uiConfig.location.zoomFactor);
+        Chai.assert.isTrue(localAuthorityDTO.getUIConfig().location.longitude === actual.uiConfig.location.longitude);
+        Chai.assert.isTrue(localAuthorityDTO.getUIConfig().location.latitude === actual.uiConfig.location.latitude);
+        Chai.assert.isTrue(localAuthorityDTO.getName() === actual.name);
+        Chai.assert.isTrue(localAuthorityDTO.getId() === actual.id);
+    }
+
+    @test
+    public async testGetLocalAuthorityError(): Promise<void> {
+        // 400 bad request => name or role is null or undefined
+        // 403 not enough rights => role is not high enough to update a localAuthority
+        const path: string = "/api/local-authorities/{localauthorityid}";
+        const localAuthorityId: number = 12;
+        const localAuthorityQueryServiceMock: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
+
+        const localAuthority: SaveLocalAuthority = new SaveLocalAuthority();
+        localAuthority.name = "michel";
+        localAuthority.uiConfig = new UIConfig();
+        localAuthority.uiConfig.logo = "Logo de ouf !";
+        localAuthority.uiConfig.primaryColor = "#AAAAAA";
+        localAuthority.uiConfig.secondaryColor = "#BBBBBB";
+        localAuthority.uiConfig.location = new Location();
+        localAuthority.uiConfig.location.latitude = 2.45879632;
+        localAuthority.uiConfig.location.longitude = 1.000012587;
+        localAuthority.uiConfig.location.zoomFactor = 2;
+
+        let opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_LOCAL_AUTHORITY]));
+
+        opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
+            json: true
+        };
+
+        localAuthorityQueryServiceMock.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(false));
+
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
+
+        localAuthorityQueryServiceMock.setup((instance) => instance.getLocalAuthority(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
         localAuthorityQueryServiceMock.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(true));
 
         statusCode = HTTPStatusCodes.OK;

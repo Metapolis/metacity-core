@@ -20,38 +20,25 @@
  * @link       https://bitbucket.org/metapolis/metacity-core
  * @since      0.2.0
  */
-
-import { LocalAuthorityDTO } from "./dto/localauthority/LocalAuthorityDTO";
+import { UIConfig } from "../../../../common/model/UIConfig";
 
 /**
- * Contains method to perform localAuthority query
+ * Contain all information of local authority
  */
-export interface LocalAuthorityQueryService {
+export class LocalAuthorityDetails {
 
     /**
-     * Check if local authority exists
-     *
-     * @param id local authority's identifier
-     *
-     * @returns {Promise<boolean>} true means local authority with this specific identifier exists
+     * Local authority's identifier
      */
-    isExists(id: number): Promise<boolean>;
+    public id: number;
 
     /**
-     * Retrieve localAuthority by domain
-     *
-     * @param accessKey localAuthority's accessKey
-     *
-     * @returns {Promise<LocalAuthorityDTO>}
+     * Local authority's name
      */
-    getLocalAuthorityByAccessKey(accessKey: string): Promise<LocalAuthorityDTO>;
+    public name: string;
 
     /**
-     * Retrieve localAuthority by identifier
-     *
-     * @param id localAuthority's identifier
-     *
-     * @returns {Promise<LocalAuthorityDTO>}
+     * Local authority's ui config
      */
-    getLocalAuthority(id: number): Promise<LocalAuthorityDTO>;
+    public uiConfig: UIConfig;
 }
