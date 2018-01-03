@@ -171,7 +171,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @returns {Promise<ResultList<DataSetSummary>>} list of data sets summaries
      */
-    @ClientControl(Role.MANAGE_CIRCLE)
+    @ClientControl(Role.MANAGE_DATA_SET)
     @Get("/:localauthorityid/data-sets")
     public async findLocalAuthorityDataSets(@RequestParam("localauthorityid") localAuthorityId: number,
                                             @QueryParam("limit") limit: number,
