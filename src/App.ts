@@ -78,6 +78,8 @@ import { ClientControlManager } from "./security/ClientControlManager";
 import { CredentialDaoImpl } from "./persistence/dao/impl/CredentialDaoImpl";
 import { CredentialDao } from "./persistence/dao/CredentialDao";
 import * as Moment from "moment";
+import { LocalAuthorityCommandService } from "./services/command/LocalAuthorityCommandService";
+import { LocalAuthorityCommandServiceImpl } from "./services/command/impl/LocalAuthorityCommandServiceImpl";
 
 /**
  * The App.
@@ -170,6 +172,7 @@ export class App {
     private bindCommands(): void {
         this.logger.debug("Binding command");
         this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
+        this.container.bind<LocalAuthorityCommandService>("LocalAuthorityCommandService").to(LocalAuthorityCommandServiceImpl);
         this.container.bind<UserCommandService>("UserCommandService").to(UserCommandServiceImpl);
     }
 

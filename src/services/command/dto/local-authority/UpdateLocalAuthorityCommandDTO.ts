@@ -21,77 +21,73 @@
  * @since      0.2.0
  */
 
+import { UIConfig } from "../../../../common/model/UIConfig";
+
 /**
- * Location description
+ * Represents a command to update a local authority
  */
-export class Location {
+export class UpdateLocalAuthorityCommandDTO {
 
     /**
-     * Location's latitude
+     * Local authority's identifier
      */
-    private latitude: number;
+    private id: number;
 
     /**
-     * Location's latitude
+     * Local authority's name
      */
-    private longitude: number;
+    private name: string;
 
     /**
-     * Location's zoom factor
+     * Local authority's ui config
      */
-    private zoomFactor: number;
+    private uiConfig: UIConfig;
 
     /**
-     * Getter latitude
-     *
+     * Getter id
      * @returns {number}
      */
-    public getLatitude(): number {
-        return this.latitude;
+    public getId(): number {
+        return this.id;
     }
 
     /**
-     * Setter latitude
-     *
-     * @param {number} latitude
+     * Setter id
+     * @param {number} id
      */
-    public setLatitude(latitude: number): void {
-        this.latitude = latitude;
+    public setId(id: number): void {
+        this.id = id;
     }
 
     /**
-     * Getter longitude
-     *
-     * @returns {number}
+     * Getter name
+     * @returns {string}
      */
-    public getLongitude(): number {
-        return this.longitude;
+    public getName(): string {
+        return this.name;
     }
 
     /**
-     * Setter longitude
-     *
-     * @param {number} longitude
+     * Setter name
+     * @param {string} name
      */
-    public setLongitude(longitude: number): void {
-        this.longitude = longitude;
+    public setName(name: string): void {
+        this.name = name;
     }
 
     /**
-     * Getter zoom factor
-     *
-     * @returns {number}
+     * Getter uiConfig
+     * @returns {UIConfig}
      */
-    public getZoomFactor(): number {
-        return this.zoomFactor;
+    public getUIConfig(): UIConfig {
+        return this.uiConfig;
     }
 
     /**
-     * Setter zoom factor
-     *
-     * @param {number} zoomFactor
+     * Setter uiConfig
+     * @param {UIConfig} uiConfig
      */
-    public setZoomFactor(zoomFactor: number): void {
-        this.zoomFactor = zoomFactor;
+    public setUIConfig(uiConfig: UIConfig): void {
+        this.uiConfig = uiConfig;
     }
 }

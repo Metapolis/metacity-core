@@ -53,6 +53,8 @@ import { ClientControlManager } from "../../../src/security/ClientControlManager
 import { Role } from "../../../src/common/enum/Role";
 import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
 import { CredentialDaoImpl } from "../../../src/persistence/dao/impl/CredentialDaoImpl";
+import { LocalAuthorityCommandServiceImpl } from "../../../src/services/command/impl/LocalAuthorityCommandServiceImpl";
+import { LocalAuthorityCommandService } from "../../../src/services/command/LocalAuthorityCommandService";
 
 /**
  * App test module
@@ -96,6 +98,9 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("CircleQueryServiceMock")) {
             ContextApp.container.bind("CircleQueryServiceMock").toConstantValue(TypeMoq.Mock.ofType<CircleQueryService>(CircleQueryServiceImpl));
         }
+        if (!ContextApp.container.isBound("LocalAuthorityCommandServiceMock")) {
+            ContextApp.container.bind("LocalAuthorityCommandServiceMock").toConstantValue(TypeMoq.Mock.ofType<LocalAuthorityCommandService>(LocalAuthorityCommandServiceImpl));
+        }
         if (!ContextApp.container.isBound("LocalAuthorityQueryServiceMock")) {
             ContextApp.container.bind("LocalAuthorityQueryServiceMock").toConstantValue(TypeMoq.Mock.ofType<LocalAuthorityQueryService>(LocalAuthorityQueryServiceImpl));
         }
@@ -126,6 +131,7 @@ export class AppTestModule {
         ContextApp.container.rebind("UserQueryService").toConstantValue((ContextApp.container.get("UserQueryServiceMock") as TypeMoq.IMock<UserQueryService>).object);
         ContextApp.container.rebind("CircleCommandService").toConstantValue((ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).object);
         ContextApp.container.rebind("CircleQueryService").toConstantValue((ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).object);
+        ContextApp.container.rebind("LocalAuthorityCommandService").toConstantValue((ContextApp.container.get("LocalAuthorityCommandServiceMock") as TypeMoq.IMock<LocalAuthorityCommandService>).object);
         ContextApp.container.rebind("LocalAuthorityQueryService").toConstantValue((ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>).object);
         ContextApp.container.rebind("UserCommandService").toConstantValue((ContextApp.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>).object);
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
@@ -146,6 +152,7 @@ export class AppTestModule {
         ContextApp.container.rebind("UserQueryService").to(UserQueryServiceImpl);
         ContextApp.container.rebind("CircleCommandService").to(CircleCommandServiceImpl);
         ContextApp.container.rebind("CircleQueryService").to(CircleQueryServiceImpl);
+        ContextApp.container.rebind("LocalAuthorityCommandService").to(LocalAuthorityCommandServiceImpl);
         ContextApp.container.rebind("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         ContextApp.container.rebind("UserCommandService").to(UserCommandServiceImpl);
         ContextApp.container.rebind("ClientControlManager").to(ClientControlManager);

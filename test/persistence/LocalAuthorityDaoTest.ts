@@ -32,9 +32,28 @@ import { Credential } from "../../src/persistence/domain/Credential";
 import { Role } from "../../src/common/enum/Role";
 import { CircleDao } from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
+import { UIConfig } from "../../src/common/model/UIConfig";
 
 @suite
 export class LocalAuthorityDaoTest extends AbstractTestDao {
+
+    @test
+    public async testSaveOrUpdate(): Promise<void> {
+        const localAuthorityDao: LocalAuthorityDao = ContextApp.container.get("LocalAuthorityDao");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
+
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Michel");
+        localAuthority.setUIConfig(new UIConfig());
+        await localAuthorityDao.saveOrUpdate(localAuthority);
+
+        const actual: LocalAuthority = await localAuthorityRepository.findOneById(localAuthority.getId());
+
+        Chai.assert.isTrue((await localAuthorityRepository.find()).length === 1);
+        Chai.assert.equal(actual.getId(), localAuthority.getId());
+        Chai.assert.deepEqual(actual.getUIConfig(), localAuthority.getUIConfig());
+        Chai.assert.equal(actual.getName(), localAuthority.getName());
+    }
 
     @test
     public async testFindById(): Promise<void> {
