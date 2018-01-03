@@ -127,7 +127,7 @@ export class LocalAuthorityController implements interfaces.Controller {
      *
      * @param {string} localAuthorityId localAuthority identifier
      *
-     * @return {LocalAuthorityDetails} res The expected local authority
+     * @return {LocalAuthorityDetails} The expected local authority
      */
     @ClientControl(Role.MANAGE_LOCAL_AUTHORITY)
     @Get("/:localauthorityid")
