@@ -44,7 +44,7 @@ export class LocalAuthorityDTO {
     private secret: string;
 
     /**
-     * LocalAuthority's secret
+     * LocalAuthority's ui config
      */
     private uiConfig: UIConfig;
     
