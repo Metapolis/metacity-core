@@ -58,11 +58,11 @@ export class DataSetDaoImpl implements DataSetDao {
      * @return TypeORM query
      */
     private computeQuery(query: FindDataSetQuery): SelectQueryBuilder<DataSet> {
-        const queryBuilder: SelectQueryBuilder<DataSet> = this.dataSetRepository.createQueryBuilder("dataSet");
+        const queryBuilder: SelectQueryBuilder<DataSet> = this.dataSetRepository.createQueryBuilder("ds");
         if (query.isSet()) {
             if (query.getLocalAuthorityId() !== undefined) {
                 queryBuilder
-                    .innerJoinAndSelect("dataSet.localAuthorities", "localAuthority")
+                    .innerJoinAndSelect("ds.localAuthorities", "localAuthority")
                     .where("(localAuthority.id = :localAuthority)")
                     .setParameters({localAuthority: query.getLocalAuthorityId()});
             }
@@ -127,7 +127,7 @@ export class DataSetDaoImpl implements DataSetDao {
 
         return (await this.dataSetRepository.createQueryBuilder("ds")
             .innerJoin("ds.localAuthorities", "la")
-            .where("ds.id = :dataSetid", {dataSetid: dataSetId})
+            .where("ds.id = :datasetid", {datasetid: dataSetId})
             .andWhere("la.id = :localauthorityid", {localauthorityid: localAuthorityId})
             .getCount()) === 1;
     }
