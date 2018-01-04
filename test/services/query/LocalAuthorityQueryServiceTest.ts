@@ -31,7 +31,7 @@ import * as Chai from "chai";
 import * as TypeMoq from "typemoq";
 import { IllegalArgumentError } from "../../../src/common/error/IllegalArgumentError";
 import { Credential } from "../../../src/persistence/domain/Credential";
-import { LocalAuthorityDTO } from "../../../src/services/query/dto/localauthority/LocalAuthorityDTO";
+import { LocalAuthorityDTO } from "../../../src/services/query/dto/local-authority/LocalAuthorityDTO";
 import { CircleDao } from "../../../src/persistence/dao/CircleDao";
 import { CircleQueryService } from "../../../src/services/query/CircleQueryService";
 import { UIConfig } from "../../../src/common/model/UIConfig";

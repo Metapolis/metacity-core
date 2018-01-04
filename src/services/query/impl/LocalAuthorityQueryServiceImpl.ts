@@ -28,7 +28,7 @@ import { LoggerInstance } from "winston";
 import { Utils } from "../../../common/Utils";
 import { LocalAuthorityDao } from "../../../persistence/dao/LocalAuthorityDao";
 import { LocalAuthority } from "../../../persistence/domain/LocalAuthority";
-import { LocalAuthorityDTO } from "../dto/localauthority/LocalAuthorityDTO";
+import { LocalAuthorityDTO } from "../dto/local-authority/LocalAuthorityDTO";
 import { isNullOrUndefined } from "util";
 
 /**

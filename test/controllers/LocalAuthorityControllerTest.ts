@@ -52,8 +52,12 @@ import { UIConfig } from "../../src/common/model/UIConfig";
 import { Location } from "../../src/common/model/Location";
 import { LocalAuthorityCommandService } from "../../src/services/command/LocalAuthorityCommandService";
 import { UpdateLocalAuthorityCommandDTO } from "../../src/services/command/dto/local-authority/UpdateLocalAuthorityCommandDTO";
-import { LocalAuthorityDTO } from "../../src/services/query/dto/localauthority/LocalAuthorityDTO";
+import { LocalAuthorityDTO } from "../../src/services/query/dto/local-authority/LocalAuthorityDTO";
 import { LocalAuthorityDetails } from "../../src/controllers/rest/model/local-authority/LocalAuthorityDetails";
+import { DataSetDTO } from "../../src/services/query/dto/data-set/DataSetDTO";
+import { FindDataSetQuery } from "../../src/common/query/FindDataSetQuery";
+import { DataSetSummary } from "../../src/controllers/rest/model/data-set/DataSetSummary";
+import { DataSetQueryService } from "../../src/services/query/DataSetQueryService";
 
 /**
  * All test for circle creation
@@ -670,6 +674,125 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+
+    }
+
+    @test
+    public async testFindLocalAuthorityDataSets(): Promise<void> {
+        const path: string = "/api/local-authorities/{localauthorityid}/data-sets?limit={limit}&offset={offset}";
+        const resultTotal: number = 72;
+        const localAuthorityId: number = 1;
+        const limit: number = 10;
+        const offset: number = 0;
+        const dataSetsDTOMock: DataSetDTO[] = [];
+        const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+        const dataSetQueryService: TypeMoq.IMock<DataSetQueryService> = (ContextApp.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>);
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_DATA_SET]));
+
+        for (let i = 0; i < resultTotal; i++) {
+            const dataSetDTOMock: DataSetDTO = new DataSetDTO();
+            dataSetDTOMock.setId(i);
+            dataSetDTOMock.setName(TestUtils.randomString(8));
+            dataSetDTOMock.setRestricted(TestUtils.randomInt(2) === 1);
+            dataSetsDTOMock.push(dataSetDTOMock);
+        }
+        const dataSetsResultListMock: ResultList<DataSetDTO> = new ResultList<DataSetDTO>(resultTotal, dataSetsDTOMock);
+
+        const opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{limit}", String(limit)).replace("{offset}", String(offset)),
+            json: true
+        };
+
+        const mockQuery: FindDataSetQuery = new FindDataSetQuery();
+        mockQuery.setLocalAuthorityId(localAuthorityId);
+        mockQuery.setLimit(limit);
+        mockQuery.setOffset(offset);
+
+        dataSetQueryService.setup((instance) => instance.findDataSets(mockQuery)).returns(() => Promise.resolve(dataSetsResultListMock));
+        localAuthorityQueryService.setup((instance) => instance.isExists(localAuthorityId)).returns(() => Promise.resolve(true));
+        localAuthorityQueryService.setup((instance) => instance.isExists(localAuthorityId + 1)).returns(() => Promise.resolve(false));
+
+        const actual: DataSetSummary[] = [];
+        await Request(opts).then((data: ResultList<DataSetSummary>) => {
+            Object.assign(actual, data.results);
+        });
+        for (let i = 0; i < resultTotal; i++) {
+            Chai.assert.equal(actual[i].id, dataSetsDTOMock[i].getId(), "Expected same id");
+            Chai.assert.equal(actual[i].name, dataSetsDTOMock[i].getName(), "Expected same name");
+            Chai.assert.equal(actual[i].description, dataSetsDTOMock[i].getDescription(), "Expected same description");
+            Chai.assert.equal(actual[i].restricted, dataSetsDTOMock[i].isRestricted(), "Expected same restricted value");
+        }
+
+        // Check for local authority does not exist
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{limit}", String(limit)).replace("{offset}", String(offset));
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND);
+    }
+
+    @test
+    public async testFindLocalAuthorityDataSetsError(): Promise<void> {
+        const path: string = "/api/local-authorities/12/data-sets";
+        const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
+        const dataSetQueryService: TypeMoq.IMock<DataSetQueryService> = (ContextApp.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>);
+
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
+
+        const opts = {
+            method: "GET",
+            uri: AbstractTestController.getBackend() + path,
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).reset();
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.MANAGE_DATA_SET]));
+
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
+
+        localAuthorityQueryService.setup((instance) => instance.isExists(12)).returns(() => Promise.resolve(true));
+        dataSetQueryService.setup((instance) => instance.findDataSets(TypeMoq.It.isAny())).throws(new IllegalArgumentError());
+
+        statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
         });

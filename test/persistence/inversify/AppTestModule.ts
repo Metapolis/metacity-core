@@ -52,6 +52,7 @@ export class AppTestModule {
         // Unbind all repository
         ContextApp.container.unbind("UserRepository");
         ContextApp.container.unbind("CircleRepository");
+        ContextApp.container.unbind("DataSetRepository");
         ContextApp.container.unbind("LocalAuthorityRepository");
         ContextApp.container.unbind("CredentialRepository");
 

@@ -32,6 +32,11 @@ export enum Role {
     MANAGE_CIRCLE = "MANAGE_CIRCLE",
 
     /**
+     * Manage Data set
+     */
+    MANAGE_DATA_SET = "MANAGE_DATA_SET",
+
+    /**
      * Manage Local authority
      */
     MANAGE_LOCAL_AUTHORITY = "MANAGE_LOCAL_AUTHORITY",

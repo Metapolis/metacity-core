@@ -21,37 +21,19 @@
  * @since      0.2.0
  */
 
-import { LocalAuthorityDTO } from "./dto/local-authority/LocalAuthorityDTO";
+import { DataSetDTO } from "./dto/data-set/DataSetDTO";
+import { ResultList } from "../../common/ResultList";
+import { FindDataSetQuery } from "../../common/query/FindDataSetQuery";
 
 /**
- * Contains method to perform localAuthority query
+ * Contains method to perform data set query
  */
-export interface LocalAuthorityQueryService {
-
+export interface DataSetQueryService {
     /**
-     * Check if local authority exists
+     * Find list of data sets for a local authority
      *
-     * @param id local authority's identifier
-     *
-     * @returns {Promise<boolean>} true means local authority with this specific identifier exists
+     * @param {FindDataSetQuery} query contains dataSet search query
+     * @returns {Promise<ResultList<DataSetDTO>>} DTOs of dataSets
      */
-    isExists(id: number): Promise<boolean>;
-
-    /**
-     * Retrieve localAuthority by domain
-     *
-     * @param accessKey localAuthority's accessKey
-     *
-     * @returns {Promise<LocalAuthorityDTO>}
-     */
-    getLocalAuthorityByAccessKey(accessKey: string): Promise<LocalAuthorityDTO>;
-
-    /**
-     * Retrieve localAuthority by identifier
-     *
-     * @param id localAuthority's identifier
-     *
-     * @returns {Promise<LocalAuthorityDTO>}
-     */
-    getLocalAuthority(id: number): Promise<LocalAuthorityDTO>;
+    findDataSets(query: FindDataSetQuery): Promise<ResultList<DataSetDTO>>;
 }

@@ -22,9 +22,9 @@
  */
 
 /**
- * Contains circle search query
+ * Contains dataSet search query
  */
-export class FindCircleQuery {
+export class FindDataSetQuery {
 
     /**
      * Query limit (default 100)
@@ -55,42 +55,42 @@ export class FindCircleQuery {
     }
 
     /**
-     * circle's limit getter
+     * dataSet's limit getter
      */
     public getLimit(): number {
         return this.limit;
     }
 
     /**
-     * circle's limit setter
+     * dataSet's limit setter
      */
     public setLimit(limit: number) {
         this.limit = limit;
     }
 
     /**
-     * circle's offset getter
+     * dataSet's offset getter
      */
     public getOffset(): number {
         return this.offset;
     }
 
     /**
-     * circle's offset setter
+     * dataSet's offset setter
      */
     public setOffset(offset: number) {
         this.offset = offset;
     }
 
     /**
-     * circle's localAuthorityId getter
+     * dataSet's localAuthorityId getter
      */
     public getLocalAuthorityId(): number {
         return this.localAuthorityId;
     }
 
     /**
-     * circle's localAuthorityId setter
+     * dataSet's localAuthorityId setter
      */
     public setLocalAuthorityId(localAuthorityId: number) {
         this.localAuthorityId = localAuthorityId;

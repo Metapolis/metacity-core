@@ -21,37 +21,29 @@
  * @since      0.2.0
  */
 
-import { LocalAuthorityDTO } from "./dto/local-authority/LocalAuthorityDTO";
+import { DataSet } from "../domain/DataSet";
+import { FindDataSetQuery } from "../../common/query/FindDataSetQuery";
 
 /**
- * Contains method to perform localAuthority query
+ * Data Access Object of {@link DataSet}
  */
-export interface LocalAuthorityQueryService {
+export interface DataSetDao {
 
     /**
-     * Check if local authority exists
+     * Retrieves all dataSets matching the filter
      *
-     * @param id local authority's identifier
+     * @param {FindDataSetQuery} query contains dataSet search query
      *
-     * @returns {Promise<boolean>} true means local authority with this specific identifier exists
+     * @returns {Promise<DataSet[]>} dataSets
      */
-    isExists(id: number): Promise<boolean>;
+    findBy(query: FindDataSetQuery): Promise<DataSet[]>;
 
     /**
-     * Retrieve localAuthority by domain
+     * Count dataSet for a specific query
      *
-     * @param accessKey localAuthority's accessKey
+     * @param {FindDataSetQuery} query query use to count dataSets
      *
-     * @returns {Promise<LocalAuthorityDTO>}
+     * @returns {number} number of found dataSet
      */
-    getLocalAuthorityByAccessKey(accessKey: string): Promise<LocalAuthorityDTO>;
-
-    /**
-     * Retrieve localAuthority by identifier
-     *
-     * @param id localAuthority's identifier
-     *
-     * @returns {Promise<LocalAuthorityDTO>}
-     */
-    getLocalAuthority(id: number): Promise<LocalAuthorityDTO>;
+    countBy(query: FindDataSetQuery): Promise<number>;
 }

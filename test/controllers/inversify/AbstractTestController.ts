@@ -39,6 +39,8 @@ import { ClientControlManager } from "../../../src/security/ClientControlManager
 import { CredentialDao } from "../../../src/persistence/dao/CredentialDao";
 import { LocalAuthorityCommandService } from "../../../src/services/command/LocalAuthorityCommandService";
 import { LocalAuthorityQueryService } from "../../../src/services/query/LocalAuthorityQueryService";
+import { DataSetQueryService } from "../../../src/services/query/DataSetQueryService";
+import { DataSetDao } from "../../../src/persistence/dao/DataSetDao";
 
 /**
  * Abstract controller
@@ -88,12 +90,14 @@ export abstract class AbstractTestController {
         (AbstractTestController.container.get("UserQueryServiceMock") as TypeMoq.IMock<UserQueryService>).reset();
         (AbstractTestController.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).reset();
         (AbstractTestController.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).reset();
+        (AbstractTestController.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>).reset();
         (AbstractTestController.container.get("LocalAuthorityCommandServiceMock") as TypeMoq.IMock<LocalAuthorityCommandService>).reset();
         (AbstractTestController.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>).reset();
         (AbstractTestController.container.get("UserCommandServiceMock") as TypeMoq.IMock<UserCommandService>).reset();
         (AbstractTestController.container.get("LocalAuthorityDaoMock") as TypeMoq.IMock<LocalAuthorityDao>).reset();
         (AbstractTestController.container.get("UserDaoMock") as TypeMoq.IMock<UserDao>).reset();
         (AbstractTestController.container.get("CircleDaoMock") as TypeMoq.IMock<CircleDao>).reset();
+        (AbstractTestController.container.get("DataSetDaoMock") as TypeMoq.IMock<DataSetDao>).reset();
         (AbstractTestController.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDao>).reset();
         (AbstractTestController.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).reset();
     }
