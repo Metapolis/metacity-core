@@ -21,7 +21,7 @@
  * @since      0.2.0
  */
 
-import { Controller, Delete, Get, interfaces, Post, Put, QueryParam, RequestBody, RequestParam, Response } from "inversify-express-utils";
+import { Controller, Delete, Get, interfaces, Patch, Post, Put, QueryParam, RequestBody, RequestParam, Response } from "inversify-express-utils";
 import { inject, injectable } from "inversify";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
@@ -52,6 +52,8 @@ import { DataSetSummary } from "./model/data-set/DataSetSummary";
 import { FindDataSetQuery } from "../../common/query/FindDataSetQuery";
 import { DataSetDTO } from "../../services/query/dto/data-set/DataSetDTO";
 import { DataSetQueryService } from "../../services/query/DataSetQueryService";
+import { BooleanValue } from "./model/common/BooleanValue";
+import { DataSetCommandService } from "../../services/command/DataSetCommandService";
 
 /**
  * API resources to Local authorities services
@@ -88,6 +90,12 @@ export class LocalAuthorityController implements interfaces.Controller {
      */
     @inject("DataSetQueryService")
     private dataSetQueryService: DataSetQueryService;
+
+    /**
+     * DataSet command service
+     */
+    @inject("DataSetCommandService")
+    private dataSetCommandService: DataSetCommandService;
 
     /**
      * Local authority query service
@@ -201,6 +209,36 @@ export class LocalAuthorityController implements interfaces.Controller {
         this.logger.debug("%d Data sets retrieved", dataSetResultList.total);
 
         return new ResultList<DataSetSummary>(dataSetResultList.total, dataSetSummaries);
+    }
+
+    /**
+     * Find data sets, filter result
+     *
+     * @param {number} localAuthorityId: localAuthority identifier
+     * @param {number} dataSetId: data set identifier
+     * @param {BooleanValue} restrictedValue: new restricted value
+     * @param {Express.Response} res Response to set 204
+     */
+    @ClientControl(Role.MANAGE_DATA_SET)
+    @Put("/:localauthorityid/data-sets/:datasetid/restricted")
+    public async updateDataSetRestricted(@RequestParam("localauthorityid") localAuthorityId: number,
+                                         @RequestParam("datasetid") dataSetId: number,
+                                         @RequestBody() restrictedValue: BooleanValue,
+                                         @Response() res: Express.Response): Promise<void> {
+        this.logger.debug("Begin update data set's restricted");
+        const localAuthorityIdNumber: number = Number(localAuthorityId);
+        const dataSetIdNumber: number = Number(dataSetId);
+
+        if (!(await this.dataSetQueryService.isOwnedByLocalAuthority(dataSetIdNumber, localAuthorityIdNumber))) {
+            this.logger.debug("DataSet with id '%s' cannot be found or local authority with '%s' does not exists is dataSet not owned by local authority", dataSetId, localAuthorityId);
+            throw new NotFoundError("DataSet or local authority not found or not owned");
+        }
+
+        await this.dataSetCommandService.updateRestrictedField(restrictedValue.value, dataSetIdNumber);
+
+        this.logger.debug("Data set '%s' is updated", dataSetId);
+        // empty response temporary just because JS sucks
+        res.sendStatus(HTTPStatusCodes.NO_CONTENT);
     }
 
     /**

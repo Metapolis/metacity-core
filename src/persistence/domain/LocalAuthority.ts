@@ -103,7 +103,7 @@ export class LocalAuthority {
     private initUIConfig(uiConfig: string): void {
         this.uiConfig = new UIConfig();
         if (!isNullOrUndefined(uiConfig)) {
-            Object.assign(uiConfig, this.uiConfig);
+            Object.assign(this.uiConfig, JSON.parse(uiConfig));
         }
     }
 
