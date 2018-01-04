@@ -67,7 +67,7 @@ export class DataSetDaoImpl implements DataSetDao {
                     .setParameters({localAuthority: query.getLocalAuthorityId()});
             }
         }
-        queryBuilder.orderBy("dataSet.name", "ASC");
+        queryBuilder.orderBy("ds.name", "ASC");
 
         this.logger.debug("Computed query is : '%s'", queryBuilder.getSql());
 
