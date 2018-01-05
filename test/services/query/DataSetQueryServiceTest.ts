@@ -186,4 +186,38 @@ export class DataSetQueryServiceTest extends AbstractTestService {
             Chai.assert.equal(err.message, "Limit must be superior to zero");
         });
     }
+
+    @test
+    private async testIsOwnedByLocalAuthority(): Promise<void> {
+        const dataSetQueryService: DataSetQueryService = (ContextApp.container.get("DataSetQueryService") as DataSetQueryService);
+        const dataSetDaoMock: TypeMoq.IMock<DataSetDao> = (ContextApp.container.get("DataSetDaoMock") as TypeMoq.IMock<DataSetDao>);
+
+        dataSetDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(12, 123)).returns(() => Promise.resolve(true));
+        dataSetDaoMock.setup((instance) => instance.isOwnedByLocalAuthority(10, 124)).returns(() => Promise.resolve(false));
+
+        let isOwnedByLocalAuthority: boolean = await dataSetQueryService.isOwnedByLocalAuthority(12, 123);
+
+        Chai.assert.isTrue(isOwnedByLocalAuthority);
+
+        isOwnedByLocalAuthority = await dataSetQueryService.isOwnedByLocalAuthority(10, 124);
+
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
+    }
+
+    @test
+    private async testIsExists(): Promise<void> {
+        const dataSetQueryService: DataSetQueryService = (ContextApp.container.get("DataSetQueryService") as DataSetQueryService);
+        const dataSetDaoMock: TypeMoq.IMock<DataSetDao> = (ContextApp.container.get("DataSetDaoMock") as TypeMoq.IMock<DataSetDao>);
+
+        dataSetDaoMock.setup((instance) => instance.isExists(12)).returns(() => Promise.resolve(true));
+        dataSetDaoMock.setup((instance) => instance.isExists(10)).returns(() => Promise.resolve(false));
+
+        let exists: boolean = await dataSetQueryService.isExists(12);
+
+        Chai.assert.isTrue(exists);
+
+        exists = await dataSetQueryService.isExists(10);
+
+        Chai.assert.isFalse(exists);
+    }
 }
