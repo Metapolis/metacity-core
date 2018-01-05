@@ -62,9 +62,9 @@ export class DataSetDaoImpl implements DataSetDao {
         if (query.isSet()) {
             if (query.getLocalAuthorityId() !== undefined) {
                 queryBuilder
-                    .innerJoinAndSelect("ds.localAuthorities", "localAuthority")
-                    .where("(localAuthority.id = :localAuthority)")
-                    .setParameters({localAuthority: query.getLocalAuthorityId()});
+                    .innerJoinAndSelect("ds.localAuthority", "la")
+                    .where("(la.id = :localauthorityid)")
+                    .setParameters({localauthorityid: query.getLocalAuthorityId()});
             }
         }
         queryBuilder.orderBy("ds.name", "ASC");
@@ -126,7 +126,7 @@ export class DataSetDaoImpl implements DataSetDao {
         this.logger.debug("Check if dataSet '%s' is owned by localAuthority '%s' in database", dataSetId, localAuthorityId);
 
         return (await this.dataSetRepository.createQueryBuilder("ds")
-            .innerJoin("ds.localAuthorities", "la")
+            .innerJoin("ds.localAuthority", "la")
             .where("ds.id = :datasetid", {datasetid: dataSetId})
             .andWhere("la.id = :localauthorityid", {localauthorityid: localAuthorityId})
             .getCount()) === 1;

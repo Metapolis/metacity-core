@@ -78,7 +78,7 @@ export class LocalAuthority {
      *
      * You have to use getter and setter
      */
-    @ManyToMany((type) => DataSet, (dataSet) => "localAuthorities")
+    @OneToMany((type) => DataSet, (dataSet) => "localAuthority")
     private dataSets: Promise<DataSet[]>;
 
     /**
