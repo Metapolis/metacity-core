@@ -234,7 +234,7 @@ export class LocalAuthorityController implements interfaces.Controller {
             throw new NotFoundError("DataSet or local authority not found or not owned");
         }
 
-        await this.dataSetCommandService.updateRestrictedField(restrictedValue.value, dataSetIdNumber);
+        await this.dataSetCommandService.updateRestrictedField(dataSetIdNumber, restrictedValue.value);
 
         this.logger.debug("Data set '%s' is updated", dataSetId);
         // empty response temporary just because JS sucks

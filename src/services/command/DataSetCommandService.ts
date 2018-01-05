@@ -29,8 +29,8 @@ export interface DataSetCommandService {
     /**
      * Update restricted field for specific data set
      *
-     * @param {boolean} value new value for restricted field
      * @param {number} dataSetId data set identifier
+     * @param {boolean} value new value for restricted field
      */
-    updateRestrictedField(value: boolean, dataSetId: number): Promise<void>;
+    updateRestrictedField(dataSetId: number, value: boolean): Promise<void>;
 }

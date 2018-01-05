@@ -51,7 +51,7 @@ export class DataSetCommandServiceImpl implements DataSetCommandService {
     /**
      * Override
      */
-    public async updateRestrictedField(value: boolean, dataSetId: number): Promise<void> {
+    public async updateRestrictedField(dataSetId: number, value: boolean): Promise<void> {
         this.logger.debug("Begin update restricted field for data set '%d'", dataSetId);
         Utils.checkArgument(!isNullOrUndefined(value), "Restricted new value cannot be null or undefined");
         Utils.checkArgument(!isNullOrUndefined(dataSetId), "Date set identifier  cannot be null or undefined");

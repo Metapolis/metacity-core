@@ -33,6 +33,8 @@ import { Role } from "../../src/common/enum/Role";
 import { CircleDao } from "../../src/persistence/dao/CircleDao";
 import { Circle } from "../../src/persistence/domain/Circle";
 import { UIConfig } from "../../src/common/model/UIConfig";
+import { Location } from "../../src/common/model/Location";
+import { isNullOrUndefined } from "util";
 
 @suite
 export class LocalAuthorityDaoTest extends AbstractTestDao {
@@ -63,6 +65,16 @@ export class LocalAuthorityDaoTest extends AbstractTestDao {
 
         const localAuthority: LocalAuthority = new LocalAuthority();
         localAuthority.setName("Toto");
+        // UIconfig to set
+        const uiConfig: UIConfig = new UIConfig();
+        uiConfig.location = new Location();
+        uiConfig.primaryColor = "#AACCDD";
+        uiConfig.secondaryColor = "#BBAACD";
+        uiConfig.logo = "www.logo.gouv";
+        uiConfig.location.latitude = 44.000944;
+        uiConfig.location.longitude = -1.000944;
+        uiConfig.location.zoomFactor = -0.4;
+        localAuthority.setUIConfig(uiConfig);
 
         const credential: Credential = new Credential();
         credential.setSecret("danslavieparfoismaispasseulement");
@@ -83,6 +95,14 @@ export class LocalAuthorityDaoTest extends AbstractTestDao {
         Chai.assert.equal((await find.getCredential()).getSecret(), (await localAuthority.getCredential()).getSecret());
         Chai.assert.equal((await find.getCredential()).getAccessKey(), (await localAuthority.getCredential()).getAccessKey());
         Chai.assert.equal(find.getId(), localAuthority.getId());
+        Chai.assert.isTrue(!isNullOrUndefined(find.getUIConfig()));
+        Chai.assert.equal(find.getUIConfig().secondaryColor, localAuthority.getUIConfig().secondaryColor);
+        Chai.assert.equal(find.getUIConfig().primaryColor, localAuthority.getUIConfig().primaryColor);
+        Chai.assert.equal(find.getUIConfig().logo, localAuthority.getUIConfig().logo);
+        Chai.assert.isTrue(!isNullOrUndefined(find.getUIConfig().location));
+        Chai.assert.equal(find.getUIConfig().location.zoomFactor, localAuthority.getUIConfig().location.zoomFactor);
+        Chai.assert.equal(find.getUIConfig().location.latitude, localAuthority.getUIConfig().location.latitude);
+        Chai.assert.equal(find.getUIConfig().location.longitude, localAuthority.getUIConfig().location.longitude);
     }
 
     @test
