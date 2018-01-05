@@ -14,7 +14,7 @@
     "base_path": "/api"
   },
   "database": {
-    "name": "metacity-test",
+    "name": "metacity_test",
     "user": "metacity",
     "password": "metacity",
     "host": "127.0.0.1",
