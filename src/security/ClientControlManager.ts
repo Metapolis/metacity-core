@@ -30,6 +30,8 @@ import { CredentialDao } from "../persistence/dao/CredentialDao";
 import { Credential } from "../persistence/domain/Credential";
 import CryptoJS = require("crypto-js");
 import { ResultList } from "../common/ResultList";
+import { LocalAuthority } from "../persistence/domain/LocalAuthority";
+import { LocalAuthorityDao } from "../persistence/dao/LocalAuthorityDao";
 
 /**
  * Contain all services to manage security
@@ -49,6 +51,12 @@ export class ClientControlManager {
      */
     @inject("CredentialDao")
     private credentialDao: CredentialDao;
+
+    /**
+     * LocalAuthority data access object
+     */
+    @inject("LocalAuthorityDao")
+    private localAuthorityDao: LocalAuthorityDao;
 
     /**
      * Client access param name
@@ -82,7 +90,7 @@ export class ClientControlManager {
         if (timestamp > currentTimeMillis || currentTimeMillis > timestamp + ClientControlManager.THREE_MINUTES) {
             throw new AccessDeniedError("Call expired for this time '" + timestamp + "'");
         }
-
+        const context = require("request-context");
         const accessKey: string = parameterMap.get(ClientControlManager.CLIENT_ACCESS_KEY) as string;
 
         const credential: Credential | undefined = await this.credentialDao.findByAccessKey(accessKey);
@@ -90,9 +98,13 @@ export class ClientControlManager {
             throw new AccessDeniedError("No credential found for accessKey '" + accessKey + "'");
         }
 
-        const expectedSignature = this.getExpectedSignature(credential.getAccessKey(), credential.getSecret(), path, timestamp, method, parameterMap);
+        const expectedSignature = ClientControlManager.getExpectedSignature(credential.getAccessKey(), credential.getSecret(), path, timestamp, method, parameterMap);
         if (expectedSignature !== signature) {
             throw new AccessDeniedError("Invalid signature. Found '" + signature + "' instead of '" + expectedSignature + "'");
+        }
+        const localAuthority: LocalAuthority | undefined = await this.localAuthorityDao.findByCredentialAccessKey(accessKey);
+        if (localAuthority !== undefined) {
+            context.set("app:local-authority", localAuthority);
         }
 
         this.logger.debug("Authentication successful for client '%s'", credential.getAccessKey());
@@ -112,7 +124,7 @@ export class ClientControlManager {
      *
      * @return {string} a computed signature
      */
-    private getExpectedSignature(accessKey: string, secret: string, path: string, timestamp: number, method: string, parameterMap: Map<string, string | string[]>): string {
+    private static getExpectedSignature(accessKey: string, secret: string, path: string, timestamp: number, method: string, parameterMap: Map<string, string | string[]>): string {
         let signature: string = "";
         signature = CryptoJS.SHA512(signature.concat(path, ":", accessKey, ":", secret)).toString();
 
