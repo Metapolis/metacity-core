@@ -84,6 +84,8 @@ import { DataSetQueryServiceImpl } from "./services/query/impl/DataSetQueryServi
 import { DataSetQueryService } from "./services/query/DataSetQueryService";
 import { DataSetDaoImpl } from "./persistence/dao/impl/DataSetDaoImpl";
 import { DataSetDao } from "./persistence/dao/DataSetDao";
+import { DataSetCommandService } from "./services/command/DataSetCommandService";
+import { DataSetCommandServiceImpl } from "./services/command/impl/DataSetCommandServiceImpl";
 
 /**
  * The App.
@@ -176,6 +178,7 @@ export class App {
     private bindCommands(): void {
         this.logger.debug("Binding command");
         this.container.bind<CircleCommandService>("CircleCommandService").to(CircleCommandServiceImpl);
+        this.container.bind<DataSetCommandService>("DataSetCommandService").to(DataSetCommandServiceImpl);
         this.container.bind<LocalAuthorityCommandService>("LocalAuthorityCommandService").to(LocalAuthorityCommandServiceImpl);
         this.container.bind<UserCommandService>("UserCommandService").to(UserCommandServiceImpl);
     }

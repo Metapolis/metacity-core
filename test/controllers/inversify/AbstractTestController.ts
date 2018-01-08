@@ -41,6 +41,7 @@ import { LocalAuthorityCommandService } from "../../../src/services/command/Loca
 import { LocalAuthorityQueryService } from "../../../src/services/query/LocalAuthorityQueryService";
 import { DataSetQueryService } from "../../../src/services/query/DataSetQueryService";
 import { DataSetDao } from "../../../src/persistence/dao/DataSetDao";
+import { DataSetCommandService } from "../../../src/services/command/DataSetCommandService";
 
 /**
  * Abstract controller
@@ -89,6 +90,7 @@ export abstract class AbstractTestController {
         (AbstractTestController.container.get("UserAuthenticationQueryServiceMock") as TypeMoq.IMock<UserAuthenticationQueryService>).reset();
         (AbstractTestController.container.get("UserQueryServiceMock") as TypeMoq.IMock<UserQueryService>).reset();
         (AbstractTestController.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>).reset();
+        (AbstractTestController.container.get("DataSetCommandServiceMock") as TypeMoq.IMock<DataSetCommandService>).reset();
         (AbstractTestController.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>).reset();
         (AbstractTestController.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>).reset();
         (AbstractTestController.container.get("LocalAuthorityCommandServiceMock") as TypeMoq.IMock<LocalAuthorityCommandService>).reset();

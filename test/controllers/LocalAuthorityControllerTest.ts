@@ -58,6 +58,8 @@ import { DataSetDTO } from "../../src/services/query/dto/data-set/DataSetDTO";
 import { FindDataSetQuery } from "../../src/common/query/FindDataSetQuery";
 import { DataSetSummary } from "../../src/controllers/rest/model/data-set/DataSetSummary";
 import { DataSetQueryService } from "../../src/services/query/DataSetQueryService";
+import { BooleanValue } from "../../src/controllers/rest/model/common/BooleanValue";
+import { DataSetCommandService } from "../../src/services/command/DataSetCommandService";
 
 /**
  * All test for circle creation
@@ -553,6 +555,110 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         LocalAuthorityControllerTest.circleCommandService.setup((instance) => instance.updateCircle(TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
         LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
+
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.BAD_REQUEST, "Expect a 400");
+    }
+
+    @test
+    public async testUpdateLocalAuthorityDataSetRestricted(): Promise<void> {
+        const path: string = "/api/local-authorities/{localauthorityid}/data-sets/{datasetid}/restricted";
+        const localAuthorityId: number = 12;
+        const dataSetIdentifier = 42;
+        const dataSetQueryServiceMock: TypeMoq.IMock<DataSetQueryService> = (ContextApp.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>);
+        const dataSetCommandServiceMock: TypeMoq.IMock<DataSetCommandService> = (ContextApp.container.get("DataSetCommandServiceMock") as TypeMoq.IMock<DataSetCommandService>);
+
+        const restrictedValue: BooleanValue = new BooleanValue();
+        restrictedValue.value = true;
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_DATA_SET]));
+
+        dataSetQueryServiceMock.setup((instance) => instance.isOwnedByLocalAuthority(dataSetIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
+
+        const opts = {
+            method: "PUT",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{datasetid}", String(dataSetIdentifier)),
+            body: restrictedValue,
+            json: true
+        };
+
+        await Request(opts);
+
+        dataSetCommandServiceMock.verify((instance: DataSetCommandService) => instance.updateRestrictedField(dataSetIdentifier, true), TypeMoq.Times.exactly(1));
+
+    }
+
+    @test
+    public async testUpdateLocalAuthorityDataSetErrorRestricted(): Promise<void> {
+        // 400 bad request => name or role is null or undefined
+        // 403 not enough rights => role is not high enough to update a dataSet
+        const path: string = "/api/local-authorities/{localauthorityid}/data-sets/{datasetid}/restricted";
+        const dataSetIdentifier = 42;
+        const localAuthorityId: number = 12;
+        const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
+        const dataSetQueryServiceMock: TypeMoq.IMock<DataSetQueryService> = (ContextApp.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>);
+        const dataSetCommandServiceMock: TypeMoq.IMock<DataSetCommandService> = (ContextApp.container.get("DataSetCommandServiceMock") as TypeMoq.IMock<DataSetCommandService>);
+
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET]));
+
+        const restrictedValue: BooleanValue = new BooleanValue();
+        restrictedValue.value = true;
+
+        let opts = {
+            method: "PUT",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{datasetid}", String(dataSetIdentifier)),
+            body: restrictedValue,
+            json: true
+        };
+
+        let statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+        clientControlManageMock.reset();
+        clientControlManageMock.setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_DATA_SET]));
+
+        opts = {
+            method: "PUT",
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{datasetid}", String(dataSetIdentifier)),
+            body: restrictedValue,
+            json: true
+        };
+
+        dataSetQueryServiceMock.setup((instance) => instance.isOwnedByLocalAuthority(dataSetIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
+
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
+
+        dataSetCommandServiceMock.setup((instance) => instance.updateRestrictedField(TypeMoq.It.isAny(), TypeMoq.It.isAny())).throws(new IllegalArgumentError("ERROR"));
+        dataSetQueryServiceMock.setup((instance) => instance.isOwnedByLocalAuthority(dataSetIdentifier, localAuthorityId)).returns(() => Promise.resolve(true));
 
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {

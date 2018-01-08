@@ -23,6 +23,7 @@
 
 import { DataSet } from "../domain/DataSet";
 import { FindDataSetQuery } from "../../common/query/FindDataSetQuery";
+import { Circle } from "../domain/Circle";
 
 /**
  * Data Access Object of {@link DataSet}
@@ -46,4 +47,40 @@ export interface DataSetDao {
      * @returns {number} number of found dataSet
      */
     countBy(query: FindDataSetQuery): Promise<number>;
+
+    /**
+     * Save or update a dataSet
+     *
+     * @param {DataSet} dataSet to save
+     *
+     */
+    saveOrUpdate(dataSet: DataSet): Promise<void>;
+
+    /**
+     * Check if this specific dataSet exists
+     *
+     * @param {number} id dataSet's identifier
+     *
+     * @returns {Promise<boolean>} true means dataSet exists in database
+     */
+    isExists(id: number): Promise<boolean>;
+
+    /**
+     * Retrieves a specific dataSet
+     *
+     * @param {number} id dataSet identifier
+     *
+     * @returns {Promise<DataSet>} dataSet found
+     */
+    findById(id: number): Promise<DataSet | undefined>;
+
+    /**
+     * Check if dataSet is owned by localAuthority
+     *
+     * @param {number} dataSetId dataSet identifier
+     * @param {number} localAuthorityId localAuthority identifier
+     *
+     * @returns {boolean} true means localAuthority own dataSet
+     */
+    isOwnedByLocalAuthority(dataSetId: number, localAuthorityId: number): Promise<boolean>;
 }

@@ -39,6 +39,7 @@ CREATE TABLE credential
 (
   access_key character varying NOT NULL,
   secret character varying(250) NOT NULL,
+  roles text NOT NULL,
   CONSTRAINT credential_pkey PRIMARY KEY (access_key)
 )
 WITH (
@@ -51,7 +52,7 @@ CREATE TABLE local_authority
 (
   id bigserial NOT NULL,
   name character varying(250) NOT NULL,
-  ui_config text,
+  ui_config_json_string text,
   credential_access_key character varying,
   CONSTRAINT local_authority_pkey PRIMARY KEY (id),
   CONSTRAINT credential_access_key FOREIGN KEY (credential_access_key)
@@ -72,7 +73,11 @@ CREATE TABLE data_set
   data_type text NOT NULL,
   restricted boolean NOT NULL,
   roles text NOT NULL,
-  CONSTRAINT data_set_pkey PRIMARY KEY (id)
+  local_authority_id bigint,
+  CONSTRAINT data_set_pkey PRIMARY KEY (id),
+  CONSTRAINT local_authority_id FOREIGN KEY (local_authority_id)
+      REFERENCES local_authority (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
@@ -114,24 +119,6 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE "user"
-  OWNER TO metacity;
-
-CREATE TABLE data_set_local_authorities_local_authority
-(
-  data_set_id bigint NOT NULL,
-  local_authority_id bigint NOT NULL,
-  CONSTRAINT data_set_local_authorities_local_authority_pkey PRIMARY KEY (data_set_id, local_authority_id),
-  CONSTRAINT data_set_id FOREIGN KEY (data_set_id)
-      REFERENCES data_set (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT local_authority_id FOREIGN KEY (local_authority_id)
-      REFERENCES local_authority (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE data_set_local_authorities_local_authority
   OWNER TO metacity;
 
 CREATE TABLE circle_users_user

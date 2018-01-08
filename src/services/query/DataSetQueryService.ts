@@ -36,4 +36,23 @@ export interface DataSetQueryService {
      * @returns {Promise<ResultList<DataSetDTO>>} DTOs of dataSets
      */
     findDataSets(query: FindDataSetQuery): Promise<ResultList<DataSetDTO>>;
+
+    /**
+     * Check if dataSet exists
+     *
+     * @param id dataSet's identifier
+     *
+     * @returns {Promise<boolean>} true means dataSet with this specific identifier exists
+     */
+    isExists(id: number): Promise<boolean>;
+
+    /**
+     * Check if dataSet is owned by localAuthority
+     *
+     * @param {number} dataSetId dataSet identifier
+     * @param {number} localAuthorityId localAuthority identifier
+     *
+     * @returns {boolean} true means localAuthority own dataSet
+     */
+    isOwnedByLocalAuthority(dataSetId: number, localAuthorityId: number): Promise<boolean>;
 }

@@ -34,6 +34,8 @@ import { AbstractTestDao } from "./inversify/AbstractTestDao";
 import { FindDataSetQuery } from "../../src/common/query/FindDataSetQuery";
 import { LocalAuthorityDao } from "../../src/persistence/dao/LocalAuthorityDao";
 import { DataType } from "../../src/common/enum/DataType";
+import { CircleDao } from "../../src/persistence/dao/CircleDao";
+import { Circle } from "../../src/persistence/domain/Circle";
 
 @suite
 export class DataSetDaoTest extends AbstractTestDao {
@@ -160,5 +162,129 @@ export class DataSetDaoTest extends AbstractTestDao {
         query.setLocalAuthorityId(4);
         count = await dataSetDao.countBy(query);
         Chai.assert.equal(count, 0);
+    }
+
+    @test
+    public async testSaveOrUpdate(): Promise<void> {
+        const dataSetDao: DataSetDao = ContextApp.container.get("DataSetDao");
+        const dataSetRepository: TypeORM.Repository<DataSet> = ContextApp.container.get("DataSetRepository");
+
+        const dataSet: DataSet = new DataSet();
+        dataSet.setName("Michel");
+        dataSet.setDataType(DataType.TWEET);
+        dataSet.setRoles(["Champion"]);
+        dataSet.setDescription("Description de champion");
+        dataSet.setRestricted(true);
+
+        await dataSetDao.saveOrUpdate(dataSet);
+
+        const actual: DataSet = await dataSetRepository.findOneById(dataSet.getId());
+
+        Chai.assert.isTrue((await dataSetRepository.find()).length === 1);
+        Chai.assert.equal(actual.getId(), dataSet.getId());
+        Chai.assert.deepEqual(actual.getRoles(), dataSet.getRoles());
+        Chai.assert.equal(actual.getName(), dataSet.getName());
+        Chai.assert.equal(actual.getDataType(), dataSet.getDataType());
+        Chai.assert.equal(actual.getDescription(), dataSet.getDescription());
+        Chai.assert.equal(actual.isRestricted(), dataSet.isRestricted());
+
+    }
+
+    @test
+    public async testIsExists(): Promise<void> {
+        const dataSetDao: DataSetDao = ContextApp.container.get("DataSetDao");
+        const dataSetRepository: TypeORM.Repository<DataSet> = ContextApp.container.get("DataSetRepository");
+
+        const dataSet: DataSet = new DataSet();
+        dataSet.setName("Michel");
+        dataSet.setDataType(DataType.TWEET);
+        dataSet.setRoles(["Champion"]);
+        dataSet.setDescription("Description de champion");
+        dataSet.setRestricted(true);
+
+        await dataSetRepository.save(dataSet);
+
+        let isExists: boolean = await dataSetDao.isExists(dataSet.getId());
+
+        Chai.assert.isTrue(isExists);
+
+        isExists = await dataSetDao.isExists(dataSet.getId() + 2);
+
+        Chai.assert.isFalse(isExists);
+    }
+
+    @test
+    public async testFindById(): Promise<void> {
+        const dataSetDao: DataSetDao = ContextApp.container.get("DataSetDao");
+        const dataSetRepository: TypeORM.Repository<DataSet> = ContextApp.container.get("DataSetRepository");
+
+        const dataSet: DataSet = new DataSet();
+        dataSet.setName("Michel");
+        dataSet.setDataType(DataType.TWEET);
+        dataSet.setRoles(["Champion"]);
+        dataSet.setDescription("Description de champion");
+        dataSet.setRestricted(true);
+
+        await dataSetRepository.save(dataSet);
+
+        let actual: DataSet = await dataSetDao.findById(dataSet.getId());
+
+        Chai.assert.equal(actual.getId(), dataSet.getId());
+        Chai.assert.deepEqual(actual.getRoles(), dataSet.getRoles());
+        Chai.assert.equal(actual.getName(), dataSet.getName());
+        Chai.assert.equal(actual.isRestricted(), dataSet.isRestricted());
+        Chai.assert.equal(actual.getDescription(), dataSet.getDescription());
+        Chai.assert.equal(actual.getDataType(), dataSet.getDataType());
+
+        actual = await dataSetDao.findById(dataSet.getId() + 2);
+
+        Chai.assert.isTrue(actual === undefined);
+    }
+
+    @test
+    public async testIsOwnedByLocalAuthority(): Promise<void> {
+        const dataSetDao: DataSetDao = ContextApp.container.get("DataSetDao");
+        const dataSetRepository: TypeORM.Repository<DataSet> = ContextApp.container.get("DataSetRepository");
+        const credentialRepository: TypeORM.Repository<Credential> = ContextApp.container.get("CredentialRepository");
+        const localAuthorityRepository: TypeORM.Repository<LocalAuthority> = ContextApp.container.get("LocalAuthorityRepository");
+
+        const localAuthority: LocalAuthority = new LocalAuthority();
+        localAuthority.setName("Stark Corp");
+
+        const credential: Credential = new Credential();
+        credential.setSecret("danslavieparfoismaispasseulement");
+        credential.setAccessKey("AccessKey");
+        credential.setRoles([Role.ACCESS_TWEET]);
+        await credentialRepository.save(credential);
+
+        localAuthority.setCredential(Promise.resolve(credential));
+
+        await localAuthorityRepository.save(localAuthority);
+
+        const dataSet: DataSet = new DataSet();
+        dataSet.setName("Michel");
+        dataSet.setDataType(DataType.TWEET);
+        dataSet.setRoles(["Champion"]);
+        dataSet.setDescription("Description de champion");
+        dataSet.setLocalAuthority(Promise.resolve(localAuthority));
+        dataSet.setRestricted(true);
+
+        await dataSetRepository.save(dataSet);
+
+        let isOwnedByLocalAuthority: boolean = await dataSetDao.isOwnedByLocalAuthority(dataSet.getId(), localAuthority.getId());
+
+        Chai.assert.isTrue(isOwnedByLocalAuthority);
+
+        isOwnedByLocalAuthority = await dataSetDao.isOwnedByLocalAuthority(dataSet.getId() + 2, 1235);
+
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
+
+        isOwnedByLocalAuthority = await dataSetDao.isOwnedByLocalAuthority(dataSet.getId(), 1235);
+
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
+
+        isOwnedByLocalAuthority = await dataSetDao.isOwnedByLocalAuthority(dataSet.getId() + 2, localAuthority.getId());
+
+        Chai.assert.isFalse(isOwnedByLocalAuthority);
     }
 }

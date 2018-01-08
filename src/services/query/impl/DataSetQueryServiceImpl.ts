@@ -54,6 +54,23 @@ export class DataSetQueryServiceImpl implements DataSetQueryService {
     /**
      * Override
      */
+    public async isExists(id: number): Promise<boolean> {
+        this.logger.debug("Check if dataSet with id '%s' exists", id);
+
+        return await this.dataSetDao.isExists(id);
+    }
+
+    /**
+     * Override
+     */
+    public async isOwnedByLocalAuthority(dataSetId: number, localAuthorityId: number): Promise<boolean> {
+        this.logger.debug("Check if dataSet '%s' is owned by localAuthority '%s'", dataSetId, localAuthorityId);
+        return await this.dataSetDao.isOwnedByLocalAuthority(dataSetId, localAuthorityId);
+    }
+    
+    /**
+     * Override
+     */
     public async findDataSets(query: FindDataSetQuery): Promise<ResultList<DataSetDTO>> {
         this.logger.debug("Retrieving dataSets");
         Utils.checkArgument(!isNullOrUndefined(query), "Query cannot be null");

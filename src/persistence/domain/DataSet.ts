@@ -21,7 +21,7 @@
  * @since      0.2.0
  */
 
-import { AfterLoad, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { AfterLoad, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { LoggerInstance } from "winston";
 import { Utils } from "../../common/Utils";
 import { LocalAuthority } from "./LocalAuthority";
@@ -78,11 +78,10 @@ export class DataSet {
     private roles: string;
 
     /**
-     * Dataset's local authorities
+     * Circle's localAuthority (owner of circle)
      */
-    @ManyToMany((type) => LocalAuthority, (localAuthority) => "dataSets")
-    @JoinTable()
-    private localAuthorities: Promise<LocalAuthority[]>;
+    @ManyToOne((type) => LocalAuthority, (localAuthority) => "dataSets")
+    private localAuthority: Promise<LocalAuthority>;
 
     /**
      * Transient role array
@@ -216,19 +215,20 @@ export class DataSet {
     }
 
     /**
-     * Getter local authorities
-     * @returns {Promise<LocalAuthority[]>}
+     * Getter local authority
+     *
+     * @returns {Promise<LocalAuthority>}
      */
-    public getLocalAuthoritiy(): Promise<LocalAuthority[]> {
-        return this.localAuthorities;
+    public getLocalAuthority(): Promise<LocalAuthority> {
+        return this.localAuthority;
     }
 
     /**
-     * Setter local authorities
+     * Setter local authority
      *
      * @param localAuthority authority new local authority value
      */
-    public setLocalAuthoritiy(localAuthority: Promise<LocalAuthority[]>): void {
-        this.localAuthorities = localAuthority;
+    public setLocalAuthority(localAuthority: Promise<LocalAuthority>): void {
+        this.localAuthority = localAuthority;
     }
 }

@@ -29,6 +29,7 @@ import * as TypeORM from "typeorm";
 import { inject, injectable } from "inversify";
 import { FindDataSetQuery } from "../../../common/query/FindDataSetQuery";
 import { SelectQueryBuilder } from "typeorm/query-builder/SelectQueryBuilder";
+import { Circle } from "../../domain/Circle";
 
 /**
  * Implementation of {@link DataSetDao}
@@ -57,16 +58,16 @@ export class DataSetDaoImpl implements DataSetDao {
      * @return TypeORM query
      */
     private computeQuery(query: FindDataSetQuery): SelectQueryBuilder<DataSet> {
-        const queryBuilder: SelectQueryBuilder<DataSet> = this.dataSetRepository.createQueryBuilder("dataSet");
+        const queryBuilder: SelectQueryBuilder<DataSet> = this.dataSetRepository.createQueryBuilder("ds");
         if (query.isSet()) {
             if (query.getLocalAuthorityId() !== undefined) {
                 queryBuilder
-                    .innerJoinAndSelect("dataSet.localAuthorities", "localAuthority")
-                    .where("(localAuthority.id = :localAuthority)")
-                    .setParameters({localAuthority: query.getLocalAuthorityId()});
+                    .innerJoinAndSelect("ds.localAuthority", "la")
+                    .where("(la.id = :localauthorityid)")
+                    .setParameters({localauthorityid: query.getLocalAuthorityId()});
             }
         }
-        queryBuilder.orderBy("dataSet.name", "ASC");
+        queryBuilder.orderBy("ds.name", "ASC");
 
         this.logger.debug("Computed query is : '%s'", queryBuilder.getSql());
 
@@ -89,5 +90,45 @@ export class DataSetDaoImpl implements DataSetDao {
      */
     public async countBy(query: FindDataSetQuery): Promise<number> {
         return await this.computeQuery(query).getCount();
+    }
+
+    /**
+     * Override
+     */
+    public async saveOrUpdate(dataSet: DataSet): Promise<void> {
+        this.logger.info("Persist new dataSet '%s'", dataSet.getName());
+        await this.dataSetRepository.save(dataSet);
+        this.logger.info("DataSet saved");
+    }
+
+    /**
+     * Override
+     */
+    public async isExists(id: number): Promise<boolean> {
+        this.logger.debug("Check in data base if dataSet with id '%s' exists", id);
+
+        return (await this.dataSetRepository.count({where: {id: id}})) > 0;
+    }
+
+    /**
+     * Override
+     */
+    public async findById(id: number): Promise<DataSet> | undefined {
+        this.logger.info("Retrieve dataSet with identifier '%s'", id);
+
+        return await this.dataSetRepository.findOneById(id);
+    }
+
+    /**
+     * Override
+     */
+    public async isOwnedByLocalAuthority(dataSetId: number, localAuthorityId: number): Promise<boolean> {
+        this.logger.debug("Check if dataSet '%s' is owned by localAuthority '%s' in database", dataSetId, localAuthorityId);
+
+        return (await this.dataSetRepository.createQueryBuilder("ds")
+            .innerJoin("ds.localAuthority", "la")
+            .where("ds.id = :datasetid", {datasetid: dataSetId})
+            .andWhere("la.id = :localauthorityid", {localauthorityid: localAuthorityId})
+            .getCount()) === 1;
     }
 }
