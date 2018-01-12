@@ -54,6 +54,9 @@ import { DataSetDTO } from "../../services/query/dto/data-set/DataSetDTO";
 import { DataSetQueryService } from "../../services/query/DataSetQueryService";
 import { BooleanValue } from "./model/common/BooleanValue";
 import { DataSetCommandService } from "../../services/command/DataSetCommandService";
+import { AccessDeniedError } from "../../common/error/AccessDeniedError";
+import { isNullOrUndefined } from "util";
+import { HttpLocalAuthorityProvider } from "../../security/HttpLocalAuthorityProvider";
 
 /**
  * API resources to Local authorities services
@@ -110,6 +113,12 @@ export class LocalAuthorityController implements interfaces.Controller {
     private localAuthorityCommandService: LocalAuthorityCommandService;
 
     /**
+     * Http LocalAuthority provider for all request
+     */
+    @inject("HttpLocalAuthorityProvider")
+    private httpLocalAuthorityProvider: HttpLocalAuthorityProvider;
+
+    /**
      * Update specific localAuthority
      *
      * @param {SaveLocalAuthority} localAuthority new values for local authority
@@ -121,6 +130,12 @@ export class LocalAuthorityController implements interfaces.Controller {
     public async updateLocalAuthority(@RequestBody() localAuthority: SaveLocalAuthority, @RequestParam("localauthorityid") localAuthorityId: number, @Response() res: Express.Response): Promise<void> {
         // I have to do this, because express can only parse string
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
 
         if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
             this.logger.debug("Local authority with '%s' does not exists", localAuthorityId);
@@ -152,6 +167,12 @@ export class LocalAuthorityController implements interfaces.Controller {
     public async getLocalAuthorityDetail(@RequestParam("localauthorityid") localAuthorityId: number): Promise<LocalAuthorityDetails> {
         // I have to do this, because express can only parse string
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
 
         if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
             this.logger.debug("Local authority with '%s' does not exists", localAuthorityId);
@@ -186,6 +207,13 @@ export class LocalAuthorityController implements interfaces.Controller {
                                             @QueryParam("offset") offset: number): Promise<ResultList<DataSetSummary>> {
         this.logger.debug("Begin find data sets");
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
+
         if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
             this.logger.debug("Local authority with id '%s' cannot be found", localAuthorityIdNumber);
             throw new NotFoundError("Local authority not found");
@@ -229,6 +257,12 @@ export class LocalAuthorityController implements interfaces.Controller {
         const localAuthorityIdNumber: number = Number(localAuthorityId);
         const dataSetIdNumber: number = Number(dataSetId);
 
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
+
         if (!(await this.dataSetQueryService.isOwnedByLocalAuthority(dataSetIdNumber, localAuthorityIdNumber))) {
             this.logger.debug("DataSet with id '%s' cannot be found or local authority with '%s' does not exists is dataSet not owned by local authority", dataSetId, localAuthorityId);
             throw new NotFoundError("DataSet or local authority not found or not owned");
@@ -257,6 +291,13 @@ export class LocalAuthorityController implements interfaces.Controller {
                                            @QueryParam("offset") offset: number): Promise<ResultList<CircleSummary>> {
         this.logger.debug("Begin find circles");
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
+
         if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
             this.logger.debug("Local authority with id '%s' cannot be found", localAuthorityIdNumber);
             throw new NotFoundError("Local authority not found");
@@ -294,6 +335,13 @@ export class LocalAuthorityController implements interfaces.Controller {
     public async createLocalAuthorityCircle(@RequestBody() circle: SaveCircle, @RequestParam("localauthorityid") localAuthorityId: number): Promise<NumberIdentifier> {
         this.logger.debug("Begin creation");
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
+
         if (!(await this.localAuthorityQueryService.isExists(localAuthorityIdNumber))) {
             this.logger.debug("Local authority with id '%s' cannot be found", localAuthorityIdNumber);
             throw new NotFoundError("Local authority not found");
@@ -325,6 +373,12 @@ export class LocalAuthorityController implements interfaces.Controller {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
 
         if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
             this.logger.debug("Circle with id '%s' cannot be found or local authority with '%s' does not exists is circle not owned by local authority", circleId, localAuthorityId);
@@ -362,6 +416,12 @@ export class LocalAuthorityController implements interfaces.Controller {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
 
         // Check if circle and localAuthority exist and is circle is owned by localAuthority
         if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {
@@ -405,6 +465,12 @@ export class LocalAuthorityController implements interfaces.Controller {
         // I have to do this, because express can only parse string
         const circleIdNumber: number = Number(circleId);
         const localAuthorityIdNumber: number = Number(localAuthorityId);
+
+        // Security Check only for local authority (need connection)
+        if (isNullOrUndefined(this.httpLocalAuthorityProvider.get()) || this.httpLocalAuthorityProvider.get().getId() !== localAuthorityIdNumber) {
+            this.logger.debug("Local authority connected isn't authorize to access to this information");
+            throw new AccessDeniedError();
+        }
 
         // Check if circle and localAuthority exist and is circle is owned by localAuthority
         if (!(await this.circleQueryService.isOwnedByLocalAuthority(circleIdNumber, localAuthorityIdNumber))) {

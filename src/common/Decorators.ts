@@ -98,7 +98,6 @@ function UserControl(...roles: string[]) {
         };
 
         return descriptor;
-
     };
 }
 

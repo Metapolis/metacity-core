@@ -61,6 +61,7 @@ import { DataSetDao } from "../../../src/persistence/dao/DataSetDao";
 import { DataSetDaoImpl } from "../../../src/persistence/dao/impl/DataSetDaoImpl";
 import { DataSetCommandService } from "../../../src/services/command/DataSetCommandService";
 import { DataSetCommandServiceImpl } from "../../../src/services/command/impl/DataSetCommandServiceImpl";
+import { HttpLocalAuthorityProvider } from "../../../src/security/HttpLocalAuthorityProvider";
 
 /**
  * App test module
@@ -137,6 +138,9 @@ export class AppTestModule {
         if (!ContextApp.container.isBound("ClientControlManagerMock")) {
             ContextApp.container.bind("ClientControlManagerMock").toConstantValue(TypeMoq.Mock.ofType<ClientControlManager>(ClientControlManager));
         }
+        if (!ContextApp.container.isBound("HttpLocalAuthorityProviderMock")) {
+            ContextApp.container.bind("HttpLocalAuthorityProviderMock").toConstantValue(TypeMoq.Mock.ofType<HttpLocalAuthorityProvider>(HttpLocalAuthorityProvider));
+        }
 
         // Rebind all services
         ContextApp.container.rebind("UserDao").toConstantValue((ContextApp.container.get("UserDaoMock") as TypeMoq.IMock<UserDaoImpl>).object);
@@ -155,6 +159,7 @@ export class AppTestModule {
         ContextApp.container.rebind("TrafficQueryService").toConstantValue((ContextApp.container.get("TrafficQueryServiceMock") as TypeMoq.IMock<TrafficQueryService>).object);
         ContextApp.container.rebind("TweetQueryService").toConstantValue((ContextApp.container.get("TweetQueryServiceMock") as TypeMoq.IMock<TweetQueryService>).object);
         ContextApp.container.rebind("ClientControlManager").toConstantValue((ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).object);
+        ContextApp.container.rebind("HttpLocalAuthorityProvider").toConstantValue((ContextApp.container.get("HttpLocalAuthorityProviderMock") as TypeMoq.IMock<HttpLocalAuthorityProvider>).object);
 
         return ContextApp.container;
     }
@@ -177,6 +182,7 @@ export class AppTestModule {
         ContextApp.container.rebind("LocalAuthorityQueryService").to(LocalAuthorityQueryServiceImpl);
         ContextApp.container.rebind("UserCommandService").to(UserCommandServiceImpl);
         ContextApp.container.rebind("ClientControlManager").to(ClientControlManager);
+        ContextApp.container.rebind("HttpLocalAuthorityProvider").to(HttpLocalAuthorityProvider);
         if (ContextApp.container.isBound("ESClientMock")) {
             ContextApp.container.unbind("ESClientMock");
         }
