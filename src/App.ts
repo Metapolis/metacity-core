@@ -86,6 +86,7 @@ import { DataSetDaoImpl } from "./persistence/dao/impl/DataSetDaoImpl";
 import { DataSetDao } from "./persistence/dao/DataSetDao";
 import { DataSetCommandService } from "./services/command/DataSetCommandService";
 import { DataSetCommandServiceImpl } from "./services/command/impl/DataSetCommandServiceImpl";
+import { HttpLocalAuthorityProvider } from "./security/HttpLocalAuthorityProvider";
 
 /**
  * The App.
@@ -215,9 +216,10 @@ export class App {
     private async initModule(): Promise<void> {
         this.logger.debug("Connect to database");
         await this.connectDB();
-        // Bind security manager
+        // Bind security component
         this.container.bind<UserControlManager>("UserControlManager").to(UserControlManager);
         this.container.bind<ClientControlManager>("ClientControlManager").to(ClientControlManager);
+        this.container.bind<HttpLocalAuthorityProvider>("HttpLocalAuthorityProvider").to(HttpLocalAuthorityProvider);
 
         this.bindDao();
         this.bindCommands();
@@ -266,6 +268,7 @@ export class App {
             const expressWinston = require("express-winston");
             const context = require("request-context");
             app.use(context.middleware("request"));
+            // Define logger behavior for all requests
             app.use(expressWinston.logger({
                 transports: [
                     new (Winston.transports.Console)({
@@ -322,6 +325,7 @@ export class App {
             });
         });
         server.setErrorConfig((app) => {
+            // Define behavior when exception is thrown
             app.use((err: Error, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
                 if (/^\/api/.test(req.path)) {
                     this.logger.error("An error occurred on api resources");

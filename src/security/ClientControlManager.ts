@@ -32,6 +32,7 @@ import CryptoJS = require("crypto-js");
 import { ResultList } from "../common/ResultList";
 import { LocalAuthority } from "../persistence/domain/LocalAuthority";
 import { LocalAuthorityDao } from "../persistence/dao/LocalAuthorityDao";
+import { HttpLocalAuthorityProvider } from "./HttpLocalAuthorityProvider";
 
 /**
  * Contain all services to manage security
@@ -57,6 +58,12 @@ export class ClientControlManager {
      */
     @inject("LocalAuthorityDao")
     private localAuthorityDao: LocalAuthorityDao;
+
+    /**
+     * Http LocalAuthority provider for all request
+     */
+    @inject("HttpLocalAuthorityProvider")
+    private httpLocalAuthorityProvider: HttpLocalAuthorityProvider;
 
     /**
      * Client access param name
@@ -90,7 +97,6 @@ export class ClientControlManager {
         if (timestamp > currentTimeMillis || currentTimeMillis > timestamp + ClientControlManager.THREE_MINUTES) {
             throw new AccessDeniedError("Call expired for this time '" + timestamp + "'");
         }
-        const context = require("request-context");
         const accessKey: string = parameterMap.get(ClientControlManager.CLIENT_ACCESS_KEY) as string;
 
         const credential: Credential | undefined = await this.credentialDao.findByAccessKey(accessKey);
@@ -104,7 +110,7 @@ export class ClientControlManager {
         }
         const localAuthority: LocalAuthority | undefined = await this.localAuthorityDao.findByCredentialAccessKey(accessKey);
         if (localAuthority !== undefined) {
-            context.set("app:local-authority", localAuthority);
+            this.httpLocalAuthorityProvider.set(localAuthority);
         }
 
         this.logger.debug("Authentication successful for client '%s'", credential.getAccessKey());

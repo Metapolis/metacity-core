@@ -42,6 +42,7 @@ import { LocalAuthorityQueryService } from "../../../src/services/query/LocalAut
 import { DataSetQueryService } from "../../../src/services/query/DataSetQueryService";
 import { DataSetDao } from "../../../src/persistence/dao/DataSetDao";
 import { DataSetCommandService } from "../../../src/services/command/DataSetCommandService";
+import { HttpLocalAuthorityProvider } from "../../../src/security/HttpLocalAuthorityProvider";
 
 /**
  * Abstract controller
@@ -102,6 +103,7 @@ export abstract class AbstractTestController {
         (AbstractTestController.container.get("DataSetDaoMock") as TypeMoq.IMock<DataSetDao>).reset();
         (AbstractTestController.container.get("CredentialDaoMock") as TypeMoq.IMock<CredentialDao>).reset();
         (AbstractTestController.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).reset();
+        (AbstractTestController.container.get("HttpLocalAuthorityProviderMock") as TypeMoq.IMock<HttpLocalAuthorityProvider>).reset();
     }
 
     /**

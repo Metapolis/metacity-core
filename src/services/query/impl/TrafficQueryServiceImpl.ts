@@ -89,6 +89,7 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
         })).hits;
 
         // Build dto list
+        // TODO create document object with public field to simple parse the json from ElasticSearch
         const accidents: CarAccidentDTO[] = [];
         for (const jsonAccident of jsonAccidents.hits) {
             accidents.push(new CarAccidentDTO(jsonAccident._source));

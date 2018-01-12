@@ -118,6 +118,7 @@ export class TweetQueryServiceImpl implements TweetQueryService {
         })).hits;
 
         // Parse result to DTO
+        // TODO create document object with public field to simple parse the json from ElasticSearch
         const accidents: TweetDTO[] = [];
         for (const jsonTweet of jsonTweets.hits) {
             accidents.push(new TweetDTO(jsonTweet._source as { type: string, category: string }));

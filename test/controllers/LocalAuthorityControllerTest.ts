@@ -60,6 +60,8 @@ import { DataSetSummary } from "../../src/controllers/rest/model/data-set/DataSe
 import { DataSetQueryService } from "../../src/services/query/DataSetQueryService";
 import { BooleanValue } from "../../src/controllers/rest/model/common/BooleanValue";
 import { DataSetCommandService } from "../../src/services/command/DataSetCommandService";
+import { LocalAuthority } from "../../src/persistence/domain/LocalAuthority";
+import { HttpLocalAuthorityProvider } from "../../src/security/HttpLocalAuthorityProvider";
 
 /**
  * All test for circle creation
@@ -70,9 +72,15 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     private static circleQueryService: TypeMoq.IMock<CircleQueryService>;
 
     public static async before(): Promise<void> {
-        AbstractTestController.before();
+        await AbstractTestController.before();
         LocalAuthorityControllerTest.circleCommandService = (ContextApp.container.get("CircleCommandServiceMock") as TypeMoq.IMock<CircleCommandService>);
         LocalAuthorityControllerTest.circleQueryService = (ContextApp.container.get("CircleQueryServiceMock") as TypeMoq.IMock<CircleQueryService>);
+    }
+
+    public before(): void {
+        const localAuthorityConnected: LocalAuthority = new LocalAuthority();
+        localAuthorityConnected.setId(12);
+        (ContextApp.container.get("HttpLocalAuthorityProviderMock") as TypeMoq.IMock<HttpLocalAuthorityProvider>).setup((instance) => instance.get()).returns(() => localAuthorityConnected);
     }
 
     /**
@@ -82,7 +90,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testCreateLocalAuthorityCircle(): Promise<void> {
 
         const path: string = "/api/local-authorities/{localauthorityid}/circles";
-        const localAuthorityId: number = 5;
+        const localAuthorityId: number = 12;
         // Hello im a rigid linter
         const circleIdentifier = 42;
         const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
@@ -132,8 +140,8 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testCreateLocalAuthorityCircleError(): Promise<void> {
         // 400 bad request => name or role is null or undefined
         // 403 not enough rights => role is not high enough to create a circle
-        const path: string = "/api/local-authorities/1/circles";
-        const path404: string = "/api/local-authorities/2/circles";
+        const path: string = "/api/local-authorities/12/circles";
+        const path403: string = "/api/local-authorities/13/circles";
         const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
         const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
         clientControlManageMock.setup(
@@ -150,7 +158,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
 
         let opts = {
             method: "POST",
-            uri: AbstractTestController.getBackend() + path404,
+            uri: AbstractTestController.getBackend() + path,
             body: circle,
             json: true
         };
@@ -170,15 +178,16 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
 
-        localAuthorityQueryService.setup((instance) => instance.isExists(1)).returns(() => Promise.resolve(true));
-        localAuthorityQueryService.setup((instance) => instance.isExists(2)).returns(() => Promise.resolve(false));
+        opts.uri = AbstractTestController.getBackend() + path403;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
 
-        opts = {
-            method: "POST",
-            uri: AbstractTestController.getBackend() + path404,
-            body: circle,
-            json: true
-        };
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        opts.uri = AbstractTestController.getBackend() + path;
+        localAuthorityQueryService.setup((instance) => instance.isExists(12)).returns(() => Promise.resolve(false));
 
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
@@ -186,8 +195,9 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         });
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expect a 404");
+        localAuthorityQueryService.reset();
+        localAuthorityQueryService.setup((instance) => instance.isExists(12)).returns(() => Promise.resolve(true));
 
-        opts.uri = AbstractTestController.getBackend() + path;
         LocalAuthorityControllerTest.circleCommandService.setup(
             (instance) => instance.createCircle(TypeMoq.It.isAny())
         ).throws(new IllegalArgumentError("ERROR"));
@@ -299,6 +309,14 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_LOCAL_AUTHORITY]));
+
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1));
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
 
         opts = {
             method: "PUT",
@@ -426,6 +444,14 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_LOCAL_AUTHORITY]));
 
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1));
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
         opts = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)),
@@ -537,6 +563,14 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
 
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{circleid}", String(circleIdentifier));
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
         opts = {
             method: "PUT",
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
@@ -641,6 +675,14 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_DATA_SET]));
 
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{datasetid}", String(dataSetIdentifier));
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
         opts = {
             method: "PUT",
             uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{datasetid}", String(dataSetIdentifier)),
@@ -673,7 +715,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
-        const localAuthorityId: number = 23;
+        const localAuthorityId: number = 12;
         (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
@@ -731,7 +773,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         // 403 not enough rights => role is not high enough to update a circle
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
-        const localAuthorityId: number = 23;
+        const localAuthorityId: number = 12;
         const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
         clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
@@ -762,9 +804,18 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
 
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{circleid}", String(circleIdentifier));
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+
         opts = {
             method: "GET",
-            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", "toto").replace("{circleid}", String(circleIdentifier)),
+            uri: AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId)).replace("{circleid}", String(circleIdentifier)),
             json: true
         };
 
@@ -792,7 +843,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testFindLocalAuthorityDataSets(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/data-sets?limit={limit}&offset={offset}";
         const resultTotal: number = 72;
-        const localAuthorityId: number = 1;
+        const localAuthorityId: number = 12;
         const limit: number = 10;
         const offset: number = 0;
         const dataSetsDTOMock: DataSetDTO[] = [];
@@ -840,21 +891,12 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             Chai.assert.equal(actual[i].description, dataSetsDTOMock[i].getDescription(), "Expected same description");
             Chai.assert.equal(actual[i].restricted, dataSetsDTOMock[i].isRestricted(), "Expected same restricted value");
         }
-
-        // Check for local authority does not exist
-        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{limit}", String(limit)).replace("{offset}", String(offset));
-
-        let statusCode = HTTPStatusCodes.OK;
-        await Request(opts).catch((error) => {
-            statusCode = error.statusCode;
-        });
-
-        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND);
     }
 
     @test
     public async testFindLocalAuthorityDataSetsError(): Promise<void> {
         const path: string = "/api/local-authorities/12/data-sets";
+        const path403: string = "/api/local-authorities/13/data-sets";
         const localAuthorityQueryService: TypeMoq.IMock<LocalAuthorityQueryService> = (ContextApp.container.get("LocalAuthorityQueryServiceMock") as TypeMoq.IMock<LocalAuthorityQueryService>);
         const dataSetQueryService: TypeMoq.IMock<DataSetQueryService> = (ContextApp.container.get("DataSetQueryServiceMock") as TypeMoq.IMock<DataSetQueryService>);
 
@@ -888,6 +930,15 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.MANAGE_DATA_SET]));
 
+        opts.uri = AbstractTestController.getBackend() + path403;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        opts.uri = AbstractTestController.getBackend() + path;
         statusCode = HTTPStatusCodes.OK;
         await Request(opts).catch((error) => {
             statusCode = error.statusCode;
@@ -911,7 +962,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testFindLocalAuthorityCircles(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/circles?limit={limit}&offset={offset}";
         const resultTotal: number = 72;
-        const localAuthorityId: number = 1;
+        const localAuthorityId: number = 12;
         const limit: number = 10;
         const offset: number = 0;
         const circlesDTOMock: CircleDTO[] = [];
@@ -959,21 +1010,12 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
             Chai.assert.equal(actual[i].name, circlesDTOMock[i].getName(), "Expected same name");
             Chai.assert.equal(actual[i].defaultCircle, circlesDTOMock[i].isDefaultCircle(), "Expected same circle default");
         }
-
-        // Check for local authority does not exist
-        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{limit}", String(limit)).replace("{offset}", String(offset));
-
-        let statusCode = HTTPStatusCodes.OK;
-        await Request(opts).catch((error) => {
-            statusCode = error.statusCode;
-        });
-
-        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND);
     }
 
     @test
     public async testFindLocalAuthorityCirclesError(): Promise<void> {
         const path: string = "/api/local-authorities/12/circles";
+        const path403: string = "/api/local-authorities/13/circles";
         (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
@@ -994,13 +1036,39 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
         });
 
         Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).reset();
+        (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
+            (instance) => instance.authenticateClient(
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny(),
+                TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.MANAGE_CIRCLE]));
+
+        opts.uri = AbstractTestController.getBackend() + path403;
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
+
+        opts.uri = AbstractTestController.getBackend() + path;
+
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.NOT_FOUND, "Expected a 404");
     }
 
     @test
     public async testDeleteLocalAuthorityCircle(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
-        const localAuthorityId: number = 23;
+        const localAuthorityId: number = 12;
         (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>).setup(
             (instance) => instance.authenticateClient(
                 TypeMoq.It.isAny(),
@@ -1045,7 +1113,7 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
     public async testDeleteLocalAuthorityCircleError(): Promise<void> {
         const path: string = "/api/local-authorities/{localauthorityid}/circles/{circleid}";
         const circleIdentifier = 42;
-        const localAuthorityId: number = 23;
+        const localAuthorityId: number = 12;
         const clientControlManageMock: TypeMoq.IMock<ClientControlManager> = (ContextApp.container.get("ClientControlManagerMock") as TypeMoq.IMock<ClientControlManager>);
         clientControlManageMock.setup(
             (instance) => instance.authenticateClient(
@@ -1075,6 +1143,14 @@ export class LocalAuthorityControllerTest extends AbstractTestController {
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny(),
                 TypeMoq.It.isAny())).returns(() => Promise.resolve([Role.ACCESS_TWEET, Role.MANAGE_CIRCLE]));
+
+        opts.uri = AbstractTestController.getBackend() + path.replace("{localauthorityid}", String(localAuthorityId + 1)).replace("{circleid}", String(circleIdentifier));
+        statusCode = HTTPStatusCodes.OK;
+        await Request(opts).catch((error) => {
+            statusCode = error.statusCode;
+        });
+
+        Chai.assert.equal(statusCode, HTTPStatusCodes.FORBIDDEN, "Expect a 403");
 
         LocalAuthorityControllerTest.circleQueryService.setup((instance) => instance.isOwnedByLocalAuthority(circleIdentifier, localAuthorityId)).returns(() => Promise.resolve(false));
 
