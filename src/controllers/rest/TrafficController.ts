@@ -136,13 +136,13 @@ export class TrafficController implements interfaces.Controller {
             const shouldParams: AtmosphericCondition[] = [];
 
             // Parse must params
-            for (const must of areaSearchFilter.getMustValues()) {
+            for (const must of atmosphericConditionSearchFilter.getMustValues()) {
                 // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
                 mustParam.push((AtmosphericCondition as any)[must]);
             }
 
             // Parse should params
-            for (const should of areaSearchFilter.getShouldValues()) {
+            for (const should of atmosphericConditionSearchFilter.getShouldValues()) {
                 // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
                 shouldParams.push((AtmosphericCondition as any)[should]);
             }
@@ -157,13 +157,13 @@ export class TrafficController implements interfaces.Controller {
             const shouldParams: CollisionType[] = [];
 
             // Parse must params
-            for (const must of areaSearchFilter.getMustValues()) {
+            for (const must of collisionTypeSearchFilter.getMustValues()) {
                 // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
                 mustParam.push((CollisionType as any)[must]);
             }
 
             // Parse should params
-            for (const should of areaSearchFilter.getShouldValues()) {
+            for (const should of collisionTypeSearchFilter.getShouldValues()) {
                 // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
                 shouldParams.push((CollisionType as any)[should]);
             }
@@ -178,13 +178,13 @@ export class TrafficController implements interfaces.Controller {
             const shouldParams: Luminosity[] = [];
 
             // Parse must params
-            for (const must of areaSearchFilter.getMustValues()) {
+            for (const must of luminositySearchFilter.getMustValues()) {
                 // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
                 mustParam.push((Luminosity as any)[must]);
             }
 
             // Parse should params
-            for (const should of areaSearchFilter.getShouldValues()) {
+            for (const should of luminositySearchFilter.getShouldValues()) {
                 // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
                 shouldParams.push((Luminosity as any)[should]);
             }
