@@ -150,6 +150,192 @@ class TrafficQueryServiceTest extends AbstractTestService {
 
             return ret;
         })), TypeMoq.Times.once());
+
+        // Atmosperic Condition Filter
+        // Must
+        findTrafficAccidentsQuery.setGeoFilter(undefined);
+        findTrafficAccidentsQuery.setAtmosphericConditionFilter(new LogicalQueryCriteria<AtmosphericCondition>([AtmosphericCondition.HEAVY_RAIN, AtmosphericCondition.LIGHT_RAIN], new Array<AtmosphericCondition>()));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":3}}},{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":2}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Should
+        findTrafficAccidentsQuery.setAtmosphericConditionFilter(new LogicalQueryCriteria<AtmosphericCondition>(new Array<AtmosphericCondition>(), [AtmosphericCondition.HEAVY_RAIN, AtmosphericCondition.LIGHT_RAIN]));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"should\": [{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":3}}},{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":2}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Must and Should
+        findTrafficAccidentsQuery.setAtmosphericConditionFilter(new LogicalQueryCriteria<AtmosphericCondition>([AtmosphericCondition.CLOUDY_WEATHER], [AtmosphericCondition.HEAVY_RAIN, AtmosphericCondition.LIGHT_RAIN]));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":8}}}]\"should\": [{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":3}}},{\"term\" : {\"climatology.atmosphericCondition\": {\"value\":2}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Collision type
+        // Must
+        findTrafficAccidentsQuery.setAtmosphericConditionFilter(undefined);
+        findTrafficAccidentsQuery.setCollisionTypeFilter(new LogicalQueryCriteria<CollisionType>([CollisionType.TWO_CARS_ON_SIDE, CollisionType.TWO_CARS_FRONTAL], new Array<CollisionType>()));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"term\" : {\"collisionType\": {\"value\":3}}},{\"term\" : {\"collisionType\": {\"value\":1}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Should
+        findTrafficAccidentsQuery.setCollisionTypeFilter(new LogicalQueryCriteria<CollisionType>(new Array<CollisionType>(), [CollisionType.TWO_CARS_ON_SIDE, CollisionType.TWO_CARS_FRONTAL]));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"should\": [{\"term\" : {\"collisionType\": {\"value\":3}}},{\"term\" : {\"collisionType\": {\"value\":1}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Must and Should
+        findTrafficAccidentsQuery.setCollisionTypeFilter(new LogicalQueryCriteria<CollisionType>([CollisionType.TWO_CARS_ON_SIDE, CollisionType.TWO_CARS_FRONTAL], [CollisionType.OTHERS]));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"term\" : {\"collisionType\": {\"value\":3}}},{\"term\" : {\"collisionType\": {\"value\":1}}}]\"should\": [{\"term\" : {\"collisionType\": {\"value\":6}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Collision type
+        // Must
+        findTrafficAccidentsQuery.setCollisionTypeFilter(undefined);
+        findTrafficAccidentsQuery.setLuminosityFilter(new LogicalQueryCriteria<Luminosity>([Luminosity.NIGHT_WITHOUT_LIGHT, Luminosity.DUSK_OR_DAWN], new Array<Luminosity>()));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"term\" : {\"climatology.luminosity\": {\"value\":3}}},{\"term\" : {\"climatology.luminosity\": {\"value\":2}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Should
+        findTrafficAccidentsQuery.setLuminosityFilter(new LogicalQueryCriteria<Luminosity>(new Array<Luminosity>(), [Luminosity.NIGHT_WITHOUT_LIGHT, Luminosity.DUSK_OR_DAWN]));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"should\": [{\"term\" : {\"climatology.luminosity\": {\"value\":3}}},{\"term\" : {\"climatology.luminosity\": {\"value\":2}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
+
+        // Must and Should
+        findTrafficAccidentsQuery.setLuminosityFilter(new LogicalQueryCriteria<Luminosity>([Luminosity.NIGHT_WITHOUT_LIGHT, Luminosity.NIGHT_WITHOUT_LIGHT], [Luminosity.PLAIN_DAY]));
+        careAccidentDTOs = (await trafficQueryService.findTrafficAccidents(findTrafficAccidentsQuery));
+
+        for (let i = 0; i < AccidentData.accidents.hits.hits.length; i++) {
+            const accidentJson: AccidentJsonData = new AccidentJsonData();
+            Object.assign(accidentJson, AccidentData.accidents.hits.hits[i]._source);
+            this.assertAccident(careAccidentDTOs.results[i], accidentJson);
+        }
+
+        esClient.verify((instance) => instance.search(TypeMoq.It.is((searchParams: SearchParams) => {
+            let ret: boolean = searchParams.index === findTrafficAccidentsQuery.getIndex();
+            ret = ret && searchParams.type === findTrafficAccidentsQuery.getType();
+            ret = ret && searchParams.size === findTrafficAccidentsQuery.getLimit();
+            ret = ret && searchParams.from === findTrafficAccidentsQuery.getOffset();
+            ret = ret && searchParams.body === "{ \"query\":{\"bool\" : {\"must\": [{\"term\" : {\"climatology.luminosity\": {\"value\":3}}},{\"term\" : {\"climatology.luminosity\": {\"value\":3}}}]\"should\": [{\"term\" : {\"climatology.luminosity\": {\"value\":1}}}]}}}";
+
+            return ret;
+        })), TypeMoq.Times.once());
     }
 
     @test
