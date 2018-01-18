@@ -46,6 +46,7 @@ import { Circle } from "../../src/persistence/domain/Circle";
 import { Role } from "../../src/common/enum/Role";
 import { Credential } from "../../src/persistence/domain/Credential";
 import { ClientControlManager } from "../../src/security/ClientControlManager";
+import { isNullOrUndefined } from "util";
 
 /**
  * All test for traffic controller
@@ -147,13 +148,16 @@ class TrafficControllerTest extends AbstractTestController {
             this.assertAccidentSummary(actual.results[j], mockAccidents[j]);
         }
 
-        let optsFilter = {
+        const optsFilter = {
             method: "GET",
             uri: AbstractTestController.getBackend() + path,
             qs: {
                 offset: offset,
                 limit: limit,
-                areas: "[[44.0001|3.01]|[45.0001|4.01]],[[4.0001|1.01]|[24.0001|2.01]];[[4.0101|5.01]|[2.0001|30.01]]"
+                areas: "[[44.0001|3.01]|[45.0001|4.01]],[[4.0001|1.01]|[24.0001|2.01]];[[4.0101|5.01]|[2.0001|30.01]]",
+                atmosconditions: "",
+                coltypes: "",
+                luminosities: ""
             },
             headers: {
                 Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1iYXlvdSIsImlkIjoiMSIsInJvbGVzIjpbXSwiaWF0IjoxNTAxNTEzMjIwfQ.GnTWMzQYkyJImEybLUi7G-mGniqVwruAqA9ewXhgYQ8"
@@ -166,21 +170,130 @@ class TrafficControllerTest extends AbstractTestController {
             ret = ret && query.getType() === mockQuery.getType();
             ret = ret && query.getIndex() === mockQuery.getIndex();
             ret = ret && query.isSet() === true;
-            ret = ret && query.getGeoFilter().getMustParams().length === 2;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLatitudeParams() === 44.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLongitudeParams() === 3.01;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLatitudeParams() === 45.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLongitudeParams() === 4.01;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLatitudeParams() === 4.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLongitudeParams() === 1.01;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLatitudeParams() === 24.0001;
-            ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLongitudeParams() === 2.01;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLatitudeParams() === 4.0101;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLongitudeParams() === 5.01;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLatitudeParams() === 2.0001;
-            ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLongitudeParams() === 30.01;
+            if (!isNullOrUndefined(query.getGeoFilter())) {
+                ret = ret && query.getGeoFilter().getMustParams().length === 2;
+                ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLatitudeParams() === 44.0001;
+                ret = ret && query.getGeoFilter().getMustParams()[0].getTopLeft().getLongitudeParams() === 3.01;
+                ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLatitudeParams() === 45.0001;
+                ret = ret && query.getGeoFilter().getMustParams()[0].getBottomRight().getLongitudeParams() === 4.01;
+                ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLatitudeParams() === 4.0001;
+                ret = ret && query.getGeoFilter().getMustParams()[1].getTopLeft().getLongitudeParams() === 1.01;
+                ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLatitudeParams() === 24.0001;
+                ret = ret && query.getGeoFilter().getMustParams()[1].getBottomRight().getLongitudeParams() === 2.01;
+                ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLatitudeParams() === 4.0101;
+                ret = ret && query.getGeoFilter().getShouldParams()[0].getTopLeft().getLongitudeParams() === 5.01;
+                ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLatitudeParams() === 2.0001;
+                ret = ret && query.getGeoFilter().getShouldParams()[0].getBottomRight().getLongitudeParams() === 30.01;
 
-            ret = ret && query.getGeoFilter().getShouldParams().length === 1;
+                ret = ret && query.getGeoFilter().getShouldParams().length === 1;
+            } else {
+                ret = false;
+            }
+            return ret;
+        }))).returns(() => Promise.resolve(new ResultList<CarAccidentDTO>(200, mockAccidents)));
+
+
+        // Check with a standard call, no filter, pass
+        responseValue = "";
+        await Request(optsFilter).then((data: string) => {
+            responseValue += data;
+        });
+
+        actual = JSON.parse(responseValue);
+        Chai.assert.equal(actual.total, 200, "Expected same total");
+
+        for (let j = 0; j < 10; j++) {
+            this.assertAccidentSummary(actual.results[j], mockAccidents[j]);
+        }
+
+        optsFilter.qs.areas = "";
+        optsFilter.qs.atmosconditions = "NORMAL;LIGHT_RAIN,HEAVY_RAIN";
+
+        trafficQueryService.setup((instance) => instance.findTrafficAccidents(TypeMoq.It.is((query: FindTrafficAccidentQuery) => {
+            let ret = query.getLimit() === mockQuery.getLimit();
+            ret = ret && query.getOffset() === mockQuery.getOffset();
+            ret = ret && query.getType() === mockQuery.getType();
+            ret = ret && query.getIndex() === mockQuery.getIndex();
+            ret = ret && query.isSet() === true;
+            if (!isNullOrUndefined(query.getAtmosphericConditionFilter())) {
+                ret = ret && query.getAtmosphericConditionFilter().getMustParams().length === 1;
+                ret = ret && query.getAtmosphericConditionFilter().getMustParams()[0] === AtmosphericCondition.NORMAL;
+
+                ret = ret && query.getAtmosphericConditionFilter().getShouldParams().length === 2;
+                ret = ret && query.getAtmosphericConditionFilter().getShouldParams()[0] === AtmosphericCondition.LIGHT_RAIN;
+                ret = ret && query.getAtmosphericConditionFilter().getShouldParams()[1] === AtmosphericCondition.HEAVY_RAIN;
+            } else {
+                ret = false;
+            }
+            return ret;
+        }))).returns(() => Promise.resolve(new ResultList<CarAccidentDTO>(200, mockAccidents)));
+
+
+        // Check with a standard call, no filter, pass
+        responseValue = "";
+        await Request(optsFilter).then((data: string) => {
+            responseValue += data;
+        });
+
+        actual = JSON.parse(responseValue);
+        Chai.assert.equal(actual.total, 200, "Expected same total");
+
+        for (let j = 0; j < 10; j++) {
+            this.assertAccidentSummary(actual.results[j], mockAccidents[j]);
+        }
+
+        optsFilter.qs.atmosconditions = "";
+        optsFilter.qs.coltypes = "TWO_CARS_FRONTAL;TWO_CARS_BACKSIDE,TWO_CARS_ON_SIDE";
+
+        trafficQueryService.setup((instance) => instance.findTrafficAccidents(TypeMoq.It.is((query: FindTrafficAccidentQuery) => {
+            let ret = query.getLimit() === mockQuery.getLimit();
+            ret = ret && query.getOffset() === mockQuery.getOffset();
+            ret = ret && query.getType() === mockQuery.getType();
+            ret = ret && query.getIndex() === mockQuery.getIndex();
+            ret = ret && query.isSet() === true;
+            if (!isNullOrUndefined(query.getCollisionTypeFilter())) {
+
+                ret = ret && query.getCollisionTypeFilter().getMustParams().length === 1;
+                ret = ret && query.getCollisionTypeFilter().getMustParams()[0] === CollisionType.TWO_CARS_FRONTAL;
+
+                ret = ret && query.getCollisionTypeFilter().getShouldParams().length === 2;
+                ret = ret && query.getCollisionTypeFilter().getShouldParams()[0] === CollisionType.TWO_CARS_BACKSIDE;
+                ret = ret && query.getCollisionTypeFilter().getShouldParams()[1] === CollisionType.TWO_CARS_ON_SIDE;
+            } else {
+                ret = false;
+            }
+            return ret;
+        }))).returns(() => Promise.resolve(new ResultList<CarAccidentDTO>(200, mockAccidents)));
+
+
+        // Check with a standard call, no filter, pass
+        responseValue = "";
+        await Request(optsFilter).then((data: string) => {
+            responseValue += data;
+        });
+
+        actual = JSON.parse(responseValue);
+        Chai.assert.equal(actual.total, 200, "Expected same total");
+
+        for (let j = 0; j < 10; j++) {
+            this.assertAccidentSummary(actual.results[j], mockAccidents[j]);
+        }
+
+        optsFilter.qs.coltypes = "";
+        optsFilter.qs.luminosities = "PLAIN_DAY;DUSK_OR_DAWN,NIGHT_WITHOUT_LIGHT";
+
+        trafficQueryService.setup((instance) => instance.findTrafficAccidents(TypeMoq.It.is((query: FindTrafficAccidentQuery) => {
+            let ret = query.getLimit() === mockQuery.getLimit();
+            ret = ret && query.getOffset() === mockQuery.getOffset();
+            ret = ret && query.getType() === mockQuery.getType();
+            ret = ret && query.getIndex() === mockQuery.getIndex();
+            ret = ret && query.isSet() === true;
+            ret = ret && query.getLuminosityFilter().getMustParams().length === 1;
+            ret = ret && query.getLuminosityFilter().getMustParams()[0] === Luminosity.PLAIN_DAY;
+
+            ret = ret && query.getLuminosityFilter().getShouldParams().length === 2;
+            ret = ret && query.getLuminosityFilter().getShouldParams()[0] === Luminosity.DUSK_OR_DAWN;
+            ret = ret && query.getLuminosityFilter().getShouldParams()[1] === Luminosity.NIGHT_WITHOUT_LIGHT;
 
             return ret;
         }))).returns(() => Promise.resolve(new ResultList<CarAccidentDTO>(200, mockAccidents)));

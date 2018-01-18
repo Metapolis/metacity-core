@@ -69,6 +69,9 @@ export class TrafficController implements interfaces.Controller {
      * Get traffic accident information
      *
      * @param areas area search filter
+     * @param atmosphericConditions atmospheric condition search filter
+     * @param collisionTypes collision type search filter
+     * @param luminosities luminosity search filter
      * @param offset result offset
      * @param limit size of return result
      *
@@ -77,6 +80,9 @@ export class TrafficController implements interfaces.Controller {
     @Get("/accidents")
     @ClientControl(Role.ACCESS_ACCIDENT)
     public async findAccidents(@QueryParam("areas") areas: string,
+                               @QueryParam("atmosconditions") atmosphericConditions: string,
+                               @QueryParam("coltypes") collisionTypes: string,
+                               @QueryParam("luminosities") luminosities: string,
                                @QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<AccidentSummary>> {
         Utils.checkArgument(offset != null, "Offset must be set");
@@ -86,8 +92,20 @@ export class TrafficController implements interfaces.Controller {
 
         this.logger.info("Find all traffic information");
         let areaSearchFilter: SearchFilter;
+        let atmosphericConditionSearchFilter: SearchFilter;
+        let collisionTypeSearchFilter: SearchFilter;
+        let luminositySearchFilter: SearchFilter;
         if (!Utils.isNullOrEmpty(areas)) {
             areaSearchFilter = new SearchFilter(areas);
+        }
+        if (!Utils.isNullOrEmpty(atmosphericConditions)) {
+            atmosphericConditionSearchFilter = new SearchFilter(atmosphericConditions);
+        }
+        if (!Utils.isNullOrEmpty(collisionTypes)) {
+            collisionTypeSearchFilter = new SearchFilter(collisionTypes);
+        }
+        if (!Utils.isNullOrEmpty(luminosities)) {
+            luminositySearchFilter = new SearchFilter(luminosities);
         }
         const query: FindTrafficAccidentQuery = new FindTrafficAccidentQuery();
         query.setOffset(Number(offset));
@@ -111,6 +129,69 @@ export class TrafficController implements interfaces.Controller {
             // Create criteria
             const geoFilter: LogicalQueryCriteria<GeoShape> = new LogicalQueryCriteria<GeoShape>(mustParam, shouldParams);
             query.setGeoFilter(geoFilter);
+        }
+
+        if (atmosphericConditionSearchFilter != null) {
+            const mustParam: AtmosphericCondition[] = [];
+            const shouldParams: AtmosphericCondition[] = [];
+
+            // Parse must params
+            for (const must of atmosphericConditionSearchFilter.getMustValues()) {
+                // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
+                mustParam.push((AtmosphericCondition as any)[must]);
+            }
+
+            // Parse should params
+            for (const should of atmosphericConditionSearchFilter.getShouldValues()) {
+                // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
+                shouldParams.push((AtmosphericCondition as any)[should]);
+            }
+
+            // Create criteria
+            const atmosphericConditionFilter: LogicalQueryCriteria<AtmosphericCondition> = new LogicalQueryCriteria<AtmosphericCondition>(mustParam, shouldParams);
+            query.setAtmosphericConditionFilter(atmosphericConditionFilter);
+        }
+
+        if (collisionTypeSearchFilter != null) {
+            const mustParam: CollisionType[] = [];
+            const shouldParams: CollisionType[] = [];
+
+            // Parse must params
+            for (const must of collisionTypeSearchFilter.getMustValues()) {
+                // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
+                mustParam.push((CollisionType as any)[must]);
+            }
+
+            // Parse should params
+            for (const should of collisionTypeSearchFilter.getShouldValues()) {
+                // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
+                shouldParams.push((CollisionType as any)[should]);
+            }
+
+            // Create criteria
+            const collisionTypeFilter: LogicalQueryCriteria<CollisionType> = new LogicalQueryCriteria<CollisionType>(mustParam, shouldParams);
+            query.setCollisionTypeFilter(collisionTypeFilter);
+        }
+
+        if (luminositySearchFilter != null) {
+            const mustParam: Luminosity[] = [];
+            const shouldParams: Luminosity[] = [];
+
+            // Parse must params
+            for (const must of luminositySearchFilter.getMustValues()) {
+                // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
+                mustParam.push((Luminosity as any)[must]);
+            }
+
+            // Parse should params
+            for (const should of luminositySearchFilter.getShouldValues()) {
+                // Trick to cast string to enum (ref: https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/)
+                shouldParams.push((Luminosity as any)[should]);
+            }
+
+            // Create criteria
+            const luminosityFilter: LogicalQueryCriteria<Luminosity> = new LogicalQueryCriteria<Luminosity>(mustParam, shouldParams);
+            query.setLuminosityFilter(luminosityFilter);
         }
 
         const resultListAccidents: ResultList<CarAccidentDTO> = await this.trafficQueryService.findTrafficAccidents(query);

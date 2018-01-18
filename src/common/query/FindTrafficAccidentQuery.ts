@@ -24,6 +24,10 @@
 import { LogicalQueryCriteria } from "./LogicalQueryCriteria";
 import { GeoShape } from "../GeoShape";
 import { Config } from "../../Config";
+import { AtmosphericCondition } from "../enum/accident/AtmosphericCondition";
+import { CollisionType } from "../enum/accident/CollisionType";
+import { Luminosity } from "../enum/accident/Luminosity";
+import { isNullOrUndefined } from "util";
 
 /**
  * Contains traffic accident search query
@@ -63,12 +67,30 @@ export class FindTrafficAccidentQuery {
     private geoFilter: LogicalQueryCriteria<GeoShape>;
 
     /**
+     * Atmospheric condition filter
+     */
+    private atmosphericConditionFilter: LogicalQueryCriteria<AtmosphericCondition>;
+
+    /**
+     * collision type filter
+     */
+    private collisionTypeFilter: LogicalQueryCriteria<CollisionType>;
+
+    /**
+     * Luminosity filter
+     */
+    private luminosityFilter: LogicalQueryCriteria<Luminosity>;
+
+    /**
      * True means optional parameters are set
      *
      * @returns {boolean} True if one of optional parameter is set
      */
     public isSet(): boolean {
-        return this.geoFilter != null;
+        return !isNullOrUndefined(this.geoFilter)
+            || !isNullOrUndefined(this.atmosphericConditionFilter)
+            || !isNullOrUndefined(this.collisionTypeFilter)
+            || !isNullOrUndefined(this.luminosityFilter);
     }
 
     /**
@@ -83,6 +105,48 @@ export class FindTrafficAccidentQuery {
      */
     public setGeoFilter(geoFilter: LogicalQueryCriteria<GeoShape>) {
         this.geoFilter = geoFilter;
+    }
+
+    /**
+     * Accident's atmospheric condition Filter getter
+     */
+    public getAtmosphericConditionFilter(): LogicalQueryCriteria<AtmosphericCondition> {
+        return this.atmosphericConditionFilter;
+    }
+
+    /**
+     * Accident's atmospheric condition filter setter
+     */
+    public setAtmosphericConditionFilter(atmosphericConditionFilter: LogicalQueryCriteria<AtmosphericCondition>) {
+        this.atmosphericConditionFilter = atmosphericConditionFilter;
+    }
+
+    /**
+     * Accident's atmospheric condition Filter getter
+     */
+    public getCollisionTypeFilter(): LogicalQueryCriteria<CollisionType> {
+        return this.collisionTypeFilter;
+    }
+
+    /**
+     * Accident's atmospheric condition filter setter
+     */
+    public setCollisionTypeFilter(collisionTypeFilter: LogicalQueryCriteria<CollisionType>) {
+        this.collisionTypeFilter = collisionTypeFilter;
+    }
+
+    /**
+     * Accident's atmospheric condition Filter getter
+     */
+    public getLuminosityFilter(): LogicalQueryCriteria<Luminosity> {
+        return this.luminosityFilter;
+    }
+
+    /**
+     * Accident's atmospheric condition filter setter
+     */
+    public setLuminosityFilter(luminosityFilter: LogicalQueryCriteria<Luminosity>) {
+        this.luminosityFilter = luminosityFilter;
     }
 
     /**

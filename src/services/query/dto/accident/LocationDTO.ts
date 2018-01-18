@@ -72,6 +72,7 @@ export class LocationDTO {
      */
     constructor(json: {} = {}) {
         Object.assign(this, json);
+        this.gpsType = (GPSType as any)[this.gpsType];
         if (Utils.isNullOrEmpty(this.address)) {
             this.address = undefined;
         }

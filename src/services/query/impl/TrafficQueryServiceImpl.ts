@@ -31,6 +31,8 @@ import { FindTrafficAccidentQuery } from "../../../common/query/FindTrafficAccid
 import { ResultList } from "../../../common/ResultList";
 import { BoundingBoxQueryParam } from "../builder/elasticsearch/model/BoundingBoxQueryParam";
 import { QueryBuilder } from "../builder/elasticsearch/QueryBuilder";
+import { TermQueryParam } from "../builder/elasticsearch/model/TermQueryParam";
+import { isNullOrUndefined } from "util";
 
 /**
  * Implementation of {@link TrafficQueryService}
@@ -66,12 +68,39 @@ export class TrafficQueryServiceImpl implements TrafficQueryService {
         const queryBuilder: QueryBuilder = new QueryBuilder();
         if (query.isSet()) {
             // Build geo shape filter
-            if (query.getGeoFilter()) {
+            if (!isNullOrUndefined(query.getGeoFilter())) {
                 for (const geoShape of query.getGeoFilter().getMustParams()) {
                     queryBuilder.must(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
                 }
                 for (const geoShape of query.getGeoFilter().getShouldParams()) {
                     queryBuilder.should(new BoundingBoxQueryParam("latLon", geoShape.getTopLeft(), geoShape.getBottomRight()));
+                }
+            }
+
+            if (!isNullOrUndefined(query.getAtmosphericConditionFilter())) {
+                for (const atmosphericCondition of query.getAtmosphericConditionFilter().getMustParams()) {
+                    queryBuilder.must(new TermQueryParam("climatology.atmosphericCondition", atmosphericCondition));
+                }
+                for (const atmosphericCondition of query.getAtmosphericConditionFilter().getShouldParams()) {
+                    queryBuilder.should(new TermQueryParam("climatology.atmosphericCondition", atmosphericCondition));
+                }
+            }
+
+            if (!isNullOrUndefined(query.getCollisionTypeFilter())) {
+                for (const collisionType of query.getCollisionTypeFilter().getMustParams()) {
+                    queryBuilder.must(new TermQueryParam("collisionType", collisionType));
+                }
+                for (const collisionType of query.getCollisionTypeFilter().getShouldParams()) {
+                    queryBuilder.should(new TermQueryParam("collisionType", collisionType));
+                }
+            }
+
+            if (!isNullOrUndefined(query.getLuminosityFilter())) {
+                for (const luminosity of query.getLuminosityFilter().getMustParams()) {
+                    queryBuilder.must(new TermQueryParam("climatology.luminosity", luminosity));
+                }
+                for (const luminosity of query.getLuminosityFilter().getShouldParams()) {
+                    queryBuilder.should(new TermQueryParam("climatology.luminosity", luminosity));
                 }
             }
             this.logger.info("Query elastic : '%s'", queryBuilder.build());
