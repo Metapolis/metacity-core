@@ -73,12 +73,15 @@ export class TweetQueryServiceImpl implements TweetQueryService {
                 for (const dateRange of query.getDateFilter().getMustParams()) {
                     const rangeQuery: RangeQueryParam = new RangeQueryParam();
                     rangeQuery.field = "createdAt";
+                    // build query for date
                     rangeQuery.createGTELTNumber(dateRange.getStart(), dateRange.getEnd());
                     queryBuilder.must(rangeQuery);
                 }
+
                 for (const dateRange of query.getDateFilter().getShouldParams()) {
                     const rangeQuery: RangeQueryParam = new RangeQueryParam();
                     rangeQuery.field = "createdAt";
+                    // build query for date
                     rangeQuery.createGTELTNumber(dateRange.getStart(), dateRange.getEnd());
                     queryBuilder.should(rangeQuery);
                 }
