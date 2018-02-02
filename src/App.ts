@@ -72,6 +72,7 @@ import { DataSet } from "./persistence/domain/DataSet";
 import { UserQueryService } from "./services/query/UserQueryService";
 import { UserQueryServiceImpl } from "./services/query/impl/UserQueryServiceImpl";
 import * as CORS from "cors";
+import { FieldType, InfluxDB } from "influx";
 import methodOverride = require("method-override");
 import { UserControlManager } from "./security/UserControlManager";
 import { ClientControlManager } from "./security/ClientControlManager";
@@ -87,6 +88,7 @@ import { DataSetDao } from "./persistence/dao/DataSetDao";
 import { DataSetCommandService } from "./services/command/DataSetCommandService";
 import { DataSetCommandServiceImpl } from "./services/command/impl/DataSetCommandServiceImpl";
 import { HttpLocalAuthorityProvider } from "./security/HttpLocalAuthorityProvider";
+import { TestSchema } from "./common/model/influxdb/TestSchema";
 
 /**
  * The App.
@@ -171,6 +173,24 @@ export class App {
 
         this.logger.debug("Binding ElasticSearch client");
         this.container.bind<Client>("ESClient").toConstantValue(elasticClient);
+    }
+
+    /**
+     * Bind the influxDB client
+     */
+    private bindInfluxClient(): void {
+        this.logger.debug("Create InfluxDB client");
+
+        // Create the influx db client
+        const influxDBClient: InfluxDB = new InfluxDB({
+            host: Config.getInfluxDBHost(),
+            database: Config.getInfluxDBDatabaseName(),
+            schema: [
+                new TestSchema().getSchema()
+            ]
+        });
+
+        this.container.bind("InfluxDBClient").toConstantValue(influxDBClient);
     }
 
     /**

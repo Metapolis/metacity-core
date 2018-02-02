@@ -182,11 +182,30 @@ export class Config {
     }
 
     /**
-     * Get database autooSchemaSync
+     * Get database autoSchemaSync
      *
      * @returns {number}
      */
     public static isDatabaseAutoSchemaSync(): boolean {
         return Config.properties.get("database.auto_schema_sync");
     }
+
+    /**
+     * Get influxDB host
+     *
+     * @returns {string}
+     */
+    public static getInfluxDBHost(): string {
+        return Config.properties.get("influxdb.host");
+    }
+
+    /**
+     * Get influxDB database
+     *
+     * @returns {string}
+     */
+    public static getInfluxDBDatabaseName(): string {
+        return Config.properties.get("influxdb.database");
+    }
+
 }

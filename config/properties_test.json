@@ -14,12 +14,16 @@
     "base_path": "/api"
   },
   "database": {
-    "name": "metacity_test",
+    "name": "metacity-test",
     "user": "metacity",
     "password": "metacity",
     "host": "127.0.0.1",
     "port": 5432,
     "drop_schema": true,
     "auto_schema_sync": true
+  },
+  "influxdb": {
+    "host": "localhost:XXXX",
+    "database": "database"
   }
 }

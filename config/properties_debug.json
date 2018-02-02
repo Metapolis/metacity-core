@@ -21,5 +21,9 @@
     "port": 5432,
     "drop_schema": false,
     "auto_schema_sync": true
+  },
+  "influxdb": {
+    "host": "localhost:XXXX",
+    "database": "database"
   }
 }

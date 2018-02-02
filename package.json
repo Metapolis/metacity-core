@@ -31,7 +31,7 @@
     "express-winston": "2.4.0",
     "has-color": "0.1.7",
     "http-status-codes": "1.1.6",
-    "influx": "5.0.7",
+    "influx": "^5.0.7",
     "inversify": "3.3.0",
     "inversify-express-utils": "3.5.2",
     "jsonwebtoken": "7.4.1",
