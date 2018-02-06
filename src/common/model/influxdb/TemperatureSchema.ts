@@ -25,9 +25,9 @@ import { InfluxDBSchema } from "./InfluxDBSchema";
 import { FieldType, ISchemaOptions } from "influx";
 
 /**
- * Test influx db schema
+ * Temperature influx db schema
  */
-export class TestSchema implements InfluxDBSchema {
+export class TemperatureSchema implements InfluxDBSchema {
 
     /**
      * Measurement name
@@ -37,18 +37,25 @@ export class TestSchema implements InfluxDBSchema {
     private measurementName: string = "response_time";
 
     /**
-     * Field type of path
+     * Field type of town
      *
      * @type {FieldType.STRING}
      */
-    private path: FieldType = FieldType.STRING;
+    private town: FieldType = FieldType.STRING;
 
     /**
-     * Field type of duration
+     * Field type of temperature
      *
      * @type {FieldType.INTEGER}
      */
-    private duration: FieldType = FieldType.INTEGER;
+    private temperature: FieldType = FieldType.INTEGER;
+
+    /**
+     * Field type of identifier
+     *
+     * @type {FieldType.INTEGER}
+     */
+    private id: FieldType = FieldType.INTEGER;
 
     /**
      * Tags
@@ -67,8 +74,9 @@ export class TestSchema implements InfluxDBSchema {
         return {
             measurement: this.measurementName,
             fields: {
-                path: this.path,
-                duration: this.duration
+                town: this.town,
+                temperature: this.temperature,
+                id: this.id
             },
             tags: this.tags
         };

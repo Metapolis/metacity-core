@@ -88,7 +88,7 @@ import { DataSetDao } from "./persistence/dao/DataSetDao";
 import { DataSetCommandService } from "./services/command/DataSetCommandService";
 import { DataSetCommandServiceImpl } from "./services/command/impl/DataSetCommandServiceImpl";
 import { HttpLocalAuthorityProvider } from "./security/HttpLocalAuthorityProvider";
-import { TestSchema } from "./common/model/influxdb/TestSchema";
+import { TemperatureSchema } from "./common/model/influxdb/TemperatureSchema";
 
 /**
  * The App.
@@ -186,7 +186,7 @@ export class App {
             host: Config.getInfluxDBHost(),
             database: Config.getInfluxDBDatabaseName(),
             schema: [
-                new TestSchema().getSchema()
+                new TemperatureSchema().getSchema()
             ]
         });
 
@@ -246,6 +246,7 @@ export class App {
         this.bindQueries();
         this.bindControllers();
         this.bindElasticClient();
+        this.bindInfluxClient();
         this.createServer();
     }
 

@@ -14,7 +14,7 @@
     "base_path": "/api"
   },
   "database": {
-    "name": "metacity-test",
+    "name": "metacity_test",
     "user": "metacity",
     "password": "metacity",
     "host": "127.0.0.1",
@@ -23,7 +23,7 @@
     "auto_schema_sync": true
   },
   "influxdb": {
-    "host": "localhost:XXXX",
-    "database": "database"
+    "host": "localhost:8086",
+    "database": "tests"
   }
 }

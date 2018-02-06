@@ -23,7 +23,7 @@
     "auto_schema_sync": false
   },
   "influxdb": {
-    "host": "localhost:XXXX",
-    "database": "database"
+    "host": "localhost:8086",
+    "database": "tests"
   }
 }
