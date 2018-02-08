@@ -22,12 +22,22 @@
  */
 
 /**
- * API measurement to get boolean value
+ * Represent model of temperature measurement
  */
-export class BooleanValue {
+export class TemperatureMeasurement {
 
     /**
-     * Boolean value
+     * Temperature's town
      */
-    public value: boolean;
+    public town: string;
+
+    /**
+     * Temperature's value
+     */
+    public temperature: number;
+
+    /**
+     * Temperature's identifier
+     */
+    public id: number;
 }

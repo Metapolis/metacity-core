@@ -21,13 +21,21 @@
  * @since      0.2.0
  */
 
+import { FindTemperatureQuery } from "../../common/query/FindTemperatureQuery";
+import { ResultList } from "../../common/ResultList";
+import { TemperatureDTO } from "./dto/temperature/TemperatureDTO";
+
 /**
- * API measurement to get boolean value
+ * Contains method to perform temperature query
  */
-export class BooleanValue {
+export interface TemperatureQueryService {
 
     /**
-     * Boolean value
+     * Retrieves all temperature
+     *
+     * @param query Query use to find temperature
+     *
+     * @returns {Promise<ResultList<TemperatureDTO>>}
      */
-    public value: boolean;
+    findTemperatures(query: FindTemperatureQuery): Promise<ResultList<TemperatureDTO>>;
 }

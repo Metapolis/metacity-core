@@ -88,7 +88,9 @@ import { DataSetDao } from "./persistence/dao/DataSetDao";
 import { DataSetCommandService } from "./services/command/DataSetCommandService";
 import { DataSetCommandServiceImpl } from "./services/command/impl/DataSetCommandServiceImpl";
 import { HttpLocalAuthorityProvider } from "./security/HttpLocalAuthorityProvider";
-import { TemperatureSchema } from "./common/model/influxdb/TemperatureSchema";
+import { TemperatureSchema } from "./common/model/influxdb/schema/TemperatureSchema";
+import { TemperatureQueryService } from "./services/query/TemperatureQueryService";
+import { TemperatureQueryServiceImpl } from "./services/query/impl/TemperatureQueryServiceImpl";
 
 /**
  * The App.
@@ -216,6 +218,7 @@ export class App {
         this.container.bind<CircleQueryService>("CircleQueryService").to(CircleQueryServiceImpl);
         this.container.bind<DataSetQueryService>("DataSetQueryService").to(DataSetQueryServiceImpl);
         this.container.bind<UserQueryService>("UserQueryService").to(UserQueryServiceImpl);
+        this.container.bind<TemperatureQueryService>("TemperatureQueryService").to(TemperatureQueryServiceImpl);
     }
 
     /**

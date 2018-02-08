@@ -29,7 +29,7 @@ import { ISchemaOptions } from "influx/lib/src/schema";
 export interface InfluxDBSchema {
 
     /**
-     * Return the influx DB schema to create the data model connection
+     * Return the influx DB schema to create the data measurement connection
      *
      * @returns {ISchemaOptions}
      */

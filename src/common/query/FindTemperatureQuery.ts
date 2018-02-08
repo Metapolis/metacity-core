@@ -22,12 +22,49 @@
  */
 
 /**
- * API measurement to get boolean value
+ * Contains temperature search query
  */
-export class BooleanValue {
+export class FindTemperatureQuery {
 
     /**
-     * Boolean value
+     * Query limit (default 100)
+     *
+     * @type {number}
      */
-    public value: boolean;
+    private limit: number = 100;
+
+    /**
+     * Query offset (default 0)
+     * @type {number}
+     */
+    private offset: number = 0;
+
+    /**
+     * temperature's limit getter
+     */
+    public getLimit(): number {
+        return this.limit;
+    }
+
+    /**
+     * temperature's limit setter
+     */
+    public setLimit(limit: number) {
+        this.limit = limit;
+    }
+
+    /**
+     * temperature's offset getter
+     */
+    public getOffset(): number {
+        return this.offset;
+    }
+
+    /**
+     * temperature's offset setter
+     */
+    public setOffset(offset: number) {
+        this.offset = offset;
+    }
+
 }

@@ -40,11 +40,11 @@ import { ClientControl, UserControl } from "../../common/Decorators";
 import { Role } from "../../common/enum/Role";
 
 /**
- * API resources to delivery service to access to traffic element
+ * API resources to delivery service to access to tweets element
  *
- * /api/traffics route
+ * /api/tweets route
  *
- * @class TrafficController
+ * @class TweetController
  */
 @Controller("/api/tweets")
 @injectable()

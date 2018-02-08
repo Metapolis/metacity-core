@@ -22,42 +22,76 @@
  */
 
 /**
- * Contains all role in application
+ * Represent a temperature
  */
-export enum Role {
+export class TemperatureDTO {
 
     /**
-     * Manage Circle
+     * Temperature's identifier
      */
-    MANAGE_CIRCLE = "MANAGE_CIRCLE",
+    private id: number;
 
     /**
-     * Manage Data set
+     * Temperature's town
      */
-    MANAGE_DATA_SET = "MANAGE_DATA_SET",
+    private town: string;
 
     /**
-     * Manage Local authority
+     * Temperature value
      */
-    MANAGE_LOCAL_AUTHORITY = "MANAGE_LOCAL_AUTHORITY",
+    private value: number;
 
     /**
-     * Manage User
+     * Getter identifier
+     *
+     * @returns {number}
      */
-    MANAGE_USER = "MANAGE_USER",
+    public getId(): number {
+        return this.id;
+    }
 
     /**
-     * Access accident
+     * Setter identifier
+     *
+     * @param id new identifier value
      */
-    ACCESS_ACCIDENT = "ACCESS_ACCIDENT",
+    public setId(id: number): void {
+        this.id = id;
+    }
 
     /**
-     * Access tweet
+     * Getter town
+     *
+     * @returns {string}
      */
-    ACCESS_TWEET = "ACCESS_TWEET",
+    public getTown(): string {
+        return this.town;
+    }
 
     /**
-     * Access temperature
+     * Setter town
+     *
+     * @param town new town value
      */
-    ACCESS_TEMPERATURE = "ACCESS_TEMPERATURE"
+    public setTown(town: string): void {
+        this.town = town;
+    }
+
+    /**
+     * Setter temperature value
+     *
+     * @param {number} value
+     */
+    public setValue(value: number): void {
+        this.value = value;
+    }
+
+    /**
+     * Getter temperature value
+     *
+     * @returns {number}
+     */
+    public getValue(): number {
+        return this.value;
+    }
 }
