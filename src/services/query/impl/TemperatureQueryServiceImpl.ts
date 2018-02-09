@@ -33,6 +33,8 @@ import { TemperatureMeasurement } from "../../../common/model/influxdb/measureme
 
 /**
  * Implementation of {@link TemperatureQueryService}
+ *
+ * /!\ Service sample for influx db connection
  */
 @injectable()
 export class TemperatureQueryServiceImpl implements TemperatureQueryService {
@@ -56,7 +58,7 @@ export class TemperatureQueryServiceImpl implements TemperatureQueryService {
      * @param query
      */
     public async findTemperatures(query: FindTemperatureQuery): Promise<ResultList<TemperatureDTO>> {
-        this.logger.info("Retrieve temperatures in elastic search");
+        this.logger.info("Retrieve temperatures in influxdb");
         Utils.checkArgument(query != null, "Query cannot be null");
         Utils.checkArgument(query.getOffset() != null, "Offset must be set");
         Utils.checkArgument(query.getOffset() >= 0, "Offset cannot be negative");
@@ -64,20 +66,20 @@ export class TemperatureQueryServiceImpl implements TemperatureQueryService {
         Utils.checkArgument(query.getLimit() > 0, "Limit must be superior to zero");
 
         // Call influx with query
-        const temperatureMeasurements = await this.influxDBClient.query<TemperatureMeasurement>("Select * from temperature order by time desc limit ${query.getLimit()} offset ${query.getLimit() * query.getOffset()}");
-        const count = (await this.influxDBClient.query<number>("Select count(*) from temperature")).groups()[0].rows[0];
+        const temperatureMeasurements = await this.influxDBClient.query<TemperatureMeasurement>(`Select * from temperature order by time desc limit ${query.getLimit()} offset ${query.getLimit() * query.getOffset()}`);
+        const count = (await this.influxDBClient.query<{ count_temperature: number }>("Select count(*) from temperature"))[0] as { count_temperature: number };
 
         // Parse result to DTO
         // TODO create document object with public field to simple parse the json from ElasticSearch
         const temperatures: TemperatureDTO[] = [];
-        for (const temperatureMeasurement of temperatureMeasurements.groups()[0].rows) {
+        for (const temperatureMeasurement of temperatureMeasurements) {
             const temperatureDTO: TemperatureDTO = new TemperatureDTO();
             temperatureDTO.setId(temperatureMeasurement.id);
             temperatureDTO.setTown(temperatureMeasurement.town);
             temperatureDTO.setValue(temperatureMeasurement.temperature);
-            temperatures.push();
+            temperatures.push(temperatureDTO);
         }
 
-        return new ResultList<TemperatureDTO>(count, temperatures);
+        return new ResultList<TemperatureDTO>(count.count_temperature, temperatures);
     }
 }

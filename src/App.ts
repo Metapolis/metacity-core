@@ -91,6 +91,7 @@ import { HttpLocalAuthorityProvider } from "./security/HttpLocalAuthorityProvide
 import { TemperatureSchema } from "./common/model/influxdb/schema/TemperatureSchema";
 import { TemperatureQueryService } from "./services/query/TemperatureQueryService";
 import { TemperatureQueryServiceImpl } from "./services/query/impl/TemperatureQueryServiceImpl";
+import { TemperatureController } from "./controllers/rest/TemperatureController";
 
 /**
  * The App.
@@ -231,6 +232,7 @@ export class App {
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(TweetController).whenTargetNamed("TweetController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(LocalAuthorityController).whenTargetNamed("LocalAuthorityController");
         this.container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed("UserController");
+        this.container.bind<interfaces.Controller>(TYPE.Controller).to(TemperatureController).whenTargetNamed("TemperatureController");
     }
 
     /**

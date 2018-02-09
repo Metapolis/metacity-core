@@ -36,6 +36,8 @@ import { TemperatureQueryService } from "../../services/query/TemperatureQuerySe
 /**
  * API resources to delivery service to access to temperature element
  *
+ * /!\ Resource sample for influx db connection
+ *
  * /api/temperatures route
  *
  * @class TrafficController
@@ -62,14 +64,11 @@ export class TemperatureController implements interfaces.Controller {
      *
      * @param offset result offset
      * @param limit size of return result
-     * @param dates dates search filter
-     * @param hashtags hash tags search filter
-     * @param mentions mentions search filter
      *
      * @returns {Promise<ResultList<Temperature>>}
      */
     @Get("/")
-    @ClientControl(Role.ACCESS_TEMPERATURE)
+    // @ClientControl(Role.ACCESS_TEMPERATURE)
     public async findAccidents(@QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<Temperature>> {
         Utils.checkArgument(offset != null, "Offset must be set");

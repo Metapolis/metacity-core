@@ -27,6 +27,8 @@ import { TemperatureDTO } from "./dto/temperature/TemperatureDTO";
 
 /**
  * Contains method to perform temperature query
+ *
+ * /!\ Service sample for influx db connection
  */
 export interface TemperatureQueryService {
 
