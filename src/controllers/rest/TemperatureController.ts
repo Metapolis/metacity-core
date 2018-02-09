@@ -68,7 +68,7 @@ export class TemperatureController implements interfaces.Controller {
      * @returns {Promise<ResultList<Temperature>>}
      */
     @Get("/")
-    // @ClientControl(Role.ACCESS_TEMPERATURE)
+    @ClientControl(Role.ACCESS_TEMPERATURE)
     public async findAccidents(@QueryParam("offset") offset: number,
                                @QueryParam("limit") limit: number): Promise<ResultList<Temperature>> {
         Utils.checkArgument(offset != null, "Offset must be set");
